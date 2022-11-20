@@ -41,4 +41,4 @@ class DepartmentController extends Controller
         $data->delete();
         return "Department Delete Successfully";
     }
-} 
+}

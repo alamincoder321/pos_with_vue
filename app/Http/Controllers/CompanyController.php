@@ -36,7 +36,6 @@ class CompanyController extends Controller
             }
             $data->save();
             return "Company Profile updated successfully";
-
         } catch (\Throwable $e) {
             return "Opps! something went wrong";
         }

@@ -22,10 +22,10 @@ class HomeController extends Controller
 
     public function saveUser(Request $request)
     {
-        try{
-            if(empty($request->id)){
+        try {
+            if (empty($request->id)) {
                 $data = new User;
-            }else{
+            } else {
                 $data = User::find($request->id);
                 $old  = $data->image;
             }
@@ -36,9 +36,9 @@ class HomeController extends Controller
             if (!empty($request->password)) {
                 $data->password = Hash::make($request->password);
             }
-            if($request->hasFile("image")){
-                if(isset($old)){
-                    if(File::exists($old)){
+            if ($request->hasFile("image")) {
+                if (isset($old)) {
+                    if (File::exists($old)) {
                         File::delete($old);
                     }
                 }
@@ -46,12 +46,12 @@ class HomeController extends Controller
             }
             $data->save();
 
-            if(empty($request->id)){
+            if (empty($request->id)) {
                 return "User save successfully";
-            }else{
+            } else {
                 return "User updated successfully";
             }
-        }catch(\Throwable $e){
+        } catch (\Throwable $e) {
             return "Opps! something went wrong";
         }
     }

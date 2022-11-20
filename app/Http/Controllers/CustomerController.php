@@ -11,9 +11,9 @@ class CustomerController extends Controller
 {
     public function getCustomer()
     {
-        $gen_code = $this->generateCode('Customer', 'C-'); 
+        $gen_code = $this->generateCode('Customer', 'C-');
         $customers = DB::select("SELECT c.*, ci.name AS city_name FROM customers AS c LEFT JOIN cities AS ci ON ci.id=c.city_id ORDER BY name");
-        return response()->json(["gen_code"=>$gen_code, "customers"=>$customers]);
+        return response()->json(["gen_code" => $gen_code, "customers" => $customers]);
     }
 
     public function saveCustomer(Request $request)
