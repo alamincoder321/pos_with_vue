@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card">
+                <div class="card" :style="{display: useraccess.includes('unit.store')?'':'none'}">
                     <div class="card-header">
                         <h4 class="card-title">Unit Create</h4>
                     </div>
@@ -24,7 +24,7 @@
                                     @click="clearData">
                                     Reset
                                 </button>
-                                <button type="submit" class="btn btn-sm btn-outline-success shadow-none">
+                                <button :style="{display: useraccess.includes('unit.store')?'':'none'}" type="submit" class="btn btn-sm btn-outline-success shadow-none">
                                     Save Unit
                                 </button>
                             </div>
@@ -42,10 +42,10 @@
                 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
-                            <button class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
+                            <button :style="{display: useraccess.includes('unit.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>
-                            <button class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
+                            <button :style="{display: useraccess.includes('unit.delete')?'':'none'}" class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
                                 Delete
                             </button>
                         </span>
@@ -75,12 +75,14 @@ export default {
                 id: "",
                 name: "",
             },
+            useraccess: [],
             user_id: null,
         };
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
         this.getUnit();
+        this.getPermission();
         this.logOut();
     },
     methods: {
@@ -128,6 +130,11 @@ export default {
                 name: "",
             };
         },
+        getPermission() {
+            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+                this.useraccess = Array.from(res.data);
+            });
+        },
 
         logOut() {
             if (this.user_id === null) {
@@ -138,7 +145,11 @@ export default {
             }
         },
     },
-
+    watch: {
+        useraccess(){
+            this.useraccess.includes("unit.index")?"":location.href = "/unauthorize"
+        }
+    },
     mounted() {
         document.title = "Unit Page";
     },

@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group text-center mt-3">
+                            <div class="form-group text-center mt-3" :style="{display: useraccess.includes('companyprofile.store')?'':'none'}">
                                 <button type="submit" class="userSave btn btn-sm btn-outline-success shadow-none">
                                     Save Company Profile
                                 </button>
@@ -117,12 +117,14 @@ export default {
             company: [],
             user_id: null,
             imageSrc: "",
+            useraccess: [],
         };
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
         this.getCompany();
         this.logOut();
+        this.getPermission()
     },
     methods: {
         getCompany() {
@@ -172,16 +174,27 @@ export default {
             }
         },
 
+        getPermission() {
+            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+                this.useraccess = Array.from(res.data);
+            });
+        },
+
         logOut() {
             if (this.user_id === null) {
                 axios.get(location.origin + "/logout").then((res) => {
                     alert("Logout");
-                    location.reload();
+                    location.reload(); 
                 });
             }
         },
     },
 
+    watch: {
+        useraccess(){
+            this.useraccess.includes("companyprofile.index")?"":location.href = "/unauthorize"
+        }
+    },
     mounted() {
         document.title = "Company Profile Page";
     },

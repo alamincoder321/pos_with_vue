@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Permission;
+use App\Models\UserAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -64,5 +66,41 @@ class HomeController extends Controller
             File::delete($old);
         }
         return "User Delete Successfully";
+    }
+
+    // useraccess
+
+    public function getUserAccess()
+    {
+        $all_permission = DB::select("SELECT p.id, p.group_name, p.permission FROM permissions AS p");
+        $group_name = DB::select("SELECT p.id, p.group_name, p.permission FROM permissions AS p GROUP BY group_name ORDER BY id");
+        return response()->json(["permission"=>$all_permission, "group"=>$group_name]);
+    }
+
+    public function savePermission(Request $request)
+    {
+        try {
+            UserAccess::where('user_id', $request->user_id)->delete();
+            $perm = Permission::all();           
+            foreach ($perm as $key => $value) {
+                if (in_array($value->id, $request->permission)) {
+                    UserAccess::create([
+                        'user_id'     => $request->user_id,
+                        'group_name'  => $value->group_name,
+                        'permission' => $value->permission,
+                    ]);
+                }
+            }
+            return "Successfully add permission";
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+            return "Opps! something went wrong";;
+        }
+
+    }
+
+    public function getPermission($id)
+    {
+        return UserAccess::where('user_id', $id)->pluck('permission')->toArray();
     }
 }

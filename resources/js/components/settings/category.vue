@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card">
+                <div class="card" :style="{display: useraccess.includes('category.store')?'':'none'}">
                     <div class="card-header">
                         <h4 class="card-title">Category Create</h4>
                     </div>
@@ -41,7 +41,7 @@
                                     @click="clearData">
                                     Reset
                                 </button>
-                                <button type="submit" class="saveCategory btn btn-sm btn-outline-success shadow-none">
+                                <button :style="{display: useraccess.includes('category.store')?'':'none'}" type="submit" class="saveCategory btn btn-sm btn-outline-success shadow-none">
                                     Save Category
                                 </button>
                             </div>
@@ -59,10 +59,10 @@
                 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
-                            <button class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
+                            <button :style="{display: useraccess.includes('category.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>
-                            <button class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
+                            <button :style="{display: useraccess.includes('category.delete')?'':'none'}" class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
                                 Delete
                             </button>
                         </span>
@@ -100,12 +100,14 @@ export default {
                 image: "",
             },
             user_id: null,
+            useraccess: [],
             imageSrc: location.origin + "/no-image.jpg",
         };
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
         this.getCategory();
+        this.getPermission();
         this.logOut();
     },
     methods: {
@@ -177,6 +179,12 @@ export default {
             this.imageSrc = location.origin + "/no-image.jpg"
         },
 
+        getPermission() {
+            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+                this.useraccess = Array.from(res.data);
+            });
+        },
+
         logOut() {
             if (this.user_id === null) {
                 axios.get(location.origin + "/logout").then((res) => {
@@ -187,6 +195,11 @@ export default {
         },
     },
 
+    watch: {
+        useraccess(){
+            this.useraccess.includes("category.index")?"":location.href = "/unauthorize"
+        }
+    },
     mounted() {
         document.title = "Category Page";
     },

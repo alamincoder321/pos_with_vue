@@ -8,5 +8,6 @@ Route::get("/", [LoginController::class, "showLoginForm"]);
 Route::post("/login", [LoginController::class, "login"]);
 Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 
+Route::get("/user-access/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/home", [HomeController::class, "index"])->middleware('auth');

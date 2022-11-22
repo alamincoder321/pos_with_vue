@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card">
+                <div class="card" :style="{display: useraccess.includes('user.store')?'':'none'}">
                     <div class="card-header">
                         <h4 class="card-title">User Create</h4>
                     </div>
@@ -58,9 +58,9 @@
                                     @click="clearData">
                                     Reset
                                 </button>
-                                <button type="submit" class="userSave btn btn-sm btn-outline-success shadow-none">
+                                <button :style="{display: useraccess.includes('user.store')?'':'none'}" type="submit" class="userSave btn btn-sm btn-outline-success shadow-none">
                                     Save User
-                                </button>
+                                </button> 
                             </div>
                         </div>
                     </form>
@@ -76,10 +76,13 @@
 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
-                            <button class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
+                            <router-link :style="{display: useraccess.includes('useraccess.index')?'':'none'}" :to="{path:'/user-access/'+props.row.id}" class="btn btn-sm btn-outline-warning shadow-none">
+                                Access
+                            </router-link>
+                            <button :style="{display: useraccess.includes('user.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>
-                            <button class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
+                            <button :style="{display: useraccess.includes('user.delete')?'':'none'}" class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
                                 Delete
                             </button>
                         </span>
@@ -124,6 +127,7 @@ export default {
                 image: "",
             },
             user_id: null,
+            useraccess: [],
             imageSrc: location.origin + "/no-image.jpg",
         };
     },
@@ -131,6 +135,7 @@ export default {
         this.user_id = localStorage.getItem("user_id");
         this.getUser();
         this.logOut();
+        this.getPermission();
     },
     methods: {
         getUser() {
@@ -216,6 +221,11 @@ export default {
             this.imageSrc = location.origin + "/no-image.jpg"
         },
 
+        getPermission() {
+            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+                this.useraccess = Array.from(res.data);
+            });
+        },
         logOut() {
             if (this.user_id === null) {
                 axios.get(location.origin + "/logout").then((res) => {
@@ -225,6 +235,12 @@ export default {
             }
         },
     },
+
+    watch: {
+        useraccess(){
+            this.useraccess.includes("user.index")?"":location.href = "/unauthorize"
+        }
+    }, 
 
     mounted() {
         document.title = "User Page";

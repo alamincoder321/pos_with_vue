@@ -1,5 +1,7 @@
+import unauthorize from "./components/unauthorize.vue";
 import home from "./components/home.vue";
 import user from "./components/user.vue";
+import useraccess from "./components/useraccess.vue";
 import company from "./components/company.vue";
 import category from "./components/settings/category.vue";
 import brand from "./components/settings/brand.vue";
@@ -11,10 +13,11 @@ import supplier from "./components/administration/supplier.vue";
 import employer from "./components/administration/employer.vue";
 
 const routes = [
+    { path: "/unauthorize", component: unauthorize },
     { path: "/home", component: home },
     { path: "/users", component: user },
+    { path: "/user-access/:id", component: useraccess },
     { path: "/company_profile", component: company },
-
     // settings
     { path: "/categories", component: category },
     { path: "/brands", component: brand },
