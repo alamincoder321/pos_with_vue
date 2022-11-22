@@ -239,11 +239,13 @@ export default {
         getCity() {
             axios.get("/api/get_city").then((res) => {
                 this.cities = res.data;
+                this.cities.unshift({id:"", name:"Select City"})
             });
         },
         getDepartment() {
             axios.get("/api/get_department").then((res) => {
                 this.departments = res.data;
+                this.departments.unshift({id:"", name:"Select Department"})
             });
         },
         getEmployer() {

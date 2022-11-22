@@ -172,7 +172,6 @@ export default {
                 name: "",
                 phone: "",
                 owner_name: "",
-                city_id: 1,
                 address: "",
                 previous_due: 0.00,
                 customer_type: "retail",
@@ -199,6 +198,7 @@ export default {
         getCity() {
             axios.get("/api/get_city").then((res) => {
                 this.cities = res.data;
+                this.cities.unshift({id:"", name:"Select City"})
             });
         },
         getCustomer() {

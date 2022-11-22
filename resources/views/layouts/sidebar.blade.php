@@ -12,7 +12,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </router-link>
                 @endif
                 <div class="sb-sidenav-menu-heading">Interface</div>
-                @if(in_array("category.index", $useraccess) || in_array("brand.index", $useraccess) || in_array("unit.index", $useraccess))
+                @if(in_array("product.index", $useraccess) || in_array("category.index", $useraccess) || in_array("brand.index", $useraccess) || in_array("unit.index", $useraccess))
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-connectdevelop"></i></div>
                     Contents
@@ -28,6 +28,9 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @endif
                         @if(in_array("unit.index", $useraccess))
                         <router-link class="nav-link" to="/units">Unit</router-link>
+                        @endif
+                        @if(in_array("product.index", $useraccess))
+                        <router-link class="nav-link" to="/products">Product</router-link>
                         @endif
                     </nav>
                 </div>

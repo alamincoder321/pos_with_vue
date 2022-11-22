@@ -84,6 +84,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "product",
+                "permission" => [
+                    "product.index",
+                    "product.edit",
+                    "product.store",
+                    "product.delete",
+                ],
+            ],
+            [
                 "group_name" => "supplier",
                 "permission" => [
                     "supplier.index",

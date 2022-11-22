@@ -11,6 +11,7 @@ import department from "./components/settings/department.vue";
 import customer from "./components/administration/customer.vue";
 import supplier from "./components/administration/supplier.vue";
 import employer from "./components/administration/employer.vue";
+import product from "./components/contents/product.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -28,6 +29,8 @@ const routes = [
     { path: "/customers", component: customer },
     { path: "/suppliers", component: supplier },
     { path: "/employers", component: employer },
+    //content
+    {path: "/products", component: product},
     
 ];
 
