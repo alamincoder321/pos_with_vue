@@ -12,7 +12,7 @@ class SupplierController extends Controller
     public function getSupplier()
     {
         $gen_code = $this->generateCode('Supplier', 'S-');
-        $suppliers = DB::select("SELECT s.*, ci.name AS city_name FROM suppliers AS s LEFT JOIN cities AS ci ON ci.id=s.city_id ORDER BY name");
+        $suppliers = DB::select("SELECT s.*, CONCAT(s.supplier_code, ' - ', s.name) AS display_name, ci.name AS city_name FROM suppliers AS s LEFT JOIN cities AS ci ON ci.id=s.city_id ORDER BY name");
         return response()->json(["gen_code" => $gen_code, "suppliers" => $suppliers]);
     }
 

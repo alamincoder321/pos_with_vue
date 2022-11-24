@@ -12,6 +12,7 @@ import customer from "./components/administration/customer.vue";
 import supplier from "./components/administration/supplier.vue";
 import employer from "./components/administration/employer.vue";
 import product from "./components/contents/product.vue";
+import purchase from "./components/sales/purchase.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -31,6 +32,8 @@ const routes = [
     { path: "/employers", component: employer },
     //content
     {path: "/products", component: product},
+    //purchase and sales
+    {path: "/purchases", component: purchase},
     
 ];
 

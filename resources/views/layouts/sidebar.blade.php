@@ -32,6 +32,9 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @if(in_array("product.index", $useraccess))
                         <router-link class="nav-link" to="/products">Product</router-link>
                         @endif
+                        @if(in_array("dashboard", $useraccess))
+                        <router-link class="nav-link" to="/purchases">Purchase</router-link>
+                        @endif
                     </nav>
                 </div>
                 @endif
