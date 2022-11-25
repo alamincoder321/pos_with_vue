@@ -144,6 +144,26 @@
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in carts" :key="index">
+                                    <td class="text-center">{{ index + 1 }}</td>
+                                    <td class="text-center">{{ item.product_name }}</td>
+                                    <td class="text-center">{{ item.purchase_price }}</td>
+                                    <td class="text-center">{{ item.qty }}</td>
+                                    <td class="text-center">{{ item.total_amount }}</td>
+                                    <td class="text-center">
+                                        <button @click="removeCart(item)"
+                                            class="btn shadow-none btn-sm btn-danger border-0"
+                                            style="border-radius: 0;">delete</button>
+                                    </td>
+                                </tr>
+                                <tr v-if="carts.length != 0">
+                                    <td class="text-center" style="font-weight: bold;" colspan="4">Total</td>
+                                    <td class="text-center" style="font-weight: bold;" colspan="2">{{ carts.reduce((acc,
+                                            c) => { return +acc + +c.total_amount }, 0).toFixed(2)
+                                    }}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -190,7 +210,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="total">Total:</label>
-                                    <input type="number" id="total" class="form-control shadow-none" readonly>
+                                    <input type="number" id="total" class="form-control shadow-none" :value="carts.reduce((acc,
+                                            c) => { return +acc + +c.total_amount }, 0).toFixed(2)
+                                    " readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="payment_type">Payment Type:</label>
@@ -213,7 +235,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="previous_due">Pre.Due:</label>
-                                            <input type="text" id="previous_due" class="form-control shadow-none"
+                                            <input type="text" id="previous_due" :value="selectedSupplier.previous_due" :style="{color: selectedSupplier.previous_due != 0?'red':'black'}" class="form-control shadow-none"
                                                 readonly>
                                         </div>
                                     </div>
@@ -262,7 +284,8 @@ export default {
                 name: "",
                 phone: "",
                 address: "",
-                supplier_type: ""
+                supplier_type: "",
+                previous_due: 0,
             },
             products: [],
             selectedProduct: {
@@ -279,6 +302,7 @@ export default {
                 selling_price: 0,
                 total_amount: 0,
             },
+            carts: [],
             useraccess: [],
             user_id: null,
         }
@@ -326,9 +350,13 @@ export default {
                     display_name: "",
                     phone: "",
                     address: "",
-                    supplier_type: ""
+                    supplier_type: "",
+                    previous_due: 0,
                 }
                 return
+            }
+            if(this.selectedSupplier.id == ""){
+                this.selectedSupplier.previous_due = 0
             }
         },
         onChangeProduct() {
@@ -339,6 +367,18 @@ export default {
                     name: "",
                     purchase_price: "",
                     selling_price: "",
+                }
+                return
+            }
+
+            if (this.selectedProduct.id == "") {
+                this.cart = {
+                    product_id: "",
+                    product_name: "",
+                    purchase_price: 0,
+                    qty: 0,
+                    selling_price: 0,
+                    total_amount: 0,
                 }
                 return
             }
@@ -360,7 +400,51 @@ export default {
         },
 
         AddToCart() {
-            alert("Hello Cart");
+            if (this.cart.product_id != "") {
+                if (this.cart.qty == 0) {
+                    alert("Quantity increment must")
+                    document.querySelector("#qty").focus()
+                    return
+                }
+                if (this.carts.length > 0) {
+                    this.carts.forEach((pro, index) => {
+                        if(this.cart.product_id ===  pro.product_id){
+                            this.carts.slice(index, 1)
+                            this.carts[index] = this.cart
+                            return
+                        }
+                    })
+                }
+
+                this.carts.push(this.cart)
+                this.clearData()
+            } else {
+                alert("Product Select First")
+                document.querySelector("#product [type='search']").focus()
+            }
+        },
+
+        removeCart(item) {
+            var index = this.carts.indexOf(item);
+            this.carts.splice(index, 1);
+        },
+
+        clearData() {
+            this.selectedProduct = {
+                id: "",
+                display_name: "",
+                name: "",
+                purchase_price: "",
+                selling_price: "",
+            }
+            this.cart = {
+                product_id: "",
+                product_name: "",
+                purchase_price: 0,
+                qty: 0,
+                selling_price: 0,
+                total_amount: 0,
+            }
         },
 
         getPermission() {
@@ -387,6 +471,13 @@ export default {
     },
 };
 </script>
+
+
+
+
+
+
+
 
 
 <style>

@@ -57,11 +57,10 @@
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <marquee>Design and Developed By Al Amin Islam</marquee>
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website {{date('Y')}}</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
+                            <div style="width: 15%;" class="text-muted">Copyright &copy; {{date('Y')}}</div>
+                            <div style="width: 85%;">
+                                <marquee style="color: red;">Design and Developed By Al Amin Islam</marquee>
                             </div>
                         </div>
                     </div>

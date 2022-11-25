@@ -218,19 +218,19 @@ export default {
         getBrand() {
             axios.get("/api/get_brand").then((res) => {
                 this.brands = res.data;
-                this.brands.unshift({id:"", name:"Select Brand"})
+                this.brands.unshift({id:0, name:"Select Brand"})
             });
         },
         getCategory() {
             axios.get("/api/get_category").then((res) => {
                 this.categories = res.data;
-                this.categories.unshift({id:"", name:"Select Category"})
+                this.categories.unshift({id:0, name:"Select Category"})
             });
         },
         getUnit() {
             axios.get("/api/get_unit").then((res) => {
                 this.units = res.data;
-                this.units.unshift({id:"", name:"Select Unit"})
+                this.units.unshift({id:0, name:"Select Unit"})
             });
         },
         getProduct() {
