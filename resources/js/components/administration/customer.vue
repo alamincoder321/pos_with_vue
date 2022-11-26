@@ -179,7 +179,7 @@ export default {
             },
             selectedCity: {
                 id: "",
-                name: ""
+                name: "Select City"
             },
             customer_code: "",
             useraccess: [],
@@ -198,7 +198,7 @@ export default {
         getCity() {
             axios.get("/api/get_city").then((res) => {
                 this.cities = res.data;
-                this.cities.unshift({id:"", name:"Select City"})
+                this.cities.unshift({id:0, name:"Select City"})
             });
         },
         getCustomer() {

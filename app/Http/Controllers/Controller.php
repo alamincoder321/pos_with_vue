@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+
+use function PHPUnit\Framework\isNull;
 
 class Controller extends BaseController
 {
@@ -49,5 +52,16 @@ class Controller extends BaseController
             $code = strlen($newCode) > count($zeros) ? $newCode : $zeros[count($zeros) - strlen($newCode)] . $newCode;
         }
         return $prefix . $code;
+    }
+
+    function invoiceNumberPurchase()
+    {
+        $purchase = Purchase::first();
+        if (isNull($purchase)) {
+            $invoice = '#' . date('Y') . '0001';
+            return $invoice;
+        } else {
+            return $purchase->invoice + 1;
+        }
     }
 }

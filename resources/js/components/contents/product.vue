@@ -189,15 +189,15 @@ export default {
             },
             selectedBrand: {
                 id: "",
-                name: ""
+                name: "Select Brand"
             },
             selectedCategory: {
                 id: "",
-                name: ""
+                name: "Select Category"
             },
             selectedUnit: {
                 id: "",
-                name: ""
+                name: "Select Unit"
             },
             product_code: "",
             useraccess: [],

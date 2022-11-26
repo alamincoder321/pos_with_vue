@@ -29,6 +29,7 @@ class CreatePurchasesTable extends Migration
             $table->decimal("transport_cost");
             $table->string("payment_type", 50);
             $table->integer("account_id")->nullable();
+            $table->integer("note");
             $table->integer("added_by");
             $table->timestamps();
         });

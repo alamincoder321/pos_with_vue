@@ -54,7 +54,7 @@
                                         <label for="dob"
                                             class="col-5 col-lg-4 d-flex align-items-center">DOB:</label>
                                         <div class="col-7 col-lg-8">
-                                            <date-picker id="dob" name="dob" class="form-control shadow-none" v-model="employer.dob" :config="options"></date-picker>
+                                            <date-picker disabledTime id="dob" name="dob" class="form-control shadow-none" v-model="employer.dob" :config="options"></date-picker>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -102,7 +102,7 @@
                                         <label for="join_date"
                                             class="col-5 col-lg-4 d-flex align-items-center">Join Date:</label>
                                         <div class="col-7 col-lg-8">
-                                            <date-picker id="join_date" name="join_date" class="form-control shadow-none" v-model="employer.join_date" :config="options"></date-picker>
+                                            <date-picker disabledTime id="join_date" name="join_date" class="form-control shadow-none" v-model="employer.join_date" :config="options"></date-picker>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -215,11 +215,11 @@ export default {
             },
             selectedCity: {
                 id: "",
-                name: ""
+                name: "Select City"
             },
             selectedDepartment: {
                 id: "",
-                name: ""
+                name: "Select Department"
             },
             employer_code: "",
             useraccess: [],
@@ -239,13 +239,13 @@ export default {
         getCity() {
             axios.get("/api/get_city").then((res) => {
                 this.cities = res.data;
-                this.cities.unshift({id:"", name:"Select City"})
+                this.cities.unshift({id:0, name:"Select City"})
             });
         },
         getDepartment() {
             axios.get("/api/get_department").then((res) => {
                 this.departments = res.data;
-                this.departments.unshift({id:"", name:"Select Department"})
+                this.departments.unshift({id:0, name:"Select Department"})
             });
         },
         getEmployer() {

@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Http\Request;
@@ -69,4 +70,8 @@ Route::get("/delete_employer/{id}", [EmployerController::class, "deleteEmployer"
 Route::get("/get_product", [ProductController::class, "getProduct"]);
 Route::post("/save_product", [ProductController::class, "saveProduct"]);
 Route::get("/delete_product/{id}", [ProductController::class, "deleteProduct"]);
+//product
+Route::get("/get_purchase", [PurchaseController::class, "getPurchase"]);
+Route::post("/save_purchase", [PurchaseController::class, "savePurchase"]);
+Route::get("/delete_purchase/{id}", [PurchaseController::class, "deletePurchase"]);
 

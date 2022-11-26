@@ -7,18 +7,18 @@
                         <div class="row">
                             <label for="invoice" class="col-4 col-lg-1">Invoice:</label>
                             <div class="col-8 col-lg-2">
-                                <input type="number" readonly class="form-control shadow-none">
+                                <input type="text" v-model="purchase.invoice" readonly class="form-control shadow-none">
                             </div>
 
                             <label for="category" class="col-4 col-lg-2">Category:</label>
                             <div class="col-8 col-lg-3">
                                 <v-select label="name" id="category" name="category_id" :options="categories"
-                                    v-model="selectedCategory"></v-select>
+                                    v-model="selectedCategory" @input="CategoryChange"></v-select>
                             </div>
 
                             <label for="invoice" class="col-4 col-lg-1">Brand:</label>
                             <div class="col-8 col-lg-3">
-                                <v-select label="name" id="brand" name="brand_id" :options="brands"
+                                <v-select label="name" @input="BrandChange" id="brand" name="brand_id" :options="brands"
                                     v-model="selectedBrand">
                                 </v-select>
                             </div>
@@ -97,13 +97,13 @@
                                     <div class="col-7 col-lg-3 pe-lg-0">
                                         <input type="text" id="purchase_price" name="purchase_price"
                                             class="form-control shadow-none" @input="cartQtyPurchaseChange"
-                                            v-model="cart.purchase_price" autocomplete="off" />
+                                            v-model="selectedProduct.purchase_price" autocomplete="off" />
                                     </div>
-                                    <label for="qty" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
+                                    <label for="quantity" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
                                     <div class="col-7 col-lg-4">
-                                        <input type="number" id="qty" name="qty" v-model="cart.qty"
-                                            @input="cartQtyPurchaseChange" class="form-control shadow-none"
-                                            autocomplete="off" />
+                                        <input type="number" id="quantity" name="quantity"
+                                            v-model="selectedProduct.quantity" @input="cartQtyPurchaseChange"
+                                            class="form-control shadow-none" autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -111,7 +111,7 @@
                                         Rate:</label>
                                     <div class="col-7 col-lg-8">
                                         <input type="number" id="selling_price" name="selling_price"
-                                            class="form-control shadow-none" v-model="cart.selling_price"
+                                            class="form-control shadow-none" v-model="selectedProduct.selling_price"
                                             autocomplete="off" />
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                         Amount:</label>
                                     <div class="col-7 col-lg-8">
                                         <input type="number" id="total_amount" name="total_amount"
-                                            v-model="cart.total_amount" class="form-control shadow-none"
+                                            v-model="selectedProduct.total_amount" class="form-control shadow-none"
                                             autocomplete="off" readonly />
                                     </div>
                                 </div>
@@ -147,21 +147,30 @@
                             <tbody>
                                 <tr v-for="(item, index) in carts" :key="index">
                                     <td class="text-center">{{ index + 1 }}</td>
-                                    <td class="text-center">{{ item.product_name }}</td>
+                                    <td class="text-center">{{ item.name }}</td>
                                     <td class="text-center">{{ item.purchase_price }}</td>
-                                    <td class="text-center">{{ item.qty }}</td>
+                                    <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ item.total_amount }}</td>
                                     <td class="text-center">
                                         <button @click="removeCart(item)"
                                             class="btn shadow-none btn-sm btn-danger border-0"
-                                            style="border-radius: 0;">delete</button>
+                                            style="border-radius: 0;">remove</button>
                                     </td>
                                 </tr>
                                 <tr v-if="carts.length != 0">
-                                    <td class="text-center" style="font-weight: bold;" colspan="4">Total</td>
-                                    <td class="text-center" style="font-weight: bold;" colspan="2">{{ carts.reduce((acc,
-                                            c) => { return +acc + +c.total_amount }, 0).toFixed(2)
-                                    }}</td>
+                                    <td colspan="4" class="text-center">
+                                        <div class="form-group row">
+                                            <label for="note" class="col-5">Note:</label>
+                                            <div class="col-7">
+                                                <textarea name="note" id="note" v-model="purchase.note"
+                                                    class="form-control shadow-none"></textarea>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center" colspan="2" style="font-weight: bold;"><span>Total:
+                                        </span>{{ carts.reduce((acc,
+                                                c) => { return +acc + +c.total_amount }, 0).toFixed(2)
+                                        }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -175,80 +184,108 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="date">Date:</label>
-                                    <date-picker id="date" name="date" class="form-control shadow-none" v-model="date"
-                                        :config="options"></date-picker>
-                                </div>
-                                <div class="form-group">
-                                    <label for="subtotal">SubTotal:</label>
-                                    <input type="number" id="subtotal" class="form-control shadow-none" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="vat">Vat:</label>
-                                    <div class="row">
-                                        <div class="col-6 col-lg-7">
-                                            <div class="input-group">
-                                                <input type="number" style="height:32px;" id="vat"
-                                                    class="form-control shadow-none"><span
-                                                    style="height:32px;line-height:1;" class="btn btn-warning">%</span>
+                            <form @submit.prevent="savePurchase">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="date">Date:</label>
+                                        <date-picker disabledTime id="date" name="date" class="form-control shadow-none"
+                                            v-model="purchase.date" :config="options"></date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subtotal">SubTotal:</label>
+                                        <input type="number" id="subtotal" name="subtotal" v-model="purchase.subtotal"
+                                            class="form-control shadow-none" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vat">Vat:</label>
+                                        <div class="row">
+                                            <div class="col-6 col-lg-7">
+                                                <div class="input-group">
+                                                    <input type="number" style="height:32px;" id="vat" name="vat"
+                                                        @input="TotalAmount" v-model="purchase.vat"
+                                                        class="form-control shadow-none"><span
+                                                        style="height:32px;line-height:1;"
+                                                        class="btn btn-warning">%</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-lg-5">
+                                                <input type="number" id="vat_amount" name="vat_amount"
+                                                    v-model="purchase.vat_amount" class="form-control shadow-none"
+                                                    readonly>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-lg-5">
-                                            <input type="number" id="vat" class="form-control shadow-none" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="discount">Discount:</label>
+                                        <div class="row">
+                                            <div class="col-6 col-lg-7">
+                                                <div class="input-group">
+                                                    <input type="number" style="height:32px;" id="discount"
+                                                        @input="TotalAmount" name="discount" v-model="purchase.discount"
+                                                        class="form-control shadow-none"><span
+                                                        style="height:32px;line-height:1;"
+                                                        class="btn btn-warning">%</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-lg-5">
+                                                <input type="number" id="discount_amount" name="discount_amount"
+                                                    v-model="purchase.discount_amount" class="form-control shadow-none"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="transport_cost">Labour Cost/Transport Cost:</label>
+                                        <input type="number" id="transport_cost" name="transport_cost"
+                                            @input="TotalAmount" v-model="purchase.transport_cost"
+                                            class="form-control shadow-none">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="total">Total:</label>
+                                        <input type="number" id="total" name="total" v-model="purchase.total"
+                                            class="form-control shadow-none" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="payment_type">Payment Type:</label>
+                                        <select name="payment_type" id="payment_type" v-model="purchase.payment_type" class="form-control shadow-none">
+                                            <option value="cash">Cash</option>
+                                            <option value="bank">Bank</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="paid">Paid:</label>
+                                        <input type="number" id="paid" name="paid" @input="TotalAmount"
+                                            v-model="purchase.paid" class="form-control shadow-none">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="due">Due:</label>
+                                                <input type="text" id="due" name="due" v-model="purchase.due"
+                                                    class="form-control shadow-none"
+                                                    :style="{ color: purchase.due < 0 ? 'red' : 'black' }" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="previous_due">Pre.Due:</label>
+                                                <input type="text" id="previous_due"
+                                                    :value="selectedSupplier.previous_due"
+                                                    :style="{ color: selectedSupplier.previous_due != 0 ? 'red' : 'black' }"
+                                                    class="form-control shadow-none" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-5">
+                                            <button class="btn btn-secondary shadow-none w-100">Reset</button>
+                                        </div>
+                                        <div class="col-7">
+                                            <button class="btn btn-success shadow-none w-100">Purchase</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="discount">Discount:</label>
-                                    <input type="number" id="discount" class="form-control shadow-none">
-                                </div>
-                                <div class="form-group">
-                                    <label for="transposrt_cost">Labour Cost/Transport Cost:</label>
-                                    <input type="number" id="transposrt_cost" class="form-control shadow-none">
-                                </div>
-                                <div class="form-group">
-                                    <label for="total">Total:</label>
-                                    <input type="number" id="total" class="form-control shadow-none" :value="carts.reduce((acc,
-                                            c) => { return +acc + +c.total_amount }, 0).toFixed(2)
-                                    " readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="payment_type">Payment Type:</label>
-                                    <select name="payment_type" id="payment_type" class="form-control shadow-none">
-                                        <option value="cash">Cash</option>
-                                        <option value="bank">Bank</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="paid">Paid:</label>
-                                    <input type="number" id="paid" class="form-control shadow-none">
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="due">Due:</label>
-                                            <input type="text" id="due" class="form-control shadow-none" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="previous_due">Pre.Due:</label>
-                                            <input type="text" id="previous_due" :value="selectedSupplier.previous_due" :style="{color: selectedSupplier.previous_due != 0?'red':'black'}" class="form-control shadow-none"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-5">
-                                        <button class="btn btn-secondary shadow-none w-100">Reset</button>
-                                    </div>
-                                    <div class="col-7">
-                                        <button class="btn btn-success shadow-none w-100">Purchase</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -264,23 +301,22 @@ export default {
         return {
             options: {
                 format: 'DD/MM/YYYY',
-                useCurrent: true,
-            },
-            date: new Date(),
+                useCurrent: false,
+            },            
             categories: [],
             selectedCategory: {
                 id: "",
-                name: ""
+                name: "Select Category"
             },
             brands: [],
             selectedBrand: {
                 id: "",
-                name: ""
+                name: "Select Brand"
             },
             suppliers: [],
             selectedSupplier: {
                 id: "",
-                display_name: "",
+                display_name: "Select Suplier",
                 name: "",
                 phone: "",
                 address: "",
@@ -288,27 +324,40 @@ export default {
                 previous_due: 0,
             },
             products: [],
+            products1: [],
             selectedProduct: {
-                id: "",
-                display_name: "",
-                name: "",
-            },
-
-            cart: {
-                product_id: "",
-                product_name: "",
-                purchase_price: 0,
-                qty: 0,
-                selling_price: 0,
-                total_amount: 0,
+                id: '',
+                product_code: '',
+                display_name: 'Select Product',
+                name: '',
+                quantity: '',
+                purchase_price: '',
+                selling_price: 0.00,
+                total_amount: ''
             },
             carts: [],
+            purchase: {
+                date: new Date(),
+                subtotal: 0,
+                total: 0,
+                paid: 0,
+                vat: 0,
+                vat_amount: 0,
+                discount: 0,
+                discount_amount: 0,
+                transport_cost: 0,
+                payment_type: 'cash',
+                due: 0,
+                invoice: "",
+                note: "",
+            },
             useraccess: [],
             user_id: null,
         }
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
+        this.getPurchase();
         this.getCategory();
         this.getBrand();
         this.getSupplier();
@@ -316,6 +365,7 @@ export default {
         this.getPermission();
         this.logOut();
     },
+
     methods: {
         getCategory() {
             axios.get("/api/get_category").then((res) => {
@@ -338,7 +388,13 @@ export default {
         getProduct() {
             axios.get("/api/get_product").then((res) => {
                 this.products = res.data.products;
+                this.products1 = res.data.products;
                 this.products.unshift({ id: 0, display_name: "Select Product" })
+            });
+        },
+        getPurchase() {
+            axios.get("/api/get_purchase").then((res) => {
+                this.purchase.invoice = res.data.invoice;
             });
         },
 
@@ -355,9 +411,10 @@ export default {
                 }
                 return
             }
-            if(this.selectedSupplier.id == ""){
+            if (this.selectedSupplier.id == "") {
                 this.selectedSupplier.previous_due = 0
             }
+            this.purchase.previous_due = this.selectedSupplier.previous_due
         },
         onChangeProduct() {
             if (this.selectedProduct == null) {
@@ -365,68 +422,82 @@ export default {
                     id: "",
                     display_name: "",
                     name: "",
+                    quantity: "",
                     purchase_price: "",
                     selling_price: "",
                 }
                 return
             }
-
-            if (this.selectedProduct.id == "") {
-                this.cart = {
-                    product_id: "",
-                    product_name: "",
-                    purchase_price: 0,
-                    qty: 0,
-                    selling_price: 0,
-                    total_amount: 0,
-                }
-                return
-            }
-
-            if (this.selectedProduct.id != "" || this.selectedProduct.id != 0) {
-                this.cart = {
-                    product_id: this.selectedProduct.id,
-                    product_name: this.selectedProduct.name,
-                    purchase_price: this.selectedProduct.purchase_price,
-                    qty: 0,
-                    selling_price: this.selectedProduct.selling_price,
-                    total_amount: 0,
-                }
-            }
         },
 
         cartQtyPurchaseChange() {
-            this.cart.total_amount = (this.cart.qty * this.cart.purchase_price).toFixed(2)
+            this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.purchase_price).toFixed(2)
         },
 
         AddToCart() {
-            if (this.cart.product_id != "") {
-                if (this.cart.qty == 0) {
-                    alert("Quantity increment must")
-                    document.querySelector("#qty").focus()
+            if (this.selectedProduct.product_id != "") {
+                let cartInd = this.carts.findIndex(p => p.id == this.selectedProduct.id);
+                if (cartInd > -1) {
+                    this.carts.splice(cartInd, 1)
+                }
+                if (this.selectedProduct.id == "") {
+                    alert("Must be select product")
+                    document.querySelector("#product [type='search']").focus()
                     return
                 }
-                if (this.carts.length > 0) {
-                    this.carts.forEach((pro, index) => {
-                        if(this.cart.product_id ===  pro.product_id){
-                            this.carts.slice(index, 1)
-                            this.carts[index] = this.cart
-                            return
-                        }
-                    })
+                if (this.selectedProduct.quantity == undefined) {
+                    alert("Quantity increment must")
+                    document.querySelector("#quantity").focus()
+                    return
                 }
+                this.product = {
+					id: this.selectedProduct.id,
+					name: this.selectedProduct.name,
+					purchase_price: this.selectedProduct.purchase_price,
+					selling_price: this.selectedProduct.selling_price,
+					quantity: this.selectedProduct.quantity,
+					total_amount: this.selectedProduct.total_amount,
+				}
 
-                this.carts.push(this.cart)
+                this.carts.push(this.product)
                 this.clearData()
+                this.TotalAmount()
             } else {
                 alert("Product Select First")
                 document.querySelector("#product [type='search']").focus()
             }
         },
 
+        TotalAmount() {
+            this.purchase.subtotal = this.carts.reduce((acc, pre) => { return (+parseFloat(acc) + +parseFloat(pre.total_amount)).toFixed(2) }, 0)
+            this.purchase.due = this.purchase.subtotal
+            this.purchase.total = this.purchase.subtotal
+            //vat calculate
+            this.purchase.vat_amount = ((parseFloat(this.purchase.subtotal) * this.purchase.vat) / 100).toFixed(2)
+            this.purchase.total = (parseFloat(this.purchase.total) + parseFloat(this.purchase.vat_amount)).toFixed(2)
+            //discount calculate
+            this.purchase.discount_amount = ((parseFloat(this.purchase.subtotal) * this.purchase.discount) / 100).toFixed(2)
+            this.purchase.total = (parseFloat(this.purchase.total) - parseFloat(this.purchase.discount_amount)).toFixed(2)
+            //transport_cost calculate
+            this.purchase.total = (+parseFloat(this.purchase.total) + +this.purchase.transport_cost).toFixed(2)
+            //total paid claculate
+            this.purchase.due = (parseFloat(this.purchase.total) - parseFloat(this.purchase.paid)).toFixed(2)
+        },
         removeCart(item) {
             var index = this.carts.indexOf(item);
             this.carts.splice(index, 1);
+            this.TotalAmount()
+        },
+
+        savePurchase(event) {
+            let data = {
+                purchase: this.purchase,
+                carts: this.carts
+            }
+            axios.post("/api/save_purchase", data)
+                .then(res => {
+                    console.log(res.data);
+                })
         },
 
         clearData() {
@@ -447,6 +518,21 @@ export default {
             }
         },
 
+        CategoryChange() {
+            if (this.selectedCategory.id == 0) {
+                this.products = this.products1
+                return
+            }
+            this.products = this.products1.filter(p => p.category_id == this.selectedCategory.id);
+        },
+        BrandChange() {
+            if (this.selectedBrand.id == 0) {
+                this.products = this.products1
+                return
+            }
+            this.products = this.products1.filter(p => p.brand_id == this.selectedBrand.id);
+        },
+
         getPermission() {
             axios.get("/api/get_permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
@@ -464,7 +550,7 @@ export default {
     watch: {
         useraccess() {
             this.useraccess.includes("dashboard") ? "" : location.href = "/unauthorize"
-        }
+        },
     },
     mounted() {
         document.title = "Perchase Page"
@@ -508,7 +594,7 @@ export default {
     left: 3px;
 }
 
-#vs3__listbox {
+#supplier #vs3__listbox {
     width: 300px !important;
 }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductInventory;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use Illuminate\Http\Request;
@@ -10,16 +12,13 @@ class PurchaseController extends Controller
 {
     public function getPurchase()
     {
-        $total_invoice = Purchase::first();
-        if ($total_invoice->count() > 0) {
-            $invoice = $total_invoice->invoice + 1;
-        }else{
-            $invoice = "#0". date("Y")."0000";
-        }
+        $invoice = $this->invoiceNumberPurchase();
+        return response()->json(['invoice'=>$invoice]);
     }
 
     public function savePurchase(Request $request)
     {
+        return $request->all();
         try {
             if (empty($request->id)) {
                 $data = new Purchase();
@@ -41,19 +40,38 @@ class PurchaseController extends Controller
             $data->transport_cost = $request->transport_cost;
             $data->payment_type   = $request->payment_type;
             $data->account_id     = $request->account_id;
+            $data->note           = $request->note;
             $data->added_by       = $request->added_by;
             $data->save();
 
             $last_id = $data->id;
-            foreach($request->products as $item){
+            foreach($request->carts as $item){
                 $details = new PurchaseDetails();
                 $details->purchase_id = $last_id;
                 $details->product_id = $item->id;
-                $details->qty = $item->qty;
+                $details->quantity = $item->quantity;
                 $details->purchase_price = $item->purchase_price;
                 $details->selling_price = $item->selling_price;
                 $details->total_price = $item->total_price;
                 $details->save();
+
+                //inventory-update
+                $inventory_check = ProductInventory::where("product_id", $item->id)->first();
+                if(count($inventory_check) > 0){
+                    $inventory_check->purchase_qty = $item->quantity;
+                    $inventory_check->save();
+                }else{
+                    $new_inventory = new ProductInventory();
+                    $new_inventory->product_id = $item->id;
+                    $new_inventory->quantity = $item->quantity;
+                    $new_inventory->save();
+                }
+
+                //update product price
+                $productchange = Product::where("id", $item->id)->first();
+                $productchange->purchase_price = $item->purchase_price;
+                $productchange->selling_price = $item->selling_price;
+                $productchange->save();
             }
 
             if (empty($request->id)) {
