@@ -24,8 +24,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@mathieustan/vue-datepicker": "^0.2.11",
         "jquery": "^3.6.1",
-        "vue-bootstrap-datetimepicker": "^5.0.1",
+        "moment": "^2.29.4",
         "vue-good-table": "^2.21.11",
         "vue-router": "^3.6.5",
         "vue-select": "^3.20.0"

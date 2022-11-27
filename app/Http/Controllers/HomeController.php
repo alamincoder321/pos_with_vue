@@ -35,6 +35,7 @@ class HomeController extends Controller
             $data->name     = $request->name;
             $data->username = $request->username;
             $data->email    = $request->email;
+            $data->role     = $request->role;
             if (!empty($request->password)) {
                 $data->password = Hash::make($request->password);
             }

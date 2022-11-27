@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name'              => "Admin",
             'username'          => "admin",
+            'role'              => "Supper Admin",
             'email'             => "admin@gmail.com",
             'email_verified_at' => now(),
             'password'          => '$2a$04$Up80bDycufY/qovhzp2Zf./rU0CXScq22KcjT0WlB4UIRLEzSdXPi',   // password

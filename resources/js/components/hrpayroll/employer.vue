@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{display: useraccess.includes('employer.store')?'':'none'}">
+                <div class="card" :style="{ display: useraccess.includes('employer.store') ? '' : 'none' }">
                     <div class="card-header">
                         <h4 class="card-title">Employer Create</h4>
                     </div>
@@ -27,7 +27,8 @@
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="designation" class="col-5 col-lg-4 d-flex align-items-center">Designation:</label>
+                                        <label for="designation"
+                                            class="col-5 col-lg-4 d-flex align-items-center">Designation:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="designation" name="designation"
                                                 class="form-control shadow-none" v-model="employer.designation"
@@ -35,26 +36,27 @@
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="father_name"
-                                            class="col-5 col-lg-4 d-flex align-items-center">Father Name:</label>
+                                        <label for="father_name" class="col-5 col-lg-4 d-flex align-items-center">Father
+                                            Name:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="text" id="father_name" name="father_name" class="form-control shadow-none"
-                                                v-model="employer.father_name" autocomplete="off" />
+                                            <input type="text" id="father_name" name="father_name"
+                                                class="form-control shadow-none" v-model="employer.father_name"
+                                                autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="mother_name"
-                                            class="col-5 col-lg-4 d-flex align-items-center">Mother Name:</label>
+                                        <label for="mother_name" class="col-5 col-lg-4 d-flex align-items-center">Mother
+                                            Name:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="text" id="mother_name" name="mother_name" class="form-control shadow-none"
-                                                v-model="employer.mother_name" autocomplete="off" />
+                                            <input type="text" id="mother_name" name="mother_name"
+                                                class="form-control shadow-none" v-model="employer.mother_name"
+                                                autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="dob"
-                                            class="col-5 col-lg-4 d-flex align-items-center">DOB:</label>
+                                        <label for="dob" class="col-5 col-lg-4 d-flex align-items-center">DOB:</label>
                                         <div class="col-7 col-lg-8">
-                                            <date-picker disabledTime id="dob" name="dob" class="form-control shadow-none" v-model="employer.dob" :config="options"></date-picker>
+                                            <VueDatePicker v-model="employer.dob" :style="color" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -68,13 +70,15 @@
                                 </div>
                                 <div class="col-12 col-lg-5">
                                     <div class="row mt-2">
-                                        <label for="department_id" class="col-5 col-lg-4 d-flex align-items-center">Department:</label>
+                                        <label for="department_id"
+                                            class="col-5 col-lg-4 d-flex align-items-center">Department:</label>
                                         <div class="col-7 col-lg-8">
                                             <div class="input-group">
                                                 <v-select label="name" name="department_id" :options="departments"
                                                     v-model="selectedDepartment"></v-select>
-                                                <a href="/departments" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                <a href="/departments" target="_blank"
+                                                    class="btn btn-success shadow-none" style="padding: 4px 8px;"><i
+                                                        class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -99,10 +103,10 @@
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="join_date"
-                                            class="col-5 col-lg-4 d-flex align-items-center">Join Date:</label>
+                                        <label for="join_date" class="col-5 col-lg-4 d-flex align-items-center">Join
+                                            Date:</label>
                                         <div class="col-7 col-lg-8">
-                                            <date-picker disabledTime id="join_date" name="join_date" class="form-control shadow-none" v-model="employer.join_date" :config="options"></date-picker>
+                                            <VueDatePicker v-model="employer.join_date" :style="color" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -129,7 +133,8 @@
                                     @click="clearData">
                                     Reset
                                 </button>
-                                <button :style="{display: useraccess.includes('employer.store')?'':'none'}" type="submit" class="btn btn-sm btn-outline-success shadow-none">
+                                <button :style="{ display: useraccess.includes('employer.store') ? '' : 'none' }"
+                                    type="submit" class="btn btn-sm btn-outline-success shadow-none">
                                     Save Employer
                                 </button>
                             </div>
@@ -147,10 +152,12 @@
 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
-                            <button :style="{display: useraccess.includes('employer.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
+                            <button :style="{ display: useraccess.includes('employer.edit') ? '' : 'none' }"
+                                class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>
-                            <button :style="{display: useraccess.includes('employer.delete')?'':'none'}" class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
+                            <button :style="{ display: useraccess.includes('employer.delete') ? '' : 'none' }"
+                                class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
                                 Delete
                             </button>
                         </span>
@@ -162,13 +169,16 @@
 </template>
 
 <script>
+var moment = require('moment');
+
 export default {
     data() {
         return {
-            options: {
-                format: 'DD/MM/YYYY',
-                useCurrent: true,
-            }, 
+            color: {
+                background: '#ffadb4',
+                borderRadius: '0.2rem',
+                height:'28px',
+            },
             columns: [
                 {
                     label: "Code",
@@ -197,18 +207,18 @@ export default {
                     field: "before",
                 },
             ],
-            employers  : [],
-            cities     : [],
+            employers: [],
+            cities: [],
             departments: [],
-            employer   : {
+            employer: {
                 id: "",
                 name: "",
                 designation: "",
                 phone: "",
                 father_name: "",
                 mother_name: "",
-                dob: new Date(),
-                join_date: new Date(),
+                dob: moment(new Date()).format("YYYY-MM-DD"),
+                join_date: moment(new Date()).format("YYYY-MM-DD"),
                 address: "",
                 salary: 0.00,
                 image: "",
@@ -239,13 +249,13 @@ export default {
         getCity() {
             axios.get("/api/get_city").then((res) => {
                 this.cities = res.data;
-                this.cities.unshift({id:0, name:"Select City"})
+                this.cities.unshift({ id: 0, name: "Select City" })
             });
         },
         getDepartment() {
             axios.get("/api/get_department").then((res) => {
                 this.departments = res.data;
-                this.departments.unshift({id:0, name:"Select Department"})
+                this.departments.unshift({ id: 0, name: "Select Department" })
             });
         },
         getEmployer() {
@@ -377,8 +387,8 @@ export default {
         },
     },
     watch: {
-        useraccess(){
-            this.useraccess.includes("employer.index")?"":location.href = "/unauthorize"
+        useraccess() {
+            this.useraccess.includes("employer.index") ? "" : location.href = "/unauthorize"
         }
     },
     mounted() {

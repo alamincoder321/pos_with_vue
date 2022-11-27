@@ -56,12 +56,12 @@ class Controller extends BaseController
 
     function invoiceNumberPurchase()
     {
-        $purchase = Purchase::first();
-        if (isNull($purchase)) {
-            $invoice = '#' . date('Y') . '0001';
+        $purchase = Purchase::latest()->first();
+        if (empty($purchase->invoice)) {
+            $invoice = date('Y') . '00001';
             return $invoice;
         } else {
-            return $purchase->invoice + 1;
+            return $purchase->invoice +1;
         }
     }
 }

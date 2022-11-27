@@ -14,12 +14,16 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 Vue.component('v-select', vSelect)
 // date picker
-import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
-import datePicker from 'vue-bootstrap-datetimepicker';
-Vue.use(datePicker);
+import VueDatePicker from '@mathieustan/vue-datepicker';
+import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
 
-// Vue.component('home', require('./components/home.vue').default);
+Vue.use(VueDatePicker);
+//moment
+import moment from 'moment';
+
+// router
 import routes from "./routes.js";
+import Vue from 'vue';
 const router = new VueRouter({
     mode: "history",
     routes

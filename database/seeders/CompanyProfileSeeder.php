@@ -15,9 +15,10 @@ class CompanyProfileSeeder extends Seeder
     public function run()
     {
         CompanyProfile::create([
-            "name"    => "Company Name",
-            "phone"   => "017#########",
-            "address" => "Company Address"
+            "name"       => "Company Name",
+            "owner_name" => "Owner Name",
+            "phone"      => "017#########",
+            "address"    => "Company Address"
         ]);
     }
 }

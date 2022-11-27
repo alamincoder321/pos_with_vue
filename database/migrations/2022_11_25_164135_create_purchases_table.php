@@ -25,11 +25,12 @@ class CreatePurchasesTable extends Migration
             $table->decimal("previous_due");
             $table->integer("vat");
             $table->decimal("vat_amount");
-            $table->decimal("discount");
+            $table->integer("discount");
+            $table->decimal("discount_amount");
             $table->decimal("transport_cost");
             $table->string("payment_type", 50);
             $table->integer("account_id")->nullable();
-            $table->integer("note");
+            $table->text("note")->nullable();
             $table->integer("added_by");
             $table->timestamps();
         });

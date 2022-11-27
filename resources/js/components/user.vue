@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{display: useraccess.includes('user.store')?'':'none'}">
+                <div class="card" :style="{ display: useraccess.includes('user.store') ? '' : 'none' }">
                     <div class="card-header">
                         <h4 class="card-title">User Create</h4>
                     </div>
@@ -28,10 +28,22 @@
                                     </div>
                                     <div class="row mt-2">
                                         <label for="email"
-                                            class="col-5 col-lg-4 d-flex align-items-center">Eamil:</label>
+                                            class="col-5 col-lg-4 d-flex align-items-center">Email:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="email" id="email" name="email" class="form-control shadow-none"
                                                 v-model="user.email" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <label for="role"
+                                            class="col-5 col-lg-4 d-flex align-items-center">User Role:</label>
+                                        <div class="col-7 col-lg-8">
+                                            <select id="role" name="role" class="form-control shadow-none"
+                                                v-model="user.role">
+                                                <option value="User">User</option>
+                                                <option value="Admin">Admin</option>
+                                                <option value="Supper Admin">Supper Admin</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -58,9 +70,10 @@
                                     @click="clearData">
                                     Reset
                                 </button>
-                                <button :style="{display: useraccess.includes('user.store')?'':'none'}" type="submit" class="userSave btn btn-sm btn-outline-success shadow-none">
+                                <button :style="{ display: useraccess.includes('user.store') ? '' : 'none' }" type="submit"
+                                    class="userSave btn btn-sm btn-outline-success shadow-none">
                                     Save User
-                                </button> 
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -76,13 +89,17 @@
 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
-                            <router-link :style="{display: useraccess.includes('useraccess.index')?'':'none'}" :to="{path:'/user-access/'+props.row.id}" class="btn btn-sm btn-outline-warning shadow-none">
+                            <router-link :style="{ display: useraccess.includes('useraccess.index') ? '' : 'none' }"
+                                :to="{ path: '/user-access/' + props.row.id }"
+                                class="btn btn-sm btn-outline-warning shadow-none">
                                 Access
                             </router-link>
-                            <button :style="{display: useraccess.includes('user.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
+                            <button :style="{ display: useraccess.includes('user.edit') ? '' : 'none' }"
+                                class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>
-                            <button :style="{display: useraccess.includes('user.delete')?'':'none'}" class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
+                            <button :style="{ display: useraccess.includes('user.delete') ? '' : 'none' }"
+                                class="btn btn-sm btn-outline-danger shadow-none" @click="deleteRow(props.row.id)">
                                 Delete
                             </button>
                         </span>
@@ -105,7 +122,10 @@ export default {
                 {
                     label: "User Name",
                     field: "username",
-                    type: "text",
+                },
+                {
+                    label: "User Role",
+                    field: "role",
                 },
                 {
                     label: "Email",
@@ -122,6 +142,7 @@ export default {
                 id: "",
                 name: "",
                 email: "",
+                role: "User",
                 username: "",
                 password: "",
                 image: "",
@@ -178,11 +199,12 @@ export default {
             this.user = {
                 id: val.id,
                 name: val.name,
+                role: val.role,
                 username: val.username,
                 email: val.email,
             };
 
-            this.imageSrc = val.image?location.origin+"/"+val.image:location.origin+"/no-image.jpg"
+            this.imageSrc = val.image ? location.origin + "/" + val.image : location.origin + "/no-image.jpg"
         },
 
         deleteRow(id) {
@@ -213,6 +235,7 @@ export default {
             this.user = {
                 id: "",
                 name: "",
+                role: "User",
                 email: "",
                 username: "",
                 password: "",
@@ -237,10 +260,10 @@ export default {
     },
 
     watch: {
-        useraccess(){
-            this.useraccess.includes("user.index")?"":location.href = "/unauthorize"
+        useraccess() {
+            this.useraccess.includes("user.index") ? "" : location.href = "/unauthorize"
         }
-    }, 
+    },
 
     mounted() {
         document.title = "User Page";

@@ -188,8 +188,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="date">Date:</label>
-                                        <date-picker disabledTime id="date" name="date" class="form-control shadow-none"
-                                            v-model="purchase.date" :config="options"></date-picker>
+                                        <VueDatePicker v-model="purchase.date" :style="color" />
                                     </div>
                                     <div class="form-group">
                                         <label for="subtotal">SubTotal:</label>
@@ -201,10 +200,10 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:32px;" id="vat" name="vat"
+                                                    <input type="number" style="height:30px;" id="vat" name="vat"
                                                         @input="TotalAmount" v-model="purchase.vat"
                                                         class="form-control shadow-none"><span
-                                                        style="height:32px;line-height:1;"
+                                                        style="height:30px;line-height:1;"
                                                         class="btn btn-warning">%</span>
                                                 </div>
                                             </div>
@@ -220,10 +219,10 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:32px;" id="discount"
+                                                    <input type="number" style="height:30px;" id="discount"
                                                         @input="TotalAmount" name="discount" v-model="purchase.discount"
                                                         class="form-control shadow-none"><span
-                                                        style="height:32px;line-height:1;"
+                                                        style="height:30px;line-height:1;"
                                                         class="btn btn-warning">%</span>
                                                 </div>
                                             </div>
@@ -247,7 +246,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="payment_type">Payment Type:</label>
-                                        <select name="payment_type" id="payment_type" v-model="purchase.payment_type" class="form-control shadow-none">
+                                        <select name="payment_type" id="payment_type" v-model="purchase.payment_type"
+                                            class="form-control shadow-none">
                                             <option value="cash">Cash</option>
                                             <option value="bank">Bank</option>
                                         </select>
@@ -295,14 +295,16 @@
 </template>
 
 <script>
+var moment = require('moment');
 export default {
 
     data() {
         return {
-            options: {
-                format: 'DD/MM/YYYY',
-                useCurrent: false,
-            },            
+            color: {
+                background: '#ffadb4',
+                borderRadius: '0.2rem',
+                height:'28px',
+            },
             categories: [],
             selectedCategory: {
                 id: "",
@@ -337,7 +339,7 @@ export default {
             },
             carts: [],
             purchase: {
-                date: new Date(),
+                date: moment(new Date()).format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
                 paid: 0,
@@ -350,6 +352,8 @@ export default {
                 due: 0,
                 invoice: "",
                 note: "",
+                added_by: "",
+                account_id: "",
             },
             useraccess: [],
             user_id: null,
@@ -357,6 +361,7 @@ export default {
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
+        this.purchase.added_by = this.user_id;
         this.getPurchase();
         this.getCategory();
         this.getBrand();
@@ -451,16 +456,22 @@ export default {
                     return
                 }
                 this.product = {
-					id: this.selectedProduct.id,
-					name: this.selectedProduct.name,
-					purchase_price: this.selectedProduct.purchase_price,
-					selling_price: this.selectedProduct.selling_price,
-					quantity: this.selectedProduct.quantity,
-					total_amount: this.selectedProduct.total_amount,
-				}
+                    id: this.selectedProduct.id,
+                    name: this.selectedProduct.name,
+                    purchase_price: this.selectedProduct.purchase_price,
+                    selling_price: this.selectedProduct.selling_price,
+                    quantity: this.selectedProduct.quantity,
+                    total_amount: this.selectedProduct.total_amount,
+                }
 
                 this.carts.push(this.product)
-                this.clearData()
+                this.selectedProduct = {
+                    id: "",
+                    display_name: "",
+                    name: "",
+                    purchase_price: "",
+                    selling_price: "",
+                }
                 this.TotalAmount()
             } else {
                 alert("Product Select First")
@@ -492,30 +503,40 @@ export default {
         savePurchase(event) {
             let data = {
                 purchase: this.purchase,
-                carts: this.carts
+                carts: this.carts,
+                supplier: this.selectedSupplier
             }
             axios.post("/api/save_purchase", data)
                 .then(res => {
-                    console.log(res.data);
+                    alert(res.data)
+                    this.clearData()
+                    this.getPurchase()
+                    this.carts = [];
                 })
         },
 
         clearData() {
-            this.selectedProduct = {
-                id: "",
-                display_name: "",
-                name: "",
-                purchase_price: "",
-                selling_price: "",
+            this.purchase = {
+                date: moment(new Date()).format("YYYY-MM-DD"),
+                subtotal: 0,
+                total: 0,
+                paid: 0,
+                vat: 0,
+                vat_amount: 0,
+                discount: 0,
+                discount_amount: 0,
+                transport_cost: 0,
+                payment_type: 'cash',
+                due: 0,
+                invoice: "",
+                note: "",
+                added_by: "",
+                account_id: "",
             }
-            this.cart = {
-                product_id: "",
-                product_name: "",
-                purchase_price: 0,
-                qty: 0,
-                selling_price: 0,
-                total_amount: 0,
-            }
+            this.selectedSupplier = {
+                    id: "",
+                    name: "",
+                }
         },
 
         CategoryChange() {
@@ -549,11 +570,11 @@ export default {
     },
     watch: {
         useraccess() {
-            this.useraccess.includes("dashboard") ? "" : location.href = "/unauthorize"
+            this.useraccess.includes("purchase.store") ? "" : location.href = "/unauthorize"
         },
     },
     mounted() {
-        document.title = "Perchase Page"
+        document.title = "Perchase Entry Page"
     },
 };
 </script>

@@ -93,6 +93,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "purchase",
+                "permission" => [
+                    "purchase.index",
+                    "purchase.edit",
+                    "purchase.store",
+                    "purchase.delete",
+                ],
+            ],
+            [
                 "group_name" => "supplier",
                 "permission" => [
                     "supplier.index",

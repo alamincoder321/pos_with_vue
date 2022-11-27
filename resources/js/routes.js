@@ -7,12 +7,13 @@ import category from "./components/settings/category.vue";
 import brand from "./components/settings/brand.vue";
 import unit from "./components/settings/unit.vue";
 import city from "./components/settings/city.vue";
-import department from "./components/settings/department.vue";
 import customer from "./components/administration/customer.vue";
 import supplier from "./components/administration/supplier.vue";
-import employer from "./components/administration/employer.vue";
-import product from "./components/contents/product.vue";
-import purchase from "./components/sales/purchase.vue";
+import department from "./components/hrpayroll/department.vue";
+import employer from "./components/hrpayroll/employer.vue";
+import product from "./components/settings/product.vue";
+import purchase from "./components/purchase/purchase.vue";
+import purchaselist from "./components/purchase/purchaselist.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -25,15 +26,17 @@ const routes = [
     { path: "/brands", component: brand },
     { path: "/units", component: unit },
     { path: "/cities", component: city },
-    { path: "/departments", component: department },
     //administration
     { path: "/customers", component: customer },
     { path: "/suppliers", component: supplier },
+    //hrpayrol
+    { path: "/departments", component: department },
     { path: "/employers", component: employer },
     //content
     {path: "/products", component: product},
     //purchase and sales
     {path: "/purchases", component: purchase},
+    {path: "/purchases-list", component: purchaselist},
     
 ];
 

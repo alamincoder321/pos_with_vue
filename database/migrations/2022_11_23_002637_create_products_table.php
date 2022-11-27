@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string("product_code");
             $table->string("name");
-            $table->integer("brand_id");
-            $table->integer("category_id");
+            $table->integer("brand_id")->nullable();
+            $table->integer("category_id")->nullable();
             $table->integer("unit_id");
             $table->integer("re_order");
             $table->decimal("purchase_price");

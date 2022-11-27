@@ -18,6 +18,7 @@ class CompanyController extends Controller
         try {
             $data             = CompanyProfile::find($request->id);
             $data->name       = $request->name;
+            $data->owner_name = $request->owner_name;
             $data->phone      = $request->phone;
             $data->address    = $request->address;
             $data->email      = $request->email;

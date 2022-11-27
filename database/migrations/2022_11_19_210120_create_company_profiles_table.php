@@ -16,6 +16,7 @@ class CreateCompanyProfilesTable extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->string("owner_name");
             $table->string("phone");
             $table->text("address");
             $table->integer("paper_type")->default(1);

@@ -18,6 +18,13 @@
                                         </div>
                                     </div>
                                     <div class="row mt-2">
+                                        <label for="owner_name" class="col-5 col-lg-4 d-flex align-items-center">Owner Name:</label>
+                                        <div class="col-7 col-lg-8">
+                                            <input type="text" id="owner_name" name="owner_name" class="form-control shadow-none"
+                                                v-model="company.owner_name" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
                                         <label for="phone" class="col-5 col-lg-4 d-flex align-items-center">
                                             Phone:</label>
                                         <div class="col-7 col-lg-8">
