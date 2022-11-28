@@ -71,7 +71,7 @@ Route::get("/get_product", [ProductController::class, "getProduct"]);
 Route::post("/save_product", [ProductController::class, "saveProduct"]);
 Route::get("/delete_product/{id}", [ProductController::class, "deleteProduct"]);
 //product
-Route::get("/get_purchase", [PurchaseController::class, "getPurchase"]);
+Route::post("/get_purchase", [PurchaseController::class, "getPurchase"]);
 Route::post("/save_purchase", [PurchaseController::class, "savePurchase"]);
 Route::get("/delete_purchase/{id}", [PurchaseController::class, "deletePurchase"]);
 

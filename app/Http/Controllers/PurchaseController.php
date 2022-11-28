@@ -8,14 +8,42 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
-    public function getPurchase()
+    public function getPurchase(Request $request)
     {
+        $clauses = '';
+        if(isset($request->dateFrom) && !empty($request->dateFrom)){
+            $clauses .= " AND p.date BETWEEN '$request->dateFrom' AND '$request->dateTo'";
+        }
+        if(isset($request->invoice) && !empty($request->invoice)){
+            $clauses .= " AND p.invoice = '$request->invoice'";
+        }
+        $purchases = DB::select("SELECT
+                            p.*,
+                            s.name,
+                            s.address,
+                            s.phone,
+                            u.name AS user_name
+                        FROM
+                            purchases AS p
+                        LEFT JOIN suppliers AS s
+                        ON s.id = p.supplier_id
+                        LEFT JOIN users AS u
+                        ON u.id = p.added_by
+                        WHERE p.status = 'a'
+                        $clauses                            
+                        ");
+
         $invoice = $this->invoiceNumberPurchase();
-        return response()->json(['invoice'=>$invoice]);
+        return response()->json(['invoice' => $invoice, 'purchases' => $purchases]);
     }
+
+
+
+
 
     public function savePurchase(Request $request)
     {
@@ -35,7 +63,7 @@ class PurchaseController extends Controller
                 $s->save();
 
                 $supplier_id = $s->id;
-            }else{
+            } else {
                 $supplier_id = $request->supplier['id'];
             }
 
@@ -59,7 +87,7 @@ class PurchaseController extends Controller
             $data->save();
 
             $last_id = $data->id;
-            foreach($request->carts as $item){
+            foreach ($request->carts as $item) {
                 $details = new PurchaseDetails();
                 $details->purchase_id = $last_id;
                 $details->product_id = $item['id'];
@@ -71,10 +99,10 @@ class PurchaseController extends Controller
 
                 //inventory-update
                 $inventory_check = ProductInventory::where("product_id", $item['id'])->first();
-                if(!empty($inventory_check)){
+                if (!empty($inventory_check)) {
                     $inventory_check->purchase_qty = $item['quantity'];
                     $inventory_check->save();
-                }else{
+                } else {
                     $new_inventory = new ProductInventory();
                     $new_inventory->product_id = $item['id'];
                     $new_inventory->purchase_qty = $item['quantity'];

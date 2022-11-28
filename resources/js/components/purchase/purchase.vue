@@ -398,7 +398,8 @@ export default {
             });
         },
         getPurchase() {
-            axios.get("/api/get_purchase").then((res) => {
+            axios.post("/api/get_purchase", {id: '1'}).then((res) => {
+                console.log(res.data);
                 this.purchase.invoice = res.data.invoice;
             });
         },
