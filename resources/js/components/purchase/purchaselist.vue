@@ -9,7 +9,7 @@
                                 <div class="form-group">
                                     <label for="changeVal"></label>
                                     <select class="form-control shadow-none" v-model="changeVal">
-                                        <option value="">All</option>
+                                        <option value="">By Current Date</option>
                                         <option value="invoice">Invoice</option>
                                     </select>
                                 </div>
@@ -32,7 +32,7 @@
                                     <VueDatePicker v-model="dateTo" :style="color" format="DD-MM-YYYY" />
                                 </div>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-1 mt-lg-0 mt-3">
                                 <label for=""></label>
                                 <button type="button" @click="getPurchase" class="searchBtn">Submit</button>
                             </div>
@@ -47,23 +47,34 @@
                         <tr class="text-center" style="font-size: 12px;">
                             <th>Invoice No.</th>
                             <th>Date</th>
-                            <th>Supplier</th>
+                            <th>Supplier Details</th>
+                            <th>Purchase Details</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody style="border:0; font-size: 12px;">
                         <tr v-for="(item, index) in purchases" :key="index">
                             <td>#{{ item.invoice }}</td>
-                            <td>{{ formatDate(item.datte) }}</td>
-                            <td>{{ item.name }}</td>
+                            <td>{{ formatDate(item.date) }}</td>
+                            <td>
+                                <span style="font-weight: bold;">Name:</span> {{ item.name }}<br />
+                                <span style="font-weight: bold;">Phone:</span> {{item.phone}} <br />
+                                <span style="font-weight: bold;">Address:</span> {{item.address}}                            
+                            </td>
+                            <td>
+                                <span style="font-weight: bold;">SubTotal:</span> {{item.subtotal}} <br />
+                                <span style="font-weight: bold;">Total:</span> {{item.total}} <br />
+                                <span style="font-weight: bold;">Paid:</span> {{item.paid}} <br />
+                                <span style="font-weight: bold;">Due:</span> {{item.due}}
+                            </td>
                             <td>
                                 <router-link :to="{ path: '/purchases' }">
                                     <i class="fa fa-edit text-primary hidden-print"></i></router-link>
-                                <span @click="PrintInvoice"><i class="fas fa-print text-info hidden-print"></i></span>
+                                <span @click="PrintInvoice" style="cursor:pointer;"><i class="fas fa-print text-info hidden-print"></i></span>
                             </td>
                         </tr>
                         <tr :style="{ display: purchases.length == 0 ? '' : 'none' }">
-                            <td colspan="4" align="center">Not Found Data</td>
+                            <td colspan="5" align="center">Not Found Data</td>
                         </tr>
                     </tbody>
                 </table>

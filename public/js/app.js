@@ -10695,7 +10695,7 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("All")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("By Current Date")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "invoice"
     }
@@ -10771,7 +10771,7 @@ var render = function render() {
       expression: "dateTo"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-1"
+    staticClass: "col-lg-1 mt-lg-0 mt-3"
   }, [_c("label", {
     attrs: {
       "for": ""
@@ -10796,7 +10796,35 @@ var render = function render() {
   }, [_vm._l(_vm.purchases, function (item, index) {
     return _c("tr", {
       key: index
-    }, [_c("td", [_vm._v("#" + _vm._s(item.invoice))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.datte)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_c("router-link", {
+    }, [_c("td", [_vm._v("#" + _vm._s(item.invoice))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Name:")]), _vm._v(" " + _vm._s(item.name)), _c("br"), _vm._v(" "), _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Phone:")]), _vm._v(" " + _vm._s(item.phone) + " "), _c("br"), _vm._v(" "), _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + "                            \n                        ")]), _vm._v(" "), _c("td", [_c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("SubTotal:")]), _vm._v(" " + _vm._s(item.subtotal) + " "), _c("br"), _vm._v(" "), _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Total:")]), _vm._v(" " + _vm._s(item.total) + " "), _c("br"), _vm._v(" "), _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Paid:")]), _vm._v(" " + _vm._s(item.paid) + " "), _c("br"), _vm._v(" "), _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Due:")]), _vm._v(" " + _vm._s(item.due) + "\n                        ")]), _vm._v(" "), _c("td", [_c("router-link", {
       attrs: {
         to: {
           path: "/purchases"
@@ -10805,6 +10833,9 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fa fa-edit text-primary hidden-print"
     })]), _vm._v(" "), _c("span", {
+      staticStyle: {
+        cursor: "pointer"
+      },
       on: {
         click: _vm.PrintInvoice
       }
@@ -10817,7 +10848,7 @@ var render = function render() {
     }
   }, [_c("td", {
     attrs: {
-      colspan: "4",
+      colspan: "5",
       align: "center"
     }
   }, [_vm._v("Not Found Data")])])], 2)])])])]);
@@ -10835,7 +10866,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_c("th", [_vm._v("Invoice No.")]), _vm._v(" "), _c("th", [_vm._v("Date")]), _vm._v(" "), _c("th", [_vm._v("Supplier")]), _vm._v(" "), _c("th", [_vm._v("Action")])])]);
+  }, [_c("th", [_vm._v("Invoice No.")]), _vm._v(" "), _c("th", [_vm._v("Date")]), _vm._v(" "), _c("th", [_vm._v("Supplier Details")]), _vm._v(" "), _c("th", [_vm._v("Purchase Details")]), _vm._v(" "), _c("th", [_vm._v("Action")])])]);
 }];
 render._withStripped = true;
 

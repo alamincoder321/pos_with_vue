@@ -34,7 +34,7 @@ class PurchaseController extends Controller
                         LEFT JOIN users AS u
                         ON u.id = p.added_by
                         WHERE p.status = 'a'
-                        $clauses                            
+                        $clauses ORDER BY p.invoice DESC                            
                         ");
 
         $invoice = $this->invoiceNumberPurchase();
