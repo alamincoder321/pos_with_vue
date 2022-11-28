@@ -14,27 +14,29 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2" :style="{ display: changeVal == 'invoice' ? 'block' : 'none' }">
+                            <div class="col-lg-4" :style="{ display: changeVal == 'invoice' ? '' : 'none' }">
                                 <div class="form-group">
                                     <label for="invoice">Invoice</label>
-                                    <input type="text" class="form-control shadow-none" v-model="invoice" />
+                                    <v-select label="invoice" id="invoice" :options="invoices"
+                                        v-model="selectedInvoice">
+                                    </v-select>
                                 </div>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
                                 <div class="form-group">
                                     <label for="dateFrom">DateFrom:</label>
                                     <VueDatePicker v-model="dateFrom" :style="color" format="DD-MM-YYYY" />
                                 </div>
                             </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="dateTo">DateTo:</label>
+                            <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
+                                <div class='form-group'>
+                                    <label>DateTo:</label>
                                     <VueDatePicker v-model="dateTo" :style="color" format="DD-MM-YYYY" />
                                 </div>
                             </div>
                             <div class="col-lg-1 mt-lg-0 mt-3">
-                                <label for=""></label>
-                                <button type="button" @click="getPurchase" class="searchBtn">Submit</button>
+                                <label></label>
+                                <button type="button" @click="getSearchPurchase" class="searchBtn">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -58,23 +60,25 @@
                             <td>{{ formatDate(item.date) }}</td>
                             <td>
                                 <span style="font-weight: bold;">Name:</span> {{ item.name }}<br />
-                                <span style="font-weight: bold;">Phone:</span> {{item.phone}} <br />
-                                <span style="font-weight: bold;">Address:</span> {{item.address}}                            
+                                <span style="font-weight: bold;">Phone:</span> {{ item.phone }} <br />
+                                <span style="font-weight: bold;">Address:</span> {{ item.address }}
                             </td>
                             <td>
-                                <span style="font-weight: bold;">SubTotal:</span> {{item.subtotal}} <br />
-                                <span style="font-weight: bold;">Total:</span> {{item.total}} <br />
-                                <span style="font-weight: bold;">Paid:</span> {{item.paid}} <br />
-                                <span style="font-weight: bold;">Due:</span> {{item.due}}
+                                <span style="font-weight: bold;">SubTotal:</span> {{ item.subtotal }} <br />
+                                <span style="font-weight: bold;">Total:</span> {{ item.total }} <br />
+                                <span style="font-weight: bold;">Paid:</span> {{ item.paid }} <br />
+                                <span style="font-weight: bold;">Due:</span> {{ item.due }}
                             </td>
                             <td>
                                 <router-link :to="{ path: '/purchases' }">
-                                    <i class="fa fa-edit text-primary hidden-print"></i></router-link>
-                                <span @click="PrintInvoice" style="cursor:pointer;"><i class="fas fa-print text-info hidden-print"></i></span>
+                                    <i class="fa fa-edit text-primary hidden-print"></i>
+                                </router-link>
+                                <span @click="PrintInvoice" style="cursor:pointer;"><i
+                                        class="fas fa-print text-info hidden-print"></i></span>
                             </td>
                         </tr>
                         <tr :style="{ display: purchases.length == 0 ? '' : 'none' }">
-                            <td colspan="5" align="center">Not Found Data</td>
+                            <td colspan="5" class="text-center">Not Found Data</td>
                         </tr>
                     </tbody>
                 </table>
@@ -96,7 +100,11 @@ export default {
             changeVal: "",
             dateFrom: moment(new Date()).format("YYYY-MM-DD"),
             dateTo: moment(new Date()).format("YYYY-MM-DD"),
-            invoice: "",
+            invoices: [],
+            selectedInvoice: {
+                id: "",
+                invoice: "",
+            },
 
             purchases: [],
             useraccess: [],
@@ -105,19 +113,25 @@ export default {
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
-        this.getPurchase();
+        this.getSearchPurchase();
+        this.getPurchases();
         this.getPermission();
         this.logOut();
     },
     methods: {
-        getPurchase() {
+        getSearchPurchase() {
             let data = {
-                invoice: this.invoice,
-                dateFrom: this.dateFrom,
-                dateTo: this.dateTo
+                dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
+                dateTo: this.dateTo,
+                invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
             }
             axios.post("/api/get_purchase", data).then((res) => {
                 this.purchases = res.data.purchases
+            });
+        },
+        getPurchases() {
+            axios.post("/api/get_purchase").then((res) => {
+                this.invoices = res.data.purchases
             });
         },
 
@@ -140,7 +154,7 @@ export default {
             myWindow.close();
         },
 
-        formatDate(date){
+        formatDate(date) {
             return moment(date).format("DD-MM-YYYY");
         },
 
@@ -149,6 +163,7 @@ export default {
                 this.useraccess = Array.from(res.data);
             });
         },
+
         logOut() {
             if (this.user_id === null) {
                 axios.get(location.origin + "/logout").then((res) => {
@@ -158,11 +173,13 @@ export default {
             }
         },
     },
+
     watch: {
         useraccess() {
             this.useraccess.includes("purchase.index") ? "" : location.href = "/unauthorize"
         }
     },
+
     mounted() {
         document.title = "Purchase List Page"
     },

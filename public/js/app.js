@@ -6556,7 +6556,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       changeVal: "",
       dateFrom: moment(new Date()).format("YYYY-MM-DD"),
       dateTo: moment(new Date()).format("YYYY-MM-DD"),
-      invoice: "",
+      invoices: [],
+      selectedInvoice: {
+        id: "",
+        invoice: ""
+      },
       purchases: [],
       useraccess: [],
       user_id: null
@@ -6564,20 +6568,27 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   },
   created: function created() {
     this.user_id = localStorage.getItem("user_id");
-    this.getPurchase();
+    this.getSearchPurchase();
+    this.getPurchases();
     this.getPermission();
     this.logOut();
   },
   methods: {
-    getPurchase: function getPurchase() {
+    getSearchPurchase: function getSearchPurchase() {
       var _this = this;
       var data = {
-        invoice: this.invoice,
-        dateFrom: this.dateFrom,
-        dateTo: this.dateTo
+        dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
+        dateTo: this.dateTo,
+        invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
       };
       axios.post("/api/get_purchase", data).then(function (res) {
         _this.purchases = res.data.purchases;
+      });
+    },
+    getPurchases: function getPurchases() {
+      var _this2 = this;
+      axios.post("/api/get_purchase").then(function (res) {
+        _this2.invoices = res.data.purchases;
       });
     },
     PrintInvoice: function PrintInvoice() {
@@ -6609,9 +6620,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       return moment(date).format("DD-MM-YYYY");
     },
     getPermission: function getPermission() {
-      var _this2 = this;
+      var _this3 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this2.useraccess = Array.from(res.data);
+        _this3.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -10700,9 +10711,9 @@ var render = function render() {
       value: "invoice"
     }
   }, [_vm._v("Invoice")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2",
+    staticClass: "col-lg-4",
     style: {
-      display: _vm.changeVal == "invoice" ? "block" : "none"
+      display: _vm.changeVal == "invoice" ? "" : "none"
     }
   }, [_c("div", {
     staticClass: "form-group"
@@ -10710,28 +10721,24 @@ var render = function render() {
     attrs: {
       "for": "invoice"
     }
-  }, [_vm._v("Invoice")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.invoice,
-      expression: "invoice"
-    }],
-    staticClass: "form-control shadow-none",
+  }, [_vm._v("Invoice")]), _vm._v(" "), _c("v-select", {
     attrs: {
-      type: "text"
+      label: "invoice",
+      id: "invoice",
+      options: _vm.invoices
     },
-    domProps: {
-      value: _vm.invoice
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.invoice = $event.target.value;
-      }
+    model: {
+      value: _vm.selectedInvoice,
+      callback: function callback($$v) {
+        _vm.selectedInvoice = $$v;
+      },
+      expression: "selectedInvoice"
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2"
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-2",
+    style: {
+      display: _vm.changeVal == "" ? "" : "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -10751,14 +10758,13 @@ var render = function render() {
       expression: "dateFrom"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-2"
+    staticClass: "col-lg-2",
+    style: {
+      display: _vm.changeVal == "" ? "" : "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "dateTo"
-    }
-  }, [_vm._v("DateTo:")]), _vm._v(" "), _c("VueDatePicker", {
+  }, [_c("label", [_vm._v("DateTo:")]), _vm._v(" "), _c("VueDatePicker", {
     style: _vm.color,
     attrs: {
       format: "DD-MM-YYYY"
@@ -10772,17 +10778,13 @@ var render = function render() {
     }
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-1 mt-lg-0 mt-3"
-  }, [_c("label", {
-    attrs: {
-      "for": ""
-    }
-  }), _vm._v(" "), _c("button", {
+  }, [_c("label"), _vm._v(" "), _c("button", {
     staticClass: "searchBtn",
     attrs: {
       type: "button"
     },
     on: {
-      click: _vm.getPurchase
+      click: _vm.getSearchPurchase
     }
   }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-12 col-12"
@@ -10808,7 +10810,7 @@ var render = function render() {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + "                            \n                        ")]), _vm._v(" "), _c("td", [_c("span", {
+    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + "\n                        ")]), _vm._v(" "), _c("td", [_c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
@@ -10847,9 +10849,9 @@ var render = function render() {
       display: _vm.purchases.length == 0 ? "" : "none"
     }
   }, [_c("td", {
+    staticClass: "text-center",
     attrs: {
-      colspan: "5",
-      align: "center"
+      colspan: "5"
     }
   }, [_vm._v("Not Found Data")])])], 2)])])])]);
 };
