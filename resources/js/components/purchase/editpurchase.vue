@@ -400,8 +400,29 @@ export default {
             });
         },
         getPurchase() {
-            axios.post("/api/get_purchase", {id: '1'}).then((res) => {
-                this.purchase.invoice = res.data.invoice;
+            let data = {invoice: this.$route.params.id}
+            axios.post("/api/get_purchase", data).then((res) => {
+                this.purchase = res.data.purchases[0]
+                this.carts = res.data.purchases[0].purchaseDetails
+                if(res.data.purchases[0].supplier_type == "G"){
+                    this.selectedSupplier = {
+                        id: res.data.purchases[0].supplier_id,
+                        name: res.data.purchases[0].name,
+                        display_name: "General Supplier",
+                        phone: res.data.purchases[0].phone,
+                        address: res.data.purchases[0].address,
+                        supplier_type: res.data.purchases[0].supplier_type
+                    }
+                }else{
+                    this.selectedSupplier = {
+                        id: res.data.purchases[0].supplier_id,
+                        name: res.data.purchases[0].name,
+                        display_name: res.data.purchases[0].display_name,
+                        phone: res.data.purchases[0].phone,
+                        address: res.data.purchases[0].address,
+                        supplier_type: res.data.purchases[0].supplier_type
+                    }
+                }
             });
         },
 
@@ -514,12 +535,12 @@ export default {
                     this.clearData()
                     this.getPurchase()
                     this.carts = [];
+                    this.$router.push({path: "/purchases-list"})
                 })
         },
 
         clearData() {
             this.purchase = {
-                id: "",
                 date: moment(new Date()).format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,

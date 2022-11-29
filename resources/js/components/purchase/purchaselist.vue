@@ -8,29 +8,30 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <label for="changeVal"></label>
-                                    <select class="form-control shadow-none" v-model="changeVal">
+                                    <select class="form-control shadow-none" v-model="changeVal"
+                                        @change="onChangeValue">
                                         <option value="">By Current Date</option>
-                                        <option value="invoice">Invoice</option>
+                                        <option value="invoice">By Invoice</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4" :style="{ display: changeVal == 'invoice' ? '' : 'none' }">
                                 <div class="form-group">
                                     <label for="invoice">Invoice</label>
-                                    <v-select label="invoice" id="invoice" :options="invoices" v-model="selectedInvoice"
-                                        @change="onChangeValue">
+                                    <v-select label="invoice" id="invoice" :options="invoices"
+                                        v-model="selectedInvoice">
                                     </v-select>
                                 </div>
                             </div>
                             <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
                                 <div class="form-group">
-                                    <label for="dateFrom">DateFrom:</label>
+                                    <label for="dateFrom">From Date:</label>
                                     <VueDatePicker v-model="dateFrom" :style="color" format="DD-MM-YYYY" />
                                 </div>
                             </div>
                             <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
                                 <div class='form-group'>
-                                    <label>DateTo:</label>
+                                    <label>To Date:</label>
                                     <VueDatePicker v-model="dateTo" :style="color" format="DD-MM-YYYY" />
                                 </div>
                             </div>
@@ -70,11 +71,13 @@
                                 <span style="font-weight: bold;">Due:</span> {{ item.due }}
                             </td>
                             <td>
-                                <router-link :to="{ path: '/purchases' }">
-                                    <i class="fa fa-edit text-primary hidden-print"></i>
-                                </router-link>
+                                <span @click="PrintInvoice" style="cursor:pointer; margin-right: 5px;"><i
+                                        class="fas fa-trash text-danger"></i></span>
+                                <router-link style="margin-right: 5px;" :to="{ path: '/purchases-edit/'+item.invoice }">
+                                    <i class="fa fa-edit text-primary"></i>
+                                </router-link>                               
                                 <span @click="PrintInvoice" style="cursor:pointer;"><i
-                                        class="fas fa-print text-info hidden-print"></i></span>
+                                        class="fas fa-print text-info"></i></span>
                             </td>
                         </tr>
                         <tr :style="{ display: purchases.length == 0 ? '' : 'none' }">
@@ -135,18 +138,31 @@ export default {
             });
         },
         onChangeValue() {
-            alert("hello")
+            if (this.changeVal == '') {
+                this.selectedInvoice = {
+                    id: "",
+                    invoice: ""
+                }
+            }
         },
 
         async PrintInvoice() {
-            var myWindow = window.open('', '');
+            var myWindow = window.open('', 'PRINT');
             myWindow.document.write(`
 				<html>
 					<head>
-						<title>Print</title>	
+						<title>Print</title>
 					</head>
-					<body>                        
-						${document.querySelector("table").innerHTML}
+					<body>
+                        <table border='1' cellspacing='0' width='100%'>
+                            <tr>
+                                <td>Sl</td>
+                                <td>Name</td>
+                            </tr>
+                            <tr>
+                                <td colspan='2'>Hello</td>
+                            </tr>
+                        </table>
 					</body>
 				</html>
 

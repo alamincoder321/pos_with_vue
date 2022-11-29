@@ -48,7 +48,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         @if(in_array("purchase.store", $useraccess))
-                        <router-link class="nav-link" to="/purchases">Purchase Add</router-link>
+                        <router-link class="nav-link" to="/purchases">Purchase Entry</router-link>
                         @endif
                         @if(in_array("purchase.index", $useraccess))
                         <router-link class="nav-link" to="/purchases-list">Purchase List & Report</router-link>

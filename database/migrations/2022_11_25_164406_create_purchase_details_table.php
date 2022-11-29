@@ -15,12 +15,12 @@ class CreatePurchaseDetailsTable extends Migration
     {
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("purchase_id")->constrained("purchases", "id");
-            $table->foreignId("product_id")->constrained("products", "id");
+            $table->foreignId("purchase_id")->constrained("purchases", "id")->onDelete("cascade");
+            $table->integer("product_id");
             $table->integer("quantity");
-            $table->integer("purchase_price");
-            $table->integer("selling_price");
-            $table->integer("total_price");
+            $table->decimal("purchase_price");
+            $table->decimal("selling_price");
+            $table->decimal("total_amount");
             $table->timestamps();
         });
     }

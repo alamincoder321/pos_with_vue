@@ -10,4 +10,8 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = ["*"];
+
+    public function purchase(){
+        return $this->hasMany(PurchaseDetails::class, "purchase_id", "id");
+    }
 }
