@@ -6591,6 +6591,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         _this2.invoices = res.data.purchases;
       });
     },
+    onChangeValue: function onChangeValue() {
+      alert("hello");
+    },
     PrintInvoice: function PrintInvoice() {
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var myWindow;
@@ -10726,6 +10729,9 @@ var render = function render() {
       label: "invoice",
       id: "invoice",
       options: _vm.invoices
+    },
+    on: {
+      change: _vm.onChangeValue
     },
     model: {
       value: _vm.selectedInvoice,

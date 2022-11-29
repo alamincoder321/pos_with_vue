@@ -17,8 +17,8 @@
                             <div class="col-lg-4" :style="{ display: changeVal == 'invoice' ? '' : 'none' }">
                                 <div class="form-group">
                                     <label for="invoice">Invoice</label>
-                                    <v-select label="invoice" id="invoice" :options="invoices"
-                                        v-model="selectedInvoice">
+                                    <v-select label="invoice" id="invoice" :options="invoices" v-model="selectedInvoice"
+                                        @change="onChangeValue">
                                     </v-select>
                                 </div>
                             </div>
@@ -133,6 +133,9 @@ export default {
             axios.post("/api/get_purchase").then((res) => {
                 this.invoices = res.data.purchases
             });
+        },
+        onChangeValue() {
+            alert("hello")
         },
 
         async PrintInvoice() {
