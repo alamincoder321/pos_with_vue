@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Sale;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -62,6 +63,16 @@ class Controller extends BaseController
             return $invoice;
         } else {
             return $purchase->invoice +1;
+        }
+    }
+    function invoiceNumberSale()
+    {
+        $sale = Sale::latest()->first();
+        if (empty($sale->invoice)) {
+            $invoice = date('Y') . '00001';
+            return $invoice;
+        } else {
+            return $sale->invoice +1;
         }
     }
 }
