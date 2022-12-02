@@ -5,6 +5,7 @@ import useraccess from "./components/useraccess.vue";
 import company from "./components/company.vue";
 import category from "./components/settings/category.vue";
 import brand from "./components/settings/brand.vue";
+import bank from "./components/account/bank.vue";
 import unit from "./components/settings/unit.vue";
 import city from "./components/settings/city.vue";
 import customer from "./components/administration/customer.vue";
@@ -30,6 +31,8 @@ const routes = [
     { path: "/brands", component: brand },
     { path: "/units", component: unit },
     { path: "/cities", component: city },
+    // bankaccount
+    { path: "/bankaccounts", component: bank },
     //administration
     { path: "/customers", component: customer },
     { path: "/suppliers", component: supplier },
@@ -37,16 +40,15 @@ const routes = [
     { path: "/departments", component: department },
     { path: "/employers", component: employer },
     //content
-    {path: "/products", component: product},
+    { path: "/products", component: product },
     //purchase
-    {path: "/purchases", component: purchase},
-    {path: "/purchases-list", component: purchaselist},
-    {path: "/purchases-edit/:id", component: editpurchase},
+    { path: "/purchases", component: purchase },
+    { path: "/purchases-list", component: purchaselist },
+    { path: "/purchases-edit/:id", component: editpurchase },
     // sales
-    {path: "/sales", component: sale},
-    {path: "/sales-list", component: salelist},
-    {path: "/sales-edit/:id", component: editsale},
-    
+    { path: "/sales", component: sale },
+    { path: "/sales-list", component: salelist },
+    { path: "/sales-edit/:id", component: editsale },
 ];
 
 export default routes;

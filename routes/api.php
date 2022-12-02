@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
@@ -42,6 +43,10 @@ Route::get("/delete_category/{id}", [CategoryController::class, "deleteCategory"
 Route::get("/get_brand", [BrandController::class, "getBrand"]);
 Route::post("/save_brand", [BrandController::class, "saveBrand"]);
 Route::get("/delete_brand/{id}", [BrandController::class, "deleteBrand"]);
+//bankaccount
+Route::get("/get_bankaccount", [BankAccountController::class, "getBankAccount"]);
+Route::post("/save_bankaccount", [BankAccountController::class, "saveBankAccount"]);
+Route::get("/delete_bankaccount/{id}", [BankAccountController::class, "deleteBankAccount"]);
 //unit
 Route::get("/get_unit", [UnitController::class, "getUnit"]);
 Route::post("/save_unit", [UnitController::class, "saveUnit"]);

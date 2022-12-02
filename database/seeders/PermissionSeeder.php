@@ -23,6 +23,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "bankaccount",
+                "permission" => [
+                    "bankaccount.index",
+                    "bankaccount.edit",
+                    "bankaccount.store",
+                    "bankaccount.delete",
+                ],
+            ],
+            [
                 "group_name" => "brand",
                 "permission" => [
                     "brand.index",

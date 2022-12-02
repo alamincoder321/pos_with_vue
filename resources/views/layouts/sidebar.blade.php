@@ -109,6 +109,20 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                     </nav>
                 </div>
                 @endif
+                @if(in_array("bankaccount.index", $useraccess))
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-money-bill"></i></div>
+                    Accounts Module
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        @if(in_array("bankaccount.index", $useraccess))
+                        <router-link class="nav-link" to="/bankaccounts">Bank Account</router-link>
+                        @endif
+                    </nav>
+                </div>
+                @endif
                 @if(in_array("user.index", $useraccess))
                 <router-link class="nav-link" to="/users">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-user"></i></div>
