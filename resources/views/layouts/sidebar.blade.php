@@ -57,13 +57,31 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </div>
                 @endif
 
-                @if(in_array("supplier.index", $useraccess) || in_array("customer.index", $useraccess))
+                @if(in_array("sale.index", $useraccess))
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-shopping-cart"></i></div>
+                    Sale
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        @if(in_array("sale.store", $useraccess))
+                        <router-link class="nav-link" to="/sales">Sale Entry</router-link>
+                        @endif
+                        @if(in_array("sale.index", $useraccess))
+                        <router-link class="nav-link" to="/sales-list">Sale List & Report</router-link>
+                        @endif
+                    </nav>
+                </div>
+                @endif
+
+                @if(in_array("supplier.index", $useraccess) || in_array("customer.index", $useraccess))
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-cogs"></i></div>
                     Administration
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         @if(in_array("customer.index", $useraccess))
                         <router-link class="nav-link" to="/customers">Customer</router-link>
@@ -75,12 +93,12 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </div>
                 @endif
                 @if(in_array("department.index", $useraccess) || in_array("employer.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-users"></i></div>
                     HR & Payroll
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         @if(in_array("department.index", $useraccess))
                         <router-link class="nav-link" to="/departments">Department</router-link>

@@ -442,7 +442,7 @@ export default {
         },
 
         AddToCart() {
-            if (this.selectedProduct.product_id != "") {
+            if (this.selectedProduct.id != "") {
                 let cartInd = this.carts.findIndex(p => p.id == this.selectedProduct.id);
                 if (cartInd > -1) {
                     this.carts.splice(cartInd, 1)
@@ -458,7 +458,7 @@ export default {
                     return
                 }
                 this.product = {
-                    id: this.selectedProduct.id,
+                    product_id: this.selectedProduct.id,
                     name: this.selectedProduct.name,
                     purchase_price: this.selectedProduct.purchase_price,
                     selling_price: this.selectedProduct.selling_price,

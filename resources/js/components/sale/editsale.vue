@@ -7,7 +7,7 @@
                         <div class="row">
                             <label for="invoice" class="col-4 col-lg-1">Invoice:</label>
                             <div class="col-8 col-lg-2">
-                                <input type="text" v-model="purchase.invoice" readonly class="form-control shadow-none">
+                                <input type="text" v-model="sale.invoice" readonly class="form-control shadow-none">
                             </div>
 
                             <label for="category" class="col-4 col-lg-2">Category:</label>
@@ -32,39 +32,39 @@
             <div class="col-12 col-lg-9">
                 <div class="card mt-2">
                     <div class="card-header">
-                        <h4>Supplier && Product Information</h4>
+                        <h4>Customer && Product Information</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="row mt-2">
-                                    <label for="supplier_id"
-                                        class="col-5 col-lg-4 d-flex align-items-center">Supplier:</label>
+                                    <label for="customer_id"
+                                        class="col-5 col-lg-4 d-flex align-items-center">Customer:</label>
                                     <div class="col-7 col-lg-8">
                                         <div class="input-group">
-                                            <v-select label="display_name" id="supplier" name="supplier_id"
-                                                :options="suppliers" v-model="selectedSupplier"
-                                                @input="onChangeSupplier"></v-select>
-                                            <a href="/suppliers" target="_blank" class="btn btn-success shadow-none"
+                                            <v-select label="display_name" id="customer" name="customer_id"
+                                                :options="customers" v-model="selectedCustomer"
+                                                @input="onChangeCustomer"></v-select>
+                                            <a href="/customers" target="_blank" class="btn btn-success shadow-none"
                                                 style="padding: 4px 6px;"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-2"
-                                    :style="{ display: selectedSupplier.supplier_type != 'G' ? 'none' : '' }">
+                                    :style="{ display: selectedCustomer.customer_type != 'G' ? 'none' : '' }">
                                     <label for="name" class="col-5 col-lg-4 d-flex align-items-center">Name:</label>
                                     <div class="col-7 col-lg-8">
                                         <input type="text" id="name" name="name" class="form-control shadow-none"
-                                            v-model="selectedSupplier.name" autocomplete="off"
-                                            :readonly="selectedSupplier.supplier_type != 'G' ? true : false" />
+                                            v-model="selectedCustomer.name" autocomplete="off"
+                                            :readonly="selectedCustomer.customer_type != 'G' ? true : false" />
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <label for="phone" class="col-5 col-lg-4 d-flex align-items-center">Phone:</label>
                                     <div class="col-7 col-lg-8">
                                         <input type="text" id="phone" name="phone" class="form-control shadow-none"
-                                            v-model="selectedSupplier.phone" autocomplete="off"
-                                            :readonly="selectedSupplier.supplier_type != 'G' ? true : false" />
+                                            v-model="selectedCustomer.phone" autocomplete="off"
+                                            :readonly="selectedCustomer.customer_type != 'G' ? true : false" />
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -72,8 +72,8 @@
                                         class="col-5 col-lg-4 d-flex align-items-center">Address:</label>
                                     <div class="col-7 col-lg-8">
                                         <textarea id="address" name="address" class="form-control shadow-none"
-                                            v-model="selectedSupplier.address" autocomplete="off"
-                                            :readonly="selectedSupplier.supplier_type != 'G' ? true : false"></textarea>
+                                            v-model="selectedCustomer.address" autocomplete="off"
+                                            :readonly="selectedCustomer.customer_type != 'G' ? true : false"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -92,17 +92,10 @@
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <label for="purchase_price"
-                                        class="col-5 col-lg-4 d-flex align-items-center">Pur.Rate:</label>
-                                    <div class="col-7 col-lg-3 pe-lg-0">
-                                        <input type="text" id="purchase_price" name="purchase_price"
-                                            class="form-control shadow-none" @input="cartQtyPurchaseChange"
-                                            v-model="selectedProduct.purchase_price" autocomplete="off" />
-                                    </div>
-                                    <label for="quantity" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
-                                    <div class="col-7 col-lg-4">
+                                    <label for="quantity" class="col-5 col-lg-4 d-flex align-items-center">Qty:</label>
+                                    <div class="col-7 col-lg-8">
                                         <input type="number" id="quantity" name="quantity"
-                                            v-model="selectedProduct.quantity" @input="cartQtyPurchaseChange"
+                                            v-model="selectedProduct.quantity" @input="cartQtySaleChange"
                                             class="form-control shadow-none" autocomplete="off" />
                                     </div>
                                 </div>
@@ -138,7 +131,7 @@
                                 <tr>
                                     <th class="text-center">Sl</th>
                                     <th class="text-center">Product Name</th>
-                                    <th class="text-center">Purchase Rate</th>
+                                    <th class="text-center">Sale Rate</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-center">Total Amount</th>
                                     <th class="text-center">Action</th>
@@ -148,7 +141,7 @@
                                 <tr v-for="(item, index) in carts" :key="index">
                                     <td class="text-center">{{ index + 1 }}</td>
                                     <td class="text-center">{{ item.name }}</td>
-                                    <td class="text-center">{{ item.purchase_price }}</td>
+                                    <td class="text-center">{{ item.selling_price }}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ item.total_amount }}</td>
                                     <td class="text-center">
@@ -162,7 +155,7 @@
                                         <div class="form-group row">
                                             <label for="note" class="col-5">Note:</label>
                                             <div class="col-7">
-                                                <textarea name="note" id="note" v-model="purchase.note"
+                                                <textarea name="note" id="note" v-model="sale.note"
                                                     class="form-control shadow-none"></textarea>
                                             </div>
                                         </div>
@@ -184,15 +177,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <form @submit.prevent="savePurchase">
+                            <form @submit.prevent="saveSale">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="date">Date:</label>
-                                        <VueDatePicker v-model="purchase.date" :style="color" />
+                                        <VueDatePicker v-model="sale.date" :style="color" />
                                     </div>
                                     <div class="form-group">
                                         <label for="subtotal">SubTotal:</label>
-                                        <input type="number" id="subtotal" name="subtotal" v-model="purchase.subtotal"
+                                        <input type="number" id="subtotal" name="subtotal" v-model="sale.subtotal"
                                             class="form-control shadow-none" readonly>
                                     </div>
                                     <div class="form-group">
@@ -201,7 +194,7 @@
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
                                                     <input type="number" style="height:30px;" id="vat" name="vat"
-                                                        @input="TotalAmount" v-model="purchase.vat"
+                                                        @input="TotalAmount" v-model="sale.vat"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
                                                         class="btn btn-warning">%</span>
@@ -209,7 +202,7 @@
                                             </div>
                                             <div class="col-6 col-lg-5">
                                                 <input type="number" id="vat_amount" name="vat_amount"
-                                                    v-model="purchase.vat_amount" class="form-control shadow-none"
+                                                    v-model="sale.vat_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
                                         </div>
@@ -220,7 +213,7 @@
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
                                                     <input type="number" style="height:30px;" id="discount"
-                                                        @input="TotalAmount" name="discount" v-model="purchase.discount"
+                                                        @input="TotalAmount" name="discount" v-model="sale.discount"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
                                                         class="btn btn-warning">%</span>
@@ -228,7 +221,7 @@
                                             </div>
                                             <div class="col-6 col-lg-5">
                                                 <input type="number" id="discount_amount" name="discount_amount"
-                                                    v-model="purchase.discount_amount" class="form-control shadow-none"
+                                                    v-model="sale.discount_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
                                         </div>
@@ -236,17 +229,17 @@
                                     <div class="form-group">
                                         <label for="transport_cost">Labour Cost/Transport Cost:</label>
                                         <input type="number" id="transport_cost" name="transport_cost"
-                                            @input="TotalAmount" v-model="purchase.transport_cost"
+                                            @input="TotalAmount" v-model="sale.transport_cost"
                                             class="form-control shadow-none">
                                     </div>
                                     <div class="form-group">
                                         <label for="total">Total:</label>
-                                        <input type="number" id="total" name="total" v-model="purchase.total"
+                                        <input type="number" id="total" name="total" v-model="sale.total"
                                             class="form-control shadow-none" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="payment_type">Payment Type:</label>
-                                        <select name="payment_type" id="payment_type" v-model="purchase.payment_type"
+                                        <select name="payment_type" id="payment_type" v-model="sale.payment_type"
                                             class="form-control shadow-none">
                                             <option value="cash">Cash</option>
                                             <option value="bank">Bank</option>
@@ -255,23 +248,23 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="purchase.paid" class="form-control shadow-none">
+                                            v-model="sale.paid" class="form-control shadow-none">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="due">Due:</label>
-                                                <input type="text" id="due" name="due" v-model="purchase.due"
+                                                <input type="text" id="due" name="due" v-model="sale.due"
                                                     class="form-control shadow-none"
-                                                    :style="{ color: purchase.due < 0 ? 'red' : 'black' }" readonly>
+                                                    :style="{ color: sale.due < 0 ? 'red' : 'black' }" readonly>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="previous_due">Pre.Due:</label>
                                                 <input type="text" id="previous_due"
-                                                    :value="purchase.previous_due"
-                                                    :style="{ color: purchase.previous_due != 0 ? 'red' : 'black' }"
+                                                    :value="sale.previous_due"
+                                                    :style="{ color: sale.previous_due != 0 ? 'red' : 'black' }"
                                                     class="form-control shadow-none" readonly>
                                             </div>
                                         </div>
@@ -281,7 +274,7 @@
                                             <button class="btn btn-secondary shadow-none w-100">Reset</button>
                                         </div>
                                         <div class="col-7">
-                                            <button class="btn btn-success shadow-none w-100">Purchase</button>
+                                            <button class="btn btn-success shadow-none w-100">Sale</button>
                                         </div>
                                     </div>
                                 </div>
@@ -315,14 +308,14 @@ export default {
                 id: "",
                 name: "Select Brand"
             },
-            suppliers: [],
-            selectedSupplier: {
+            customers: [],
+            selectedCustomer: {
                 id: "",
-                display_name: "Select Suplier",
+                display_name: "Select Customer",
                 name: "",
                 phone: "",
                 address: "",
-                supplier_type: "",
+                customer_type: "",
                 previous_due: 0,
             },
             products: [],
@@ -338,7 +331,7 @@ export default {
                 total_amount: ''
             },
             carts: [],
-            purchase: {
+            sale: {
                 id: "",
                 date: moment(new Date()).format("YYYY-MM-DD"),
                 subtotal: 0,
@@ -363,11 +356,11 @@ export default {
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
-        this.purchase.added_by = this.user_id;
-        this.getPurchase();
+        this.sale.added_by = this.user_id;
+        this.getSale();
         this.getCategory();
         this.getBrand();
-        this.getSupplier();
+        this.getCustomer();
         this.getProduct();
         this.getPermission();
         this.logOut();
@@ -386,10 +379,10 @@ export default {
                 this.brands.unshift({ id: 0, name: "Select Brand" })
             });
         },
-        getSupplier() {
-            axios.get("/api/get_supplier").then((res) => {
-                this.suppliers = res.data.suppliers;
-                this.suppliers.unshift({ id: 0, display_name: "General Supplier", supplier_type: "G" })
+        getCustomer() {
+            axios.get("/api/get_customer").then((res) => {
+                this.customers = res.data.customers;
+                this.customers.unshift({ id: 0, display_name: "General Customer", customer_type: "G" })
             });
         },
         getProduct() {
@@ -399,50 +392,50 @@ export default {
                 this.products.unshift({ id: 0, display_name: "Select Product" })
             });
         },
-        getPurchase() {
+        getSale() {
             let data = {invoice: this.$route.params.id}
-            axios.post("/api/get_purchase", data).then((res) => {
-                this.purchase = res.data.purchases[0]
-                this.carts = res.data.purchases[0].purchaseDetails
-                if(res.data.purchases[0].supplier_type == "G"){
-                    this.selectedSupplier = {
-                        id: res.data.purchases[0].supplier_id,
-                        name: res.data.purchases[0].name,
+            axios.post("/api/get_sale", data).then((res) => {
+                this.sale = res.data.sales[0]
+                this.carts = res.data.sales[0].saleDetails
+                if(res.data.sales[0].customer_type == "G"){
+                    this.selectedCustomer = {
+                        id: res.data.sales[0].customer_id,
+                        name: res.data.sales[0].name,
                         display_name: "General Supplier",
-                        phone: res.data.purchases[0].phone,
-                        address: res.data.purchases[0].address,
-                        supplier_type: res.data.purchases[0].supplier_type
+                        phone: res.data.sales[0].phone,
+                        address: res.data.sales[0].address,
+                        customer_type: res.data.sales[0].customer_type
                     }
                 }else{
-                    this.selectedSupplier = {
-                        id: res.data.purchases[0].supplier_id,
-                        name: res.data.purchases[0].name,
-                        display_name: res.data.purchases[0].display_name,
-                        phone: res.data.purchases[0].phone,
-                        address: res.data.purchases[0].address,
-                        supplier_type: res.data.purchases[0].supplier_type
+                    this.selectedCustomer = {
+                        id: res.data.sales[0].customer_id,
+                        name: res.data.sales[0].name,
+                        display_name: res.data.sales[0].display_name,
+                        phone: res.data.sales[0].phone,
+                        address: res.data.sales[0].address,
+                        customer_type: res.data.sales[0].customer_type
                     }
                 }
             });
         },
 
-        onChangeSupplier() {
-            if (this.selectedSupplier == null) {
-                this.selectedSupplier = {
+        onChangeCustomer() {
+            if (this.selectedCustomer == null) {
+                this.selectedCustomer = {
                     id: "",
                     name: "",
                     display_name: "",
                     phone: "",
                     address: "",
-                    supplier_type: "",
+                    customer_type: "",
                     previous_due: 0,
                 }
                 return
             }
-            if (this.selectedSupplier.id == "") {
-                this.selectedSupplier.previous_due = 0
+            if (this.selectedCustomer.id == "") {
+                this.selectedCustomer.previous_due = 0
             }
-            this.purchase.previous_due = this.selectedSupplier.previous_due
+            this.sale.previous_due = this.selectedCustomer.previous_due
         },
         onChangeProduct() {
             if (this.selectedProduct == null) {
@@ -458,12 +451,12 @@ export default {
             }
         },
 
-        cartQtyPurchaseChange() {
-            this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.purchase_price).toFixed(2)
+        cartQtySaleChange() {
+            this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2)
         },
 
         AddToCart() {
-            if (this.selectedProduct.product_id != "") {
+            if (this.selectedProduct.id != "") {
                 let cartInd = this.carts.findIndex(p => p.id == this.selectedProduct.id);
                 if (cartInd > -1) {
                     this.carts.splice(cartInd, 1)
@@ -479,12 +472,12 @@ export default {
                     return
                 }
                 this.product = {
-                    product_id    : this.selectedProduct.id,
-                    name          : this.selectedProduct.name,
+                    product_id: this.selectedProduct.id,
+                    name: this.selectedProduct.name,
                     purchase_price: this.selectedProduct.purchase_price,
-                    selling_price : this.selectedProduct.selling_price,
-                    quantity      : this.selectedProduct.quantity,
-                    total_amount  : this.selectedProduct.total_amount,
+                    selling_price: this.selectedProduct.selling_price,
+                    quantity: this.selectedProduct.quantity,
+                    total_amount: this.selectedProduct.total_amount,
                 }
 
                 this.carts.push(this.product)
@@ -503,19 +496,19 @@ export default {
         },
 
         TotalAmount() {
-            this.purchase.subtotal = this.carts.reduce((acc, pre) => { return (+parseFloat(acc) + +parseFloat(pre.total_amount)).toFixed(2) }, 0)
-            this.purchase.due = this.purchase.subtotal
-            this.purchase.total = this.purchase.subtotal
+            this.sale.subtotal = this.carts.reduce((acc, pre) => { return (+parseFloat(acc) + +parseFloat(pre.total_amount)).toFixed(2) }, 0)
+            this.sale.due = this.sale.subtotal
+            this.sale.total = this.sale.subtotal
             //vat calculate
-            this.purchase.vat_amount = ((parseFloat(this.purchase.subtotal) * this.purchase.vat) / 100).toFixed(2)
-            this.purchase.total = (parseFloat(this.purchase.total) + parseFloat(this.purchase.vat_amount)).toFixed(2)
+            this.sale.vat_amount = ((parseFloat(this.sale.subtotal) * this.sale.vat) / 100).toFixed(2)
+            this.sale.total = (parseFloat(this.sale.total) + parseFloat(this.sale.vat_amount)).toFixed(2)
             //discount calculate
-            this.purchase.discount_amount = ((parseFloat(this.purchase.subtotal) * this.purchase.discount) / 100).toFixed(2)
-            this.purchase.total = (parseFloat(this.purchase.total) - parseFloat(this.purchase.discount_amount)).toFixed(2)
+            this.sale.discount_amount = ((parseFloat(this.sale.subtotal) * this.sale.discount) / 100).toFixed(2)
+            this.sale.total = (parseFloat(this.sale.total) - parseFloat(this.sale.discount_amount)).toFixed(2)
             //transport_cost calculate
-            this.purchase.total = (+parseFloat(this.purchase.total) + +this.purchase.transport_cost).toFixed(2)
+            this.sale.total = (+parseFloat(this.sale.total) + +this.sale.transport_cost).toFixed(2)
             //total paid claculate
-            this.purchase.due = (parseFloat(this.purchase.total) - parseFloat(this.purchase.paid)).toFixed(2)
+            this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
         },
         removeCart(item) {
             var index = this.carts.indexOf(item);
@@ -523,24 +516,24 @@ export default {
             this.TotalAmount()
         },
 
-        savePurchase(event) {
+        saveSale(event) {
             let data = {
-                purchase: this.purchase,
+                sale: this.sale,
                 carts: this.carts,
-                supplier: this.selectedSupplier
+                customer: this.selectedCustomer
             }
-            axios.post("/api/save_purchase", data)
+            axios.post("/api/save_sale", data)
                 .then(res => {
                     alert(res.data)
                     this.clearData()
-                    this.getPurchase()
+                    this.getSale()
                     this.carts = [];
-                    this.$router.push({path: "/purchases-list"})
+                    this.$router.push({path: "/sales-list"})
                 })
         },
 
         clearData() {
-            this.purchase = {
+            this.sale = {
                 date: moment(new Date()).format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
@@ -558,7 +551,7 @@ export default {
                 added_by: "",
                 account_id: "",
             }
-            this.selectedSupplier = {
+            this.selectedCustomer = {
                     id: "",
                     name: "",
                 }
@@ -595,11 +588,11 @@ export default {
     },
     watch: {
         useraccess() {
-            this.useraccess.includes("purchase.edit") ? "" : location.href = "/unauthorize"
+            this.useraccess.includes("sale.edit") ? "" : location.href = "/unauthorize"
         },
     },
     mounted() {
-        document.title = "Perchase Edit Page"
+        document.title = "Sale Edit Page"
     },
 };
 </script>

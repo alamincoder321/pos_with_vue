@@ -111,6 +111,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "sale",
+                "permission" => [
+                    "sale.index",
+                    "sale.edit",
+                    "sale.store",
+                    "sale.delete",
+                ],
+            ],
+            [
                 "group_name" => "unit",
                 "permission" => [
                     "unit.index",

@@ -102,35 +102,34 @@ class SaleController extends Controller
 
             if ($request->sale['id'] != null) {
                 $last_id = $request->sale['id'];
+                $salequantities = SaleDetail::where("sale_id", $last_id)->get();
+                foreach($salequantities as $inventoryqty){
+                    $inventoryQtyUpdate = ProductInventory::where("product_id", $inventoryqty->product_id)->first();
+                    $inventoryQtyUpdate->sale_qty = $inventoryQtyUpdate->sale_qty-$inventoryqty->quantity;
+                    $inventoryQtyUpdate->save();
+                }
                 SaleDetail::where("sale_id", $last_id)->delete();
             } else {
                 $last_id = $data->id;
             }
             foreach ($request->carts as $item) {
-                $details = new SaleDetail();
-                $details->sale_id = $last_id;
-                if ($request->sale['id'] != null) {
-                    $details->product_id = $item['product_id'];
-                } else {
-                    $details->product_id = $item['id'];
-                }
-                $details->quantity = $item['quantity'];
+                $details                = new SaleDetail();
+                $details->sale_id       = $last_id;
+                $details->product_id    = $item['product_id'];
+                $details->quantity      = $item['quantity'];
                 $details->selling_price = $item['selling_price'];
-                $details->total_amount = $item['total_amount'];
+                $details->total_amount  = $item['total_amount'];
                 $details->save();
 
                 //inventory-update
-                if ($request->sale['id'] != null) {
-                    $inventory_check = ProductInventory::where("product_id", $item['product_id'])->first();
-                } else {
-                    $inventory_check = ProductInventory::where("product_id", $item['id'])->first();
-                }
+                $inventory_check = ProductInventory::where("product_id", $item['product_id'])->first();
+
                 if (!empty($inventory_check)) {
-                    $inventory_check->sale_qty = $item['quantity'];
+                    $inventory_check->sale_qty = $inventory_check->sale_qty+$item['quantity'];
                     $inventory_check->save();
                 } else {
                     $new_inventory = new ProductInventory();
-                    $new_inventory->product_id = $item['id'];
+                    $new_inventory->product_id = $item['product_id'];
                     $new_inventory->sale_qty = $item['quantity'];
                     $new_inventory->save();
                 }

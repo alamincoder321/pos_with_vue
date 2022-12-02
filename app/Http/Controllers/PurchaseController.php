@@ -103,46 +103,41 @@ class PurchaseController extends Controller
 
             if ($request->purchase['id'] != null) {
                 $last_id = $request->purchase['id'];
+                $purchaseqtys = PurchaseDetails::where("purchase_id", $last_id)->get();
+                foreach($purchaseqtys as $inventoryqty){
+                    $inventoryQtyUpdate = ProductInventory::where("product_id", $inventoryqty->product_id)->first();
+                    $inventoryQtyUpdate->purchase_qty = $inventoryQtyUpdate->purchase_qty-$inventoryqty->quantity;
+                    $inventoryQtyUpdate->save();
+                }
                 PurchaseDetails::where("purchase_id", $last_id)->delete();
             } else {
                 $last_id = $data->id;
             }
             foreach ($request->carts as $item) {
-                $details = new PurchaseDetails();
-                $details->purchase_id = $last_id;
-                if ($request->purchase['id'] != null) {
-                    $details->product_id = $item['product_id'];
-                } else {
-                    $details->product_id = $item['id'];
-                }
-                $details->quantity = $item['quantity'];
+                $details                 = new PurchaseDetails();
+                $details->purchase_id    = $last_id;
+                $details->product_id     = $item['product_id'];
+                $details->quantity       = $item['quantity'];
                 $details->purchase_price = $item['purchase_price'];
-                $details->selling_price = $item['selling_price'];
-                $details->total_amount = $item['total_amount'];
+                $details->selling_price  = $item['selling_price'];
+                $details->total_amount   = $item['total_amount'];
                 $details->save();
 
                 //inventory-update
-                if ($request->purchase['id'] != null) {
-                    $inventory_check = ProductInventory::where("product_id", $item['product_id'])->first();
-                } else {
-                    $inventory_check = ProductInventory::where("product_id", $item['id'])->first();
-                }
+                $inventory_check = ProductInventory::where("product_id", $item['product_id'])->first();
+
                 if (!empty($inventory_check)) {
-                    $inventory_check->purchase_qty = $item['quantity'];
+                    $inventory_check->purchase_qty = $inventory_check->purchase_qty+$item['quantity'];
                     $inventory_check->save();
                 } else {
                     $new_inventory = new ProductInventory();
-                    $new_inventory->product_id = $item['id'];
+                    $new_inventory->product_id = $item['product_id'];
                     $new_inventory->purchase_qty = $item['quantity'];
                     $new_inventory->save();
                 }
 
                 //update product price
-                if ($request->purchase['id'] != null) {
-                    $productchange = Product::where("id", $item['product_id'])->first();
-                } else {
-                    $productchange = Product::where("id", $item['id'])->first();
-                }
+                $productchange = Product::where("id", $item['product_id'])->first();
                 $productchange->purchase_price = $item['purchase_price'];
                 $productchange->selling_price = $item['selling_price'];
                 $productchange->save();
@@ -156,5 +151,17 @@ class PurchaseController extends Controller
         } catch (\Throwable $e) {
             return "Opps! something went wrong";
         }
+    }
+
+    public function deletePurchase($id)
+    {
+        $details = PurchaseDetails::where("purchase_id", $id)->get();
+        foreach ($details as $item) {
+            $inventory = ProductInventory::where("product_id", $item->product_id)->first();
+            $inventory->purchase_qty = $inventory->purchase_qty - $item->quantity;
+            $inventory->save();
+        }
+        Purchase::find($id)->delete();
+        return "Purchae Delete";
     }
 }

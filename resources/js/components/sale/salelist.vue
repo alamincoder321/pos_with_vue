@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-lg-1 mt-lg-0 mt-3">
                                 <label></label>
-                                <button type="button" @click="getSearchPurchase" class="searchBtn">Submit</button>
+                                <button type="button" @click="getSearchSale" class="searchBtn">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -50,13 +50,13 @@
                         <tr class="text-center" style="font-size: 12px;">
                             <th>Invoice No.</th>
                             <th>Date</th>
-                            <th>Supplier Details</th>
-                            <th>Purchase Amount Details</th>
+                            <th>Customer Details</th>
+                            <th>Sale Amount Details</th>
                             <th class="hideAction">Action</th>
                         </tr>
                     </thead>
                     <tbody style="border:0; font-size: 12px;">
-                        <tr v-for="(item, index) in purchases" :key="index">
+                        <tr v-for="(item, index) in sales" :key="index">
                             <td>#{{ item.invoice }}</td>
                             <td>{{ formatDate(item.date) }}</td>
                             <td>
@@ -76,14 +76,14 @@
                             <td class="hideAction">
                                 <span @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
                                         class="fas fa-trash text-danger"></i></span>
-                                <router-link style="margin-right: 5px;" :to="{ path: '/purchases-edit/'+item.invoice }">
+                                <router-link style="margin-right: 5px;" :to="{ path: '/sales-edit/'+item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
                                 </router-link>                               
                                 <span @click="PrintInvoice" style="cursor:pointer;"><i
                                         class="fas fa-print text-info"></i></span>
                             </td>
                         </tr>
-                        <tr :style="{ display: purchases.length == 0 ? '' : 'none' }">
+                        <tr :style="{ display: sales.length == 0 ? '' : 'none' }">
                             <td colspan="5" class="text-center">Not Found Data</td>
                         </tr>
                     </tbody>
@@ -112,32 +112,32 @@ export default {
                 invoice: "",
             },
 
-            purchases: [],
+            sales: [],
             useraccess: [],
             user_id: null,
         }
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
-        this.getSearchPurchase();
-        this.getPurchases();
+        this.getSearchSale();
+        this.getSale();
         this.getPermission();
         this.logOut();
     },
     methods: {
-        getSearchPurchase() {
+        getSearchSale() {
             let data = {
                 dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
                 dateTo: this.dateTo,
                 invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
             }
-            axios.post("/api/get_purchase", data).then((res) => {
-                this.purchases = res.data.purchases
+            axios.post("/api/get_sale", data).then((res) => {
+                this.sales = res.data.sales
             });
         },
-        getPurchases() {
-            axios.post("/api/get_purchase").then((res) => {
-                this.invoices = res.data.purchases
+        getSale() {
+            axios.post("/api/get_sale").then((res) => {
+                this.invoices = res.data.sales
             });
         },
         onChangeValue() {
@@ -151,7 +151,7 @@ export default {
 
         InvoiceDelete(id){
             if(confirm("Are you sure want to delete")){
-                axios.get("/api/delete_purchase/" + id).then((res) => {
+                axios.get("/api/delete_sale/" + id).then((res) => {
                     console.log(res.data);
                 });
             }
@@ -209,12 +209,12 @@ export default {
 
     watch: {
         useraccess() {
-            this.useraccess.includes("purchase.index") ? "" : location.href = "/unauthorize"
+            this.useraccess.includes("sale.index") ? "" : location.href = "/unauthorize"
         }
     },
 
     mounted() {
-        document.title = "Purchase List Page"
+        document.title = "Sale List Page"
     },
 };
 </script>
