@@ -59,6 +59,7 @@ class PurchaseController extends Controller
     public function savePurchase(Request $request)
     {
         try {
+            DB::beginTransaction();
             if ($request->purchase['id'] == null) {
                 $data = new Purchase();
             } else {
@@ -143,12 +144,15 @@ class PurchaseController extends Controller
                 $productchange->save();
             }
 
+            DB::commit();
+
             if ($request->purchase['id'] == null) {
                 return "Purchase save successfully";
             } else {
                 return "Purchase updated successfully";
             }
         } catch (\Throwable $e) {
+            DB::rollback();
             return "Opps! something went wrong";
         }
     }

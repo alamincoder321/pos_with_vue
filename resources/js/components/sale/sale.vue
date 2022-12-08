@@ -494,14 +494,28 @@ export default {
         },
 
         saveSale(event) {
+            if(this.selectedCustomer.id == ""){
+                alert("Select Customer")
+                document.querySelector("#customer [type='search']").focus()
+                reutrn
+            }
+            if(this.carts.length == 0){
+                alert("Cart is Empty")
+                document.querySelector("#product [type='search']").focus()
+                reutrn
+            }
             let data = {
                 sale: this.sale,
                 carts: this.carts,
                 customer: this.selectedCustomer
             }
+
             axios.post("/api/save_sale", data)
                 .then(res => {
-                    alert(res.data)
+                    alert(res.data.msg)
+                    if(confirm("Are you sure want print")){
+                        this.$router.push({path: '/invoice/' + res.data.invoice})
+                    }
                     this.clearData()
                     this.getSale()
                     this.carts = [];

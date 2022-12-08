@@ -5483,6 +5483,402 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      color: {
+        background: '#ffadb4',
+        borderRadius: '0.2rem',
+        height: '28px'
+      },
+      columns: [{
+        label: "Payment Date",
+        field: "date"
+      }, {
+        label: "Customer",
+        field: "name"
+      }, {
+        label: "Payment Type",
+        field: "payment_type"
+      }, {
+        label: "Bank Name",
+        field: "bank_name"
+      }, {
+        label: "Payment Amount",
+        field: "payment_amount"
+      }, {
+        label: "Added By",
+        field: "user_name"
+      }, {
+        label: "Action",
+        field: "before"
+      }],
+      customerpayments: [],
+      customerpayment: {
+        id: "",
+        date: moment(new Date()).format("YYYY-MM-DD"),
+        payment_type: "cash",
+        bank_id: "",
+        customer_id: "",
+        due: 0.00,
+        payment_amount: 0.00,
+        description: "",
+        added_by: ""
+      },
+      customers: [],
+      selectedCustomer: null,
+      banks: [],
+      selectedBank: null,
+      useraccess: [],
+      user_id: null
+    };
+  },
+  created: function created() {
+    this.user_id = localStorage.getItem("user_id");
+    this.customerpayment.added_by = this.user_id;
+    this.getCustomer();
+    this.getBank();
+    this.getCustomerPayment();
+    this.getPermission();
+    this.logOut();
+  },
+  methods: {
+    getCustomer: function getCustomer() {
+      var _this = this;
+      axios.get("/api/get_customer").then(function (res) {
+        _this.customers = res.data.customers;
+        _this.customers.unshift({
+          id: 0,
+          display_name: 'Select Customer'
+        });
+      });
+    },
+    getBank: function getBank() {
+      var _this2 = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this2.banks = res.data;
+        _this2.banks.unshift({
+          id: 0,
+          display_name: 'Select Bank'
+        });
+      });
+    },
+    getCustomerPayment: function getCustomerPayment() {
+      var _this3 = this;
+      axios.get("/api/get_customerpayment").then(function (res) {
+        _this3.customerpayments = res.data;
+      });
+    },
+    onChangeCustomer: function onChangeCustomer() {
+      this.customerpayment.customer_id = this.selectedCustomer.id;
+    },
+    onChangeBank: function onChangeBank() {
+      this.customerpayment.bank_id = this.selectedBank.id;
+    },
+    saveCustomerPayment: function saveCustomerPayment(event) {
+      var _this4 = this;
+      if (this.selectedCustomer == null) {
+        alert("Select Customer Name");
+        return;
+      }
+      if (this.customerpayment.payment_amount == "") {
+        alert("Payment amount is empty");
+        return;
+      }
+      if (this.customerpayment.payment_type == "bank") {
+        if (this.selectedBank == null) {
+          alert("Please Select Bank account");
+        }
+      }
+      axios.post(location.origin + "/api/save_customerpayment", this.customerpayment).then(function (res) {
+        alert(res.data);
+        _this4.clearData();
+        _this4.getCustomerPayment();
+      });
+    },
+    editRow: function editRow(val) {
+      this.customerpayment = {
+        id: val.id,
+        date: val.date,
+        payment_type: val.payment_type,
+        bank_id: val.bank_id,
+        customer_id: val.customer_id,
+        due: val.due,
+        payment_amount: val.payment_amount,
+        description: val.description,
+        added_by: val.added_by
+      };
+      this.selectedCustomer = {
+        id: val.customer_id,
+        display_name: "".concat(val.customer_code, "-").concat(val.name)
+      };
+      this.selectedBank = {
+        id: val.bank_id,
+        display_name: "".concat(val.account_no, "-").concat(val.bank_name)
+      };
+    },
+    deleteRow: function deleteRow(id) {
+      var _this5 = this;
+      if (confirm("Are you sure")) {
+        axios.get("/api/delete_customerpayment/" + id).then(function (res) {
+          alert(res.data);
+          _this5.getCustomerPayment();
+        });
+      }
+    },
+    clearData: function clearData() {
+      this.customerpayment = {
+        id: "",
+        date: moment(new Date()).format("YYYY-MM-DD"),
+        payment_type: "cash",
+        bank_id: "",
+        customer_id: "",
+        due: 0.00,
+        payment_amount: 0.00,
+        description: ""
+      };
+      this.selectedCustomer = null;
+      this.selectedBank = null;
+      this.getCustomerPayment();
+    },
+    getPermission: function getPermission() {
+      var _this6 = this;
+      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+        _this6.useraccess = Array.from(res.data);
+      });
+    },
+    logOut: function logOut() {
+      if (this.user_id === null) {
+        axios.get(location.origin + "/logout").then(function (res) {
+          alert("Logout");
+          location.reload();
+        });
+      }
+    }
+  },
+  watch: {
+    useraccess: function useraccess() {
+      this.useraccess.includes("customerpayment.index") ? "" : location.href = "/unauthorize";
+    }
+  },
+  mounted: function mounted() {
+    document.title = "Customer Payment Page";
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      color: {
+        background: '#ffadb4',
+        borderRadius: '0.2rem',
+        height: '28px'
+      },
+      columns: [{
+        label: "Payment Date",
+        field: "date"
+      }, {
+        label: "Supplier",
+        field: "name"
+      }, {
+        label: "Payment Type",
+        field: "payment_type"
+      }, {
+        label: "Bank Name",
+        field: "bank_name"
+      }, {
+        label: "Payment Amount",
+        field: "payment_amount"
+      }, {
+        label: "Added By",
+        field: "user_name"
+      }, {
+        label: "Action",
+        field: "before"
+      }],
+      supplierpayments: [],
+      supplierpayment: {
+        id: "",
+        date: moment(new Date()).format("YYYY-MM-DD"),
+        payment_type: "cash",
+        bank_id: "",
+        supplier_id: "",
+        due: 0.00,
+        payment_amount: 0.00,
+        description: "",
+        added_by: ""
+      },
+      suppliers: [],
+      selectedSupplier: null,
+      banks: [],
+      selectedBank: null,
+      useraccess: [],
+      user_id: null
+    };
+  },
+  created: function created() {
+    this.user_id = localStorage.getItem("user_id");
+    this.supplierpayment.added_by = this.user_id;
+    this.getSupplier();
+    this.getBank();
+    this.getSupplierPayment();
+    this.getPermission();
+    this.logOut();
+  },
+  methods: {
+    getSupplier: function getSupplier() {
+      var _this = this;
+      axios.get("/api/get_supplier").then(function (res) {
+        _this.suppliers = res.data.suppliers;
+        _this.suppliers.unshift({
+          id: 0,
+          display_name: 'Select Supplier'
+        });
+      });
+    },
+    getBank: function getBank() {
+      var _this2 = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this2.banks = res.data;
+        _this2.banks.unshift({
+          id: 0,
+          display_name: 'Select Bank'
+        });
+      });
+    },
+    getSupplierPayment: function getSupplierPayment() {
+      var _this3 = this;
+      axios.get("/api/get_supplierpayment").then(function (res) {
+        _this3.supplierpayments = res.data;
+      });
+    },
+    onChangeSupplier: function onChangeSupplier() {
+      this.supplierpayment.supplier_id = this.selectedCustomer.id;
+    },
+    onChangeBank: function onChangeBank() {
+      this.supplierpayment.bank_id = this.selectedBank.id;
+    },
+    saveSupplierPayment: function saveSupplierPayment(event) {
+      var _this4 = this;
+      if (this.selectedSupplier == null) {
+        alert("Select Supplier Name");
+        return;
+      }
+      if (this.supplierpayment.payment_amount == "") {
+        alert("Payment amount is empty");
+        return;
+      }
+      if (this.supplierpayment.payment_type == "bank") {
+        if (this.selectedBank == null) {
+          alert("Please Select Bank account");
+        }
+      }
+      this.supplierpayment.bank_id = this.selectedBank.id;
+      this.supplierpayment.supplier_id = this.selectedSupplier.id;
+      axios.post(location.origin + "/api/save_supplierpayment", this.supplierpayment).then(function (res) {
+        alert(res.data);
+        _this4.clearData();
+        _this4.getSupplierPayment();
+      });
+    },
+    editRow: function editRow(val) {
+      this.supplierpayment = {
+        id: val.id,
+        date: val.date,
+        payment_type: val.payment_type,
+        bank_id: val.bank_id,
+        supplier_id: val.supplier_id,
+        due: val.due,
+        payment_amount: val.payment_amount,
+        description: val.description,
+        added_by: val.added_by
+      };
+      this.selectedSupplier = {
+        id: val.supplier_id,
+        display_name: "".concat(val.supplier_code, "-").concat(val.name)
+      };
+      this.selectedBank = {
+        id: val.bank_id,
+        display_name: "".concat(val.account_no, "-").concat(val.bank_name)
+      };
+    },
+    deleteRow: function deleteRow(id) {
+      var _this5 = this;
+      if (confirm("Are you sure")) {
+        axios.get("/api/delete_supplierpayment/" + id).then(function (res) {
+          alert(res.data);
+          _this5.getSupplierPayment();
+        });
+      }
+    },
+    clearData: function clearData() {
+      this.supplierpayment = {
+        id: "",
+        date: moment(new Date()).format("YYYY-MM-DD"),
+        payment_type: "cash",
+        bank_id: "",
+        supplier_id: "",
+        due: 0.00,
+        payment_amount: 0.00,
+        description: ""
+      };
+      this.selectedSupplier = null;
+      this.selectedBank = null;
+      this.getSupplierPayment();
+    },
+    getPermission: function getPermission() {
+      var _this6 = this;
+      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+        _this6.useraccess = Array.from(res.data);
+      });
+    },
+    logOut: function logOut() {
+      if (this.user_id === null) {
+        axios.get(location.origin + "/logout").then(function (res) {
+          alert("Logout");
+          location.reload();
+        });
+      }
+    }
+  },
+  watch: {
+    useraccess: function useraccess() {
+      this.useraccess.includes("supplierpayment.index") ? "" : location.href = "/unauthorize";
+    }
+  },
+  mounted: function mounted() {
+    document.title = "Supplier Payment Page";
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/administration/customer.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/administration/customer.vue?vue&type=script&lang=js& ***!
@@ -6361,6 +6757,86 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   },
   mounted: function mounted() {
     document.title = "Employer Page";
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      company: [],
+      sales: []
+    };
+  },
+  created: function created() {
+    this.getSales();
+    this.getCompany();
+  },
+  mounted: function mounted() {
+    document.title = "Sales Invoice";
+  },
+  methods: {
+    getCompany: function getCompany() {
+      var _this = this;
+      axios.get("/api/get_company_profile").then(function (res) {
+        _this.company = res.data;
+      });
+    },
+    getSales: function getSales() {
+      var _this2 = this;
+      axios.post("/api/get_sale", {
+        invoice: this.$route.params.id
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.sales = Array.from(res.data.sales);
+      });
+    },
+    formatDate: function formatDate(date) {
+      return moment(date).format("DD/MM/YYYY");
+    },
+    PrintInvoice: function PrintInvoice() {
+      var _this3 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var myWindow;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                myWindow = window.open('', 'PRINT');
+                myWindow.document.write("\n                <html>\n                    <head>\n                        <title>Invoice</title>\n                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />\n                        <style>\n                            * {\n                                font-family: unset;\n                            }\n\n                            .table thead tr th {\n                                font-size: 12px;\n                            }\n\n                            .table tbody tr td {\n                                font-size: 12px;\n                            }\n\n                            img {\n                                width: 100%;\n                                height: 70px;\n                            }\n\n                            h2 {\n                                color: #939393 !important;\n                            }\n\n                            @media print {\n                                img {\n                                    width: 100% !important;\n                                    height: 70px !important;\n                                }\n\n                                h2 {\n                                    color: #939393 !important;\n                                }\n                            }\n                        </style>\n                    </head>\n                    <body>\n                        <div class='container'>\n                            <div class=\"row mb-2\">\n                                <div class=\"col-2\">\n                                    <img src=\"".concat(_this3.company.company_logo ? location.origin + "/" + _this3.company.company_logo : location.origin + '/no-image.jpg', "\">\n                                </div>\n                                <div class=\"col-10 text-center\">\n                                    <h2 class=\"text-uppercase m-0\">").concat(_this3.company.name, "</h2>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.owner_name, "</p>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.phone, "</p>\n                                    <address>").concat(_this3.company.address, "</address>\n                                </div>\n                            </div>    \n                            ").concat(document.querySelector("#invoice").innerHTML, "\n                        </div>\n                    </body>\n                </html>\n\t\t\t"));
+                myWindow.focus();
+                _context.next = 5;
+                return new Promise(function (resolve) {
+                  return setTimeout(resolve, 1000);
+                });
+              case 5:
+                myWindow.print();
+                myWindow.close();
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
   }
 });
 
@@ -7427,13 +7903,19 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         customer: this.selectedCustomer
       };
       axios.post("/api/save_sale", data).then(function (res) {
-        alert(res.data);
+        alert(res.data.msg);
+        if (confirm("Are you sure want print")) {
+          _this7.$router.push({
+            path: '/invoice/' + res.data.invoice
+          });
+        } else {
+          _this7.$router.push({
+            path: "/sales-list"
+          });
+        }
         _this7.clearData();
         _this7.getSale();
         _this7.carts = [];
-        _this7.$router.push({
-          path: "/sales-list"
-        });
       });
     },
     clearData: function clearData() {
@@ -7743,13 +8225,28 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     saveSale: function saveSale(event) {
       var _this7 = this;
+      if (this.selectedCustomer.id == "") {
+        alert("Select Customer");
+        document.querySelector("#customer [type='search']").focus();
+        reutrn;
+      }
+      if (this.carts.length == 0) {
+        alert("Cart is Empty");
+        document.querySelector("#product [type='search']").focus();
+        reutrn;
+      }
       var data = {
         sale: this.sale,
         carts: this.carts,
         customer: this.selectedCustomer
       };
       axios.post("/api/save_sale", data).then(function (res) {
-        alert(res.data);
+        alert(res.data.msg);
+        if (confirm("Are you sure want print")) {
+          _this7.$router.push({
+            path: '/invoice/' + res.data.invoice
+          });
+        }
         _this7.clearData();
         _this7.getSale();
         _this7.carts = [];
@@ -7912,7 +8409,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             switch (_context.prev = _context.next) {
               case 0:
                 myWindow = window.open('', 'PRINT');
-                myWindow.document.write("\n\t\t\t\t<html>\n\t\t\t\t\t<head>\n\t\t\t\t\t\t<title>Print</title>\n\n                        <style>\n                            @media print{\n                                .hideAction{\n                                    display:none;\n                                }\n                            }\n                        </style>\n\t\t\t\t\t</head>\n\t\t\t\t\t<body>                        \n                        <table border='1' cellspacing='0' width='100%'>\n                            <h2 style='text-align:center;'>Invoice Record</h2>\n                            ".concat(document.getElementById("getTable").innerHTML, "\n                        </table>\n\t\t\t\t\t</body>\n\t\t\t\t</html>\n\n\t\t\t"));
+                myWindow.document.write("\n\n\n\t\t\t");
                 myWindow.focus();
                 _context.next = 5;
                 return new Promise(function (resolve) {
@@ -9311,6 +9808,736 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container-fluid px-4"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12 mt-3"
+  }, [_c("div", {
+    staticClass: "card",
+    style: {
+      display: _vm.useraccess.includes("customerpayment.store") ? "" : "none"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveCustomerPayment.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg-5"
+  }, [_c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "payment_type"
+    }
+  }, [_vm._v("Payment Type:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customerpayment.payment_type,
+      expression: "customerpayment.payment_type"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      name: "payment_type",
+      id: "payment_type"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.customerpayment, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "cash"
+    }
+  }, [_vm._v("Cash")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "bank"
+    }
+  }, [_vm._v("Bank")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2",
+    style: {
+      display: _vm.customerpayment.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "bank_id"
+    }
+  }, [_vm._v("Bank\n                                            Name:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "bank",
+      name: "bank_id",
+      options: _vm.banks
+    },
+    on: {
+      input: _vm.onChangeBank
+    },
+    model: {
+      value: _vm.selectedBank,
+      callback: function callback($$v) {
+        _vm.selectedBank = $$v;
+      },
+      expression: "selectedBank"
+    }
+  }), _vm._v(" "), _vm._m(1)], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "customer_id"
+    }
+  }, [_vm._v("Customer:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "customer",
+      name: "customer_id",
+      options: _vm.customers
+    },
+    on: {
+      input: _vm.onChangeCustomer
+    },
+    model: {
+      value: _vm.selectedCustomer,
+      callback: function callback($$v) {
+        _vm.selectedCustomer = $$v;
+      },
+      expression: "selectedCustomer"
+    }
+  }), _vm._v(" "), _vm._m(2)], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "due"
+    }
+  }, [_vm._v("Due:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customerpayment.due,
+      expression: "customerpayment.due"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "number",
+      id: "due",
+      name: "due",
+      autocomplete: "off",
+      readonly: ""
+    },
+    domProps: {
+      value: _vm.customerpayment.due
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.customerpayment, "due", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-5"
+  }, [_c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "date"
+    }
+  }, [_vm._v("Payment\n                                            Date:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("VueDatePicker", {
+    style: _vm.color,
+    model: {
+      value: _vm.customerpayment.date,
+      callback: function callback($$v) {
+        _vm.$set(_vm.customerpayment, "date", $$v);
+      },
+      expression: "customerpayment.date"
+    }
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "description"
+    }
+  }, [_vm._v("Description:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customerpayment.description,
+      expression: "customerpayment.description"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      id: "description",
+      name: "description",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.customerpayment.description
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.customerpayment, "description", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "payment_amount"
+    }
+  }, [_vm._v("Payment:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customerpayment.payment_amount,
+      expression: "customerpayment.payment_amount"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "number",
+      min: "0",
+      id: "payment_amount",
+      name: "payment_amount",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.customerpayment.payment_amount
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.customerpayment, "payment_amount", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group text-center mt-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm shadow-none",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.clearData
+    }
+  }, [_vm._v("\n                                    Reset\n                                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-outline-success shadow-none",
+    style: {
+      display: _vm.useraccess.includes("customerpayment.store") ? "" : "none"
+    },
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                                    Save Customerpayment\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
+    staticClass: "my-2"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-12"
+  }, [_c("vue-good-table", {
+    attrs: {
+      columns: _vm.columns,
+      rows: _vm.customerpayments,
+      "fixed-header": true,
+      "pagination-options": {
+        enabled: true,
+        perPage: 15
+      },
+      "search-options": {
+        enabled: true
+      },
+      "line-numbers": true,
+      styleClass: "vgt-table",
+      "max-height": "550px"
+    },
+    scopedSlots: _vm._u([{
+      key: "table-row",
+      fn: function fn(props) {
+        return [props.column.field == "before" ? _c("span", [_c("button", {
+          staticClass: "btn btn-sm btn-outline-primary shadow-none",
+          style: {
+            display: _vm.useraccess.includes("customerpayment.edit") ? "" : "none"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.editRow(props.row);
+            }
+          }
+        }, [_vm._v("\n                                Edit\n                            ")]), _vm._v(" "), _c("button", {
+          staticClass: "btn btn-sm btn-outline-danger shadow-none",
+          style: {
+            display: _vm.useraccess.includes("customerpayment.delete") ? "" : "none"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.deleteRow(props.row.id);
+            }
+          }
+        }, [_vm._v("\n                                Delete\n                            ")])]) : _vm._e()];
+      }
+    }])
+  })], 1)])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h4", {
+    staticClass: "card-title"
+  }, [_vm._v("Customer Payment Create")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-success shadow-none",
+    staticStyle: {
+      padding: "4px 6px"
+    },
+    attrs: {
+      href: "/bankaccounts",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-plus"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-success shadow-none",
+    staticStyle: {
+      padding: "4px 6px"
+    },
+    attrs: {
+      href: "/customers",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-plus"
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container-fluid px-4"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12 mt-3"
+  }, [_c("div", {
+    staticClass: "card",
+    style: {
+      display: _vm.useraccess.includes("supplierpayment.store") ? "" : "none"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveSupplierPayment.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg-5"
+  }, [_c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "payment_type"
+    }
+  }, [_vm._v("Payment Type:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.supplierpayment.payment_type,
+      expression: "supplierpayment.payment_type"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      name: "payment_type",
+      id: "payment_type"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.supplierpayment, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "cash"
+    }
+  }, [_vm._v("Cash")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "bank"
+    }
+  }, [_vm._v("Bank")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2",
+    style: {
+      display: _vm.supplierpayment.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "bank_id"
+    }
+  }, [_vm._v("Bank\n                                            Name:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "bank",
+      name: "bank_id",
+      options: _vm.banks
+    },
+    on: {
+      input: _vm.onChangeBank
+    },
+    model: {
+      value: _vm.selectedBank,
+      callback: function callback($$v) {
+        _vm.selectedBank = $$v;
+      },
+      expression: "selectedBank"
+    }
+  }), _vm._v(" "), _vm._m(1)], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "supplier_id"
+    }
+  }, [_vm._v("Supplier:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "supplier",
+      name: "supplier_id",
+      options: _vm.suppliers
+    },
+    on: {
+      input: _vm.onChangeSupplier
+    },
+    model: {
+      value: _vm.selectedSupplier,
+      callback: function callback($$v) {
+        _vm.selectedSupplier = $$v;
+      },
+      expression: "selectedSupplier"
+    }
+  }), _vm._v(" "), _vm._m(2)], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "due"
+    }
+  }, [_vm._v("Due:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.supplierpayment.due,
+      expression: "supplierpayment.due"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "number",
+      id: "due",
+      name: "due",
+      autocomplete: "off",
+      readonly: ""
+    },
+    domProps: {
+      value: _vm.supplierpayment.due
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.supplierpayment, "due", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-5"
+  }, [_c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "date"
+    }
+  }, [_vm._v("Payment\n                                            Date:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("VueDatePicker", {
+    style: _vm.color,
+    model: {
+      value: _vm.supplierpayment.date,
+      callback: function callback($$v) {
+        _vm.$set(_vm.supplierpayment, "date", $$v);
+      },
+      expression: "supplierpayment.date"
+    }
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "description"
+    }
+  }, [_vm._v("Description:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.supplierpayment.description,
+      expression: "supplierpayment.description"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      id: "description",
+      name: "description",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.supplierpayment.description
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.supplierpayment, "description", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row mt-2"
+  }, [_c("label", {
+    staticClass: "col-5 col-lg-4 d-flex align-items-center",
+    attrs: {
+      "for": "payment_amount"
+    }
+  }, [_vm._v("Payment:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-8"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.supplierpayment.payment_amount,
+      expression: "supplierpayment.payment_amount"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "number",
+      min: "0",
+      id: "payment_amount",
+      name: "payment_amount",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.supplierpayment.payment_amount
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.supplierpayment, "payment_amount", $event.target.value);
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group text-center mt-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm shadow-none",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.clearData
+    }
+  }, [_vm._v("\n                                    Reset\n                                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-outline-success shadow-none",
+    style: {
+      display: _vm.useraccess.includes("supplierpayment.store") ? "" : "none"
+    },
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                                    Save SupplierPayment\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
+    staticClass: "my-2"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-12"
+  }, [_c("vue-good-table", {
+    attrs: {
+      columns: _vm.columns,
+      rows: _vm.supplierpayments,
+      "fixed-header": true,
+      "pagination-options": {
+        enabled: true,
+        perPage: 15
+      },
+      "search-options": {
+        enabled: true
+      },
+      "line-numbers": true,
+      styleClass: "vgt-table",
+      "max-height": "550px"
+    },
+    scopedSlots: _vm._u([{
+      key: "table-row",
+      fn: function fn(props) {
+        return [props.column.field == "before" ? _c("span", [_c("button", {
+          staticClass: "btn btn-sm btn-outline-primary shadow-none",
+          style: {
+            display: _vm.useraccess.includes("supplierpayment.edit") ? "" : "none"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.editRow(props.row);
+            }
+          }
+        }, [_vm._v("\n                                Edit\n                            ")]), _vm._v(" "), _c("button", {
+          staticClass: "btn btn-sm btn-outline-danger shadow-none",
+          style: {
+            display: _vm.useraccess.includes("supplierpayment.delete") ? "" : "none"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.deleteRow(props.row.id);
+            }
+          }
+        }, [_vm._v("\n                                Delete\n                            ")])]) : _vm._e()];
+      }
+    }])
+  })], 1)])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h4", {
+    staticClass: "card-title"
+  }, [_vm._v("Supplier Payment Create")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-success shadow-none",
+    staticStyle: {
+      padding: "4px 6px"
+    },
+    attrs: {
+      href: "/bankaccounts",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-plus"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-success shadow-none",
+    staticStyle: {
+      padding: "4px 6px"
+    },
+    attrs: {
+      href: "/suppliers",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-plus"
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/administration/customer.vue?vue&type=template&id=1bcbbb18&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/administration/customer.vue?vue&type=template&id=1bcbbb18& ***!
@@ -10220,7 +11447,7 @@ var render = function render() {
     attrs: {
       "for": "name"
     }
-  }, [_vm._v("Company Name:")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Company\n                                        Name:")]), _vm._v(" "), _c("div", {
     staticClass: "col-7 col-lg-8"
   }, [_c("input", {
     directives: [{
@@ -10252,7 +11479,7 @@ var render = function render() {
     attrs: {
       "for": "owner_name"
     }
-  }, [_vm._v("Owner Name:")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Owner\n                                        Name:")]), _vm._v(" "), _c("div", {
     staticClass: "col-7 col-lg-8"
   }, [_c("input", {
     directives: [{
@@ -11358,6 +12585,264 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fas fa-plus"
   })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticStyle: {
+      width: "80%",
+      margin: "auto"
+    }
+  }, [_c("div", {
+    staticClass: "container text-end"
+  }, [_c("button", {
+    staticClass: "btn btn-warning btn-sm text-white shadow-none px-4 my-3",
+    on: {
+      click: _vm.PrintInvoice
+    }
+  }, [_vm._v("Print")])]), _vm._v(" "), _c("div", {
+    staticClass: "container",
+    attrs: {
+      id: "invoice"
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "col-6 mb-3",
+    staticStyle: {
+      "line-height": "20px"
+    }
+  }, [_c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Customer Id: ")]), _vm._v(_vm._s(_vm.sales[0].code)), _c("br"), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Customer Name: ")]), _vm._v(_vm._s(_vm.sales[0].name)), _c("br"), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Customer Address: ")]), _vm._v(_vm._s(_vm.sales[0].address)), _c("br"), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Customer Mobile: ")]), _vm._v(_vm._s(_vm.sales[0].phone) + "\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "col-6 mb-3"
+  }, [_c("div", {
+    staticClass: "text-end"
+  }, [_c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Sales By:")]), _vm._v(_vm._s(_vm.sales[0].user_name)), _c("br"), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.sales[0].invoice)), _c("br"), _vm._v(" "), _c("span", {
+    staticStyle: {
+      "font-weight": "500"
+    }
+  }, [_vm._v("Sales Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.sales[0].date)) + "\n                ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 mb-3"
+  }, [_c("table", {
+    staticClass: "table table-bordered table-sm"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.sales[0].saleDetails, function (item, index) {
+    return _c("tr", {
+      key: index
+    }, [_c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("-")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(item.total_amount))])]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-7"
+  }, [_c("table", {
+    staticStyle: {
+      "line-height": "22px",
+      width: "275px"
+    }
+  }, [_c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600"
+    }
+  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].previous_due))])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600"
+    }
+  }, [_vm._v("Current Due")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].due))])]), _vm._v(" "), _c("tr", {
+    staticStyle: {
+      "border-top": "1px dashed gray"
+    }
+  }, [_c("td", {
+    staticStyle: {
+      "font-weight": "600"
+    }
+  }, [_vm._v("Total Due")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v("\n                            " + _vm._s((parseFloat(_vm.sales[0].previous_due) + parseFloat(_vm.sales[0].due)).toFixed(2)))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-5"
+  }, [_c("table", {
+    staticStyle: {
+      "line-height": "23px",
+      width: "100%"
+    }
+  }, [_c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("SubTotal")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("VAT")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("Discount")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].discount_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("Transport Cost")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].transport_cost))])]), _vm._v(" "), _c("tr", {
+    staticStyle: {
+      "border-top": "1px dashed gray"
+    }
+  }, [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("Total")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].total))])]), _vm._v(" "), _c("tr", [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("Paid")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].paid))])]), _vm._v(" "), _c("tr", {
+    staticStyle: {
+      "border-top": "1px dashed gray"
+    }
+  }, [_c("td", {
+    staticStyle: {
+      "font-weight": "600",
+      width: "130px"
+    }
+  }, [_vm._v("Due")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v(_vm._s(_vm.sales[0].due))])])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-12 mb-3"
+  }, [_c("h6", {
+    staticClass: "text-center m-0",
+    staticStyle: {
+      "border-top": "1px dashed gray",
+      "border-bottom": "1px dashed gray",
+      "text-transform": "uppercase",
+      padding: "8px"
+    }
+  }, [_vm._v("\n                    Sales Invoice")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "5%"
+    }
+  }, [_vm._v("Sl")]), _vm._v(" "), _c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "50%"
+    }
+  }, [_vm._v("Description")]), _vm._v(" "), _c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("Price")]), _vm._v(" "), _c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("Warranty")]), _vm._v(" "), _c("th", {
+    staticClass: "text-uppercase text-center",
+    staticStyle: {
+      width: "15%"
+    }
+  }, [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -15550,7 +17035,7 @@ var render = function render() {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Vat (" + _vm._s(item.vat) + ")%:")]), _vm._v(" " + _vm._s(item.vat_amount) + " "), _c("br"), _vm._v(" "), _c("span", {
+    }, [_vm._v("Vat (" + _vm._s(item.vat) + ")%:")]), _vm._v(" " + _vm._s(item.vat_amount) + "\n                            "), _c("br"), _vm._v(" "), _c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
@@ -15560,6 +17045,9 @@ var render = function render() {
       staticStyle: {
         cursor: "pointer",
         "margin-right": "5px"
+      },
+      attrs: {
+        title: "Invoice Delete"
       },
       on: {
         click: function click($event) {
@@ -15573,21 +17061,25 @@ var render = function render() {
         "margin-right": "5px"
       },
       attrs: {
+        title: "Sales Edit",
         to: {
           path: "/sales-edit/" + item.invoice
         }
       }
     }, [_c("i", {
       staticClass: "fa fa-edit text-primary"
-    })]), _vm._v(" "), _c("span", {
+    })]), _vm._v(" "), _c("router-link", {
       staticStyle: {
         cursor: "pointer"
       },
-      on: {
-        click: _vm.PrintInvoice
+      attrs: {
+        title: "invoice",
+        to: {
+          path: "/invoice/" + item.invoice
+        }
       }
     }, [_c("i", {
-      staticClass: "fas fa-print text-info"
+      staticClass: "fas fa-file text-info"
     })])], 1)]);
   }), _vm._v(" "), _c("tr", {
     style: {
@@ -17377,19 +18869,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_settings_category_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/settings/category.vue */ "./resources/js/components/settings/category.vue");
 /* harmony import */ var _components_settings_brand_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/settings/brand.vue */ "./resources/js/components/settings/brand.vue");
 /* harmony import */ var _components_account_bank_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/account/bank.vue */ "./resources/js/components/account/bank.vue");
-/* harmony import */ var _components_settings_unit_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/settings/unit.vue */ "./resources/js/components/settings/unit.vue");
-/* harmony import */ var _components_settings_city_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/settings/city.vue */ "./resources/js/components/settings/city.vue");
-/* harmony import */ var _components_administration_customer_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/administration/customer.vue */ "./resources/js/components/administration/customer.vue");
-/* harmony import */ var _components_administration_supplier_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/administration/supplier.vue */ "./resources/js/components/administration/supplier.vue");
-/* harmony import */ var _components_hrpayroll_department_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/hrpayroll/department.vue */ "./resources/js/components/hrpayroll/department.vue");
-/* harmony import */ var _components_hrpayroll_employer_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/hrpayroll/employer.vue */ "./resources/js/components/hrpayroll/employer.vue");
-/* harmony import */ var _components_settings_product_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/settings/product.vue */ "./resources/js/components/settings/product.vue");
-/* harmony import */ var _components_purchase_purchase_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/purchase/purchase.vue */ "./resources/js/components/purchase/purchase.vue");
-/* harmony import */ var _components_purchase_purchaselist_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/purchase/purchaselist.vue */ "./resources/js/components/purchase/purchaselist.vue");
-/* harmony import */ var _components_purchase_editpurchase_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/purchase/editpurchase.vue */ "./resources/js/components/purchase/editpurchase.vue");
-/* harmony import */ var _components_sale_sale_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/sale/sale.vue */ "./resources/js/components/sale/sale.vue");
-/* harmony import */ var _components_sale_salelist_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/sale/salelist.vue */ "./resources/js/components/sale/salelist.vue");
-/* harmony import */ var _components_sale_editsale_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/sale/editsale.vue */ "./resources/js/components/sale/editsale.vue");
+/* harmony import */ var _components_account_customerpayment_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/account/customerpayment.vue */ "./resources/js/components/account/customerpayment.vue");
+/* harmony import */ var _components_account_supplierpayment_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/account/supplierpayment.vue */ "./resources/js/components/account/supplierpayment.vue");
+/* harmony import */ var _components_settings_unit_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/settings/unit.vue */ "./resources/js/components/settings/unit.vue");
+/* harmony import */ var _components_settings_city_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/settings/city.vue */ "./resources/js/components/settings/city.vue");
+/* harmony import */ var _components_administration_customer_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/administration/customer.vue */ "./resources/js/components/administration/customer.vue");
+/* harmony import */ var _components_administration_supplier_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/administration/supplier.vue */ "./resources/js/components/administration/supplier.vue");
+/* harmony import */ var _components_hrpayroll_department_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/hrpayroll/department.vue */ "./resources/js/components/hrpayroll/department.vue");
+/* harmony import */ var _components_hrpayroll_employer_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/hrpayroll/employer.vue */ "./resources/js/components/hrpayroll/employer.vue");
+/* harmony import */ var _components_settings_product_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/settings/product.vue */ "./resources/js/components/settings/product.vue");
+/* harmony import */ var _components_purchase_purchase_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/purchase/purchase.vue */ "./resources/js/components/purchase/purchase.vue");
+/* harmony import */ var _components_purchase_purchaselist_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/purchase/purchaselist.vue */ "./resources/js/components/purchase/purchaselist.vue");
+/* harmony import */ var _components_purchase_editpurchase_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/purchase/editpurchase.vue */ "./resources/js/components/purchase/editpurchase.vue");
+/* harmony import */ var _components_sale_sale_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/sale/sale.vue */ "./resources/js/components/sale/sale.vue");
+/* harmony import */ var _components_sale_salelist_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/sale/salelist.vue */ "./resources/js/components/sale/salelist.vue");
+/* harmony import */ var _components_sale_editsale_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/sale/editsale.vue */ "./resources/js/components/sale/editsale.vue");
+/* harmony import */ var _components_invoice_salesinvoice_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/invoice/salesinvoice.vue */ "./resources/js/components/invoice/salesinvoice.vue");
+
+
+
 
 
 
@@ -17436,58 +18934,69 @@ var routes = [{
   component: _components_settings_brand_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: "/units",
-  component: _components_settings_unit_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_settings_unit_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: "/cities",
-  component: _components_settings_city_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_settings_city_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 },
 // bankaccount
 {
   path: "/bankaccounts",
   component: _components_account_bank_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  path: "/customerpayments",
+  component: _components_account_customerpayment_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+}, {
+  path: "/supplierpayments",
+  component: _components_account_supplierpayment_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 },
 //administration
 {
   path: "/customers",
-  component: _components_administration_customer_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_administration_customer_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: "/suppliers",
-  component: _components_administration_supplier_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_administration_supplier_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 },
 //hrpayrol
 {
   path: "/departments",
-  component: _components_hrpayroll_department_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_hrpayroll_department_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
   path: "/employers",
-  component: _components_hrpayroll_employer_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_hrpayroll_employer_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
 },
 //content
 {
   path: "/products",
-  component: _components_settings_product_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_settings_product_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
 },
 //purchase
 {
   path: "/purchases",
-  component: _components_purchase_purchase_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _components_purchase_purchase_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
 }, {
   path: "/purchases-list",
-  component: _components_purchase_purchaselist_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_purchase_purchaselist_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
 }, {
   path: "/purchases-edit/:id",
-  component: _components_purchase_editpurchase_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+  component: _components_purchase_editpurchase_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
 },
 // sales
 {
   path: "/sales",
-  component: _components_sale_sale_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+  component: _components_sale_sale_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
 }, {
   path: "/sales-list",
-  component: _components_sale_salelist_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+  component: _components_sale_salelist_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
 }, {
   path: "/sales-edit/:id",
-  component: _components_sale_editsale_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+  component: _components_sale_editsale_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+},
+//invoice
+{
+  path: "/invoice/:id",
+  component: _components_invoice_salesinvoice_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -33815,6 +35324,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.v-select {\r\n    width: 87% !important;\n}\n@media screen and (min-device-width: 360px) and (max-device-width: 768px) {\n.v-select {\r\n        width: 81% !important;\n}\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\r\n    font-family: unset;\n}\n.table thead tr th {\r\n    font-size: 12px;\n}\n.table tbody tr td {\r\n    font-size: 12px;\n}\nimg {\r\n    width: 100%;\r\n    height: 70px;\n}\nh2 {\r\n    color: #939393 !important;\n}\n@media print {\nimg {\r\n        width: 100% !important;\r\n        height: 70px !important;\n}\nh2 {\r\n        color: #939393 !important;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -73254,6 +74787,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_style_index_0_id_c9bcb0e4_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_style_index_0_id_c9bcb0e4_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_style_index_0_id_c9bcb0e4_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/purchase/editpurchase.vue?vue&type=style&index=0&id=3ac4e99e&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/purchase/editpurchase.vue?vue&type=style&index=0&id=3ac4e99e&lang=css& ***!
@@ -84042,6 +85605,84 @@ component.options.__file = "resources/js/components/account/bank.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/account/customerpayment.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/account/customerpayment.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customerpayment.vue?vue&type=template&id=267745ea& */ "./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea&");
+/* harmony import */ var _customerpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./customerpayment.vue?vue&type=script&lang=js& */ "./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _customerpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__.render,
+  _customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/account/customerpayment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/account/supplierpayment.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/account/supplierpayment.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./supplierpayment.vue?vue&type=template&id=8bc7fb46& */ "./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46&");
+/* harmony import */ var _supplierpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./supplierpayment.vue?vue&type=script&lang=js& */ "./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _supplierpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__.render,
+  _supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/account/supplierpayment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/administration/customer.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/administration/customer.vue ***!
@@ -84278,6 +85919,47 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/hrpayroll/employer.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/invoice/salesinvoice.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/invoice/salesinvoice.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./salesinvoice.vue?vue&type=template&id=c9bcb0e4& */ "./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4&");
+/* harmony import */ var _salesinvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./salesinvoice.vue?vue&type=script&lang=js& */ "./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js&");
+/* harmony import */ var _salesinvoice_vue_vue_type_style_index_0_id_c9bcb0e4_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& */ "./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _salesinvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/invoice/salesinvoice.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -84858,6 +86540,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_customerpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./customerpayment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_customerpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_supplierpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./supplierpayment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_supplierpayment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/administration/customer.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/administration/customer.vue?vue&type=script&lang=js& ***!
@@ -84951,6 +86665,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_employer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./employer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hrpayroll/employer.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_employer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./salesinvoice.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -85195,6 +86925,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_customerpayment_vue_vue_type_template_id_267745ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./customerpayment.vue?vue&type=template&id=267745ea& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/customerpayment.vue?vue&type=template&id=267745ea&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_supplierpayment_vue_vue_type_template_id_8bc7fb46___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./supplierpayment.vue?vue&type=template&id=8bc7fb46& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/account/supplierpayment.vue?vue&type=template&id=8bc7fb46&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/administration/customer.vue?vue&type=template&id=1bcbbb18&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/administration/customer.vue?vue&type=template&id=1bcbbb18& ***!
@@ -85293,6 +87057,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_employer_vue_vue_type_template_id_1f5c4b7a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_employer_vue_vue_type_template_id_1f5c4b7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./employer.vue?vue&type=template&id=1f5c4b7a& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hrpayroll/employer.vue?vue&type=template&id=1f5c4b7a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./salesinvoice.vue?vue&type=template&id=c9bcb0e4& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4&");
 
 
 /***/ }),
@@ -85570,6 +87351,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_employer_vue_vue_type_style_index_0_id_1f5c4b7a_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./employer.vue?vue&type=style&index=0&id=1f5c4b7a&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/hrpayroll/employer.vue?vue&type=style&index=0&id=1f5c4b7a&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_style_index_0_id_c9bcb0e4_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=style&index=0&id=c9bcb0e4&lang=css&");
 
 
 /***/ }),

@@ -202,8 +202,7 @@
                                             </div>
                                             <div class="col-6 col-lg-5">
                                                 <input type="number" id="vat_amount" name="vat_amount"
-                                                    v-model="sale.vat_amount" class="form-control shadow-none"
-                                                    readonly>
+                                                    v-model="sale.vat_amount" class="form-control shadow-none" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -262,8 +261,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="previous_due">Pre.Due:</label>
-                                                <input type="text" id="previous_due"
-                                                    :value="sale.previous_due"
+                                                <input type="text" id="previous_due" :value="sale.previous_due"
                                                     :style="{ color: sale.previous_due != 0 ? 'red' : 'black' }"
                                                     class="form-control shadow-none" readonly>
                                             </div>
@@ -296,7 +294,7 @@ export default {
             color: {
                 background: '#ffadb4',
                 borderRadius: '0.2rem',
-                height:'28px',
+                height: '28px',
             },
             categories: [],
             selectedCategory: {
@@ -393,11 +391,11 @@ export default {
             });
         },
         getSale() {
-            let data = {invoice: this.$route.params.id}
+            let data = { invoice: this.$route.params.id }
             axios.post("/api/get_sale", data).then((res) => {
                 this.sale = res.data.sales[0]
                 this.carts = res.data.sales[0].saleDetails
-                if(res.data.sales[0].customer_type == "G"){
+                if (res.data.sales[0].customer_type == "G") {
                     this.selectedCustomer = {
                         id: res.data.sales[0].customer_id,
                         name: res.data.sales[0].name,
@@ -406,7 +404,7 @@ export default {
                         address: res.data.sales[0].address,
                         customer_type: res.data.sales[0].customer_type
                     }
-                }else{
+                } else {
                     this.selectedCustomer = {
                         id: res.data.sales[0].customer_id,
                         name: res.data.sales[0].name,
@@ -524,11 +522,15 @@ export default {
             }
             axios.post("/api/save_sale", data)
                 .then(res => {
-                    alert(res.data)
+                    alert(res.data.msg)
+                    if (confirm("Are you sure want print")) {
+                        this.$router.push({ path: '/invoice/' + res.data.invoice })
+                    } else {
+                        this.$router.push({ path: "/sales-list" })
+                    }
                     this.clearData()
                     this.getSale()
                     this.carts = [];
-                    this.$router.push({path: "/sales-list"})
                 })
         },
 
@@ -552,9 +554,9 @@ export default {
                 account_id: "",
             }
             this.selectedCustomer = {
-                    id: "",
-                    name: "",
-                }
+                id: "",
+                name: "",
+            }
         },
 
         CategoryChange() {

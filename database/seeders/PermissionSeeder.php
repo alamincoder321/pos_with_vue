@@ -75,6 +75,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "customerpayment",
+                "permission" => [
+                    "customerpayment.index",
+                    "customerpayment.edit",
+                    "customerpayment.store",
+                    "customerpayment.delete",
+                ],
+            ],
+            [
                 "group_name" => "department",
                 "permission" => [
                     "department.index",
@@ -126,6 +135,15 @@ class PermissionSeeder extends Seeder
                     "sale.edit",
                     "sale.store",
                     "sale.delete",
+                ],
+            ],
+            [
+                "group_name" => "supplierpayment",
+                "permission" => [
+                    "supplierpayment.index",
+                    "supplierpayment.edit",
+                    "supplierpayment.store",
+                    "supplierpayment.delete",
                 ],
             ],
             [

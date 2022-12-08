@@ -6,6 +6,8 @@ import company from "./components/company.vue";
 import category from "./components/settings/category.vue";
 import brand from "./components/settings/brand.vue";
 import bank from "./components/account/bank.vue";
+import customerpayment from "./components/account/customerpayment.vue";
+import supplierpayment from "./components/account/supplierpayment.vue";
 import unit from "./components/settings/unit.vue";
 import city from "./components/settings/city.vue";
 import customer from "./components/administration/customer.vue";
@@ -19,6 +21,7 @@ import editpurchase from "./components/purchase/editpurchase.vue";
 import sale from "./components/sale/sale.vue";
 import salelist from "./components/sale/salelist.vue";
 import editsale from "./components/sale/editsale.vue";
+import salesinvoice from "./components/invoice/salesinvoice.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -33,6 +36,8 @@ const routes = [
     { path: "/cities", component: city },
     // bankaccount
     { path: "/bankaccounts", component: bank },
+    { path: "/customerpayments", component: customerpayment },
+    { path: "/supplierpayments", component: supplierpayment },
     //administration
     { path: "/customers", component: customer },
     { path: "/suppliers", component: supplier },
@@ -49,6 +54,9 @@ const routes = [
     { path: "/sales", component: sale },
     { path: "/sales-list", component: salelist },
     { path: "/sales-edit/:id", component: editsale },
+    //invoice
+    { path: "/invoice/:id", component: salesinvoice },
+
 ];
 
 export default routes;

@@ -10,7 +10,7 @@ class BankAccountController extends Controller
 {
     public function getBankAccount()
     {
-        return DB::select("SELECT * FROM bank_accounts ORDER BY account_name");
+        return DB::select("SELECT *, CONCAT(account_no, '-(', bank_name, ')') AS display_name FROM bank_accounts ORDER BY account_name");
     }
 
     public function saveBankAccount(Request $request)

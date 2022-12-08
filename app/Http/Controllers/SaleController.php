@@ -22,17 +22,18 @@ class SaleController extends Controller
         }
         $sales = DB::select("SELECT
                             p.*,
-                            s.id as customer_id,
-                            s.name,
-                            CONCAT(s.customer_code, ' - ', s.name) as display_name,
-                            s.address,
-                            s.phone,
-                            s.customer_type,
+                            c.id as customer_id,
+                            c.name,
+                            c.customer_code as code,
+                            CONCAT(c.customer_code, ' - ', c.name) as display_name,
+                            c.address,
+                            c.phone,
+                            c.customer_type,
                             u.name AS user_name
                         FROM
                             sales AS p
-                        LEFT JOIN customers AS s
-                        ON s.id = p.customer_id
+                        LEFT JOIN customers AS c
+                        ON c.id = p.customer_id
                         LEFT JOIN users AS u
                         ON u.id = p.added_by
                         WHERE 1=1
@@ -42,10 +43,12 @@ class SaleController extends Controller
         foreach ($sales as $sale) {
             $sale->saleDetails = DB::select("SELECT
                                     pd.*,
-                                    p.name
+                                    p.name,
+                                    un.name as unit_name
                                 FROM
                                     sale_details AS pd
                                 LEFT JOIN products AS p ON p.id = pd.product_id
+                                LEFT JOIN units AS un ON un.id = p.id
                                 WHERE pd.sale_id = ?", [$sale->id]);
         }
 
@@ -58,6 +61,7 @@ class SaleController extends Controller
     public function saveSale(Request $request)
     {
         try {
+            DB::beginTransaction(); 
             if ($request->sale['id'] == null) {
                 $data = new Sale();
             } else {
@@ -135,12 +139,15 @@ class SaleController extends Controller
                 }
             }
 
+            DB::commit();
+            
             if ($request->sale['id'] == null) {
-                return "Sale save successfully";
+                return response()->json(['invoice'=>$request->sale['invoice'], 'msg'=>"Sale save successfully"]);
             } else {
-                return "Sale updated successfully";
+                return response()->json(['invoice'=>$request->sale['invoice'], 'msg'=>"Sale updated successfully"]);
             }
         } catch (\Throwable $e) {
+            DB::rollback();
             return "Opps! something went wrong";
         }
     }

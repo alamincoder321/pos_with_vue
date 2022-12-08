@@ -70,17 +70,20 @@
                                 <span style="font-weight: bold;">Total:</span> {{ item.total }} <br />
                                 <span style="font-weight: bold;">Paid:</span> {{ item.paid }} <br />
                                 <span style="font-weight: bold;">Due:</span> {{ item.due }} <br />
-                                <span style="font-weight: bold;">Vat ({{item.vat}})%:</span> {{ item.vat_amount }} <br />
-                                <span style="font-weight: bold;">Discount ({{item.discount}})%:</span> {{ item.discount_amount }}
+                                <span style="font-weight: bold;">Vat ({{ item.vat }})%:</span> {{ item.vat_amount }}
+                                <br />
+                                <span style="font-weight: bold;">Discount ({{ item.discount }})%:</span> {{
+                                        item.discount_amount
+                                }}
                             </td>
                             <td class="hideAction">
-                                <span @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
+                                <span title="Invoice Delete" @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
                                         class="fas fa-trash text-danger"></i></span>
-                                <router-link style="margin-right: 5px;" :to="{ path: '/sales-edit/'+item.invoice }">
+                                <router-link title="Sales Edit" style="margin-right: 5px;" :to="{ path: '/sales-edit/' + item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
-                                </router-link>                               
-                                <span @click="PrintInvoice" style="cursor:pointer;"><i
-                                        class="fas fa-print text-info"></i></span>
+                                </router-link>
+                                <router-link title="invoice" :to="{path: '/invoice/' + item.invoice}"  style="cursor:pointer;"><i
+                                        class="fas fa-file text-info"></i></router-link>
                             </td>
                         </tr>
                         <tr :style="{ display: sales.length == 0 ? '' : 'none' }">
@@ -149,8 +152,8 @@ export default {
             }
         },
 
-        InvoiceDelete(id){
-            if(confirm("Are you sure want to delete")){
+        InvoiceDelete(id) {
+            if (confirm("Are you sure want to delete")) {
                 axios.get("/api/delete_sale/" + id).then((res) => {
                     console.log(res.data);
                 });
@@ -160,25 +163,7 @@ export default {
         async PrintInvoice() {
             var myWindow = window.open('', 'PRINT');
             myWindow.document.write(`
-				<html>
-					<head>
-						<title>Print</title>
 
-                        <style>
-                            @media print{
-                                .hideAction{
-                                    display:none;
-                                }
-                            }
-                        </style>
-					</head>
-					<body>                        
-                        <table border='1' cellspacing='0' width='100%'>
-                            <h2 style='text-align:center;'>Invoice Record</h2>
-                            ${document.getElementById("getTable").innerHTML}
-                        </table>
-					</body>
-				</html>
 
 			`);
             myWindow.focus();

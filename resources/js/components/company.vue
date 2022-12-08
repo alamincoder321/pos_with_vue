@@ -11,34 +11,36 @@
                             <div class="row">
                                 <div class="col-12 col-lg-9">
                                     <div class="row mt-2">
-                                        <label for="name" class="col-5 col-lg-4 d-flex align-items-center">Company Name:</label>
+                                        <label for="name" class="col-5 col-lg-4 d-flex align-items-center">Company
+                                            Name:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="name" name="name" class="form-control shadow-none"
                                                 v-model="company.name" autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="owner_name" class="col-5 col-lg-4 d-flex align-items-center">Owner Name:</label>
+                                        <label for="owner_name" class="col-5 col-lg-4 d-flex align-items-center">Owner
+                                            Name:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="text" id="owner_name" name="owner_name" class="form-control shadow-none"
-                                                v-model="company.owner_name" autocomplete="off" />
+                                            <input type="text" id="owner_name" name="owner_name"
+                                                class="form-control shadow-none" v-model="company.owner_name"
+                                                autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <label for="phone" class="col-5 col-lg-4 d-flex align-items-center">
                                             Phone:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="text" id="phone" name="phone"
-                                                class="form-control shadow-none" v-model="company.phone"
-                                                autocomplete="off" />
+                                            <input type="text" id="phone" name="phone" class="form-control shadow-none"
+                                                v-model="company.phone" autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="address" class="col-5 col-lg-4 d-flex align-items-center">Address:</label>
+                                        <label for="address"
+                                            class="col-5 col-lg-4 d-flex align-items-center">Address:</label>
                                         <div class="col-7 col-lg-8">
-                                            <textarea id="address" name="address"
-                                                class="form-control shadow-none" v-model="company.address"
-                                                autocomplete="off" ></textarea>
+                                            <textarea id="address" name="address" class="form-control shadow-none"
+                                                v-model="company.address" autocomplete="off"></textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -89,9 +91,15 @@
                                         <label for="paper_type"
                                             class="col-5 col-lg-4 d-flex align-items-center"></label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="radio" id="paper_type1" name="paper_type" value="1" :checked="company.paper_type==1?true:false"> <label for="paper_type1">A3</label>
-                                            <input type="radio" id="paper_type2" name="paper_type" value="2" :checked="company.paper_type==2?true:false"> <label for="paper_type2">A4</label>
-                                            <input type="radio" id="paper_type3" name="paper_type" value="3" :checked="company.paper_type==3?true:false"> <label for="paper_type3">A5</label>
+                                            <input type="radio" id="paper_type1" name="paper_type" value="1"
+                                                :checked="company.paper_type == 1 ? true : false"> <label
+                                                for="paper_type1">A3</label>
+                                            <input type="radio" id="paper_type2" name="paper_type" value="2"
+                                                :checked="company.paper_type == 2 ? true : false"> <label
+                                                for="paper_type2">A4</label>
+                                            <input type="radio" id="paper_type3" name="paper_type" value="3"
+                                                :checked="company.paper_type == 3 ? true : false"> <label
+                                                for="paper_type3">A5</label>
                                         </div>
                                     </div>
                                 </div>
@@ -104,8 +112,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group text-center mt-3" :style="{display: useraccess.includes('companyprofile.store')?'':'none'}">
-                                <button type="submit" class="userSave btn btn-sm btn-outline-success shadow-none">
+                            <div class="form-group text-center mt-3"
+                                :style="{ display: useraccess.includes('companyprofile.store') ? '' : 'none' }">
+                                <button type="submit"
+                                    class="userSave btn btn-sm btn-outline-success shadow-none">
                                     Save Company Profile
                                 </button>
                             </div>
@@ -137,7 +147,7 @@ export default {
         getCompany() {
             axios.get("/api/get_company_profile").then((res) => {
                 this.company = res.data;
-                this.imageSrc = res.data.company_logo?res.data.company_logo:location.origin + "/no-image.jpg";
+                this.imageSrc = res.data.company_logo ? res.data.company_logo : location.origin + "/no-image.jpg";
             });
         },
 
@@ -154,7 +164,6 @@ export default {
                 alert("Address field is Empty");
                 return;
             }
-
             let formdata = new FormData(event.target)
             formdata.append("company_logo", this.company.company_logo)
             formdata.append("id", this.company.id)
@@ -191,15 +200,15 @@ export default {
             if (this.user_id === null) {
                 axios.get(location.origin + "/logout").then((res) => {
                     alert("Logout");
-                    location.reload(); 
+                    location.reload();
                 });
             }
         },
     },
 
     watch: {
-        useraccess(){
-            this.useraccess.includes("companyprofile.index")?"":location.href = "/unauthorize"
+        useraccess() {
+            this.useraccess.includes("companyprofile.index") ? "" : location.href = "/unauthorize"
         }
     },
     mounted() {
