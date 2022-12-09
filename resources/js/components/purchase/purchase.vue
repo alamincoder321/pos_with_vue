@@ -419,9 +419,12 @@ export default {
                 return
             }
             if (this.selectedSupplier.id == "") {
-                this.selectedSupplier.previous_due = 0
+                this.purchase.previous_due = 0
+                return
             }
-            this.purchase.previous_due = this.selectedSupplier.previous_due
+            axios.post("/api/get_supduetotal", {id: this.selectedSupplier.id}).then((res) => {             
+                this.purchase.previous_due = res.data[0].dueAmount
+            });
         },
         onChangeProduct() {
             if (this.selectedProduct == null) {
@@ -503,6 +506,16 @@ export default {
         },
 
         savePurchase(event) {
+            if(this.selectedSupplier.name == ""){
+                alert("Select Supplier")
+                document.querySelector("#supplier [type='search']").focus()
+                reutrn
+            }
+            if(this.carts.length == 0){
+                alert("Cart is Empty")
+                document.querySelector("#product [type='search']").focus()
+                reutrn
+            }
             let data = {
                 purchase: this.purchase,
                 carts: this.carts,
@@ -510,7 +523,10 @@ export default {
             }
             axios.post("/api/save_purchase", data)
                 .then(res => {
-                    alert(res.data)
+                    alert(res.data.msg)
+                    if(confirm("Are you sure want print")){
+                        this.$router.push({path: '/purchase-invoice/' + res.data.invoice})
+                    }
                     this.clearData()
                     this.getPurchase()
                     this.carts = [];

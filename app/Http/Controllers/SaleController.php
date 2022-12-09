@@ -48,7 +48,7 @@ class SaleController extends Controller
                                 FROM
                                     sale_details AS pd
                                 LEFT JOIN products AS p ON p.id = pd.product_id
-                                LEFT JOIN units AS un ON un.id = p.id
+                                LEFT JOIN units AS un ON un.id = p.unit_id
                                 WHERE pd.sale_id = ?", [$sale->id]);
         }
 

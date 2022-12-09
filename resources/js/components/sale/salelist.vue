@@ -205,6 +205,9 @@ export default {
 </script>
 
 <style>
+#invoice{
+    width:100% !important;
+}
 .searchBtn {
     border: none;
     background: green;

@@ -74,10 +74,12 @@ Route::get("/delete_city/{id}", [CityController::class, "deleteCity"]);
 Route::get("/get_customer", [CustomerController::class, "getCustomer"]);
 Route::post("/save_customer", [CustomerController::class, "saveCustomer"]);
 Route::get("/delete_customer/{id}", [CustomerController::class, "deleteCustomer"]);
+Route::post("/get_custduetotal", [CustomerController::class, "totalDue"]);
 //supplier
 Route::get("/get_supplier", [SupplierController::class, "getSupplier"]);
 Route::post("/save_supplier", [SupplierController::class, "saveSupplier"]);
 Route::get("/delete_supplier/{id}", [SupplierController::class, "deleteSupplier"]);
+Route::post("/get_supduetotal", [SupplierController::class, "totalDue"]);
 //employer
 Route::get("/get_employer", [EmployerController::class, "getEmployer"]);
 Route::post("/save_employer", [EmployerController::class, "saveEmployer"]);

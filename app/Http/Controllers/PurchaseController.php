@@ -25,6 +25,7 @@ class PurchaseController extends Controller
                             p.*,
                             s.id as supplier_id,
                             s.name,
+                            s.supplier_code as code,
                             CONCAT(s.supplier_code, ' - ', s.name) as display_name,
                             s.address,
                             s.phone,
@@ -43,10 +44,12 @@ class PurchaseController extends Controller
         foreach ($purchases as $purchase) {
             $purchase->purchaseDetails = DB::select("SELECT
                                     pd.*,
-                                    p.name
+                                    p.name,
+                                    un.name as unit_name
                                 FROM
                                     purchase_details AS pd
                                 LEFT JOIN products AS p ON p.id = pd.product_id
+                                LEFT JOIN units AS un ON un.id = p.unit_id
                                 WHERE pd.purchase_id = ?", [$purchase->id]);
         }
 
@@ -147,9 +150,9 @@ class PurchaseController extends Controller
             DB::commit();
 
             if ($request->purchase['id'] == null) {
-                return "Purchase save successfully";
+                return response()->json(['invoice'=>$request->purchase['invoice'], 'msg'=>"Purchase save successfully"]);
             } else {
-                return "Purchase updated successfully";
+                return response()->json(['invoice'=>$request->purchase['invoice'], 'msg'=>"Purchase updated successfully"]);
             }
         } catch (\Throwable $e) {
             DB::rollback();

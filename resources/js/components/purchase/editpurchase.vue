@@ -269,8 +269,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="previous_due">Pre.Due:</label>
-                                                <input type="text" id="previous_due"
-                                                    :value="purchase.previous_due"
+                                                <input type="text" id="previous_due" :value="purchase.previous_due"
                                                     :style="{ color: purchase.previous_due != 0 ? 'red' : 'black' }"
                                                     class="form-control shadow-none" readonly>
                                             </div>
@@ -303,7 +302,7 @@ export default {
             color: {
                 background: '#ffadb4',
                 borderRadius: '0.2rem',
-                height:'28px',
+                height: '28px',
             },
             categories: [],
             selectedCategory: {
@@ -400,11 +399,11 @@ export default {
             });
         },
         getPurchase() {
-            let data = {invoice: this.$route.params.id}
+            let data = { invoice: this.$route.params.id }
             axios.post("/api/get_purchase", data).then((res) => {
                 this.purchase = res.data.purchases[0]
                 this.carts = res.data.purchases[0].purchaseDetails
-                if(res.data.purchases[0].supplier_type == "G"){
+                if (res.data.purchases[0].supplier_type == "G") {
                     this.selectedSupplier = {
                         id: res.data.purchases[0].supplier_id,
                         name: res.data.purchases[0].name,
@@ -413,7 +412,7 @@ export default {
                         address: res.data.purchases[0].address,
                         supplier_type: res.data.purchases[0].supplier_type
                     }
-                }else{
+                } else {
                     this.selectedSupplier = {
                         id: res.data.purchases[0].supplier_id,
                         name: res.data.purchases[0].name,
@@ -479,12 +478,12 @@ export default {
                     return
                 }
                 this.product = {
-                    product_id    : this.selectedProduct.id,
-                    name          : this.selectedProduct.name,
+                    product_id: this.selectedProduct.id,
+                    name: this.selectedProduct.name,
                     purchase_price: this.selectedProduct.purchase_price,
-                    selling_price : this.selectedProduct.selling_price,
-                    quantity      : this.selectedProduct.quantity,
-                    total_amount  : this.selectedProduct.total_amount,
+                    selling_price: this.selectedProduct.selling_price,
+                    quantity: this.selectedProduct.quantity,
+                    total_amount: this.selectedProduct.total_amount,
                 }
 
                 this.carts.push(this.product)
@@ -531,11 +530,15 @@ export default {
             }
             axios.post("/api/save_purchase", data)
                 .then(res => {
-                    alert(res.data)
+                    alert(res.data.msg)
+                    if (confirm("Are you sure want print")) {
+                        this.$router.push({ path: '/purchase-invoice/' + res.data.invoice })
+                    } else {
+                        this.$router.push({ path: "/purchases-list" })
+                    }
                     this.clearData()
                     this.getPurchase()
                     this.carts = [];
-                    this.$router.push({path: "/purchases-list"})
                 })
         },
 
@@ -559,9 +562,9 @@ export default {
                 account_id: "",
             }
             this.selectedSupplier = {
-                    id: "",
-                    name: "",
-                }
+                id: "",
+                name: "",
+            }
         },
 
         CategoryChange() {

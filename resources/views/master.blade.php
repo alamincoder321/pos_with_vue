@@ -54,6 +54,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <router-view></router-view>
+                    
                 </main>
                 <footer class="py-2 bg-dark mt-auto">
                     <div class="container-fluid px-4">

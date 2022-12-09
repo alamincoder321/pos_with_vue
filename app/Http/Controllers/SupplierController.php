@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\ModelTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -16,7 +17,7 @@ class SupplierController extends Controller
         return response()->json(["gen_code" => $gen_code, "suppliers" => $suppliers]);
     }
 
-    public function saveSupplier(Request $request)
+    public function saveSupplier(Request $request) 
     {
         try {
             if (empty($request->id)) {
@@ -63,5 +64,11 @@ class SupplierController extends Controller
         }
         $data->delete();
         return "Supplier Delete Successfully";
+    }
+
+    // total due get
+    public function totalDue(Request $request)
+    {
+        return ModelTable::supplierDue($request->id);
     }
 }

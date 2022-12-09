@@ -74,13 +74,13 @@
                                 <span style="font-weight: bold;">Discount ({{item.discount}})%:</span> {{ item.discount_amount }}
                             </td>
                             <td class="hideAction">
-                                <span @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
+                                <span title="purchase-delete" @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
                                         class="fas fa-trash text-danger"></i></span>
-                                <router-link style="margin-right: 5px;" :to="{ path: '/purchases-edit/'+item.invoice }">
+                                <router-link title="purchase-edit" style="margin-right: 5px;" :to="{ path: '/purchases-edit/'+item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
                                 </router-link>                               
-                                <span @click="PrintInvoice" style="cursor:pointer;"><i
-                                        class="fas fa-print text-info"></i></span>
+                                <router-link title="invoice" :to="{path: '/purchase-invoice/' + item.invoice}" style="cursor:pointer;"><i
+                                        class="fas fa-file text-info"></i></router-link>
                             </td>
                         </tr>
                         <tr :style="{ display: purchases.length == 0 ? '' : 'none' }">
@@ -152,39 +152,9 @@ export default {
         InvoiceDelete(id){
             if(confirm("Are you sure want to delete")){
                 axios.get("/api/delete_purchase/" + id).then((res) => {
-                    console.log(res.data);
+                    alert(res.data);
                 });
             }
-        },
-
-        async PrintInvoice() {
-            var myWindow = window.open('', 'PRINT');
-            myWindow.document.write(`
-				<html>
-					<head>
-						<title>Print</title>
-
-                        <style>
-                            @media print{
-                                .hideAction{
-                                    display:none;
-                                }
-                            }
-                        </style>
-					</head>
-					<body>                        
-                        <table border='1' cellspacing='0' width='100%'>
-                            <h2 style='text-align:center;'>Invoice Record</h2>
-                            ${document.getElementById("getTable").innerHTML}
-                        </table>
-					</body>
-				</html>
-
-			`);
-            myWindow.focus();
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            myWindow.print();
-            myWindow.close();
         },
 
         formatDate(date) {

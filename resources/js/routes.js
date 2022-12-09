@@ -22,6 +22,7 @@ import sale from "./components/sale/sale.vue";
 import salelist from "./components/sale/salelist.vue";
 import editsale from "./components/sale/editsale.vue";
 import salesinvoice from "./components/invoice/salesinvoice.vue";
+import purchaseinvoice from "./components/invoice/purchaseinvoice.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -56,6 +57,7 @@ const routes = [
     { path: "/sales-edit/:id", component: editsale },
     //invoice
     { path: "/invoice/:id", component: salesinvoice },
+    { path: "/purchase-invoice/:id", component: purchaseinvoice },
 
 ];
 

@@ -30,7 +30,7 @@
                                                 <v-select label="display_name" id="bank" name="bank_id" :options="banks"
                                                     v-model="selectedBank" @input="onChangeBank"></v-select>
                                                 <a href="/bankaccounts" target="_blank"
-                                                    class="btn btn-success shadow-none" style="padding: 4px 6px;"><i
+                                                    class="btn btn-success shadow-none" style="padding: 4px 8px;"><i
                                                         class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
@@ -44,7 +44,7 @@
                                                     :options="customers" v-model="selectedCustomer"
                                                     @input="onChangeCustomer"></v-select>
                                                 <a href="/customers" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 6px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>

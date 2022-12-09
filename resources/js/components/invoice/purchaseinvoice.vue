@@ -42,19 +42,19 @@ h2 {
                 <div class="col-12 mb-3">
                     <h6 class="text-center m-0"
                         style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-transform: uppercase;padding: 8px;">
-                        Sales Invoice</h6>
+                        Purchases Invoice</h6>
                 </div>
                 <div class="col-6 mb-3" style="line-height: 20px;">
-                    <span style="font-weight: 500;">Customer Id: </span>{{ sales[0].code?sales[0].code:"General Customer" }}<br>
-                    <span style="font-weight: 500;">Customer Name: </span>{{ sales[0].name }}<br>
-                    <span style="font-weight: 500;">Customer Address: </span>{{ sales[0].address }}<br>
-                    <span style="font-weight: 500;">Customer Mobile: </span>{{ sales[0].phone }}
+                    <span style="font-weight: 500;">Supplier Id: </span>{{ purchases[0].code?purchases[0].code:"General Supplier" }}<br>
+                    <span style="font-weight: 500;">Supplier Name: </span>{{ purchases[0].name }}<br>
+                    <span style="font-weight: 500;">Supplier Address: </span>{{ purchases[0].address }}<br>
+                    <span style="font-weight: 500;">Supplier Mobile: </span>{{ purchases[0].phone }}
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Sales By:</span>{{ sales[0].user_name }}<br>
-                        <span style="font-weight: 500;">Invoice:</span>#{{ sales[0].invoice }}<br>
-                        <span style="font-weight: 500;">Sales Date:</span> {{ formatDate(sales[0].date) }}
+                        <span style="font-weight: 500;">Purchases By:</span>{{ purchases[0].user_name }}<br>
+                        <span style="font-weight: 500;">Invoice:</span>#{{ purchases[0].invoice }}<br>
+                        <span style="font-weight: 500;">Purchases Date:</span> {{ formatDate(purchases[0].date) }}
                     </div>
                 </div>
                 <!-- product details -->
@@ -71,7 +71,7 @@ h2 {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in sales[0].saleDetails" :key="index">
+                            <tr v-for="(item, index) in purchases[0].purchaseDetails" :key="index">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
@@ -88,18 +88,18 @@ h2 {
                         <tr>
                             <td style="font-weight: 600;">Previous Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].previous_due }}</td>
+                            <td style="text-align: right;">{{ purchases[0].previous_due }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">Current Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].due }}</td>
+                            <td style="text-align: right;">{{ purchases[0].due }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;">Total Due</td>
                             <td>:</td>
                             <td style="text-align: right;">
-                                {{ (parseFloat(sales[0].previous_due) + parseFloat(sales[0].due)).toFixed(2) }}</td>
+                                {{ (parseFloat(purchases[0].previous_due) + parseFloat(purchases[0].due)).toFixed(2) }}</td>
                         </tr>
                     </table>
                 </div>
@@ -108,37 +108,37 @@ h2 {
                         <tr>
                             <td style="font-weight: 600;width: 130px;">SubTotal</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].subtotal }}</td>
+                            <td style="text-align: right;">{{ purchases[0].subtotal }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">VAT {{ sales[0].vat != 0?"("+sales[0].vat+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">VAT {{ purchases[0].vat != 0?"("+purchases[0].vat+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].vat_amount }}</td>
+                            <td style="text-align: right;">{{ purchases[0].vat_amount }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">Discount {{ sales[0].discount != 0?"("+sales[0].discount+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">Discount {{ purchases[0].discount != 0?"("+purchases[0].discount+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].discount_amount }}</td>
+                            <td style="text-align: right;">{{ purchases[0].discount_amount }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;width: 130px;">Transport Cost</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].transport_cost }}</td>
+                            <td style="text-align: right;">{{ purchases[0].transport_cost }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Total</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].total }}</td>
+                            <td style="text-align: right;">{{ purchases[0].total }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;width: 130px;">Paid</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].paid }}</td>
+                            <td style="text-align: right;">{{ purchases[0].paid }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].due }}</td>
+                            <td style="text-align: right;">{{ purchases[0].due }}</td>
                         </tr>
                     </table>
                 </div>
@@ -152,17 +152,17 @@ export default {
     data() {
         return {
             company: [],
-            sales: [],
+            purchases: [],
         }
     },
 
     created() {
-        this.getSales()
+        this.getPurchases()
         this.getCompany()
     },
 
     mounted() {
-        document.title = "Sales Invoice"
+        document.title = "Purchases Invoice"
     },
 
     methods: {
@@ -171,10 +171,10 @@ export default {
                 this.company = res.data;
             });
         },
-        getSales() {
-            axios.post("/api/get_sale", { invoice: this.$route.params.id }).then((res) => {
+        getPurchases() {
+            axios.post("/api/get_purchase", { invoice: this.$route.params.id }).then((res) => {
                 console.log(res.data);
-                this.sales = Array.from(res.data.sales)
+                this.purchases = Array.from(res.data.purchases)
             });
         },
         formatDate(date) {
@@ -186,7 +186,7 @@ export default {
             myWindow.document.write(`
                 <html>
                     <head>
-                        <title>Sales Invoice</title>
+                        <title>Purchases Invoice</title>
                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
                         <style>
                             * {

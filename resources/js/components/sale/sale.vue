@@ -193,7 +193,7 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:30px;" id="vat" name="vat"
+                                                    <input type="number" min="0" style="height:30px;" id="vat" name="vat"
                                                         @input="TotalAmount" v-model="sale.vat"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
@@ -201,7 +201,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" id="vat_amount" name="vat_amount"
+                                                <input type="number" min="0" id="vat_amount" name="vat_amount"
                                                     v-model="sale.vat_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
@@ -212,7 +212,7 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:30px;" id="discount"
+                                                    <input type="number" min="0" style="height:30px;" id="discount"
                                                         @input="TotalAmount" name="discount" v-model="sale.discount"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
@@ -220,7 +220,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" id="discount_amount" name="discount_amount"
+                                                <input type="number" min="0" id="discount_amount" name="discount_amount"
                                                     v-model="sale.discount_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
@@ -228,13 +228,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="transport_cost">Labour Cost/Transport Cost:</label>
-                                        <input type="number" id="transport_cost" name="transport_cost"
+                                        <input type="number" min="0" id="transport_cost" name="transport_cost"
                                             @input="TotalAmount" v-model="sale.transport_cost"
                                             class="form-control shadow-none">
                                     </div>
                                     <div class="form-group">
                                         <label for="total">Total:</label>
-                                        <input type="number" id="total" name="total" v-model="sale.total"
+                                        <input type="number" min="0" id="total" name="total" v-model="sale.total"
                                             class="form-control shadow-none" readonly>
                                     </div>
                                     <div class="form-group">
@@ -247,7 +247,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
-                                        <input type="number" id="paid" name="paid" @input="TotalAmount"
+                                        <input type="number" min="0" id="paid" name="paid" @input="TotalAmount"
                                             v-model="sale.paid" class="form-control shadow-none">
                                     </div>
                                     <div class="row">
@@ -411,9 +411,13 @@ export default {
                 return
             }
             if (this.selectedCustomer.id == "") {
-                this.selectedCustomer.previous_due = 0
+                this.sale.previous_due = 0.00
+                return
             }
-            this.sale.previous_due = this.selectedCustomer.previous_due
+
+            axios.post("/api/get_custduetotal", {id: this.selectedCustomer.id}).then((res) => {             
+                this.sale.previous_due = res.data[0].dueAmount
+            });
         },
         onChangeProduct() {
             if (this.selectedProduct == null) {
@@ -494,7 +498,7 @@ export default {
         },
 
         saveSale(event) {
-            if(this.selectedCustomer.id == ""){
+            if(this.selectedCustomer.name == ""){
                 alert("Select Customer")
                 document.querySelector("#customer [type='search']").focus()
                 reutrn
