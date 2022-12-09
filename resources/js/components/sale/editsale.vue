@@ -431,9 +431,13 @@ export default {
                 return
             }
             if (this.selectedCustomer.id == "") {
-                this.selectedCustomer.previous_due = 0
+                this.sale.previous_due = 0.00
+                return
             }
-            this.sale.previous_due = this.selectedCustomer.previous_due
+
+            axios.post("/api/get_custduetotal", { id: this.selectedCustomer.id }).then((res) => {
+                this.sale.previous_due = res.data[0].dueAmount
+            });
         },
         onChangeProduct() {
             if (this.selectedProduct == null) {

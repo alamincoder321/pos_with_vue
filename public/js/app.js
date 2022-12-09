@@ -7082,6 +7082,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeSupplier: function onChangeSupplier() {
+      var _this6 = this;
       if (this.selectedSupplier == null) {
         this.selectedSupplier = {
           id: "",
@@ -7095,9 +7096,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         return;
       }
       if (this.selectedSupplier.id == "") {
-        this.selectedSupplier.previous_due = 0;
+        this.purchase.previous_due = 0;
+        return;
       }
-      this.purchase.previous_due = this.selectedSupplier.previous_due;
+      axios.post("/api/get_supduetotal", {
+        id: this.selectedSupplier.id
+      }).then(function (res) {
+        _this6.purchase.previous_due = res.data[0].dueAmount;
+      });
     },
     onChangeProduct: function onChangeProduct() {
       if (this.selectedProduct == null) {
@@ -7116,10 +7122,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.purchase_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedProduct.product_id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this6.selectedProduct.id;
+          return p.id == _this7.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -7179,7 +7185,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     savePurchase: function savePurchase(event) {
-      var _this7 = this;
+      var _this8 = this;
       var data = {
         purchase: this.purchase,
         carts: this.carts,
@@ -7188,17 +7194,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_purchase", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this7.$router.push({
+          _this8.$router.push({
             path: '/purchase-invoice/' + res.data.invoice
           });
         } else {
-          _this7.$router.push({
+          _this8.$router.push({
             path: "/purchases-list"
           });
         }
-        _this7.clearData();
-        _this7.getPurchase();
-        _this7.carts = [];
+        _this8.clearData();
+        _this8.getPurchase();
+        _this8.carts = [];
       });
     },
     clearData: function clearData() {
@@ -7226,29 +7232,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this8.selectedCategory.id;
+        return p.category_id == _this9.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this9.selectedBrand.id;
+        return p.brand_id == _this10.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this10 = this;
+      var _this11 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this10.useraccess = Array.from(res.data);
+        _this11.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -7877,6 +7883,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeCustomer: function onChangeCustomer() {
+      var _this6 = this;
       if (this.selectedCustomer == null) {
         this.selectedCustomer = {
           id: "",
@@ -7890,9 +7897,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         return;
       }
       if (this.selectedCustomer.id == "") {
-        this.selectedCustomer.previous_due = 0;
+        this.sale.previous_due = 0.00;
+        return;
       }
-      this.sale.previous_due = this.selectedCustomer.previous_due;
+      axios.post("/api/get_custduetotal", {
+        id: this.selectedCustomer.id
+      }).then(function (res) {
+        _this6.sale.previous_due = res.data[0].dueAmount;
+      });
     },
     onChangeProduct: function onChangeProduct() {
       if (this.selectedProduct == null) {
@@ -7911,10 +7923,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this6.selectedProduct.id;
+          return p.id == _this7.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -7974,7 +7986,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this7 = this;
+      var _this8 = this;
       var data = {
         sale: this.sale,
         carts: this.carts,
@@ -7983,17 +7995,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this7.$router.push({
+          _this8.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         } else {
-          _this7.$router.push({
+          _this8.$router.push({
             path: "/sales-list"
           });
         }
-        _this7.clearData();
-        _this7.getSale();
-        _this7.carts = [];
+        _this8.clearData();
+        _this8.getSale();
+        _this8.carts = [];
       });
     },
     clearData: function clearData() {
@@ -8021,29 +8033,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this8.selectedCategory.id;
+        return p.category_id == _this9.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this9.selectedBrand.id;
+        return p.brand_id == _this10.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this10 = this;
+      var _this11 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this10.useraccess = Array.from(res.data);
+        _this11.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
