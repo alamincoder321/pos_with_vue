@@ -410,8 +410,8 @@ export default {
                 }
                 return
             }            
-            this.TotalAmount()
             if (this.selectedCustomer.id == "") {
+                this.TotalAmount()
                 this.sale.previous_due = 0.00
                 return
             }
@@ -495,9 +495,6 @@ export default {
             if(this.selectedCustomer.customer_type == "G"){
                 this.sale.paid = this.sale.total
                 this.sale.due = 0
-            }else{
-                this.sale.paid = 0
-                this.sale.due = this.sale.total
             }
         },
         removeCart(item) {

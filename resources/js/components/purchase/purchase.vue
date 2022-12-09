@@ -503,9 +503,6 @@ export default {
             if(this.selectedSupplier.supplier_type == "G"){
                 this.purchase.paid = this.purchase.total
                 this.purchase.due = 0
-            }else{
-                this.purchase.paid = 0
-                this.purchase.due = this.purchase.total
             }
         },
         removeCart(item) {

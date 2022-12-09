@@ -7202,9 +7202,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedSupplier.supplier_type == "G") {
         this.purchase.paid = this.purchase.total;
         this.purchase.due = 0;
-      } else {
-        this.purchase.paid = 0;
-        this.purchase.due = this.purchase.total;
       }
     },
     removeCart: function removeCart(item) {
@@ -7545,9 +7542,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedSupplier.supplier_type == "G") {
         this.purchase.paid = this.purchase.total;
         this.purchase.due = 0;
-      } else {
-        this.purchase.paid = 0;
-        this.purchase.due = this.purchase.total;
       }
     },
     removeCart: function removeCart(item) {
@@ -8019,9 +8013,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedCustomer.customer_type == "G") {
         this.sale.paid = this.sale.total;
         this.sale.due = 0;
-      } else {
-        this.sale.paid = 0;
-        this.sale.due = this.sale.total;
       }
     },
     removeCart: function removeCart(item) {
@@ -8275,8 +8266,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
         return;
       }
-      this.TotalAmount();
       if (this.selectedCustomer.id == "") {
+        this.TotalAmount();
         this.sale.previous_due = 0.00;
         return;
       }
@@ -8361,9 +8352,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedCustomer.customer_type == "G") {
         this.sale.paid = this.sale.total;
         this.sale.due = 0;
-      } else {
-        this.sale.paid = 0;
-        this.sale.due = this.sale.total;
       }
     },
     removeCart: function removeCart(item) {
