@@ -255,7 +255,7 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="purchase.paid" class="form-control shadow-none">
+                                            v-model="purchase.paid" class="form-control shadow-none" :readonly="selectedSupplier.supplier_type =='G'?true:false">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">

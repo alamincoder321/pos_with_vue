@@ -248,7 +248,7 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" min="0" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="sale.paid" class="form-control shadow-none">
+                                            v-model="sale.paid" class="form-control shadow-none" :readonly="selectedCustomer.customer_type =='G'?true:false">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">

@@ -247,7 +247,7 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="sale.paid" class="form-control shadow-none">
+                                            v-model="sale.paid" class="form-control shadow-none" :readonly="selectedCustomer.customer_type =='G'?true:false">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -512,7 +512,7 @@ export default {
             this.sale.total = (+parseFloat(this.sale.total) + +this.sale.transport_cost).toFixed(2)
             //total paid claculate
             this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
-            
+
             if(this.selectedCustomer.customer_type == "G"){
                 this.sale.paid = this.sale.total
                 this.sale.due = 0

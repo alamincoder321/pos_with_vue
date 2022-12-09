@@ -14053,7 +14053,8 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "paid",
-      name: "paid"
+      name: "paid",
+      readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
     },
     domProps: {
       value: _vm.purchase.paid
@@ -15002,7 +15003,8 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "paid",
-      name: "paid"
+      name: "paid",
+      readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
     },
     domProps: {
       value: _vm.purchase.paid
@@ -16189,7 +16191,8 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "paid",
-      name: "paid"
+      name: "paid",
+      readonly: _vm.selectedCustomer.customer_type == "G" ? true : false
     },
     domProps: {
       value: _vm.sale.paid
@@ -17115,7 +17118,8 @@ var render = function render() {
       type: "number",
       min: "0",
       id: "paid",
-      name: "paid"
+      name: "paid",
+      readonly: _vm.selectedCustomer.customer_type == "G" ? true : false
     },
     domProps: {
       value: _vm.sale.paid
