@@ -59,7 +59,7 @@
                 <footer class="py-2 bg-dark mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="width: 30%;" class="text-white">Design and Developed By Al Amin Islam</div>
+                            <div style="width: 30%;" class="text-white">Design and Developed By <span class="text-warning">Al Amin Islam</span></div>
                             <div style="width: 70%;">
                                 <marquee behavior="scroll" scrollamount="3" style="color: red;">&copy; {{date("Y")}}</marquee>
                             </div>
