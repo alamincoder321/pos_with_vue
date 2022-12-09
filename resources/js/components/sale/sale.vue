@@ -492,8 +492,6 @@ export default {
             //total paid claculate
             this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
 
-            console.log(this.selectedCustomer);
-
             if(this.selectedCustomer.customer_type == "G"){
                 this.sale.paid = this.sale.total
                 this.sale.due = 0

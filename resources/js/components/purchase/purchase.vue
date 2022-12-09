@@ -420,6 +420,7 @@ export default {
             }
             if (this.selectedSupplier.id == "") {
                 this.purchase.previous_due = 0
+                this.TotalAmount();
                 return
             }
             axios.post("/api/get_supduetotal", {id: this.selectedSupplier.id}).then((res) => {             
@@ -498,6 +499,14 @@ export default {
             this.purchase.total = (+parseFloat(this.purchase.total) + +this.purchase.transport_cost).toFixed(2)
             //total paid claculate
             this.purchase.due = (parseFloat(this.purchase.total) - parseFloat(this.purchase.paid)).toFixed(2)
+
+            if(this.selectedSupplier.supplier_type == "G"){
+                this.purchase.paid = this.purchase.total
+                this.purchase.due = 0
+            }else{
+                this.purchase.paid = 0
+                this.purchase.due = this.purchase.total
+            }
         },
         removeCart(item) {
             var index = this.carts.indexOf(item);

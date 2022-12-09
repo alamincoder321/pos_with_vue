@@ -7117,6 +7117,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
       if (this.selectedSupplier.id == "") {
         this.purchase.previous_due = 0;
+        this.TotalAmount();
         return;
       }
       axios.post("/api/get_supduetotal", {
@@ -7198,6 +7199,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.purchase.total = (+parseFloat(this.purchase.total) + +this.purchase.transport_cost).toFixed(2);
       //total paid claculate
       this.purchase.due = (parseFloat(this.purchase.total) - parseFloat(this.purchase.paid)).toFixed(2);
+      if (this.selectedSupplier.supplier_type == "G") {
+        this.purchase.paid = this.purchase.total;
+        this.purchase.due = 0;
+      } else {
+        this.purchase.paid = 0;
+        this.purchase.due = this.purchase.total;
+      }
     },
     removeCart: function removeCart(item) {
       var index = this.carts.indexOf(item);
@@ -7452,6 +7460,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
       if (this.selectedSupplier.id == "") {
         this.purchase.previous_due = 0;
+        this.TotalAmount();
         return;
       }
       axios.post("/api/get_supduetotal", {
@@ -7533,6 +7542,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.purchase.total = (+parseFloat(this.purchase.total) + +this.purchase.transport_cost).toFixed(2);
       //total paid claculate
       this.purchase.due = (parseFloat(this.purchase.total) - parseFloat(this.purchase.paid)).toFixed(2);
+      if (this.selectedSupplier.supplier_type == "G") {
+        this.purchase.paid = this.purchase.total;
+        this.purchase.due = 0;
+      } else {
+        this.purchase.paid = 0;
+        this.purchase.due = this.purchase.total;
+      }
     },
     removeCart: function removeCart(item) {
       var index = this.carts.indexOf(item);
@@ -7918,6 +7934,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
       if (this.selectedCustomer.id == "") {
         this.sale.previous_due = 0.00;
+        this.TotalAmount();
         return;
       }
       axios.post("/api/get_custduetotal", {
@@ -7999,6 +8016,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.sale.total = (+parseFloat(this.sale.total) + +this.sale.transport_cost).toFixed(2);
       //total paid claculate
       this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2);
+      if (this.selectedCustomer.customer_type == "G") {
+        this.sale.paid = this.sale.total;
+        this.sale.due = 0;
+      } else {
+        this.sale.paid = 0;
+        this.sale.due = this.sale.total;
+      }
     },
     removeCart: function removeCart(item) {
       var index = this.carts.indexOf(item);
@@ -8334,7 +8358,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.sale.total = (+parseFloat(this.sale.total) + +this.sale.transport_cost).toFixed(2);
       //total paid claculate
       this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2);
-      console.log(this.selectedCustomer);
       if (this.selectedCustomer.customer_type == "G") {
         this.sale.paid = this.sale.total;
         this.sale.due = 0;
