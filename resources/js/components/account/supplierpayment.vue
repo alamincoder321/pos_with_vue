@@ -79,7 +79,7 @@
                                         <div class="col-7 col-lg-8">
                                             <input type="number" min="0" id="payment_amount" name="payment_amount"
                                                 class="form-control shadow-none"
-                                                v-model="supplierpayment.payment_amount" autocomplete="off" />
+                                                v-model="supplierpayment.payment_amount" :readonly="supplierpayment.due > 0?false:true" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>
@@ -213,7 +213,14 @@ export default {
         },
 
         onChangeSupplier() {
-            this.supplierpayment.supplier_id = this.selectedCustomer.id
+            this.supplierpayment.supplier_id = this.selectedSupplier.id
+            if(this.selectedSupplier.id == ""){
+                this.supplierpayment.due = 0
+                return
+            }
+            axios.post("/api/get_supduetotal", {id: this.selectedSupplier.id}).then((res) => {             
+                this.supplierpayment.due = res.data[0].dueAmount
+            });
         },
         onChangeBank() {
             this.supplierpayment.bank_id = this.selectedBank.id

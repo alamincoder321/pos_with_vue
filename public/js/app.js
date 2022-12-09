@@ -5582,13 +5582,23 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeCustomer: function onChangeCustomer() {
+      var _this4 = this;
       this.customerpayment.customer_id = this.selectedCustomer.id;
+      if (this.selectedCustomer.id == "") {
+        this.customerpayment.due = 0;
+        return;
+      }
+      axios.post("/api/get_custduetotal", {
+        id: this.selectedCustomer.id
+      }).then(function (res) {
+        _this4.customerpayment.due = res.data[0].dueAmount;
+      });
     },
     onChangeBank: function onChangeBank() {
       this.customerpayment.bank_id = this.selectedBank.id;
     },
     saveCustomerPayment: function saveCustomerPayment(event) {
-      var _this4 = this;
+      var _this5 = this;
       if (this.selectedCustomer == null) {
         alert("Select Customer Name");
         return;
@@ -5604,8 +5614,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
       axios.post(location.origin + "/api/save_customerpayment", this.customerpayment).then(function (res) {
         alert(res.data);
-        _this4.clearData();
-        _this4.getCustomerPayment();
+        _this5.clearData();
+        _this5.getCustomerPayment();
       });
     },
     editRow: function editRow(val) {
@@ -5630,11 +5640,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     deleteRow: function deleteRow(id) {
-      var _this5 = this;
+      var _this6 = this;
       if (confirm("Are you sure")) {
         axios.get("/api/delete_customerpayment/" + id).then(function (res) {
           alert(res.data);
-          _this5.getCustomerPayment();
+          _this6.getCustomerPayment();
         });
       }
     },
@@ -5654,9 +5664,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.getCustomerPayment();
     },
     getPermission: function getPermission() {
-      var _this6 = this;
+      var _this7 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this6.useraccess = Array.from(res.data);
+        _this7.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -5779,13 +5789,23 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeSupplier: function onChangeSupplier() {
-      this.supplierpayment.supplier_id = this.selectedCustomer.id;
+      var _this4 = this;
+      this.supplierpayment.supplier_id = this.selectedSupplier.id;
+      if (this.selectedSupplier.id == "") {
+        this.supplierpayment.due = 0;
+        return;
+      }
+      axios.post("/api/get_supduetotal", {
+        id: this.selectedSupplier.id
+      }).then(function (res) {
+        _this4.supplierpayment.due = res.data[0].dueAmount;
+      });
     },
     onChangeBank: function onChangeBank() {
       this.supplierpayment.bank_id = this.selectedBank.id;
     },
     saveSupplierPayment: function saveSupplierPayment(event) {
-      var _this4 = this;
+      var _this5 = this;
       if (this.selectedSupplier == null) {
         alert("Select Supplier Name");
         return;
@@ -5803,8 +5823,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.supplierpayment.supplier_id = this.selectedSupplier.id;
       axios.post(location.origin + "/api/save_supplierpayment", this.supplierpayment).then(function (res) {
         alert(res.data);
-        _this4.clearData();
-        _this4.getSupplierPayment();
+        _this5.clearData();
+        _this5.getSupplierPayment();
       });
     },
     editRow: function editRow(val) {
@@ -5829,11 +5849,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     deleteRow: function deleteRow(id) {
-      var _this5 = this;
+      var _this6 = this;
       if (confirm("Are you sure")) {
         axios.get("/api/delete_supplierpayment/" + id).then(function (res) {
           alert(res.data);
-          _this5.getSupplierPayment();
+          _this6.getSupplierPayment();
         });
       }
     },
@@ -5853,9 +5873,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.getSupplierPayment();
     },
     getPermission: function getPermission() {
-      var _this6 = this;
+      var _this7 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this6.useraccess = Array.from(res.data);
+        _this7.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -10148,6 +10168,7 @@ var render = function render() {
       min: "0",
       id: "payment_amount",
       name: "payment_amount",
+      readonly: _vm.customerpayment.due > 0 ? false : true,
       autocomplete: "off"
     },
     domProps: {
@@ -10513,6 +10534,7 @@ var render = function render() {
       min: "0",
       id: "payment_amount",
       name: "payment_amount",
+      readonly: _vm.supplierpayment.due > 0 ? false : true,
       autocomplete: "off"
     },
     domProps: {
