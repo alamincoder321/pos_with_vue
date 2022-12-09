@@ -409,7 +409,8 @@ export default {
                     previous_due: 0,
                 }
                 return
-            }
+            }            
+            this.TotalAmount()
             if (this.selectedCustomer.id == "") {
                 this.sale.previous_due = 0.00
                 return
@@ -490,6 +491,16 @@ export default {
             this.sale.total = (+parseFloat(this.sale.total) + +this.sale.transport_cost).toFixed(2)
             //total paid claculate
             this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
+
+            console.log(this.selectedCustomer);
+
+            if(this.selectedCustomer.customer_type == "G"){
+                this.sale.paid = this.sale.total
+                this.sale.due = 0
+            }else{
+                this.sale.paid = 0
+                this.sale.due = this.sale.total
+            }
         },
         removeCart(item) {
             var index = this.carts.indexOf(item);
