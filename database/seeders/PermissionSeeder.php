@@ -84,6 +84,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "damage",
+                "permission" => [
+                    "damage.index",
+                    "damage.edit",
+                    "damage.store",
+                    "damage.delete",
+                ],
+            ],
+            [
                 "group_name" => "department",
                 "permission" => [
                     "department.index",

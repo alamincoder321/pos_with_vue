@@ -20,6 +20,7 @@ class CreateProductInventoriesTable extends Migration
             $table->integer("purchase_return_qty")->nullable();
             $table->integer("sale_qty")->nullable();
             $table->integer("sale_return_qty")->nullable();
+            $table->integer("damage_qty")->nullable();
             $table->timestamps();
         });
     }

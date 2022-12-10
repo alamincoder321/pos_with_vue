@@ -57,7 +57,7 @@
 
                 </main>
                 <footer class="py-2 bg-dark mt-auto">
-                    <div class="container-fluid px-4">
+                    <div class="container-fluid px-4" style="padding-left: 0 !important;">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div style="width: 32%;background: #646464;padding: 3px 7px;" class="text-white">Design and Developed By <span class="text-warning text-uppercase">Md. Al Amin Islam</span></div>
                             <div style="width: 68%;">

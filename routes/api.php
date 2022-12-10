@@ -7,6 +7,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerPaymentController;
+use App\Http\Controllers\DamageController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
@@ -88,6 +89,10 @@ Route::get("/delete_employer/{id}", [EmployerController::class, "deleteEmployer"
 Route::get("/get_product", [ProductController::class, "getProduct"]);
 Route::post("/save_product", [ProductController::class, "saveProduct"]);
 Route::get("/delete_product/{id}", [ProductController::class, "deleteProduct"]);
+//damage
+Route::get("/get_damage", [DamageController::class, "getDamage"]);
+Route::post("/save_damage", [DamageController::class, "saveDamage"]);
+Route::get("/delete_damage/{id}", [DamageController::class, "deleteDamage"]);
 //purchase
 Route::post("/get_purchase", [PurchaseController::class, "getPurchase"]);
 Route::post("/save_purchase", [PurchaseController::class, "savePurchase"]);

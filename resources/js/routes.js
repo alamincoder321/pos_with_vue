@@ -18,6 +18,7 @@ import product from "./components/settings/product.vue";
 import purchase from "./components/purchase/purchase.vue";
 import purchaselist from "./components/purchase/purchaselist.vue";
 import editpurchase from "./components/purchase/editpurchase.vue";
+import damage from "./components/purchase/damage.vue";
 import sale from "./components/sale/sale.vue";
 import salelist from "./components/sale/salelist.vue";
 import editsale from "./components/sale/editsale.vue";
@@ -51,6 +52,7 @@ const routes = [
     { path: "/purchases", component: purchase },
     { path: "/purchases-list", component: purchaselist },
     { path: "/purchases-edit/:id", component: editpurchase },
+    { path: "/damages", component: damage },
     // sales
     { path: "/sales", component: sale },
     { path: "/sales-list", component: salelist },
