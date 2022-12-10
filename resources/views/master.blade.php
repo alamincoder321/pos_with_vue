@@ -54,14 +54,14 @@
             <div id="layoutSidenav_content">
                 <main>
                     <router-view></router-view>
-                    
+
                 </main>
                 <footer class="py-2 bg-dark mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="width: 30%;" class="text-white">Design and Developed By <span class="text-warning">Al Amin Islam</span></div>
-                            <div style="width: 70%;">
-                                <marquee behavior="scroll" scrollamount="3" style="color: red;">&copy; {{date("Y")}}</marquee>
+                            <div style="width: 32%;background: #646464;padding: 3px 7px;" class="text-white">Design and Developed By <span class="text-warning text-uppercase">Md. Al Amin Islam</span></div>
+                            <div style="width: 68%;">
+                                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
                             </div>
                         </div>
                     </div>
@@ -77,6 +77,14 @@
                 location.href = "{{route('logout')}}"
             }
         }
+
+        // window.onload = displayClock();
+        function displayClock() {
+            var display = new Date().toLocaleTimeString();
+            document.getElementById("clock").innerText = display;
+            setTimeout(displayClock, 1000);
+        }
+        displayClock();
     </script>
 </body>
 
