@@ -6963,12 +6963,23 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         height: '28px'
       },
       columns: [{
-        label: "Name",
+        label: "Code",
+        field: "damage_code"
+      }, {
+        label: "Date",
+        field: "date"
+      }, {
+        label: "Product",
         field: "name"
       }, {
-        label: "Description",
-        field: "description",
-        type: "text"
+        label: "Qty",
+        field: "quantity"
+      }, {
+        label: "Price",
+        field: "price"
+      }, {
+        label: "Total",
+        field: "total_amount"
       }, {
         label: "Action",
         field: "before"
@@ -7017,6 +7028,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     onChangeProduct: function onChangeProduct() {
       this.damage.product_id = this.selectedProduct.id;
+      this.damage.price = this.selectedProduct.purchase_price;
+    },
+    calculateTotal: function calculateTotal() {
+      this.damage.total_amount = (parseFloat(this.damage.price) * this.damage.quantity).toFixed(2);
     },
     saveDamage: function saveDamage(event) {
       var _this3 = this;
@@ -7025,9 +7040,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         document.querySelector("#product [type='search']").focus();
         return;
       }
-      var formdata = new FormData(event.target);
-      formdata.append("id", this.damage.id);
-      axios.post(location.origin + "/api/save_damage", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save_damage", this.damage).then(function (res) {
         alert(res.data);
         _this3.clearData();
         _this3.getDamage();
@@ -7044,7 +7057,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         total_amount: val.total_amount,
         description: val.description
       };
-      this.imageSrc = val.image ? location.origin + "/" + val.image : location.origin + "/no-image.jpg";
+      this.selectedProduct = {
+        id: val.product_id,
+        display_name: val.display_name
+      };
     },
     deleteRow: function deleteRow(id) {
       var _this4 = this;
@@ -7066,6 +7082,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         total_amount: 0,
         description: ""
       };
+      this.selectedProduct = null;
     },
     getPermission: function getPermission() {
       var _this5 = this;
@@ -13541,10 +13558,10 @@ var render = function render() {
       value: _vm.damage.quantity
     },
     on: {
-      input: function input($event) {
+      input: [function ($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.damage, "quantity", $event.target.value);
-      }
+      }, _vm.calculateTotal]
     }
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 col-lg-5"
@@ -13553,7 +13570,7 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "col-5 col-lg-4 d-flex align-items-center",
     attrs: {
-      "for": "name"
+      "for": "price"
     }
   }, [_vm._v("Price:")]), _vm._v(" "), _c("div", {
     staticClass: "col-7 col-lg-8"
@@ -13561,24 +13578,24 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.damage.name,
-      expression: "damage.name"
+      value: _vm.damage.price,
+      expression: "damage.price"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
       min: "0",
-      id: "name",
-      name: "name",
+      id: "price",
+      name: "price",
       autocomplete: "off"
     },
     domProps: {
-      value: _vm.damage.name
+      value: _vm.damage.price
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.damage, "name", $event.target.value);
+        _vm.$set(_vm.damage, "price", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {
@@ -13586,7 +13603,7 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "col-5 col-lg-4 d-flex align-items-center",
     attrs: {
-      "for": "name"
+      "for": "total_amount"
     }
   }, [_vm._v("Total Amount:")]), _vm._v(" "), _c("div", {
     staticClass: "col-7 col-lg-8"
@@ -13594,24 +13611,24 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.damage.name,
-      expression: "damage.name"
+      value: _vm.damage.total_amount,
+      expression: "damage.total_amount"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
       min: "0",
-      id: "name",
-      name: "name",
+      id: "total_amount",
+      name: "total_amount",
       readonly: ""
     },
     domProps: {
-      value: _vm.damage.name
+      value: _vm.damage.total_amount
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.damage, "name", $event.target.value);
+        _vm.$set(_vm.damage, "total_amount", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {
