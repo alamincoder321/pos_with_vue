@@ -44,24 +44,29 @@
                                             class="col-5 col-lg-4 d-flex align-items-center">Quantity:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="number" min="0" id="quantity" name="quantity"
-                                                class="form-control shadow-none" v-model="damage.quantity" @input="calculateTotal" />
+                                                class="form-control shadow-none" v-model="damage.quantity"
+                                                @input="calculateTotal" />
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="col-12 col-lg-5">
                                     <div class="row mt-2">
-                                        <label for="price" class="col-5 col-lg-4 d-flex align-items-center">Price:</label>
+                                        <label for="price"
+                                            class="col-5 col-lg-4 d-flex align-items-center">Price:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="number" min="0" id="price" name="price" class="form-control shadow-none"
-                                                v-model="damage.price" autocomplete="off" />
+                                            <input type="number" min="0" id="price" name="price"
+                                                class="form-control shadow-none" v-model="damage.price"
+                                                autocomplete="off" />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <label for="total_amount" class="col-5 col-lg-4 d-flex align-items-center">Total Amount:</label>
+                                        <label for="total_amount" class="col-5 col-lg-4 d-flex align-items-center">Total
+                                            Amount:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="number" min="0" id="total_amount" name="total_amount" class="form-control shadow-none"
-                                                v-model="damage.total_amount" readonly />
+                                            <input type="number" min="0" id="total_amount" name="total_amount"
+                                                class="form-control shadow-none" v-model="damage.total_amount"
+                                                readonly />
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -201,10 +206,10 @@ export default {
 
         onChangeProduct() {
             this.damage.product_id = this.selectedProduct.id;
-            this.damage.price      = this.selectedProduct.purchase_price;
+            this.damage.price = this.selectedProduct.purchase_price;
         },
 
-        calculateTotal(){
+        calculateTotal() {
             this.damage.total_amount = (parseFloat(this.damage.price) * this.damage.quantity).toFixed(2);
         },
 

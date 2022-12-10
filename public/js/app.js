@@ -13605,7 +13605,7 @@ var render = function render() {
     attrs: {
       "for": "total_amount"
     }
-  }, [_vm._v("Total Amount:")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Total\n                                            Amount:")]), _vm._v(" "), _c("div", {
     staticClass: "col-7 col-lg-8"
   }, [_c("input", {
     directives: [{
