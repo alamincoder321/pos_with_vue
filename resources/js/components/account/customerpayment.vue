@@ -79,7 +79,8 @@
                                         <div class="col-7 col-lg-8">
                                             <input type="number" min="0" id="payment_amount" name="payment_amount"
                                                 class="form-control shadow-none"
-                                                v-model="customerpayment.payment_amount" :readonly="customerpayment.due > 0?false:true" autocomplete="off" />
+                                                v-model="customerpayment.payment_amount"
+                                                :readonly="customerpayment.due > 0 ? false : true" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>
@@ -214,11 +215,11 @@ export default {
 
         onChangeCustomer() {
             this.customerpayment.customer_id = this.selectedCustomer.id
-            if(this.selectedCustomer.id == ""){
+            if (this.selectedCustomer.id == "") {
                 this.customerpayment.due = 0
                 return
             }
-            axios.post("/api/get_custduetotal", {id: this.selectedCustomer.id}).then((res) => {             
+            axios.post("/api/get_custduetotal", { id: this.selectedCustomer.id }).then((res) => {
                 this.customerpayment.due = res.data[0].dueAmount
             });
         },
@@ -238,8 +239,15 @@ export default {
             if (this.customerpayment.payment_type == "bank") {
                 if (this.selectedBank == null) {
                     alert("Please Select Bank account")
+                    return
                 }
             }
+
+            if (parseFloat(this.customerpayment.due) < this.customerpayment.payment_amount) {
+                alert("Payment don't grather than due")
+                return
+            }
+
 
 
             axios

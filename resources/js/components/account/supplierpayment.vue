@@ -238,8 +238,14 @@ export default {
             if (this.supplierpayment.payment_type == "bank") {
                 if (this.selectedBank == null) {
                     alert("Please Select Bank account")
+                    return
                 }
             }
+            if (parseFloat(this.supplierpayment.due) < this.supplierpayment.payment_amount) {
+                alert("Payment don't grather than due")
+                return
+            }
+
             this.supplierpayment.bank_id = this.selectedBank.id
             this.supplierpayment.supplier_id = this.selectedSupplier.id
 

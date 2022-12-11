@@ -117,8 +117,21 @@
                                             autocomplete="off" readonly />
                                     </div>
                                 </div>
-                                <div class="form-group text-end mt-2">
-                                    <button class="btn btn-primary shadow-none" @click="AddToCart">AddToCart</button>
+                                <div class="row mt-2">
+                                    <div class="col-7">
+                                        <div class="card">
+                                            <div class="card-header text-center"
+                                                :class="stocks.stock > 0 ? 'text-white bg-success' : 'text-white bg-danger'">
+                                                Stock</div>
+                                            <div class="card-body text-center">
+                                                {{ stocks.stock }} {{ stocks.unit_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 d-flex justify-content-end">
+                                        <button class="btn btn-primary shadow-none"
+                                            @click="AddToCart">AddToCart</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +260,8 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="sale.paid" class="form-control shadow-none" :readonly="selectedCustomer.customer_type =='G'?true:false">
+                                            v-model="sale.paid" class="form-control shadow-none"
+                                            :readonly="selectedCustomer.customer_type == 'G' ? true : false">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -348,6 +362,7 @@ export default {
                 added_by: "",
                 account_id: "",
             },
+            stocks: "",
             useraccess: [],
             user_id: null,
         }
@@ -452,6 +467,10 @@ export default {
                 }
                 return
             }
+            axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
+                .then(res => {
+                    this.stocks = res.data[0]
+                })
         },
 
         cartQtySaleChange() {
@@ -469,6 +488,10 @@ export default {
                     document.querySelector("#product [type='search']").focus()
                     return
                 }
+                if (this.stocks.stock <= 0 || this.stocks.stock < this.selectedProduct.quantity) {
+                    alert("Unavailable stock")
+                    return
+                }
                 if (this.selectedProduct.quantity == undefined) {
                     alert("Quantity increment must")
                     document.querySelector("#quantity").focus()
@@ -481,8 +504,7 @@ export default {
                     selling_price: this.selectedProduct.selling_price,
                     quantity: this.selectedProduct.quantity,
                     total_amount: this.selectedProduct.total_amount,
-                }
-
+                }                
                 this.carts.push(this.product)
                 this.selectedProduct = {
                     id: "",
@@ -513,7 +535,7 @@ export default {
             //total paid claculate
             this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
 
-            if(this.selectedCustomer.customer_type == "G"){
+            if (this.selectedCustomer.customer_type == "G") {
                 this.sale.paid = this.sale.total
                 this.sale.due = 0
             }

@@ -464,15 +464,16 @@ export default {
                     document.querySelector("#product [type='search']").focus()
                     return
                 }
+                if(this.stocks.stock <= 0 || this.stocks.stock < this.selectedProduct.quantity){
+                    alert("Unavailable stock")
+                    return
+                }
                 if (this.selectedProduct.quantity == undefined) {
                     alert("Quantity increment must")
                     document.querySelector("#quantity").focus()
                     return
                 }
-                if(this.stocks.stock <= 0){
-                    alert("Unavailable stock")
-                    return
-                }
+                
                 this.product = {
                     product_id: this.selectedProduct.id,
                     name: this.selectedProduct.name,

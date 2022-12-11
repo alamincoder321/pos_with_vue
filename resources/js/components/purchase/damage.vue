@@ -224,7 +224,7 @@ export default {
                 document.querySelector("#product [type='search']").focus()
                 return;
             }
-            if (this.stocks.stock <= 0) {
+            if (this.stocks.stock <= 0 || this.stocks.stock < this.damage.quantity) {
                 alert("Unavailable Stock");
                 return
             }
