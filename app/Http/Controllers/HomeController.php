@@ -66,6 +66,7 @@ class HomeController extends Controller
         if (File::exists($old)) {
             File::delete($old);
         }
+        $data->delete();
         return "User Delete Successfully";
     }
 
