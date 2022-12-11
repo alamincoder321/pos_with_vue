@@ -13,7 +13,7 @@ class ModelTable extends Model
     public static function customerDue($id = null)
     {
         $clauses = "";
-        if($id != null){
+        if ($id != null) {
             $clauses .= "WHERE c.id = $id";
         }
         return DB::select("SELECT
@@ -60,7 +60,7 @@ class ModelTable extends Model
     public static function supplierDue($id = null)
     {
         $clauses = "";
-        if($id != null){
+        if ($id != null) {
             $clauses .= "WHERE s.id = $id";
         }
         return DB::select("SELECT
@@ -101,5 +101,17 @@ class ModelTable extends Model
                     ) AS dueAmount
                     FROM
                         suppliers AS s $clauses");
+    }
+
+    public static function Stock($id = null)
+    {
+        $clauses = "";
+        if ($id != null) {
+            $clauses .= "WHERE p.id = $id";
+        }
+
+        return DB::select("SELECT
+        (IFNULL(pin.purchase_qty, 0) + IFNULL(pin.sale_return_qty, 0) - IFNULL(pin.purchase_return_qty, 0) - IFNULL(pin.sale_qty, 0) - IFNULL(pin.damage_qty, 0)) AS stock,
+        p.*, un.name AS unit_name FROM products AS p LEFT JOIN product_inventories AS pin ON p.id = pin.product_id LEFT JOIN units AS un ON un.id = p.unit_id $clauses");
     }
 }

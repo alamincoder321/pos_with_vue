@@ -59,7 +59,11 @@ class DamageController extends Controller
     public function deleteDamage($id)
     {
         $data = Damage::find($id);
+        $old_inventory = ProductInventory::where("product_id", $data->product_id)->first();
+        $old_inventory->damage_qty = $old_inventory->damage_qty - $data->quantity;
+        $old_inventory->save();
+
         $data->delete();
-        return "Product Delete Successfully";
+        return "Product Damage Delete Successfully";
     }
 }

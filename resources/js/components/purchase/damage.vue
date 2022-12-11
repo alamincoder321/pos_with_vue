@@ -81,8 +81,8 @@
                                 </div>
                                 <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
                                     <div class="card" style="border-radius:0;width: 75% !important;">
-                                        <div class="card-header text-center">Stock</div>
-                                        <div class="card-body text-center">2</div>
+                                        <div class="card-header text-center" :class="stocks.stock >= 0 ? 'bg-success text-white':'bg-danger text-white'">Stock</div>
+                                        <div class="card-body text-center">{{stocks.stock}} {{stocks.unit_name}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -179,6 +179,7 @@ export default {
                 total_amount: 0,
                 description: "",
             },
+            stocks: "",
             user_id: null,
             useraccess: [],
         };
@@ -207,6 +208,10 @@ export default {
         onChangeProduct() {
             this.damage.product_id = this.selectedProduct.id;
             this.damage.price = this.selectedProduct.purchase_price;
+            axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
+                .then(res => {
+                    this.stocks = res.data[0]
+                })
         },
 
         calculateTotal() {
@@ -218,6 +223,11 @@ export default {
                 alert("Product Field is Empty");
                 document.querySelector("#product [type='search']").focus()
                 return;
+            }
+
+            if (this.stocks.stock < 0) {
+                alert("Unavailable Stock");
+                return
             }
 
             axios

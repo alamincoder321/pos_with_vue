@@ -77,13 +77,15 @@
                                 }}
                             </td>
                             <td class="hideAction">
-                                <span title="Invoice Delete" @click="InvoiceDelete(item.id)" style="cursor:pointer; margin-right: 5px;"><i
+                                <span title="Invoice Delete" @click="InvoiceDelete(item.id, index)"
+                                    style="cursor:pointer; margin-right: 5px;"><i
                                         class="fas fa-trash text-danger"></i></span>
-                                <router-link title="Sales Edit" style="margin-right: 5px;" :to="{ path: '/sales-edit/' + item.invoice }">
+                                <router-link title="Sales Edit" style="margin-right: 5px;"
+                                    :to="{ path: '/sales-edit/' + item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
                                 </router-link>
-                                <router-link title="invoice" :to="{path: '/invoice/' + item.invoice}"  style="cursor:pointer;"><i
-                                        class="fas fa-file text-info"></i></router-link>
+                                <router-link title="invoice" :to="{ path: '/invoice/' + item.invoice }"
+                                    style="cursor:pointer;"><i class="fas fa-file text-info"></i></router-link>
                             </td>
                         </tr>
                         <tr :style="{ display: sales.length == 0 ? '' : 'none' }">
@@ -152,10 +154,12 @@ export default {
             }
         },
 
-        InvoiceDelete(id) {
+        InvoiceDelete(id, sl) {
             if (confirm("Are you sure want to delete")) {
                 axios.get("/api/delete_sale/" + id).then((res) => {
-                    console.log(res.data);
+                    alert(res.data);
+                    var index = this.sales.indexOf(sl);
+                    this.sales.splice(index, 1);
                 });
             }
         },
@@ -205,9 +209,10 @@ export default {
 </script>
 
 <style>
-#invoice{
-    width:100% !important;
+#invoice {
+    width: 100% !important;
 }
+
 .searchBtn {
     border: none;
     background: green;

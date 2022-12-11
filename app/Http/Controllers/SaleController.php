@@ -55,7 +55,7 @@ class SaleController extends Controller
         $invoice = $this->invoiceNumberSale();
         return response()->json(['invoice' => $invoice, 'sales' => $sales]);
     }
-
+ 
 
 
     public function saveSale(Request $request)
@@ -150,5 +150,17 @@ class SaleController extends Controller
             DB::rollback();
             return "Opps! something went wrong";
         }
+    }
+
+    public function deleteSale($id)
+    {
+        $details = SaleDetail::where("sale_id", $id)->get();
+        foreach ($details as $item) {
+            $inventory = ProductInventory::where("product_id", $item->product_id)->first();
+            $inventory->sale_qty = $inventory->sale_qty - $item->quantity;
+            $inventory->save();
+        }
+        Sale::find($id)->delete();
+        return "Purchae Delete";
     }
 }

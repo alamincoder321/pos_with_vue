@@ -149,10 +149,12 @@ export default {
             }
         },
 
-        InvoiceDelete(id){
+        InvoiceDelete(id, sl){
             if(confirm("Are you sure want to delete")){
                 axios.get("/api/delete_purchase/" + id).then((res) => {
                     alert(res.data);
+                    var index = this.purchases.indexOf(sl);
+                    this.purchases.splice(index, 1);
                 });
             }
         },

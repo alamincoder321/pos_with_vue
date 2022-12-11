@@ -6997,6 +6997,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         total_amount: 0,
         description: ""
       },
+      stocks: "",
       user_id: null,
       useraccess: []
     };
@@ -7027,23 +7028,33 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeProduct: function onChangeProduct() {
+      var _this3 = this;
       this.damage.product_id = this.selectedProduct.id;
       this.damage.price = this.selectedProduct.purchase_price;
+      axios.post(location.origin + "/api/get_product_stock", {
+        id: this.selectedProduct.id
+      }).then(function (res) {
+        _this3.stocks = res.data[0];
+      });
     },
     calculateTotal: function calculateTotal() {
       this.damage.total_amount = (parseFloat(this.damage.price) * this.damage.quantity).toFixed(2);
     },
     saveDamage: function saveDamage(event) {
-      var _this3 = this;
+      var _this4 = this;
       if (this.selectedProduct.id == "") {
         alert("Product Field is Empty");
         document.querySelector("#product [type='search']").focus();
         return;
       }
+      if (this.stocks.stock < 0) {
+        alert("Unavailable Stock");
+        return;
+      }
       axios.post(location.origin + "/api/save_damage", this.damage).then(function (res) {
         alert(res.data);
-        _this3.clearData();
-        _this3.getDamage();
+        _this4.clearData();
+        _this4.getDamage();
       });
     },
     editRow: function editRow(val) {
@@ -7063,11 +7074,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     deleteRow: function deleteRow(id) {
-      var _this4 = this;
+      var _this5 = this;
       if (confirm("Are you sure")) {
         axios.get("/api/delete_damage/" + id).then(function (res) {
           alert(res.data);
-          _this4.getDamage();
+          _this5.getDamage();
         });
       }
     },
@@ -7085,9 +7096,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.selectedProduct = null;
     },
     getPermission: function getPermission() {
-      var _this5 = this;
+      var _this6 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this5.useraccess = Array.from(res.data);
+        _this6.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -7885,10 +7896,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
       }
     },
-    InvoiceDelete: function InvoiceDelete(id) {
+    InvoiceDelete: function InvoiceDelete(id, sl) {
+      var _this3 = this;
       if (confirm("Are you sure want to delete")) {
         axios.get("/api/delete_purchase/" + id).then(function (res) {
           alert(res.data);
+          var index = _this3.purchases.indexOf(sl);
+          _this3.purchases.splice(index, 1);
         });
       }
     },
@@ -7896,9 +7910,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       return moment(date).format("DD-MM-YYYY");
     },
     getPermission: function getPermission() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this3.useraccess = Array.from(res.data);
+        _this4.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -8699,10 +8713,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
       }
     },
-    InvoiceDelete: function InvoiceDelete(id) {
+    InvoiceDelete: function InvoiceDelete(id, sl) {
+      var _this3 = this;
       if (confirm("Are you sure want to delete")) {
         axios.get("/api/delete_sale/" + id).then(function (res) {
-          console.log(res.data);
+          alert(res.data);
+          var index = _this3.sales.indexOf(sl);
+          _this3.sales.splice(index, 1);
         });
       }
     },
@@ -8735,9 +8752,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       return moment(date).format("DD-MM-YYYY");
     },
     getPermission: function getPermission() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this3.useraccess = Array.from(res.data);
+        _this4.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -13662,7 +13679,20 @@ var render = function render() {
         _vm.$set(_vm.damage, "description", $event.target.value);
       }
     }
-  })])])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 col-lg-2 d-flex justify-content-center align-items-center"
+  }, [_c("div", {
+    staticClass: "card",
+    staticStyle: {
+      "border-radius": "0",
+      width: "75% !important"
+    }
+  }, [_c("div", {
+    staticClass: "card-header text-center",
+    "class": _vm.stocks.stock >= 0 ? "bg-success text-white" : "bg-danger text-white"
+  }, [_vm._v("Stock")]), _vm._v(" "), _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v(_vm._s(_vm.stocks.stock) + " " + _vm._s(_vm.stocks.unit_name))])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group text-center mt-3"
   }, [_c("button", {
     staticClass: "btn btn-outline-secondary btn-sm shadow-none",
@@ -13751,22 +13781,6 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fas fa-plus"
   })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-12 col-lg-2 d-flex justify-content-center align-items-center"
-  }, [_c("div", {
-    staticClass: "card",
-    staticStyle: {
-      "border-radius": "0",
-      width: "75% !important"
-    }
-  }, [_c("div", {
-    staticClass: "card-header text-center"
-  }, [_vm._v("Stock")]), _vm._v(" "), _c("div", {
-    staticClass: "card-body text-center"
-  }, [_vm._v("2")])])]);
 }];
 render._withStripped = true;
 
@@ -17993,7 +18007,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.InvoiceDelete(item.id);
+          return _vm.InvoiceDelete(item.id, index);
         }
       }
     }, [_c("i", {
@@ -36467,7 +36481,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice{\r\n    width:100% !important;\n}\n.searchBtn {\r\n    border: none;\r\n    background: green;\r\n    color: white;\r\n    padding: 3px 12px;\r\n    font-size: 15px;\r\n    border-radius: 0.2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice {\r\n    width: 100% !important;\n}\n.searchBtn {\r\n    border: none;\r\n    background: green;\r\n    color: white;\r\n    padding: 3px 12px;\r\n    font-size: 15px;\r\n    border-radius: 0.2rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

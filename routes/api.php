@@ -89,6 +89,7 @@ Route::get("/delete_employer/{id}", [EmployerController::class, "deleteEmployer"
 Route::get("/get_product", [ProductController::class, "getProduct"]);
 Route::post("/save_product", [ProductController::class, "saveProduct"]);
 Route::get("/delete_product/{id}", [ProductController::class, "deleteProduct"]);
+Route::post("/get_product_stock", [ProductController::class, "stock"]);
 //damage
 Route::get("/get_damage", [DamageController::class, "getDamage"]);
 Route::post("/save_damage", [DamageController::class, "saveDamage"]);

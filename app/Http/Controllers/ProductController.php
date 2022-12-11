@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelTable;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,5 +65,11 @@ class ProductController extends Controller
         }
         $data->delete();
         return "Product Delete Successfully";
+    }
+
+    //product stock
+    public function stock(Request $request)
+    {
+        return ModelTable::Stock($request->id);
     }
 }
