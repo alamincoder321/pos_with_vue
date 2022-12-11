@@ -7047,12 +7047,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         document.querySelector("#product [type='search']").focus();
         return;
       }
-      if (this.stocks.stock < 0) {
+      if (this.stocks.stock <= 0) {
         alert("Unavailable Stock");
         return;
       }
       axios.post(location.origin + "/api/save_damage", this.damage).then(function (res) {
         alert(res.data);
+        _this4.stocks = "";
         _this4.clearData();
         _this4.getDamage();
       });

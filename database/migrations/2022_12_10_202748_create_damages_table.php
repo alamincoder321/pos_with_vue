@@ -21,7 +21,7 @@ class CreateDamagesTable extends Migration
             $table->integer("quantity");
             $table->decimal("price");
             $table->decimal("total_amount");
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->timestamps();
         });
     }

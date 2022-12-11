@@ -225,7 +225,7 @@ export default {
                 return;
             }
 
-            if (this.stocks.stock < 0) {
+            if (this.stocks.stock <= 0) {
                 alert("Unavailable Stock");
                 return
             }
@@ -234,6 +234,7 @@ export default {
                 .post(location.origin + "/api/save_damage", this.damage)
                 .then((res) => {
                     alert(res.data);
+                    this.stocks = "";
                     this.clearData();
                     this.getDamage();
                 });
