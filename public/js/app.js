@@ -7670,7 +7670,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var _this7 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this7.selectedProduct.id;
+          return p.product_id == _this7.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -8373,6 +8373,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         added_by: "",
         account_id: ""
       },
+      stocks: "",
       useraccess: [],
       user_id: null
     };
@@ -8465,6 +8466,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     onChangeProduct: function onChangeProduct() {
+      var _this7 = this;
       if (this.selectedProduct == null) {
         this.selectedProduct = {
           id: "",
@@ -8475,15 +8477,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
         return;
       }
+      axios.post(location.origin + "/api/get_product_stock", {
+        id: this.selectedProduct.id
+      }).then(function (res) {
+        _this7.stocks = res.data[0];
+      });
     },
     cartQtySaleChange: function cartQtySaleChange() {
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this7.selectedProduct.id;
+          return p.product_id == _this8.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -8496,6 +8503,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         if (this.selectedProduct.quantity == undefined) {
           alert("Quantity increment must");
           document.querySelector("#quantity").focus();
+          return;
+        }
+        if (this.stocks.stock <= 0) {
+          alert("Unavailable stock");
           return;
         }
         this.product = {
@@ -8514,6 +8525,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           purchase_price: "",
           selling_price: ""
         };
+        this.stocks = "";
         this.TotalAmount();
       } else {
         alert("Product Select First");
@@ -8547,7 +8559,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedCustomer.name == "") {
         alert("Select Customer");
         document.querySelector("#customer [type='search']").focus();
@@ -8566,13 +8578,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this8.$router.push({
+          _this9.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         }
-        _this8.clearData();
-        _this8.getSale();
-        _this8.carts = [];
+        _this9.clearData();
+        _this9.getSale();
+        _this9.carts = [];
       });
     },
     clearData: function clearData() {
@@ -8601,29 +8613,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this9.selectedCategory.id;
+        return p.category_id == _this10.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this10.selectedBrand.id;
+        return p.brand_id == _this11.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this11 = this;
+      var _this12 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this11.useraccess = Array.from(res.data);
+        _this12.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -17254,13 +17266,24 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group text-end mt-2"
+    staticClass: "row mt-2"
+  }, [_c("div", {
+    staticClass: "col-7"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header text-center",
+    "class": _vm.stocks.stock > 0 ? "text-white bg-success" : "text-white bg-danger"
+  }, [_vm._v("Stock")]), _vm._v(" "), _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n                                            " + _vm._s(_vm.stocks.stock) + " " + _vm._s(_vm.stocks.unit_name) + "\n                                        ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-5 d-flex justify-content-end"
   }, [_c("button", {
     staticClass: "btn btn-primary shadow-none",
     on: {
       click: _vm.AddToCart
     }
-  }, [_vm._v("AddToCart")])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("AddToCart")])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
     staticClass: "card-body p-lg-0"

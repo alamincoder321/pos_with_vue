@@ -117,8 +117,18 @@
                                             autocomplete="off" readonly />
                                     </div>
                                 </div>
-                                <div class="form-group text-end mt-2">
-                                    <button class="btn btn-primary shadow-none" @click="AddToCart">AddToCart</button>
+                                <div class="row mt-2">
+                                    <div class="col-7">
+                                        <div class="card">
+                                            <div class="card-header text-center" :class="stocks.stock > 0?'text-white bg-success':'text-white bg-danger'">Stock</div>
+                                            <div class="card-body text-center">
+                                                {{stocks.stock}} {{stocks.unit_name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 d-flex justify-content-end">
+                                        <button class="btn btn-primary shadow-none" @click="AddToCart">AddToCart</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -193,8 +203,8 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" min="0" style="height:30px;" id="vat" name="vat"
-                                                        @input="TotalAmount" v-model="sale.vat"
+                                                    <input type="number" min="0" style="height:30px;" id="vat"
+                                                        name="vat" @input="TotalAmount" v-model="sale.vat"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
                                                         class="btn btn-warning">%</span>
@@ -202,8 +212,7 @@
                                             </div>
                                             <div class="col-6 col-lg-5">
                                                 <input type="number" min="0" id="vat_amount" name="vat_amount"
-                                                    v-model="sale.vat_amount" class="form-control shadow-none"
-                                                    readonly>
+                                                    v-model="sale.vat_amount" class="form-control shadow-none" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +257,8 @@
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" min="0" id="paid" name="paid" @input="TotalAmount"
-                                            v-model="sale.paid" class="form-control shadow-none" :readonly="selectedCustomer.customer_type =='G'?true:false">
+                                            v-model="sale.paid" class="form-control shadow-none"
+                                            :readonly="selectedCustomer.customer_type == 'G' ? true : false">
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -349,6 +359,7 @@ export default {
                 added_by: "",
                 account_id: "",
             },
+            stocks: "",
             useraccess: [],
             user_id: null,
         }
@@ -409,14 +420,14 @@ export default {
                     previous_due: 0,
                 }
                 return
-            }            
+            }
             if (this.selectedCustomer.id == "") {
                 this.TotalAmount()
                 this.sale.previous_due = 0.00
                 return
             }
 
-            axios.post("/api/get_custduetotal", {id: this.selectedCustomer.id}).then((res) => {             
+            axios.post("/api/get_custduetotal", { id: this.selectedCustomer.id }).then((res) => {
                 this.sale.previous_due = res.data[0].dueAmount
             });
         },
@@ -431,6 +442,11 @@ export default {
                 }
                 return
             }
+
+            axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
+                .then(res => {
+                    this.stocks = res.data[0]
+                })
         },
 
         cartQtySaleChange() {
@@ -439,7 +455,7 @@ export default {
 
         AddToCart() {
             if (this.selectedProduct.id != "") {
-                let cartInd = this.carts.findIndex(p => p.id == this.selectedProduct.id);
+                let cartInd = this.carts.findIndex(p => p.product_id == this.selectedProduct.id);
                 if (cartInd > -1) {
                     this.carts.splice(cartInd, 1)
                 }
@@ -453,13 +469,17 @@ export default {
                     document.querySelector("#quantity").focus()
                     return
                 }
+                if(this.stocks.stock <= 0){
+                    alert("Unavailable stock")
+                    return
+                }
                 this.product = {
-                    product_id    : this.selectedProduct.id,
-                    name          : this.selectedProduct.name,
+                    product_id: this.selectedProduct.id,
+                    name: this.selectedProduct.name,
                     purchase_price: this.selectedProduct.purchase_price,
-                    selling_price : this.selectedProduct.selling_price,
-                    quantity      : this.selectedProduct.quantity,
-                    total_amount  : this.selectedProduct.total_amount,
+                    selling_price: this.selectedProduct.selling_price,
+                    quantity: this.selectedProduct.quantity,
+                    total_amount: this.selectedProduct.total_amount,
                 }
 
                 this.carts.push(this.product)
@@ -470,6 +490,7 @@ export default {
                     purchase_price: "",
                     selling_price: "",
                 }
+                this.stocks = "";
                 this.TotalAmount()
             } else {
                 alert("Product Select First")
@@ -492,7 +513,7 @@ export default {
             //total paid claculate
             this.sale.due = (parseFloat(this.sale.total) - parseFloat(this.sale.paid)).toFixed(2)
 
-            if(this.selectedCustomer.customer_type == "G"){
+            if (this.selectedCustomer.customer_type == "G") {
                 this.sale.paid = this.sale.total
                 this.sale.due = 0
             }
@@ -504,12 +525,12 @@ export default {
         },
 
         saveSale(event) {
-            if(this.selectedCustomer.name == ""){
+            if (this.selectedCustomer.name == "") {
                 alert("Select Customer")
                 document.querySelector("#customer [type='search']").focus()
                 reutrn
             }
-            if(this.carts.length == 0){
+            if (this.carts.length == 0) {
                 alert("Cart is Empty")
                 document.querySelector("#product [type='search']").focus()
                 reutrn
@@ -523,8 +544,8 @@ export default {
             axios.post("/api/save_sale", data)
                 .then(res => {
                     alert(res.data.msg)
-                    if(confirm("Are you sure want print")){
-                        this.$router.push({path: '/invoice/' + res.data.invoice})
+                    if (confirm("Are you sure want print")) {
+                        this.$router.push({ path: '/invoice/' + res.data.invoice })
                     }
                     this.clearData()
                     this.getSale()
