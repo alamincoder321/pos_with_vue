@@ -152,7 +152,7 @@ export default {
     data() {
         return {
             company: [],
-            sales: [],
+            sales: "",
         }
     },
 
@@ -174,7 +174,7 @@ export default {
         getSales() {
             axios.post("/api/get_sale", { invoice: this.$route.params.id }).then((res) => {
                 console.log(res.data);
-                this.sales = Array.from(res.data.sales)
+                this.sales = res.data.sales
             });
         },
         formatDate(date) {

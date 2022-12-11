@@ -6802,7 +6802,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   data: function data() {
     return {
       company: [],
-      purchases: []
+      purchases: ""
     };
   },
   created: function created() {
@@ -6824,8 +6824,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_purchase", {
         invoice: this.$route.params.id
       }).then(function (res) {
-        console.log(res.data);
-        _this2.purchases = Array.from(res.data.purchases);
+        _this2.purchases = res.data.purchases;
       });
     },
     formatDate: function formatDate(date) {
@@ -6882,7 +6881,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   data: function data() {
     return {
       company: [],
-      sales: []
+      sales: ""
     };
   },
   created: function created() {
@@ -6905,7 +6904,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         invoice: this.$route.params.id
       }).then(function (res) {
         console.log(res.data);
-        _this2.sales = Array.from(res.data.sales);
+        _this2.sales = res.data.sales;
       });
     },
     formatDate: function formatDate(date) {
@@ -7042,13 +7041,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     saveDamage: function saveDamage(event) {
       var _this4 = this;
-      if (this.selectedProduct.id == "") {
+      if (this.selectedProduct == null) {
         alert("Product Field is Empty");
         document.querySelector("#product [type='search']").focus();
         return;
       }
       if (this.stocks.stock <= 0) {
         alert("Unavailable Stock");
+        return;
+      }
+      if (this.damage.quantity <= 0) {
+        alert("Quantity is empty");
         return;
       }
       axios.post(location.origin + "/api/save_damage", this.damage).then(function (res) {

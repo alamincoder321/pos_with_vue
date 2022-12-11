@@ -219,16 +219,20 @@ export default {
         },
 
         saveDamage(event) {
-            if (this.selectedProduct.id == "") {
+            if (this.selectedProduct == null) {
                 alert("Product Field is Empty");
                 document.querySelector("#product [type='search']").focus()
                 return;
             }
-
             if (this.stocks.stock <= 0) {
                 alert("Unavailable Stock");
                 return
             }
+            if(this.damage.quantity <= 0){
+                alert("Quantity is empty")
+                return
+            }
+
 
             axios
                 .post(location.origin + "/api/save_damage", this.damage)
