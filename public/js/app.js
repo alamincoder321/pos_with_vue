@@ -6913,7 +6913,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_sale", {
         invoice: this.$route.params.id
       }).then(function (res) {
-        console.log(res.data);
         _this2.sales = res.data.sales;
       });
     },
