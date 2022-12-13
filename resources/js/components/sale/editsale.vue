@@ -92,9 +92,15 @@
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <label for="quantity" class="col-5 col-lg-4 d-flex align-items-center">Qty:</label>
-                                    <div class="col-7 col-lg-8">
-                                        <input type="number" id="quantity" name="quantity"
+                                    <label for="warranty"
+                                        class="col-5 col-lg-4 d-flex align-items-center">Warranty:</label>
+                                    <div class="col-7 col-lg-3 pe-lg-0">
+                                        <input type="text" id="warranty" name="warranty"
+                                            class="form-control shadow-none" v-model="selectedProduct.warranty" autocomplete="off" />
+                                    </div>
+                                    <label for="quantity" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
+                                    <div class="col-7 col-lg-4">
+                                        <input type="number" min="0" id="quantity" name="quantity"
                                             v-model="selectedProduct.quantity" @input="cartQtySaleChange"
                                             class="form-control shadow-none" autocomplete="off" />
                                     </div>
@@ -146,6 +152,7 @@
                                     <th class="text-center">Product Name</th>
                                     <th class="text-center">Sale Rate</th>
                                     <th class="text-center">Quantity</th>
+                                    <th class="text-center">Warranty</th>
                                     <th class="text-center">Total Amount</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -156,6 +163,7 @@
                                     <td class="text-center">{{ item.name }}</td>
                                     <td class="text-center">{{ item.selling_price }}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
+                                    <td class="text-center">{{ item.warranty }}</td>
                                     <td class="text-center">{{ item.total_amount }}</td>
                                     <td class="text-center">
                                         <button @click="removeCart(item)"
@@ -338,6 +346,7 @@ export default {
                 display_name: 'Select Product',
                 name: '',
                 quantity: '',
+                warranty: "",
                 purchase_price: '',
                 selling_price: 0.00,
                 total_amount: ''
@@ -462,6 +471,7 @@ export default {
                     display_name: "",
                     name: "",
                     quantity: "",
+                    warranty: "",
                     purchase_price: "",
                     selling_price: "",
                 }
@@ -503,15 +513,17 @@ export default {
                     purchase_price: this.selectedProduct.purchase_price,
                     selling_price: this.selectedProduct.selling_price,
                     quantity: this.selectedProduct.quantity,
+                    warranty: this.selectedProduct.warranty,
                     total_amount: this.selectedProduct.total_amount,
                 }                
                 this.carts.push(this.product)
                 this.selectedProduct = {
-                    id: "",
-                    display_name: "",
-                    name: "",
+                    id            : "",
+                    display_name  : "",
+                    name          : "",
                     purchase_price: "",
-                    selling_price: "",
+                    warranty      : "",
+                    selling_price : "",
                 }
                 this.TotalAmount()
             } else {

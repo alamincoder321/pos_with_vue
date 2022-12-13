@@ -6849,7 +6849,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             switch (_context.prev = _context.next) {
               case 0:
                 myWindow = window.open('', 'PRINT');
-                myWindow.document.write("\n                <html>\n                    <head>\n                        <title>Purchases Invoice</title>\n                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />\n                        <style>\n                            * {\n                                font-family: unset;\n                            }\n\n                            .table thead tr th {\n                                font-size: 12px;\n                            }\n\n                            .table tbody tr td {\n                                font-size: 12px;\n                            }\n\n                            img {\n                                width: 100%;\n                                height: 70px;\n                            }\n\n                            h2 {\n                                color: #939393 !important;\n                            }\n\n                            @media print {\n                                img {\n                                    width: 100% !important;\n                                    height: 70px !important;\n                                }\n\n                                h2 {\n                                    color: #939393 !important;\n                                }\n                            }\n                        </style>\n                    </head>\n                    <body>\n                        <div class='container'>\n                            <div class=\"row mb-2\">\n                                <div class=\"col-2\">\n                                    <img src=\"".concat(_this3.company.company_logo ? location.origin + "/" + _this3.company.company_logo : location.origin + '/no-image.jpg', "\">\n                                </div>\n                                <div class=\"col-10 text-center\">\n                                    <h2 class=\"text-uppercase m-0\">").concat(_this3.company.name, "</h2>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.owner_name, "</p>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.phone, "</p>\n                                    <address>").concat(_this3.company.address, "</address>\n                                </div>\n                            </div>    \n                            ").concat(document.querySelector("#invoice").innerHTML, "\n                        </div>\n                    </body>\n                </html>\n\t\t\t"));
+                myWindow.document.write("\n                <html>\n                    <head>\n                        <title>Purchases Invoice</title>\n                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />\n                        <style>\n                            * {\n                                font-family: unset;\n                            }\n\n                            .table thead tr th {\n                                font-size: 12px;\n                            }\n\n                            .table tbody tr td {\n                                font-size: 12px;\n                            }\n\n                            img {\n                                width: 100%;\n                                height: 70px;\n                            }\n\n                            h2 {\n                                color: #939393 !important;\n                            }\n\n                            @media print {\n                                img {\n                                    width: 100% !important;\n                                    height: 70px !important;\n                                }\n\n                                h2 {\n                                    color: #939393 !important;\n                                }\n                            }\n                        </style>\n                    </head>\n                    <body>\n                        <div class='container'>\n                            <div class=\"row mb-2\">\n                                <div class=\"col-2\">\n                                    <img src=\"".concat(_this3.company.company_logo ? location.origin + "/" + _this3.company.company_logo : location.origin + '/no-image.jpg', "\">\n                                </div>\n                                <div class=\"col-10 text-center\">\n                                    <h2 class=\"text-uppercase m-0\">").concat(_this3.company.name, "</h2>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.owner_name, "</p>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.phone, "</p>\n                                    <address>").concat(_this3.company.address, "</address>\n                                </div>\n                            </div>    \n                            ").concat(document.querySelector("#invoice").innerHTML, "\n                            <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>\n                                <div class='text-left'>\n                                    <span style='text-decoration:overline;'>Received By</span>\n                                </div>\n                                <div class='text-end'>\n                                    <span style='text-decoration:overline;'>Authorized Signature</span>\n                                </div>\n                            </div>\n                            <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ").concat(moment(new Date()).format("DD-MM-YYYY"), "<div>\n                        </div>\n                    </body>\n                </html>\n\t\t\t"));
                 myWindow.focus();
                 _context.next = 5;
                 return new Promise(function (resolve) {
@@ -6928,7 +6928,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             switch (_context.prev = _context.next) {
               case 0:
                 myWindow = window.open('', 'PRINT');
-                myWindow.document.write("\n                <html>\n                    <head>\n                        <title>Sales Invoice</title>\n                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />\n                        <style>\n                            * {\n                                font-family: unset;\n                            }\n\n                            .table thead tr th {\n                                font-size: 12px;\n                            }\n\n                            .table tbody tr td {\n                                font-size: 12px;\n                            }\n\n                            img {\n                                width: 100%;\n                                height: 70px;\n                            }\n\n                            h2 {\n                                color: #939393 !important;\n                            }\n\n                            @media print {\n                                img {\n                                    width: 100% !important;\n                                    height: 70px !important;\n                                }\n\n                                h2 {\n                                    color: #939393 !important;\n                                }\n                            }\n                        </style>\n                    </head>\n                    <body>\n                        <div class='container'>\n                            <div class=\"row mb-2\">\n                                <div class=\"col-2\">\n                                    <img src=\"".concat(_this3.company.company_logo ? location.origin + "/" + _this3.company.company_logo : location.origin + '/no-image.jpg', "\">\n                                </div>\n                                <div class=\"col-10 text-center\">\n                                    <h2 class=\"text-uppercase m-0\">").concat(_this3.company.name, "</h2>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.owner_name, "</p>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.phone, "</p>\n                                    <address>").concat(_this3.company.address, "</address>\n                                </div>\n                            </div>    \n                            ").concat(document.querySelector("#invoice").innerHTML, "\n                        </div>\n                    </body>\n                </html>\n\t\t\t"));
+                myWindow.document.write("\n                <html>\n                    <head>\n                        <title>Sales Invoice</title>\n                        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />\n                        <style>\n                            * {\n                                font-family: unset;\n                            }\n\n                            .table thead tr th {\n                                font-size: 12px;\n                            }\n\n                            .table tbody tr td {\n                                font-size: 12px;\n                            }\n\n                            img {\n                                width: 100%;\n                                height: 70px;\n                            }\n\n                            h2 {\n                                color: #939393 !important;\n                            }\n\n                            @media print {\n                                img {\n                                    width: 100% !important;\n                                    height: 70px !important;\n                                }\n\n                                h2 {\n                                    color: #939393 !important;\n                                }\n                            }\n                        </style>\n                    </head>\n                    <body>\n                        <div class='container'>\n                            <div class=\"row mb-2\">\n                                <div class=\"col-2\">\n                                    <img src=\"".concat(_this3.company.company_logo ? location.origin + "/" + _this3.company.company_logo : location.origin + '/no-image.jpg', "\">\n                                </div>\n                                <div class=\"col-10 text-center\">\n                                    <h2 class=\"text-uppercase m-0\">").concat(_this3.company.name, "</h2>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.owner_name, "</p>\n                                    <p class=\"m-0 text-uppercase\">").concat(_this3.company.phone, "</p>\n                                    <address>").concat(_this3.company.address, "</address>\n                                </div>\n                            </div>    \n                            ").concat(document.querySelector("#invoice").innerHTML, "\n                            <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>\n                                <div class='text-left'>\n                                    <span style='text-decoration:overline;'>Received By</span>\n                                </div>\n                                <div class='text-end'>\n                                    <span style='text-decoration:overline;'>Authorized Signature</span>\n                                </div>\n                            </div>\n                            <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ").concat(moment(new Date()).format("DD-MM-YYYY"), "<div>\n                        </div>\n                    </body>\n                </html>\n\t\t\t"));
                 myWindow.focus();
                 _context.next = 5;
                 return new Promise(function (resolve) {
@@ -7997,6 +7997,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         display_name: 'Select Product',
         name: '',
         quantity: '',
+        warranty: "",
         purchase_price: '',
         selling_price: 0.00,
         total_amount: ''
@@ -8142,6 +8143,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           display_name: "",
           name: "",
           quantity: "",
+          warranty: "",
           purchase_price: "",
           selling_price: ""
         };
@@ -8185,6 +8187,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           purchase_price: this.selectedProduct.purchase_price,
           selling_price: this.selectedProduct.selling_price,
           quantity: this.selectedProduct.quantity,
+          warranty: this.selectedProduct.warranty,
           total_amount: this.selectedProduct.total_amount
         };
         this.carts.push(this.product);
@@ -8193,6 +8196,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           display_name: "",
           name: "",
           purchase_price: "",
+          warranty: "",
           selling_price: ""
         };
         this.TotalAmount();
@@ -8369,6 +8373,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         display_name: 'Select Product',
         name: '',
         quantity: '',
+        warranty: '',
         purchase_price: '',
         selling_price: 0.00,
         total_amount: ''
@@ -8532,6 +8537,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.product = {
           product_id: this.selectedProduct.id,
           name: this.selectedProduct.name,
+          warranty: this.selectedProduct.warranty,
           purchase_price: this.selectedProduct.purchase_price,
           selling_price: this.selectedProduct.selling_price,
           quantity: this.selectedProduct.quantity,
@@ -8542,6 +8548,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           id: "",
           display_name: "",
           name: "",
+          warranty: '',
           purchase_price: "",
           selling_price: ""
         };
@@ -13109,7 +13116,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].discount_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases[0].discount_amount))])]), _vm._v(" "), parseFloat(_vm.purchases[0].transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -13118,7 +13125,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].transport_cost))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.purchases[0].transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -13295,7 +13302,7 @@ var render = function render() {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
-    }, [_vm._v("-")]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(item.warranty))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.total_amount))])]);
   }), 0)])]), _vm._v(" "), _c("div", {
@@ -13367,7 +13374,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].discount_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales[0].discount_amount))])]), _vm._v(" "), parseFloat(_vm.sales[0].transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -13376,7 +13383,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].transport_cost))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.sales[0].transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -16273,10 +16280,40 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "col-5 col-lg-4 d-flex align-items-center",
     attrs: {
+      "for": "warranty"
+    }
+  }, [_vm._v("Warranty:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-3 pe-lg-0"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.selectedProduct.warranty,
+      expression: "selectedProduct.warranty"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "text",
+      id: "warranty",
+      name: "warranty",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.selectedProduct.warranty
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.selectedProduct, "warranty", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("label", {
+    staticClass: "col-5 col-lg-1 d-flex align-items-center",
+    attrs: {
       "for": "quantity"
     }
   }, [_vm._v("Qty:")]), _vm._v(" "), _c("div", {
-    staticClass: "col-7 col-lg-8"
+    staticClass: "col-7 col-lg-4"
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -16287,6 +16324,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "quantity",
       name: "quantity",
       autocomplete: "off"
@@ -16401,6 +16439,8 @@ var render = function render() {
     }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.quantity))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(item.warranty))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.total_amount))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
@@ -16892,6 +16932,8 @@ var staticRenderFns = [function () {
   }, [_vm._v("Sale Rate")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Quantity")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Warranty")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Total Amount")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
@@ -17204,10 +17246,40 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "col-5 col-lg-4 d-flex align-items-center",
     attrs: {
+      "for": "warranty"
+    }
+  }, [_vm._v("Warranty:")]), _vm._v(" "), _c("div", {
+    staticClass: "col-7 col-lg-3 pe-lg-0"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.selectedProduct.warranty,
+      expression: "selectedProduct.warranty"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "text",
+      id: "warranty",
+      name: "warranty",
+      autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.selectedProduct.warranty
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.selectedProduct, "warranty", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("label", {
+    staticClass: "col-5 col-lg-1 d-flex align-items-center",
+    attrs: {
       "for": "quantity"
     }
   }, [_vm._v("Qty:")]), _vm._v(" "), _c("div", {
-    staticClass: "col-7 col-lg-8"
+    staticClass: "col-7 col-lg-4"
   }, [_c("input", {
     directives: [{
       name: "model",
@@ -17218,6 +17290,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "quantity",
       name: "quantity",
       autocomplete: "off"
@@ -17332,6 +17405,8 @@ var render = function render() {
     }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.quantity))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v(_vm._s(item.warranty))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.total_amount))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
@@ -17830,6 +17905,8 @@ var staticRenderFns = [function () {
   }, [_vm._v("Sale Rate")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Quantity")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Warranty")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Total Amount")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"

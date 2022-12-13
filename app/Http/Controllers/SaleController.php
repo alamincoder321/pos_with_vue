@@ -121,6 +121,7 @@ class SaleController extends Controller
                 $details->sale_id       = $last_id;
                 $details->product_id    = $item['product_id'];
                 $details->quantity      = $item['quantity'];
+                $details->warranty      = $item['warranty'];
                 $details->selling_price = $item['selling_price'];
                 $details->total_amount  = $item['total_amount'];
                 $details->save();

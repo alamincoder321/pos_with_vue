@@ -76,7 +76,7 @@ h2 {
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
                                 <td class="text-center">{{ item.selling_price }}</td>
-                                <td class="text-center">-</td>
+                                <td class="text-center">{{ item.warranty }}</td>
                                 <td class="text-center">{{ item.total_amount }}</td>
                             </tr>
                         </tbody>
@@ -120,7 +120,7 @@ h2 {
                             <td>:</td>
                             <td style="text-align: right;">{{ sales[0].discount_amount }}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="parseFloat(sales[0].transport_cost) > 0">
                             <td style="font-weight: 600;width: 130px;">Transport Cost</td>
                             <td>:</td>
                             <td style="text-align: right;">{{ sales[0].transport_cost }}</td>
@@ -235,6 +235,15 @@ export default {
                                 </div>
                             </div>    
                             ${document.querySelector("#invoice").innerHTML}
+                            <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
+                                <div class='text-left'>
+                                    <span style='text-decoration:overline;'>Received By</span>
+                                </div>
+                                <div class='text-end'>
+                                    <span style='text-decoration:overline;'>Authorized Signature</span>
+                                </div>
+                            </div>
+                            <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
                         </div>
                     </body>
                 </html>

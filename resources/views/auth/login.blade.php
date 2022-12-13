@@ -27,7 +27,7 @@
     </style>
 </head>
 
-<body style="background: indianred;">
+<body style="background: linear-gradient(45deg, #54a7d7, #ab0f0ff7) !important;height: 100px;">
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-10 col-lg-4" style="position: absolute;top: 35%;left: 50%;transform: translate(-50%, -50%);">
@@ -37,15 +37,15 @@
                     </div>
                     <div class="card-body">
                         <form onsubmit="Login(event)">
-                            <div class="form-group py-3">
+                            <div class="form-group pt-3 pb-1">
                                 <div class="input-group">
-                                    <input type="text" name="username" class="form-control shadow-none" placeholder="Username" autocomplete="off"><i class="btn btn-secondary fa fa-user"></i>
+                                    <input type="text" name="username" class="form-control shadow-none" placeholder="Username" autocomplete="off" autofocus /><i class="btn btn-secondary fa fa-user"></i>
                                 </div>
                                 <span class="text-danger error username"></span>
                             </div>
-                            <div class="form-group py-3">
+                            <div class="form-group pb-3 pt-1">
                                 <div class="input-group">
-                                    <input type="password" name="password" class="form-control shadow-none" placeholder="Password"><i class="btn btn-secondary fa fa-unlock-alt"></i>
+                                    <input type="password" name="password" class="form-control shadow-none" placeholder="Password" /><i class="btn btn-secondary fa fa-unlock-alt"></i>
                                 </div>
                                 <span class="text-danger error password"></span>
                             </div>
