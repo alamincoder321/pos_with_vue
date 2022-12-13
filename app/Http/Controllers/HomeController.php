@@ -105,4 +105,10 @@ class HomeController extends Controller
     {
         return UserAccess::where('user_id', $id)->pluck('permission')->toArray();
     }
+
+    // edit user
+    public function editUser($id)
+    {
+        return DB::select("SELECT * FROM users WHERE id='$id' ORDER BY name");
+    }
 }

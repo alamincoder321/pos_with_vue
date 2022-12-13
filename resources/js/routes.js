@@ -1,6 +1,7 @@
 import unauthorize from "./components/unauthorize.vue";
 import home from "./components/home.vue";
 import user from "./components/user.vue";
+import user_profile from "./components/user_profile.vue";
 import useraccess from "./components/useraccess.vue";
 import company from "./components/company.vue";
 import category from "./components/settings/category.vue";
@@ -30,6 +31,7 @@ const routes = [
     { path: "/home", component: home },
     { path: "/users", component: user },
     { path: "/user-access/:id", component: useraccess },
+    { path: "/user-edit", component: user_profile },
     { path: "/company_profile", component: company },
     // settings
     { path: "/categories", component: category },

@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/get_user", [HomeController::class, "getUser"]);
 Route::post("/save_user", [HomeController::class, "saveUser"]);
 Route::get("/delete_user/{id}", [HomeController::class, "deleteUser"]);
+Route::get("/edit_user/{id}", [HomeController::class, "editUser"]);
 //user access
 Route::get("/get_useraccess", [HomeController::class, "getUserAccess"]);
 Route::get("/get_permission/{id}", [HomeController::class, "getPermission"]);
