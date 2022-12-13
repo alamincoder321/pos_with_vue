@@ -115,9 +115,9 @@ export default {
                     name    : res.data[0].name,
                     email   : res.data[0].email,
                     username: res.data[0].username,
-                    image   : "",
+                    role    : res.data[0].role,
                 }
-                this.imageSrc = res.data[0].image?location.origin + res.data[0].image:location.origin + "/no-image.jpg"
+                this.imageSrc = res.data[0].image?location.origin+"/"+ res.data[0].image:location.origin + "/no-image.jpg"
             });
         },
 
@@ -142,6 +142,7 @@ export default {
             let formdata = new FormData(event.target)
             formdata.append("image", this.user.image)
             formdata.append("id", this.user.id)
+            formdata.append("role", this.user.role)
             axios
                 .post(location.origin + "/api/save_user", formdata)
                 .then((res) => {

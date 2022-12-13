@@ -9768,9 +9768,9 @@ __webpack_require__.r(__webpack_exports__);
           name: res.data[0].name,
           email: res.data[0].email,
           username: res.data[0].username,
-          image: ""
+          role: res.data[0].role
         };
-        _this.imageSrc = res.data[0].image ? location.origin + res.data[0].image : location.origin + "/no-image.jpg";
+        _this.imageSrc = res.data[0].image ? location.origin + "/" + res.data[0].image : location.origin + "/no-image.jpg";
       });
     },
     saveUser: function saveUser(event) {
@@ -9794,6 +9794,7 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData(event.target);
       formdata.append("image", this.user.image);
       formdata.append("id", this.user.id);
+      formdata.append("role", this.user.role);
       axios.post(location.origin + "/api/save_user", formdata).then(function (res) {
         alert(res.data);
         _this2.getUser();
