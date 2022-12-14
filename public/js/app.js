@@ -14258,7 +14258,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations[0].subtotal))])]), _vm._v(" "), _vm.quotations[0].vat > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14267,7 +14267,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations[0].vat_amount))])]) : _vm._e(), _vm._v(" "), _vm.quotations[0].discount > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14276,7 +14276,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].discount_amount))])]), _vm._v(" "), parseFloat(_vm.quotations[0].transport_cost) > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations[0].discount_amount))])]) : _vm._e(), _vm._v(" "), parseFloat(_vm.quotations[0].transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"

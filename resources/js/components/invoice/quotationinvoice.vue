@@ -91,12 +91,12 @@ h2 {
                             <td>:</td>
                             <td style="text-align: right;">{{ quotations[0].subtotal }}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="quotations[0].vat > 0">
                             <td style="font-weight: 600;width: 130px;">VAT {{ quotations[0].vat != 0?"("+quotations[0].vat+"%)":'' }}</td>
                             <td>:</td>
                             <td style="text-align: right;">{{ quotations[0].vat_amount }}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="quotations[0].discount > 0">
                             <td style="font-weight: 600;width: 130px;">Discount {{ quotations[0].discount != 0?"("+quotations[0].discount+"%)":'' }}</td>
                             <td>:</td>
                             <td style="text-align: right;">{{ quotations[0].discount_amount }}</td>
