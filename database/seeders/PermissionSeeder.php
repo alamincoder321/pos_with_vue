@@ -147,6 +147,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "quotation",
+                "permission" => [
+                    "quotation.index",
+                    "quotation.edit",
+                    "quotation.store",
+                    "quotation.delete",
+                ],
+            ],
+            [
                 "group_name" => "supplierpayment",
                 "permission" => [
                     "supplierpayment.index",

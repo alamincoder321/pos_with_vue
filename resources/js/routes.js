@@ -23,8 +23,13 @@ import damage from "./components/purchase/damage.vue";
 import sale from "./components/sale/sale.vue";
 import salelist from "./components/sale/salelist.vue";
 import editsale from "./components/sale/editsale.vue";
+import quotation from "./components/quotation/quotation.vue";
+import quotationlist from "./components/quotation/quotationlist.vue";
+import editquotation from "./components/quotation/editquotation.vue";
+
 import salesinvoice from "./components/invoice/salesinvoice.vue";
 import purchaseinvoice from "./components/invoice/purchaseinvoice.vue";
+import quotationinvoice from "./components/invoice/quotationinvoice.vue";
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -59,9 +64,14 @@ const routes = [
     { path: "/sales", component: sale },
     { path: "/sales-list", component: salelist },
     { path: "/sales-edit/:id", component: editsale },
+    // quotations
+    { path: "/quotations", component: quotation },
+    { path: "/quotations-list", component: quotationlist },
+    { path: "/quotations-edit/:id", component: editquotation },
     //invoice
     { path: "/invoice/:id", component: salesinvoice },
     { path: "/purchase-invoice/:id", component: purchaseinvoice },
+    { path: "/quotaion-invoice/:id", component: quotationinvoice },
 
 ];
 

@@ -182,72 +182,146 @@ export default {
 
         async PrintInvoice() {
             var myWindow = window.open('', 'PRINT');
-            myWindow.document.write(`
-                <html>
-                    <head>
-                        <title>Purchases Invoice</title>
-                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-                        <style>
-                            * {
-                                font-family: unset;
-                            }
-
-                            .table thead tr th {
-                                font-size: 12px;
-                            }
-
-                            .table tbody tr td {
-                                font-size: 12px;
-                            }
-
-                            img {
-                                width: 100%;
-                                height: 70px;
-                            }
-
-                            h2 {
-                                color: #939393 !important;
-                            }
-
-                            @media print {
-                                img {
-                                    width: 100% !important;
-                                    height: 70px !important;
+            if(this.company.paper_type == '3'){
+                myWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Purchases Invoice</title>
+                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                            <style>
+                                * {
+                                    font-family: unset;
                                 }
-
+    
+                                .table thead tr th {
+                                    font-size: 12px;
+                                }
+    
+                                .table tbody tr td {
+                                    font-size: 12px;
+                                }
+    
+                                img {
+                                    width: 100%;
+                                    height: 70px;
+                                }
+    
                                 h2 {
                                     color: #939393 !important;
                                 }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class='container'>
-                            <div class="row mb-2">
-                                <div class="col-2">
-                                    <img src="${this.company.company_logo ? location.origin + "/" + this.company.company_logo : location.origin + '/no-image.jpg'}">
+    
+                                @media print {
+                                    @page{size: A5 portrait !important;}
+                                    *{
+                                        font-size:12px !important;
+                                    }
+                                    img {
+                                        width: 100% !important;
+                                        height: 70px !important;
+                                    }
+    
+                                    h2 {
+                                        color: #939393 !important;
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class='container'>
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <img src="${this.company.company_logo ? location.origin + "/" + this.company.company_logo : location.origin + '/no-image.jpg'}">
+                                    </div>
+                                    <div class="col-10 text-center">
+                                        <h2 class="text-uppercase m-0">${this.company.name}</h2>
+                                        <p class="m-0 text-uppercase">${this.company.owner_name}</p>
+                                        <p class="m-0 text-uppercase">${this.company.phone}</p>
+                                        <address>${this.company.address}</address>
+                                    </div>
+                                </div>    
+                                ${document.querySelector("#invoice").innerHTML}
+                                <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
+                                    <div class='text-left'>
+                                        <span style='text-decoration:overline;'>Received By</span>
+                                    </div>
+                                    <div class='text-end'>
+                                        <span style='text-decoration:overline;'>Authorized Signature</span>
+                                    </div>
                                 </div>
-                                <div class="col-10 text-center">
-                                    <h2 class="text-uppercase m-0">${this.company.name}</h2>
-                                    <p class="m-0 text-uppercase">${this.company.owner_name}</p>
-                                    <p class="m-0 text-uppercase">${this.company.phone}</p>
-                                    <address>${this.company.address}</address>
-                                </div>
-                            </div>    
-                            ${document.querySelector("#invoice").innerHTML}
-                            <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
-                                <div class='text-left'>
-                                    <span style='text-decoration:overline;'>Received By</span>
-                                </div>
-                                <div class='text-end'>
-                                    <span style='text-decoration:overline;'>Authorized Signature</span>
-                                </div>
+                                <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
                             </div>
-                            <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
-                        </div>
-                    </body>
-                </html>
-			`);
+                        </body>
+                    </html>
+                `);
+                
+            }else{
+                myWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Purchases Invoice</title>
+                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                            <style>
+                                * {
+                                    font-family: unset;
+                                }
+    
+                                .table thead tr th {
+                                    font-size: 12px;
+                                }
+    
+                                .table tbody tr td {
+                                    font-size: 12px;
+                                }
+    
+                                img {
+                                    width: 100%;
+                                    height: 70px;
+                                }
+    
+                                h2 {
+                                    color: #939393 !important;
+                                }
+    
+                                @media print {
+                                    img {
+                                        width: 100% !important;
+                                        height: 70px !important;
+                                    }
+    
+                                    h2 {
+                                        color: #939393 !important;
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class='container'>
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <img src="${this.company.company_logo ? location.origin + "/" + this.company.company_logo : location.origin + '/no-image.jpg'}">
+                                    </div>
+                                    <div class="col-10 text-center">
+                                        <h2 class="text-uppercase m-0">${this.company.name}</h2>
+                                        <p class="m-0 text-uppercase">${this.company.owner_name}</p>
+                                        <p class="m-0 text-uppercase">${this.company.phone}</p>
+                                        <address>${this.company.address}</address>
+                                    </div>
+                                </div>    
+                                ${document.querySelector("#invoice").innerHTML}
+                                <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
+                                    <div class='text-left'>
+                                        <span style='text-decoration:overline;'>Received By</span>
+                                    </div>
+                                    <div class='text-end'>
+                                        <span style='text-decoration:overline;'>Authorized Signature</span>
+                                    </div>
+                                </div>
+                                <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
+                            </div>
+                        </body>
+                    </html>
+                `);
+            }
             myWindow.focus();
             await new Promise(resolve => setTimeout(resolve, 1000));
             myWindow.print();

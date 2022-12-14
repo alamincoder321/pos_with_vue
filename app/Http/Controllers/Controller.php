@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Quotation;
 use App\Models\Sale;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -73,6 +74,16 @@ class Controller extends BaseController
             return $invoice;
         } else {
             return $sale->invoice +1;
+        }
+    }
+    function invoiceNumberQuotation()
+    {
+        $quotation = Quotation::latest()->first();
+        if (empty($quotation->invoice)) {
+            $invoice = date('Y') . '00001';
+            return $invoice;
+        } else {
+            return $quotation->invoice +1;
         }
     }
 }

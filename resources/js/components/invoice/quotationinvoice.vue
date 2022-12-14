@@ -42,19 +42,18 @@ h2 {
                 <div class="col-12 mb-3">
                     <h6 class="text-center m-0"
                         style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-transform: uppercase;padding: 8px;">
-                        Sales Invoice</h6>
+                        Quotation Invoice</h6>
                 </div>
                 <div class="col-6 mb-3" style="line-height: 20px;">
-                    <span style="font-weight: 500;">Customer Id: </span>{{ sales[0].code?sales[0].code:"General Customer" }}<br>
-                    <span style="font-weight: 500;">Customer Name: </span>{{ sales[0].name }}<br>
-                    <span style="font-weight: 500;">Customer Address: </span>{{ sales[0].address }}<br>
-                    <span style="font-weight: 500;">Customer Mobile: </span>{{ sales[0].phone }}
+                    <span style="font-weight: 500;">Customer Name: </span>{{ quotations[0].customer_name }}<br>
+                    <span style="font-weight: 500;">Customer Address: </span>{{ quotations[0].customer_address }}<br>
+                    <span style="font-weight: 500;">Customer Mobile: </span>{{ quotations[0].customer_phone }}
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Sales By:</span>{{ sales[0].user_name }}<br>
-                        <span style="font-weight: 500;">Invoice:</span>#{{ sales[0].invoice }}<br>
-                        <span style="font-weight: 500;">Sales Date:</span> {{ formatDate(sales[0].date) }}
+                        <span style="font-weight: 500;">Quotations By:</span>{{ quotations[0].user_name }}<br>
+                        <span style="font-weight: 500;">Invoice:</span>#{{ quotations[0].invoice }}<br>
+                        <span style="font-weight: 500;">Quotations Date:</span> {{ formatDate(quotations[0].date) }}
                     </div>
                 </div>
                 <!-- product details -->
@@ -71,7 +70,7 @@ h2 {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in sales[0].saleDetails" :key="index">
+                            <tr v-for="(item, index) in quotations[0].quotationDetails" :key="index">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
@@ -84,61 +83,33 @@ h2 {
                 </div>
 
                 <div class="col-7">
-                    <table style="line-height: 22px;width: 275px;">
-                        <tr>
-                            <td style="font-weight: 600;">Previous Due</td>
-                            <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].previous_due }}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;">Current Due</td>
-                            <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].due }}</td>
-                        </tr>
-                        <tr style="border-top: 1px dashed gray;">
-                            <td style="font-weight: 600;">Total Due</td>
-                            <td>:</td>
-                            <td style="text-align: right;">
-                                {{ (parseFloat(sales[0].previous_due) + parseFloat(sales[0].due)).toFixed(2) }}</td>
-                        </tr>
-                    </table>
                 </div>
                 <div class="col-5">
                     <table style="line-height: 23px;width: 100%;">
                         <tr>
                             <td style="font-weight: 600;width: 130px;">SubTotal</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].subtotal }}</td>
+                            <td style="text-align: right;">{{ quotations[0].subtotal }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">VAT {{ sales[0].vat != 0?"("+sales[0].vat+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">VAT {{ quotations[0].vat != 0?"("+quotations[0].vat+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].vat_amount }}</td>
+                            <td style="text-align: right;">{{ quotations[0].vat_amount }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">Discount {{ sales[0].discount != 0?"("+sales[0].discount+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">Discount {{ quotations[0].discount != 0?"("+quotations[0].discount+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].discount_amount }}</td>
+                            <td style="text-align: right;">{{ quotations[0].discount_amount }}</td>
                         </tr>
-                        <tr v-if="parseFloat(sales[0].transport_cost) > 0">
+                        <tr v-if="parseFloat(quotations[0].transport_cost) > 0">
                             <td style="font-weight: 600;width: 130px;">Transport Cost</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].transport_cost }}</td>
+                            <td style="text-align: right;">{{ quotations[0].transport_cost }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Total</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].total }}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;width: 130px;">Paid</td>
-                            <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].paid }}</td>
-                        </tr>
-                        <tr style="border-top: 1px dashed gray;">
-                            <td style="font-weight: 600;width: 130px;">Due</td>
-                            <td>:</td>
-                            <td style="text-align: right;">{{ sales[0].due }}</td>
+                            <td style="text-align: right;">{{ quotations[0].total }}</td>
                         </tr>
                     </table>
                 </div>
@@ -152,17 +123,17 @@ export default {
     data() {
         return {
             company: [],
-            sales: "",
+            quotations: "",
         }
     },
 
     created() {
-        this.getSales()
+        this.getQuotations()
         this.getCompany()
     },
 
     mounted() {
-        document.title = "Sales Invoice"
+        document.title = "Quotations Invoice"
     },
 
     methods: {
@@ -171,9 +142,9 @@ export default {
                 this.company = res.data;
             });
         },
-        getSales() {
-            axios.post("/api/get_sale", { invoice: this.$route.params.id }).then((res) => {
-                this.sales = res.data.sales
+        getQuotations() {
+            axios.post("/api/get_quotation", { invoice: this.$route.params.id }).then((res) => {
+                this.quotations = res.data.quotations
             });
         },
         formatDate(date) {

@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierPaymentController;
@@ -103,4 +104,8 @@ Route::get("/delete_purchase/{id}", [PurchaseController::class, "deletePurchase"
 Route::post("/get_sale", [SaleController::class, "getSale"]);
 Route::post("/save_sale", [SaleController::class, "saveSale"]);
 Route::get("/delete_sale/{id}", [SaleController::class, "deleteSale"]);
+//quotations
+Route::post("/get_quotation", [QuotationController::class, "getQuotation"]);
+Route::post("/save_quotation", [QuotationController::class, "saveQuotation"]);
+Route::get("/delete_quotation/{id}", [QuotationController::class, "deleteQuotation"]);
 

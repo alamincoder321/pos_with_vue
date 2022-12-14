@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-lg-1 mt-lg-0 mt-3">
                                 <label></label>
-                                <button type="button" @click="getSearchSale" class="searchBtn">Submit</button>
+                                <button type="button" @click="getSearchQuotation" class="searchBtn">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -56,39 +56,39 @@
                         </tr>
                     </thead>
                     <tbody style="border:0; font-size: 12px;">
-                        <tr v-for="(item, index) in sales" :key="index">
+                        <tr v-for="(item, index) in quotations" :key="index">
                             <td>#{{ item.invoice }}</td>
                             <td>{{ formatDate(item.date) }}</td>
                             <td>
-                                <span style="font-weight: bold;">Name:</span> {{ item.name }}<br />
-                                <span style="font-weight: bold;">Phone:</span> {{ item.phone }} <br />
-                                <span style="font-weight: bold;">Address:</span> {{ item.address }} <br />
-                                <span style="font-weight: bold;">Previous Due:</span> {{ item.previous_due }}
+                                <span style="font-weight: bold;">Name:</span> {{ item.customer_name }}<br />
+                                <span style="font-weight: bold;">Phone:</span> {{ item.customer_phone }} <br />
+                                <span style="font-weight: bold;">Address:</span> {{ item.customer_address }}
                             </td>
                             <td>
                                 <span style="font-weight: bold;">SubTotal:</span> {{ item.subtotal }} <br />
                                 <span style="font-weight: bold;">Total:</span> {{ item.total }} <br />
-                                <span style="font-weight: bold;">Paid:</span> {{ item.paid }} <br />
-                                <span style="font-weight: bold;">Due:</span> {{ item.due }} <br />
                                 <span style="font-weight: bold;">Vat ({{ item.vat }})%:</span> {{ item.vat_amount }}
                                 <br />
                                 <span style="font-weight: bold;">Discount ({{ item.discount }})%:</span> {{
                                         item.discount_amount
+                                }}<br />
+                                <span style="font-weight: bold;">Transport Cost </span> {{
+                                        item.transport_cost
                                 }}
                             </td>
                             <td class="hideAction">
                                 <span title="Invoice Delete" @click="InvoiceDelete(item.id, index)"
                                     style="cursor:pointer; margin-right: 5px;"><i
                                         class="fas fa-trash text-danger"></i></span>
-                                <router-link title="Sales Edit" style="margin-right: 5px;"
-                                    :to="{ path: '/sales-edit/' + item.invoice }">
+                                <router-link title="Quotations Edit" style="margin-right: 5px;"
+                                    :to="{ path: '/quotations-edit/' + item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
                                 </router-link>
-                                <router-link title="invoice" :to="{ path: '/invoice/' + item.invoice }"
+                                <router-link title="invoice" :to="{ path: '/quotaion-invoice/' + item.invoice }"
                                     style="cursor:pointer;"><i class="fas fa-file text-info"></i></router-link>
                             </td>
                         </tr>
-                        <tr :style="{ display: sales.length == 0 ? '' : 'none' }">
+                        <tr :style="{ display: quotations.length == 0 ? '' : 'none' }">
                             <td colspan="5" class="text-center">Not Found Data</td>
                         </tr>
                     </tbody>
@@ -117,32 +117,32 @@ export default {
                 invoice: "",
             },
 
-            sales: [],
+            quotations: [],
             useraccess: [],
             user_id: null,
         }
     },
     created() {
         this.user_id = localStorage.getItem("user_id");
-        this.getSearchSale();
-        this.getSale();
+        this.getSearchQuotation();
+        this.getQuotation();
         this.getPermission();
         this.logOut();
     },
     methods: {
-        getSearchSale() {
+        getSearchQuotation() {
             let data = {
                 dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
                 dateTo: this.dateTo,
                 invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
             }
-            axios.post("/api/get_sale", data).then((res) => {
-                this.sales = res.data.sales
+            axios.post("/api/get_quotation", data).then((res) => {
+                this.quotations = res.data.quotations
             });
         },
-        getSale() {
-            axios.post("/api/get_sale").then((res) => {
-                this.invoices = res.data.sales
+        getQuotation() {
+            axios.post("/api/get_quotation").then((res) => {
+                this.invoices = res.data.quotations
             });
         },
         onChangeValue() {
@@ -156,13 +156,13 @@ export default {
 
         InvoiceDelete(id, sl) {
             if (confirm("Are you sure want to delete")) {
-                axios.get("/api/delete_sale/" + id).then((res) => {
+                axios.get("/api/delete_quotation/" + id).then((res) => {
                     alert(res.data);
-                    var index = this.sales.indexOf(sl);
-                    this.sales.splice(index, 1);
+                    var index = this.quotations.indexOf(sl);
+                    this.quotations.splice(index, 1);
                 });
             }
-        },       
+        },
 
         formatDate(date) {
             return moment(date).format("DD-MM-YYYY");
@@ -186,12 +186,12 @@ export default {
 
     watch: {
         useraccess() {
-            this.useraccess.includes("sale.index") ? "" : location.href = "/unauthorize"
+            this.useraccess.includes("quotation.index") ? "" : location.href = "/unauthorize"
         }
     },
 
     mounted() {
-        document.title = "Sale List Page"
+        document.title = "Quotation List Page"
     },
 };
 </script>

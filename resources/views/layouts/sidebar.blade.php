@@ -60,7 +60,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </div>
                 @endif
 
-                @if(in_array("sale.index", $useraccess))
+                @if(in_array("sale.index", $useraccess) || in_array("sale.store", $useraccess))
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-shopping-cart"></i></div>
                     Sale
@@ -73,6 +73,24 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @endif
                         @if(in_array("sale.index", $useraccess))
                         <router-link class="nav-link" to="/sales-list">Sale List & Report</router-link>
+                        @endif
+                    </nav>
+                </div>
+                @endif
+
+                @if(in_array("quotation.index", $useraccess) || in_array("quotation.store", $useraccess))
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts6">
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file-text"></i></div>
+                    Quotation
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        @if(in_array("quotation.store", $useraccess))
+                        <router-link class="nav-link" to="/quotations">Quotation Entry</router-link>
+                        @endif
+                        @if(in_array("quotation.index", $useraccess))
+                        <router-link class="nav-link" to="/quotations-list">Quotation List & Report</router-link>
                         @endif
                     </nav>
                 </div>

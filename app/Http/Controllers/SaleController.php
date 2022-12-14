@@ -15,13 +15,13 @@ class SaleController extends Controller
     {
         $clauses = '';
         if (isset($request->dateFrom) && !empty($request->dateFrom)) {
-            $clauses .= " AND p.date BETWEEN '$request->dateFrom' AND '$request->dateTo'";
+            $clauses .= " AND s.date BETWEEN '$request->dateFrom' AND '$request->dateTo'";
         }
         if (isset($request->invoice) && !empty($request->invoice)) {
-            $clauses .= " AND p.invoice = '$request->invoice'";
+            $clauses .= " AND s.invoice = '$request->invoice'";
         }
         $sales = DB::select("SELECT
-                            p.*,
+                            s.*,
                             c.id as customer_id,
                             c.name,
                             c.customer_code as code,
@@ -31,25 +31,25 @@ class SaleController extends Controller
                             c.customer_type,
                             u.name AS user_name
                         FROM
-                            sales AS p
+                            sales AS s
                         LEFT JOIN customers AS c
-                        ON c.id = p.customer_id
+                        ON c.id = s.customer_id
                         LEFT JOIN users AS u
-                        ON u.id = p.added_by
+                        ON u.id = s.added_by
                         WHERE 1=1
-                        $clauses ORDER BY p.invoice DESC                            
+                        $clauses ORDER BY s.invoice DESC                            
                         ");
 
         foreach ($sales as $sale) {
             $sale->saleDetails = DB::select("SELECT
-                                    pd.*,
+                                    sd.*,
                                     p.name,
                                     un.name as unit_name
                                 FROM
-                                    sale_details AS pd
-                                LEFT JOIN products AS p ON p.id = pd.product_id
+                                    sale_details AS sd
+                                LEFT JOIN products AS p ON p.id = sd.product_id
                                 LEFT JOIN units AS un ON un.id = p.unit_id
-                                WHERE pd.sale_id = ?", [$sale->id]);
+                                WHERE sd.sale_id = ?", [$sale->id]);
         }
 
         $invoice = $this->invoiceNumberSale();
@@ -162,6 +162,6 @@ class SaleController extends Controller
             $inventory->save();
         }
         Sale::find($id)->delete();
-        return "Purchae Delete";
+        return "Sales Delete";
     }
 }
