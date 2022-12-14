@@ -71,7 +71,7 @@ const routes = [
     //invoice
     { path: "/invoice/:id", component: salesinvoice },
     { path: "/purchase-invoice/:id", component: purchaseinvoice },
-    { path: "/quotaion-invoice/:id", component: quotationinvoice },
+    { path: "/quotation-invoice/:id", component: quotationinvoice },
 
 ];
 

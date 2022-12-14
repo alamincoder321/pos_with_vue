@@ -11,7 +11,7 @@ Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 Route::get("/user-access/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/invoice/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/purchase-invoice/{any}", [HomeController::class, "index"])->middleware('auth');
-Route::get("/quotaion-invoice/{any}", [HomeController::class, "index"])->middleware('auth');
+Route::get("/quotation-invoice/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/purchases-edit/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("//quotations-edit/{any}", [HomeController::class, "index"])->middleware('auth');
 Route::get("/sales-edit/{any}", [HomeController::class, "index"])->middleware('auth');

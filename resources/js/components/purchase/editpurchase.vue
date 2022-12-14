@@ -247,7 +247,7 @@
                                     <div class="form-group">
                                         <label for="payment_type">Payment Type:</label>
                                         <select name="payment_type" id="payment_type" v-model="purchase.payment_type"
-                                            class="form-control shadow-none">
+                                            class="form-control shadow-none" @change="paymentChange">
                                             <option value="cash">Cash</option>
                                             <option value="bank">Bank</option>
                                         </select>
@@ -450,6 +450,15 @@ export default {
         },
         AccountChange(){
             this.purchase.account_id = this.selectedAccount.id
+        },
+        paymentChange(){
+            if(this.purchase.payment_type == "cash"){
+                this.selectedAccount = {
+                    id: "",
+                    display_name: ""
+                }
+                this.purchase.account_id = ""
+            }
         },
         onChangeSupplier() {
             if (this.selectedSupplier == null) {

@@ -433,7 +433,7 @@ export default {
                 .then(res => {
                     alert(res.data.msg)
                     if (confirm("Are you sure want print")) {
-                        this.$router.push({ path: '/quotaion-invoice/' + res.data.invoice })
+                        this.$router.push({ path: '/quotation-invoice/' + res.data.invoice })
                     }
                     this.clearData()
                     this.getQuotation()

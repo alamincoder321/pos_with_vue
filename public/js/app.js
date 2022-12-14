@@ -7410,6 +7410,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     AccountChange: function AccountChange() {
       this.purchase.account_id = this.selectedAccount.id;
     },
+    paymentChange: function paymentChange() {
+      if (this.purchase.payment_type == "cash") {
+        this.selectedAccount = {
+          id: "",
+          display_name: ""
+        };
+        this.purchase.account_id = "";
+      }
+    },
     onChangeSupplier: function onChangeSupplier() {
       var _this7 = this;
       if (this.selectedSupplier == null) {
@@ -7768,6 +7777,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     AccountChange: function AccountChange() {
       this.purchase.account_id = this.selectedAccount.id;
+    },
+    paymentChange: function paymentChange() {
+      if (this.purchase.payment_type == "cash") {
+        this.selectedAccount = {
+          id: "",
+          display_name: ""
+        };
+        this.purchase.account_id = "";
+      }
     },
     onChangeSupplier: function onChangeSupplier() {
       var _this7 = this;
@@ -8290,7 +8308,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this6.$router.push({
-            path: '/quotaion-invoice/' + res.data.invoice
+            path: '/quotation-invoice/' + res.data.invoice
           });
         } else {
           _this6.$router.push({
@@ -8576,7 +8594,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this6.$router.push({
-            path: '/quotaion-invoice/' + res.data.invoice
+            path: '/quotation-invoice/' + res.data.invoice
           });
         }
         _this6.clearData();
@@ -8941,6 +8959,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     AccountChange: function AccountChange() {
       this.sale.account_id = this.selectedAccount.id;
+    },
+    paymentChange: function paymentChange() {
+      if (this.sale.payment_type == "cash") {
+        this.selectedAccount = {
+          id: "",
+          display_name: ""
+        };
+        this.sale.account_id = "";
+      }
     },
     onChangeCustomer: function onChangeCustomer() {
       var _this7 = this;
@@ -9315,6 +9342,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     AccountChange: function AccountChange() {
       this.sale.account_id = this.selectedAccount.id;
+    },
+    paymentChange: function paymentChange() {
+      if (this.sale.payment_type == "cash") {
+        this.selectedAccount = {
+          id: "",
+          display_name: ""
+        };
+        this.sale.account_id = "";
+      }
     },
     onChangeCustomer: function onChangeCustomer() {
       var _this7 = this;
@@ -15729,7 +15765,7 @@ var render = function render() {
       id: "payment_type"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -15737,7 +15773,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.purchase, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.paymentChange]
     }
   }, [_c("option", {
     attrs: {
@@ -16705,7 +16741,7 @@ var render = function render() {
       id: "payment_type"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -16713,7 +16749,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.purchase, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.paymentChange]
     }
   }, [_c("option", {
     attrs: {
@@ -19799,7 +19835,7 @@ var render = function render() {
       id: "payment_type"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -19807,7 +19843,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.sale, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.paymentChange]
     }
   }, [_c("option", {
     attrs: {
@@ -20797,7 +20833,7 @@ var render = function render() {
       id: "payment_type"
     },
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -20805,7 +20841,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.sale, "payment_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.paymentChange]
     }
   }, [_c("option", {
     attrs: {
@@ -23414,7 +23450,7 @@ var routes = [{
   path: "/purchase-invoice/:id",
   component: _components_invoice_purchaseinvoice_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
 }, {
-  path: "/quotaion-invoice/:id",
+  path: "/quotation-invoice/:id",
   component: _components_invoice_quotationinvoice_vue__WEBPACK_IMPORTED_MODULE_30__["default"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
