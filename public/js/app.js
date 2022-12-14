@@ -7266,6 +7266,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         supplier_type: "",
         previous_due: 0
       },
+      accounts: [],
+      selectedAccount: {
+        id: "",
+        display_name: ""
+      },
       products: [],
       products1: [],
       selectedProduct: {
@@ -7309,36 +7314,47 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCategory();
     this.getBrand();
     this.getSupplier();
+    this.getBank();
     this.getProduct();
     this.getPermission();
     this.logOut();
   },
   methods: {
-    getCategory: function getCategory() {
+    getBank: function getBank() {
       var _this = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this.accounts = res.data;
+        _this.accounts.unshift({
+          id: 0,
+          display_name: "Select Bank"
+        });
+      });
+    },
+    getCategory: function getCategory() {
+      var _this2 = this;
       axios.get("/api/get_category").then(function (res) {
-        _this.categories = res.data;
-        _this.categories.unshift({
+        _this2.categories = res.data;
+        _this2.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this2 = this;
+      var _this3 = this;
       axios.get("/api/get_brand").then(function (res) {
-        _this2.brands = res.data;
-        _this2.brands.unshift({
+        _this3.brands = res.data;
+        _this3.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getSupplier: function getSupplier() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this3.suppliers = res.data.suppliers;
-        _this3.suppliers.unshift({
+        _this4.suppliers = res.data.suppliers;
+        _this4.suppliers.unshift({
           id: 0,
           display_name: "General Supplier",
           supplier_type: "G"
@@ -7346,26 +7362,32 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this4 = this;
+      var _this5 = this;
       axios.get("/api/get_product").then(function (res) {
-        _this4.products = res.data.products;
-        _this4.products1 = res.data.products;
-        _this4.products.unshift({
+        _this5.products = res.data.products;
+        _this5.products1 = res.data.products;
+        _this5.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getPurchase: function getPurchase() {
-      var _this5 = this;
+      var _this6 = this;
       var data = {
         invoice: this.$route.params.id
       };
       axios.post("/api/get_purchase", data).then(function (res) {
-        _this5.purchase = res.data.purchases[0];
-        _this5.carts = res.data.purchases[0].purchaseDetails;
+        _this6.purchase = res.data.purchases[0];
+        _this6.carts = res.data.purchases[0].purchaseDetails;
+        if (res.data.purchases[0].account_id) {
+          _this6.selectedAccount = {
+            id: res.data.purchases[0].account_id,
+            display_name: res.data.purchases[0].bank_display_name
+          };
+        }
         if (res.data.purchases[0].supplier_type == "G") {
-          _this5.selectedSupplier = {
+          _this6.selectedSupplier = {
             id: res.data.purchases[0].supplier_id,
             name: res.data.purchases[0].name,
             display_name: "General Supplier",
@@ -7374,7 +7396,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             supplier_type: res.data.purchases[0].supplier_type
           };
         } else {
-          _this5.selectedSupplier = {
+          _this6.selectedSupplier = {
             id: res.data.purchases[0].supplier_id,
             name: res.data.purchases[0].name,
             display_name: res.data.purchases[0].display_name,
@@ -7385,8 +7407,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         }
       });
     },
+    AccountChange: function AccountChange() {
+      this.purchase.account_id = this.selectedAccount.id;
+    },
     onChangeSupplier: function onChangeSupplier() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedSupplier == null) {
         this.selectedSupplier = {
           id: "",
@@ -7407,7 +7432,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_supduetotal", {
         id: this.selectedSupplier.id
       }).then(function (res) {
-        _this6.purchase.previous_due = res.data[0].dueAmount;
+        _this7.purchase.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
@@ -7427,10 +7452,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.purchase_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedProduct.product_id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.product_id == _this7.selectedProduct.id;
+          return p.product_id == _this8.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -7494,7 +7519,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     savePurchase: function savePurchase(event) {
-      var _this8 = this;
+      var _this9 = this;
       var data = {
         purchase: this.purchase,
         carts: this.carts,
@@ -7503,17 +7528,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_purchase", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this8.$router.push({
+          _this9.$router.push({
             path: '/purchase-invoice/' + res.data.invoice
           });
         } else {
-          _this8.$router.push({
+          _this9.$router.push({
             path: "/purchases-list"
           });
         }
-        _this8.clearData();
-        _this8.getPurchase();
-        _this8.carts = [];
+        _this9.clearData();
+        _this9.getPurchase();
+        _this9.carts = [];
       });
     },
     clearData: function clearData() {
@@ -7541,29 +7566,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this9.selectedCategory.id;
+        return p.category_id == _this10.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this10.selectedBrand.id;
+        return p.brand_id == _this11.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this11 = this;
+      var _this12 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this11.useraccess = Array.from(res.data);
+        _this12.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -7616,6 +7641,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       selectedBrand: {
         id: "",
         name: "Select Brand"
+      },
+      accounts: [],
+      selectedAccount: {
+        id: "",
+        display_name: ""
       },
       suppliers: [],
       selectedSupplier: {
@@ -7670,36 +7700,47 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCategory();
     this.getBrand();
     this.getSupplier();
+    this.getBank();
     this.getProduct();
     this.getPermission();
     this.logOut();
   },
   methods: {
-    getCategory: function getCategory() {
+    getBank: function getBank() {
       var _this = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this.accounts = res.data;
+        _this.accounts.unshift({
+          id: 0,
+          display_name: "Select Bank"
+        });
+      });
+    },
+    getCategory: function getCategory() {
+      var _this2 = this;
       axios.get("/api/get_category").then(function (res) {
-        _this.categories = res.data;
-        _this.categories.unshift({
+        _this2.categories = res.data;
+        _this2.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this2 = this;
+      var _this3 = this;
       axios.get("/api/get_brand").then(function (res) {
-        _this2.brands = res.data;
-        _this2.brands.unshift({
+        _this3.brands = res.data;
+        _this3.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getSupplier: function getSupplier() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this3.suppliers = res.data.suppliers;
-        _this3.suppliers.unshift({
+        _this4.suppliers = res.data.suppliers;
+        _this4.suppliers.unshift({
           id: 0,
           display_name: "General Supplier",
           supplier_type: "G"
@@ -7707,26 +7748,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this4 = this;
+      var _this5 = this;
       axios.get("/api/get_product").then(function (res) {
-        _this4.products = res.data.products;
-        _this4.products1 = res.data.products;
-        _this4.products.unshift({
+        _this5.products = res.data.products;
+        _this5.products1 = res.data.products;
+        _this5.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getPurchase: function getPurchase() {
-      var _this5 = this;
+      var _this6 = this;
       axios.post("/api/get_purchase", {
         id: '1'
       }).then(function (res) {
-        _this5.purchase.invoice = res.data.invoice;
+        _this6.purchase.invoice = res.data.invoice;
       });
     },
+    AccountChange: function AccountChange() {
+      this.purchase.account_id = this.selectedAccount.id;
+    },
     onChangeSupplier: function onChangeSupplier() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedSupplier == null) {
         this.selectedSupplier = {
           id: "",
@@ -7747,7 +7791,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_supduetotal", {
         id: this.selectedSupplier.id
       }).then(function (res) {
-        _this6.purchase.previous_due = res.data[0].dueAmount;
+        _this7.purchase.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
@@ -7767,10 +7811,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.purchase_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.product_id == _this7.selectedProduct.id;
+          return p.product_id == _this8.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -7834,7 +7878,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     savePurchase: function savePurchase(event) {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedSupplier.name == "") {
         alert("Select Supplier");
         document.querySelector("#supplier [type='search']").focus();
@@ -7853,13 +7897,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_purchase", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this8.$router.push({
+          _this9.$router.push({
             path: '/purchase-invoice/' + res.data.invoice
           });
         }
-        _this8.clearData();
-        _this8.getPurchase();
-        _this8.carts = [];
+        _this9.clearData();
+        _this9.getPurchase();
+        _this9.carts = [];
       });
     },
     clearData: function clearData() {
@@ -7888,29 +7932,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this9.selectedCategory.id;
+        return p.category_id == _this10.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this10.selectedBrand.id;
+        return p.brand_id == _this11.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this11 = this;
+      var _this12 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this11.useraccess = Array.from(res.data);
+        _this12.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -8752,6 +8796,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         customer_type: "",
         previous_due: 0
       },
+      accounts: [],
+      selectedAccount: {
+        id: "",
+        display_name: ""
+      },
       products: [],
       products1: [],
       selectedProduct: {
@@ -8797,36 +8846,47 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCategory();
     this.getBrand();
     this.getCustomer();
+    this.getBank();
     this.getProduct();
     this.getPermission();
     this.logOut();
   },
   methods: {
-    getCategory: function getCategory() {
+    getBank: function getBank() {
       var _this = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this.accounts = res.data;
+        _this.accounts.unshift({
+          id: 0,
+          display_name: "Select Bank"
+        });
+      });
+    },
+    getCategory: function getCategory() {
+      var _this2 = this;
       axios.get("/api/get_category").then(function (res) {
-        _this.categories = res.data;
-        _this.categories.unshift({
+        _this2.categories = res.data;
+        _this2.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this2 = this;
+      var _this3 = this;
       axios.get("/api/get_brand").then(function (res) {
-        _this2.brands = res.data;
-        _this2.brands.unshift({
+        _this3.brands = res.data;
+        _this3.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getCustomer: function getCustomer() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this3.customers = res.data.customers;
-        _this3.customers.unshift({
+        _this4.customers = res.data.customers;
+        _this4.customers.unshift({
           id: 0,
           display_name: "General Customer",
           customer_type: "G"
@@ -8834,26 +8894,32 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this4 = this;
+      var _this5 = this;
       axios.get("/api/get_product").then(function (res) {
-        _this4.products = res.data.products;
-        _this4.products1 = res.data.products;
-        _this4.products.unshift({
+        _this5.products = res.data.products;
+        _this5.products1 = res.data.products;
+        _this5.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getSale: function getSale() {
-      var _this5 = this;
+      var _this6 = this;
       var data = {
         invoice: this.$route.params.id
       };
       axios.post("/api/get_sale", data).then(function (res) {
-        _this5.sale = res.data.sales[0];
-        _this5.carts = res.data.sales[0].saleDetails;
+        _this6.sale = res.data.sales[0];
+        _this6.carts = res.data.sales[0].saleDetails;
+        if (res.data.sales[0].account_id) {
+          _this6.selectedAccount = {
+            id: res.data.sales[0].account_id,
+            display_name: res.data.sales[0].bank_display_name
+          };
+        }
         if (res.data.sales[0].customer_type == "G") {
-          _this5.selectedCustomer = {
+          _this6.selectedCustomer = {
             id: res.data.sales[0].customer_id,
             name: res.data.sales[0].name,
             display_name: "General Supplier",
@@ -8862,7 +8928,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             customer_type: res.data.sales[0].customer_type
           };
         } else {
-          _this5.selectedCustomer = {
+          _this6.selectedCustomer = {
             id: res.data.sales[0].customer_id,
             name: res.data.sales[0].name,
             display_name: res.data.sales[0].display_name,
@@ -8873,8 +8939,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         }
       });
     },
+    AccountChange: function AccountChange() {
+      this.sale.account_id = this.selectedAccount.id;
+    },
     onChangeCustomer: function onChangeCustomer() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedCustomer == null) {
         this.selectedCustomer = {
           id: "",
@@ -8895,11 +8964,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_custduetotal", {
         id: this.selectedCustomer.id
       }).then(function (res) {
-        _this6.sale.previous_due = res.data[0].dueAmount;
+        _this7.sale.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedProduct == null) {
         this.selectedProduct = {
           id: "",
@@ -8915,17 +8984,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post(location.origin + "/api/get_product_stock", {
         id: this.selectedProduct.id
       }).then(function (res) {
-        _this7.stocks = res.data[0];
+        _this8.stocks = res.data[0];
       });
     },
     cartQtySaleChange: function cartQtySaleChange() {
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this8.selectedProduct.id;
+          return p.id == _this9.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -8995,7 +9064,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this9 = this;
+      var _this10 = this;
       var data = {
         sale: this.sale,
         carts: this.carts,
@@ -9004,17 +9073,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this9.$router.push({
+          _this10.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         } else {
-          _this9.$router.push({
+          _this10.$router.push({
             path: "/sales-list"
           });
         }
-        _this9.clearData();
-        _this9.getSale();
-        _this9.carts = [];
+        _this10.clearData();
+        _this10.getSale();
+        _this10.carts = [];
       });
     },
     clearData: function clearData() {
@@ -9042,29 +9111,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this10.selectedCategory.id;
+        return p.category_id == _this11.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this11 = this;
+      var _this12 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this11.selectedBrand.id;
+        return p.brand_id == _this12.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this12 = this;
+      var _this13 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this12.useraccess = Array.from(res.data);
+        _this13.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -9128,6 +9197,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         customer_type: "",
         previous_due: 0
       },
+      accounts: [],
+      selectedAccount: {
+        id: "",
+        display_name: ""
+      },
       products: [],
       products1: [],
       selectedProduct: {
@@ -9171,6 +9245,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.sale.added_by = this.user_id;
     this.getSale();
     this.getCategory();
+    this.getBank();
     this.getBrand();
     this.getCustomer();
     this.getProduct();
@@ -9178,31 +9253,41 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.logOut();
   },
   methods: {
-    getCategory: function getCategory() {
+    getBank: function getBank() {
       var _this = this;
+      axios.get("/api/get_bankaccount").then(function (res) {
+        _this.accounts = res.data;
+        _this.accounts.unshift({
+          id: 0,
+          display_name: "Select Bank"
+        });
+      });
+    },
+    getCategory: function getCategory() {
+      var _this2 = this;
       axios.get("/api/get_category").then(function (res) {
-        _this.categories = res.data;
-        _this.categories.unshift({
+        _this2.categories = res.data;
+        _this2.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this2 = this;
+      var _this3 = this;
       axios.get("/api/get_brand").then(function (res) {
-        _this2.brands = res.data;
-        _this2.brands.unshift({
+        _this3.brands = res.data;
+        _this3.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getCustomer: function getCustomer() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this3.customers = res.data.customers;
-        _this3.customers.unshift({
+        _this4.customers = res.data.customers;
+        _this4.customers.unshift({
           id: 0,
           display_name: "General Customer",
           customer_type: "G"
@@ -9210,26 +9295,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this4 = this;
+      var _this5 = this;
       axios.get("/api/get_product").then(function (res) {
-        _this4.products = res.data.products;
-        _this4.products1 = res.data.products;
-        _this4.products.unshift({
+        _this5.products = res.data.products;
+        _this5.products1 = res.data.products;
+        _this5.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getSale: function getSale() {
-      var _this5 = this;
+      var _this6 = this;
       axios.post("/api/get_sale", {
         id: '1'
       }).then(function (res) {
-        _this5.sale.invoice = res.data.invoice;
+        _this6.sale.invoice = res.data.invoice;
       });
     },
+    AccountChange: function AccountChange() {
+      this.sale.account_id = this.selectedAccount.id;
+    },
     onChangeCustomer: function onChangeCustomer() {
-      var _this6 = this;
+      var _this7 = this;
       if (this.selectedCustomer == null) {
         this.selectedCustomer = {
           id: "",
@@ -9250,11 +9338,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_custduetotal", {
         id: this.selectedCustomer.id
       }).then(function (res) {
-        _this6.sale.previous_due = res.data[0].dueAmount;
+        _this7.sale.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedProduct == null) {
         this.selectedProduct = {
           id: "",
@@ -9268,17 +9356,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post(location.origin + "/api/get_product_stock", {
         id: this.selectedProduct.id
       }).then(function (res) {
-        _this7.stocks = res.data[0];
+        _this8.stocks = res.data[0];
       });
     },
     cartQtySaleChange: function cartQtySaleChange() {
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.product_id == _this8.selectedProduct.id;
+          return p.product_id == _this9.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -9349,7 +9437,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedCustomer.name == "") {
         alert("Select Customer");
         document.querySelector("#customer [type='search']").focus();
@@ -9368,13 +9456,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/save_sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this9.$router.push({
+          _this10.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         }
-        _this9.clearData();
-        _this9.getSale();
-        _this9.carts = [];
+        _this10.clearData();
+        _this10.getSale();
+        _this10.carts = [];
       });
     },
     clearData: function clearData() {
@@ -9403,29 +9491,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this10.selectedCategory.id;
+        return p.category_id == _this11.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this11 = this;
+      var _this12 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this11.selectedBrand.id;
+        return p.brand_id == _this12.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this12 = this;
+      var _this13 = this;
       axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this12.useraccess = Array.from(res.data);
+        _this13.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -15660,6 +15748,32 @@ var render = function render() {
       value: "bank"
     }
   }, [_vm._v("Bank")])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group",
+    style: {
+      display: _vm.purchase.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    attrs: {
+      "for": "account_id"
+    }
+  }, [_vm._v("Bank Name:")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "account",
+      name: "account_id",
+      options: _vm.accounts
+    },
+    on: {
+      input: _vm.AccountChange
+    },
+    model: {
+      value: _vm.selectedAccount,
+      callback: function callback($$v) {
+        _vm.selectedAccount = $$v;
+      },
+      expression: "selectedAccount"
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -16610,6 +16724,32 @@ var render = function render() {
       value: "bank"
     }
   }, [_vm._v("Bank")])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group",
+    style: {
+      display: _vm.purchase.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    attrs: {
+      "for": "account_id"
+    }
+  }, [_vm._v("Bank Name:")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "account",
+      name: "account_id",
+      options: _vm.accounts
+    },
+    on: {
+      input: _vm.AccountChange
+    },
+    model: {
+      value: _vm.selectedAccount,
+      callback: function callback($$v) {
+        _vm.selectedAccount = $$v;
+      },
+      expression: "selectedAccount"
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -19678,6 +19818,32 @@ var render = function render() {
       value: "bank"
     }
   }, [_vm._v("Bank")])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group",
+    style: {
+      display: _vm.sale.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    attrs: {
+      "for": "account_id"
+    }
+  }, [_vm._v("Bank Name:")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "account",
+      name: "account_id",
+      options: _vm.accounts
+    },
+    on: {
+      input: _vm.AccountChange
+    },
+    model: {
+      value: _vm.selectedAccount,
+      callback: function callback($$v) {
+        _vm.selectedAccount = $$v;
+      },
+      expression: "selectedAccount"
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -20264,7 +20430,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card-header text-center",
     "class": _vm.stocks.stock > 0 ? "text-white bg-success" : "text-white bg-danger"
-  }, [_vm._v("Stock")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                            Stock")]), _vm._v(" "), _c("div", {
     staticClass: "card-body text-center"
   }, [_vm._v("\n                                            " + _vm._s(_vm.stocks.stock) + " " + _vm._s(_vm.stocks.unit_name) + "\n                                        ")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-5 d-flex justify-content-end"
@@ -20650,6 +20816,32 @@ var render = function render() {
       value: "bank"
     }
   }, [_vm._v("Bank")])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group",
+    style: {
+      display: _vm.sale.payment_type == "bank" ? "" : "none"
+    }
+  }, [_c("label", {
+    attrs: {
+      "for": "account_id"
+    }
+  }, [_vm._v("Bank Name:")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      label: "display_name",
+      id: "account",
+      name: "account_id",
+      options: _vm.accounts
+    },
+    on: {
+      input: _vm.AccountChange
+    },
+    model: {
+      value: _vm.selectedAccount,
+      callback: function callback($$v) {
+        _vm.selectedAccount = $$v;
+      },
+      expression: "selectedAccount"
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -39814,7 +40006,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#category {\r\n    width: 100% !important;\n}\n#brand {\r\n    width: 100% !important;\n}\n#supplier {\r\n    width: 87% !important;\n}\n#product {\r\n    width: 87% !important;\n}\n.vs__selected-options {\r\n    overflow: hidden;\n}\n.vs__selected {\r\n    position: absolute;\r\n    top: 0px;\r\n    left: 3px;\n}\n#customer #vs3__listbox {\r\n    width: 300px !important;\n}\n#vs4__listbox {\r\n    width: 300px !important;\n}\n@media screen and (min-device-width: 360px) and (max-device-width: 768px) {\n#customer {\r\n        width: 81% !important;\n}\n#product {\r\n        width: 81% !important;\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#category {\r\n    width: 100% !important;\n}\n#brand {\r\n    width: 100% !important;\n}\n#supplier {\r\n    width: 87% !important;\n}\n#product {\r\n    width: 87% !important;\n}\n#account {\r\n    width: 100% !important;\n}\n.vs__selected-options {\r\n    overflow: hidden;\n}\n.vs__selected {\r\n    position: absolute;\r\n    top: 0px;\r\n    left: 3px;\n}\n#customer #vs3__listbox {\r\n    width: 300px !important;\n}\n#vs4__listbox {\r\n    width: 300px !important;\n}\n@media screen and (min-device-width: 360px) and (max-device-width: 768px) {\n#customer {\r\n        width: 81% !important;\n}\n#product {\r\n        width: 81% !important;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

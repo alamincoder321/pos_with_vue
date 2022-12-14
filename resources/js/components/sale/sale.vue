@@ -96,7 +96,8 @@
                                         class="col-5 col-lg-4 d-flex align-items-center">Warranty:</label>
                                     <div class="col-7 col-lg-3 pe-lg-0">
                                         <input type="text" id="warranty" name="warranty"
-                                            class="form-control shadow-none" v-model="selectedProduct.warranty" autocomplete="off" />
+                                            class="form-control shadow-none" v-model="selectedProduct.warranty"
+                                            autocomplete="off" />
                                     </div>
                                     <label for="quantity" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
                                     <div class="col-7 col-lg-4">
@@ -126,14 +127,17 @@
                                 <div class="row mt-2">
                                     <div class="col-7">
                                         <div class="card">
-                                            <div class="card-header text-center" :class="stocks.stock > 0?'text-white bg-success':'text-white bg-danger'">Stock</div>
+                                            <div class="card-header text-center"
+                                                :class="stocks.stock > 0 ? 'text-white bg-success' : 'text-white bg-danger'">
+                                                Stock</div>
                                             <div class="card-body text-center">
-                                                {{stocks.stock}} {{stocks.unit_name}}
+                                                {{ stocks.stock }} {{ stocks.unit_name }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-5 d-flex justify-content-end">
-                                        <button class="btn btn-primary shadow-none" @click="AddToCart">AddToCart</button>
+                                        <button class="btn btn-primary shadow-none"
+                                            @click="AddToCart">AddToCart</button>
                                     </div>
                                 </div>
                             </div>
@@ -262,6 +266,12 @@
                                             <option value="bank">Bank</option>
                                         </select>
                                     </div>
+                                    <div class="form-group" :style="{display: sale.payment_type == 'bank'?'':'none'}">
+                                        <label for="account_id">Bank Name:</label>
+                                        <v-select label="display_name" @input="AccountChange" id="account" name="account_id"
+                                            :options="accounts" v-model="selectedAccount">
+                                        </v-select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" min="0" id="paid" name="paid" @input="TotalAmount"
@@ -335,6 +345,11 @@ export default {
                 customer_type: "",
                 previous_due: 0,
             },
+            accounts: [],
+            selectedAccount: {
+                id: "",
+                display_name: "",
+            },
             products: [],
             products1: [],
             selectedProduct: {
@@ -378,6 +393,7 @@ export default {
         this.sale.added_by = this.user_id;
         this.getSale();
         this.getCategory();
+        this.getBank();
         this.getBrand();
         this.getCustomer();
         this.getProduct();
@@ -386,6 +402,12 @@ export default {
     },
 
     methods: {
+        getBank() {
+            axios.get("/api/get_bankaccount").then((res) => {
+                this.accounts = res.data;
+                this.accounts.unshift({ id: 0, display_name: "Select Bank" })
+            });
+        },
         getCategory() {
             axios.get("/api/get_category").then((res) => {
                 this.categories = res.data;
@@ -415,6 +437,10 @@ export default {
             axios.post("/api/get_sale", { id: '1' }).then((res) => {
                 this.sale.invoice = res.data.invoice;
             });
+        },
+
+        AccountChange(){
+            this.sale.account_id = this.selectedAccount.id
         },
 
         onChangeCustomer() {
@@ -449,7 +475,7 @@ export default {
                     quantity: "",
                     selling_price: "",
                 }
-                return 
+                return
             }
 
             axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
@@ -473,7 +499,7 @@ export default {
                     document.querySelector("#product [type='search']").focus()
                     return
                 }
-                if(this.stocks.stock <= 0 || this.stocks.stock < this.selectedProduct.quantity){
+                if (this.stocks.stock <= 0 || this.stocks.stock < this.selectedProduct.quantity) {
                     alert("Unavailable stock")
                     return
                 }
@@ -482,7 +508,7 @@ export default {
                     document.querySelector("#quantity").focus()
                     return
                 }
-                
+
                 this.product = {
                     product_id: this.selectedProduct.id,
                     name: this.selectedProduct.name,
@@ -654,6 +680,9 @@ export default {
 
 #product {
     width: 87% !important;
+}
+#account {
+    width: 100% !important;
 }
 
 

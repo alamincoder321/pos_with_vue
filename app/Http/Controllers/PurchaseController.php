@@ -30,11 +30,14 @@ class PurchaseController extends Controller
                             s.address,
                             s.phone,
                             s.supplier_type,
+                            CONCAT(ac.account_no, '-(', ac.bank_name, ')') AS bank_display_name,
                             u.name AS user_name
                         FROM
                             purchases AS p
                         LEFT JOIN suppliers AS s
                         ON s.id = p.supplier_id
+                        LEFT JOIN bank_accounts AS ac
+                        ON ac.id = p.account_id
                         LEFT JOIN users AS u
                         ON u.id = p.added_by
                         WHERE 1=1

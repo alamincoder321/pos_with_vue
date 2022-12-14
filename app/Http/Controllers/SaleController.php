@@ -29,11 +29,14 @@ class SaleController extends Controller
                             c.address,
                             c.phone,
                             c.customer_type,
+                            CONCAT(ac.account_no, '-(', ac.bank_name, ')') AS bank_display_name,
                             u.name AS user_name
                         FROM
                             sales AS s
                         LEFT JOIN customers AS c
                         ON c.id = s.customer_id
+                        LEFT JOIN bank_accounts AS ac
+                        ON ac.id = s.account_id
                         LEFT JOIN users AS u
                         ON u.id = s.added_by
                         WHERE 1=1

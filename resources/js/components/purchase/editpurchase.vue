@@ -252,6 +252,12 @@
                                             <option value="bank">Bank</option>
                                         </select>
                                     </div>
+                                    <div class="form-group" :style="{display: purchase.payment_type == 'bank'?'':'none'}">
+                                        <label for="account_id">Bank Name:</label>
+                                        <v-select label="display_name" @input="AccountChange" id="account" name="account_id"
+                                            :options="accounts" v-model="selectedAccount">
+                                        </v-select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
@@ -324,6 +330,11 @@ export default {
                 supplier_type: "",
                 previous_due: 0,
             },
+            accounts: [],
+            selectedAccount: {
+                id: "",
+                display_name: "",
+            },
             products: [],
             products1: [],
             selectedProduct: {
@@ -367,12 +378,19 @@ export default {
         this.getCategory();
         this.getBrand();
         this.getSupplier();
+        this.getBank();
         this.getProduct();
         this.getPermission();
         this.logOut();
     },
 
     methods: {
+        getBank() {
+            axios.get("/api/get_bankaccount").then((res) => {
+                this.accounts = res.data;
+                this.accounts.unshift({ id: 0, display_name: "Select Bank" })
+            });
+        },
         getCategory() {
             axios.get("/api/get_category").then((res) => {
                 this.categories = res.data;
@@ -403,6 +421,12 @@ export default {
             axios.post("/api/get_purchase", data).then((res) => {
                 this.purchase = res.data.purchases[0]
                 this.carts = res.data.purchases[0].purchaseDetails
+                if(res.data.purchases[0].account_id){
+                    this.selectedAccount = {
+                        id: res.data.purchases[0].account_id,
+                        display_name: res.data.purchases[0].bank_display_name
+                    }
+                }
                 if (res.data.purchases[0].supplier_type == "G") {
                     this.selectedSupplier = {
                         id: res.data.purchases[0].supplier_id,
@@ -424,7 +448,9 @@ export default {
                 }
             });
         },
-
+        AccountChange(){
+            this.purchase.account_id = this.selectedAccount.id
+        },
         onChangeSupplier() {
             if (this.selectedSupplier == null) {
                 this.selectedSupplier = {

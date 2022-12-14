@@ -252,6 +252,12 @@
                                             <option value="bank">Bank</option>
                                         </select>
                                     </div>
+                                    <div class="form-group" :style="{display: purchase.payment_type == 'bank'?'':'none'}">
+                                        <label for="account_id">Bank Name:</label>
+                                        <v-select label="display_name" @input="AccountChange" id="account" name="account_id"
+                                            :options="accounts" v-model="selectedAccount">
+                                        </v-select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
                                         <input type="number" id="paid" name="paid" @input="TotalAmount"
@@ -315,6 +321,11 @@ export default {
                 id: "",
                 name: "Select Brand"
             },
+            accounts: [],
+            selectedAccount: {
+                id: "",
+                display_name: "",
+            },
             suppliers: [],
             selectedSupplier: {
                 id: "",
@@ -368,12 +379,19 @@ export default {
         this.getCategory();
         this.getBrand();
         this.getSupplier();
+        this.getBank();
         this.getProduct();
         this.getPermission();
         this.logOut();
     },
 
     methods: {
+        getBank() {
+            axios.get("/api/get_bankaccount").then((res) => {
+                this.accounts = res.data;
+                this.accounts.unshift({ id: 0, display_name: "Select Bank" })
+            });
+        },
         getCategory() {
             axios.get("/api/get_category").then((res) => {
                 this.categories = res.data;
@@ -403,6 +421,10 @@ export default {
             axios.post("/api/get_purchase", {id: '1'}).then((res) => {
                 this.purchase.invoice = res.data.invoice;
             });
+        },
+
+        AccountChange(){
+            this.purchase.account_id = this.selectedAccount.id
         },
 
         onChangeSupplier() {
