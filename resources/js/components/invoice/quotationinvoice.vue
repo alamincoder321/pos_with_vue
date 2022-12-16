@@ -152,7 +152,7 @@ export default {
         },
 
         async PrintInvoice() {
-            var myWindow = window.open('', '_blank');
+            var myWindow = window.open('', '', `width=${window.screen.width},height=${window.screen.height}`);
             if(this.company.paper_type == "3"){
                 myWindow.document.write(`
                     <html>
