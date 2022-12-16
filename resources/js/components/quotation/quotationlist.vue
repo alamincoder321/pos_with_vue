@@ -84,7 +84,7 @@
                                     :to="{ path: '/quotations-edit/' + item.invoice }">
                                     <i class="fa fa-edit text-primary"></i>
                                 </router-link>
-                                <router-link title="invoice" :to="{ path: '/quotaion-invoice/' + item.invoice }"
+                                <router-link title="invoice" :to="{ path: '/quotation-invoice/' + item.invoice }"
                                     style="cursor:pointer;"><i class="fas fa-file text-info"></i></router-link>
                             </td>
                         </tr>

@@ -45,16 +45,16 @@ h2 {
                         Purchases Invoice</h6>
                 </div>
                 <div class="col-6 mb-3" style="line-height: 20px;">
-                    <span style="font-weight: 500;">Supplier Id: </span>{{ purchases[0].code?purchases[0].code:"General Supplier" }}<br>
-                    <span style="font-weight: 500;">Supplier Name: </span>{{ purchases[0].name }}<br>
-                    <span style="font-weight: 500;">Supplier Address: </span>{{ purchases[0].address }}<br>
-                    <span style="font-weight: 500;">Supplier Mobile: </span>{{ purchases[0].phone }}
+                    <span style="font-weight: 500;">Supplier Id: </span>{{ purchases.code?purchases.code:"General Supplier" }}<br>
+                    <span style="font-weight: 500;">Supplier Name: </span>{{ purchases.name }}<br>
+                    <span style="font-weight: 500;">Supplier Address: </span>{{ purchases.address }}<br>
+                    <span style="font-weight: 500;">Supplier Mobile: </span>{{ purchases.phone }}
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Purchases By:</span>{{ purchases[0].user_name }}<br>
-                        <span style="font-weight: 500;">Invoice:</span>#{{ purchases[0].invoice }}<br>
-                        <span style="font-weight: 500;">Purchases Date:</span> {{ formatDate(purchases[0].date) }}
+                        <span style="font-weight: 500;">Purchases By:</span>{{ purchases.user_name }}<br>
+                        <span style="font-weight: 500;">Invoice:</span>#{{ purchases.invoice }}<br>
+                        <span style="font-weight: 500;">Purchases Date:</span> {{ formatDate(purchases.date) }}
                     </div>
                 </div>
                 <!-- product details -->
@@ -71,7 +71,7 @@ h2 {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in purchases[0].purchaseDetails" :key="index">
+                            <tr v-for="(item, index) in purchases.purchaseDetails" :key="index">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
@@ -88,18 +88,18 @@ h2 {
                         <tr>
                             <td style="font-weight: 600;">Previous Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].previous_due }}</td>
+                            <td style="text-align: right;">{{ purchases.previous_due }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">Current Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].due }}</td>
+                            <td style="text-align: right;">{{ purchases.due }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;">Total Due</td>
                             <td>:</td>
                             <td style="text-align: right;">
-                                {{ (parseFloat(purchases[0].previous_due) + parseFloat(purchases[0].due)).toFixed(2) }}</td>
+                                {{ (parseFloat(purchases.previous_due) + parseFloat(purchases.due)).toFixed(2) }}</td>
                         </tr>
                     </table>
                 </div>
@@ -108,37 +108,37 @@ h2 {
                         <tr>
                             <td style="font-weight: 600;width: 130px;">SubTotal</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].subtotal }}</td>
+                            <td style="text-align: right;">{{ purchases.subtotal }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">VAT {{ purchases[0].vat != 0?"("+purchases[0].vat+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">VAT {{ purchases.vat != 0?"("+purchases.vat+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].vat_amount }}</td>
+                            <td style="text-align: right;">{{ purchases.vat_amount }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">Discount {{ purchases[0].discount != 0?"("+purchases[0].discount+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">Discount {{ purchases.discount != 0?"("+purchases.discount+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].discount_amount }}</td>
+                            <td style="text-align: right;">{{ purchases.discount_amount }}</td>
                         </tr>
-                        <tr v-if="parseFloat(purchases[0].transport_cost) > 0">
+                        <tr v-if="parseFloat(purchases.transport_cost) > 0">
                             <td style="font-weight: 600;width: 130px;">Transport Cost</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].transport_cost }}</td>
+                            <td style="text-align: right;">{{ purchases.transport_cost }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Total</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].total }}</td>
+                            <td style="text-align: right;">{{ purchases.total }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;width: 130px;">Paid</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].paid }}</td>
+                            <td style="text-align: right;">{{ purchases.paid }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Due</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ purchases[0].due }}</td>
+                            <td style="text-align: right;">{{ purchases.due }}</td>
                         </tr>
                     </table>
                 </div>
@@ -152,7 +152,7 @@ export default {
     data() {
         return {
             company: [],
-            purchases: "",
+            purchases: {},
         }
     },
 
@@ -173,7 +173,7 @@ export default {
         },
         getPurchases() {
             axios.post("/api/get_purchase", { invoice: this.$route.params.id }).then((res) => {
-                this.purchases = res.data.purchases
+                this.purchases = res.data.purchases[0]
             });
         },
         formatDate(date) {

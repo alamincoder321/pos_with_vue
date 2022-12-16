@@ -6812,7 +6812,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   data: function data() {
     return {
       company: [],
-      purchases: ""
+      purchases: {}
     };
   },
   created: function created() {
@@ -6834,7 +6834,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_purchase", {
         invoice: this.$route.params.id
       }).then(function (res) {
-        _this2.purchases = res.data.purchases;
+        _this2.purchases = res.data.purchases[0];
       });
     },
     formatDate: function formatDate(date) {
@@ -6895,7 +6895,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   data: function data() {
     return {
       company: [],
-      quotations: ""
+      quotations: {}
     };
   },
   created: function created() {
@@ -6917,7 +6917,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_quotation", {
         invoice: this.$route.params.id
       }).then(function (res) {
-        _this2.quotations = res.data.quotations;
+        _this2.quotations = res.data.quotations[0];
       });
     },
     formatDate: function formatDate(date) {
@@ -6978,7 +6978,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   data: function data() {
     return {
       company: [],
-      sales: ""
+      sales: {}
     };
   },
   created: function created() {
@@ -7000,7 +7000,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_sale", {
         invoice: this.$route.params.id
       }).then(function (res) {
-        _this2.sales = res.data.sales;
+        _this2.sales = res.data.sales[0];
       });
     },
     formatDate: function formatDate(date) {
@@ -13976,19 +13976,19 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Supplier Id: ")]), _vm._v(_vm._s(_vm.purchases[0].code ? _vm.purchases[0].code : "General Supplier")), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Supplier Id: ")]), _vm._v(_vm._s(_vm.purchases.code ? _vm.purchases.code : "General Supplier")), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Supplier Name: ")]), _vm._v(_vm._s(_vm.purchases[0].name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Supplier Name: ")]), _vm._v(_vm._s(_vm.purchases.name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Supplier Address: ")]), _vm._v(_vm._s(_vm.purchases[0].address)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Supplier Address: ")]), _vm._v(_vm._s(_vm.purchases.address)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Supplier Mobile: ")]), _vm._v(_vm._s(_vm.purchases[0].phone) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Supplier Mobile: ")]), _vm._v(_vm._s(_vm.purchases.phone) + "\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "col-6 mb-3"
   }, [_c("div", {
     staticClass: "text-end"
@@ -13996,19 +13996,19 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Purchases By:")]), _vm._v(_vm._s(_vm.purchases[0].user_name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Purchases By:")]), _vm._v(_vm._s(_vm.purchases.user_name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.purchases[0].invoice)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.purchases.invoice)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Purchases Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.purchases[0].date)) + "\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Purchases Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.purchases.date)) + "\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 mb-3"
   }, [_c("table", {
     staticClass: "table table-bordered table-sm"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.purchases[0].purchaseDetails, function (item, index) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.purchases.purchaseDetails, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -14037,7 +14037,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].previous_due))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases.previous_due))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600"
     }
@@ -14045,7 +14045,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].due))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.purchases.due))])]), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14057,7 +14057,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v("\n                            " + _vm._s((parseFloat(_vm.purchases[0].previous_due) + parseFloat(_vm.purchases[0].due)).toFixed(2)))])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            " + _vm._s((parseFloat(_vm.purchases.previous_due) + parseFloat(_vm.purchases.due)).toFixed(2)))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-5"
   }, [_c("table", {
     staticStyle: {
@@ -14073,25 +14073,25 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases.subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("VAT " + _vm._s(_vm.purchases[0].vat != 0 ? "(" + _vm.purchases[0].vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("VAT " + _vm._s(_vm.purchases.vat != 0 ? "(" + _vm.purchases.vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases.vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("Discount " + _vm._s(_vm.purchases[0].discount != 0 ? "(" + _vm.purchases[0].discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("Discount " + _vm._s(_vm.purchases.discount != 0 ? "(" + _vm.purchases.discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].discount_amount))])]), _vm._v(" "), parseFloat(_vm.purchases[0].transport_cost) > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases.discount_amount))])]), _vm._v(" "), parseFloat(_vm.purchases.transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14100,7 +14100,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.purchases.transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14113,7 +14113,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].total))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.purchases.total))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14122,7 +14122,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].paid))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.purchases.paid))])]), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14135,7 +14135,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.purchases[0].due))])])])])])])]);
+  }, [_vm._v(_vm._s(_vm.purchases.due))])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -14234,15 +14234,15 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Name: ")]), _vm._v(_vm._s(_vm.quotations[0].customer_name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Customer Name: ")]), _vm._v(_vm._s(_vm.quotations.customer_name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Address: ")]), _vm._v(_vm._s(_vm.quotations[0].customer_address)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Customer Address: ")]), _vm._v(_vm._s(_vm.quotations.customer_address)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Mobile: ")]), _vm._v(_vm._s(_vm.quotations[0].customer_phone) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Customer Mobile: ")]), _vm._v(_vm._s(_vm.quotations.customer_phone) + "\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "col-6 mb-3"
   }, [_c("div", {
     staticClass: "text-end"
@@ -14250,19 +14250,19 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Quotations By:")]), _vm._v(_vm._s(_vm.quotations[0].user_name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Quotations By:")]), _vm._v(_vm._s(_vm.quotations.user_name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.quotations[0].invoice)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.quotations.invoice)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Quotations Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.quotations[0].date)) + "\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Quotations Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.quotations.date)) + "\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 mb-3"
   }, [_c("table", {
     staticClass: "table table-bordered table-sm"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.quotations[0].quotationDetails, function (item, index) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.quotations.quotationDetails, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -14294,25 +14294,25 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].subtotal))])]), _vm._v(" "), _vm.quotations[0].vat > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations.subtotal))])]), _vm._v(" "), _vm.quotations.vat > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("VAT " + _vm._s(_vm.quotations[0].vat != 0 ? "(" + _vm.quotations[0].vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("VAT " + _vm._s(_vm.quotations.vat != 0 ? "(" + _vm.quotations.vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].vat_amount))])]) : _vm._e(), _vm._v(" "), _vm.quotations[0].discount > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations.vat_amount))])]) : _vm._e(), _vm._v(" "), _vm.quotations.discount > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("Discount " + _vm._s(_vm.quotations[0].discount != 0 ? "(" + _vm.quotations[0].discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("Discount " + _vm._s(_vm.quotations.discount != 0 ? "(" + _vm.quotations.discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].discount_amount))])]) : _vm._e(), _vm._v(" "), parseFloat(_vm.quotations[0].transport_cost) > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.quotations.discount_amount))])]) : _vm._e(), _vm._v(" "), parseFloat(_vm.quotations.transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14321,7 +14321,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.quotations.transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14334,7 +14334,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.quotations[0].total))])])])])])])]);
+  }, [_vm._v(_vm._s(_vm.quotations.total))])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -14433,19 +14433,19 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Id: ")]), _vm._v(_vm._s(_vm.sales[0].code ? _vm.sales[0].code : "General Customer")), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Customer Id: ")]), _vm._v(_vm._s(_vm.sales.code ? _vm.sales.code : "General Customer")), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Name: ")]), _vm._v(_vm._s(_vm.sales[0].name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Customer Name: ")]), _vm._v(_vm._s(_vm.sales.name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Address: ")]), _vm._v(_vm._s(_vm.sales[0].address)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Customer Address: ")]), _vm._v(_vm._s(_vm.sales.address)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Customer Mobile: ")]), _vm._v(_vm._s(_vm.sales[0].phone) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Customer Mobile: ")]), _vm._v(_vm._s(_vm.sales.phone) + "\n            ")]), _vm._v(" "), _c("div", {
     staticClass: "col-6 mb-3"
   }, [_c("div", {
     staticClass: "text-end"
@@ -14453,19 +14453,19 @@ var render = function render() {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Sales By:")]), _vm._v(_vm._s(_vm.sales[0].user_name)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Sales By:")]), _vm._v(_vm._s(_vm.sales.user_name)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.sales[0].invoice)), _c("br"), _vm._v(" "), _c("span", {
+  }, [_vm._v("Invoice:")]), _vm._v("#" + _vm._s(_vm.sales.invoice)), _c("br"), _vm._v(" "), _c("span", {
     staticStyle: {
       "font-weight": "500"
     }
-  }, [_vm._v("Sales Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.sales[0].date)) + "\n                ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Sales Date:")]), _vm._v(" " + _vm._s(_vm.formatDate(_vm.sales.date)) + "\n                ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-12 mb-3"
   }, [_c("table", {
     staticClass: "table table-bordered table-sm"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.sales[0].saleDetails, function (item, index) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.sales.saleDetails, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
@@ -14494,7 +14494,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].previous_due))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales.previous_due))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600"
     }
@@ -14502,7 +14502,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].due))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.sales.due))])]), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14514,7 +14514,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v("\n                            " + _vm._s((parseFloat(_vm.sales[0].previous_due) + parseFloat(_vm.sales[0].due)).toFixed(2)))])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                            " + _vm._s((parseFloat(_vm.sales.previous_due) + parseFloat(_vm.sales.due)).toFixed(2)))])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-5"
   }, [_c("table", {
     staticStyle: {
@@ -14530,25 +14530,25 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales.subtotal))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("VAT " + _vm._s(_vm.sales[0].vat != 0 ? "(" + _vm.sales[0].vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("VAT " + _vm._s(_vm.sales.vat != 0 ? "(" + _vm.sales.vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales.vat_amount))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("Discount " + _vm._s(_vm.sales[0].discount != 0 ? "(" + _vm.sales[0].discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("Discount " + _vm._s(_vm.sales.discount != 0 ? "(" + _vm.sales.discount + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].discount_amount))])]), _vm._v(" "), parseFloat(_vm.sales[0].transport_cost) > 0 ? _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales.discount_amount))])]), _vm._v(" "), parseFloat(_vm.sales.transport_cost) > 0 ? _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14557,7 +14557,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.sales.transport_cost))])]) : _vm._e(), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14570,7 +14570,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].total))])]), _vm._v(" "), _c("tr", [_c("td", {
+  }, [_vm._v(_vm._s(_vm.sales.total))])]), _vm._v(" "), _c("tr", [_c("td", {
     staticStyle: {
       "font-weight": "600",
       width: "130px"
@@ -14579,7 +14579,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].paid))])]), _vm._v(" "), _c("tr", {
+  }, [_vm._v(_vm._s(_vm.sales.paid))])]), _vm._v(" "), _c("tr", {
     staticStyle: {
       "border-top": "1px dashed gray"
     }
@@ -14592,7 +14592,7 @@ var render = function render() {
     staticStyle: {
       "text-align": "right"
     }
-  }, [_vm._v(_vm._s(_vm.sales[0].due))])])])])])])]);
+  }, [_vm._v(_vm._s(_vm.sales.due))])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -19021,7 +19021,7 @@ var render = function render() {
       attrs: {
         title: "invoice",
         to: {
-          path: "/quotaion-invoice/" + item.invoice
+          path: "/quotation-invoice/" + item.invoice
         }
       }
     }, [_c("i", {

@@ -45,15 +45,15 @@ h2 {
                         Quotation Invoice</h6>
                 </div>
                 <div class="col-6 mb-3" style="line-height: 20px;">
-                    <span style="font-weight: 500;">Customer Name: </span>{{ quotations[0].customer_name }}<br>
-                    <span style="font-weight: 500;">Customer Address: </span>{{ quotations[0].customer_address }}<br>
-                    <span style="font-weight: 500;">Customer Mobile: </span>{{ quotations[0].customer_phone }}
+                    <span style="font-weight: 500;">Customer Name: </span>{{ quotations.customer_name }}<br>
+                    <span style="font-weight: 500;">Customer Address: </span>{{ quotations.customer_address }}<br>
+                    <span style="font-weight: 500;">Customer Mobile: </span>{{ quotations.customer_phone }}
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Quotations By:</span>{{ quotations[0].user_name }}<br>
-                        <span style="font-weight: 500;">Invoice:</span>#{{ quotations[0].invoice }}<br>
-                        <span style="font-weight: 500;">Quotations Date:</span> {{ formatDate(quotations[0].date) }}
+                        <span style="font-weight: 500;">Quotations By:</span>{{ quotations.user_name }}<br>
+                        <span style="font-weight: 500;">Invoice:</span>#{{ quotations.invoice }}<br>
+                        <span style="font-weight: 500;">Quotations Date:</span> {{ formatDate(quotations.date) }}
                     </div>
                 </div>
                 <!-- product details -->
@@ -70,7 +70,7 @@ h2 {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in quotations[0].quotationDetails" :key="index">
+                            <tr v-for="(item, index) in quotations.quotationDetails" :key="index">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
@@ -89,27 +89,27 @@ h2 {
                         <tr>
                             <td style="font-weight: 600;width: 130px;">SubTotal</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ quotations[0].subtotal }}</td>
+                            <td style="text-align: right;">{{ quotations.subtotal }}</td>
                         </tr>
-                        <tr v-if="quotations[0].vat > 0">
-                            <td style="font-weight: 600;width: 130px;">VAT {{ quotations[0].vat != 0?"("+quotations[0].vat+"%)":'' }}</td>
+                        <tr v-if="quotations.vat > 0">
+                            <td style="font-weight: 600;width: 130px;">VAT {{ quotations.vat != 0?"("+quotations.vat+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ quotations[0].vat_amount }}</td>
+                            <td style="text-align: right;">{{ quotations.vat_amount }}</td>
                         </tr>
-                        <tr v-if="quotations[0].discount > 0">
-                            <td style="font-weight: 600;width: 130px;">Discount {{ quotations[0].discount != 0?"("+quotations[0].discount+"%)":'' }}</td>
+                        <tr v-if="quotations.discount > 0">
+                            <td style="font-weight: 600;width: 130px;">Discount {{ quotations.discount != 0?"("+quotations.discount+"%)":'' }}</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ quotations[0].discount_amount }}</td>
+                            <td style="text-align: right;">{{ quotations.discount_amount }}</td>
                         </tr>
-                        <tr v-if="parseFloat(quotations[0].transport_cost) > 0">
+                        <tr v-if="parseFloat(quotations.transport_cost) > 0">
                             <td style="font-weight: 600;width: 130px;">Transport Cost</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ quotations[0].transport_cost }}</td>
+                            <td style="text-align: right;">{{ quotations.transport_cost }}</td>
                         </tr>
                         <tr style="border-top: 1px dashed gray;">
                             <td style="font-weight: 600;width: 130px;">Total</td>
                             <td>:</td>
-                            <td style="text-align: right;">{{ quotations[0].total }}</td>
+                            <td style="text-align: right;">{{ quotations.total }}</td>
                         </tr>
                     </table>
                 </div>
@@ -123,7 +123,7 @@ export default {
     data() {
         return {
             company: [],
-            quotations: "",
+            quotations: {},
         }
     },
 
@@ -144,7 +144,7 @@ export default {
         },
         getQuotations() {
             axios.post("/api/get_quotation", { invoice: this.$route.params.id }).then((res) => {
-                this.quotations = res.data.quotations
+                this.quotations = res.data.quotations[0]
             });
         },
         formatDate(date) {
