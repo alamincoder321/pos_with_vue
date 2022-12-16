@@ -114,4 +114,76 @@ class ModelTable extends Model
         (IFNULL(pin.purchase_qty, 0) + IFNULL(pin.sale_return_qty, 0) - IFNULL(pin.purchase_return_qty, 0) - IFNULL(pin.sale_qty, 0) - IFNULL(pin.damage_qty, 0)) AS stock,
         p.*, un.name AS unit_name FROM products AS p LEFT JOIN product_inventories AS pin ON p.id = pin.product_id LEFT JOIN units AS un ON un.id = p.unit_id $clauses");
     }
+
+    public static function bankBalance($id=null, $fromDate=null, $toDate= null)
+    {
+        return DB::select("SELECT
+                        b.*,
+                        (
+                        SELECT
+                            IFNULL(SUM(sm.paid),
+                            0)
+                        FROM
+                            sales AS sm
+                        WHERE
+                            sm.payment_type = 'bank' AND sm.account_id = b.id
+                            " . ($fromDate==null ? "" : " AND sm.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS saleamount,
+                        (
+                        SELECT
+                            IFNULL(SUM(pm.paid),
+                            0)
+                        FROM
+                            purchases AS pm
+                        WHERE
+                            pm.payment_type = 'bank' AND pm.account_id = b.id
+                            " . ($fromDate==null ? "" : " AND pm.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS purchaseamount,
+                    (
+                        SELECT
+                            IFNULL(SUM(cp.payment_amount),
+                            0)
+                        FROM
+                            customer_payments AS cp
+                        WHERE
+                            cp.payment_type = 'bank' AND cp.bank_id = b.id
+                            " . ($fromDate==null ? "" : " AND cp.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS customeramount,
+                    (
+                        SELECT
+                            IFNULL(SUM(sp.payment_amount),
+                            0)
+                        FROM
+                            supplier_payments AS sp
+                        WHERE
+                            sp.payment_type = 'bank' AND sp.bank_id = b.id
+                            " . ($fromDate==null ? "" : " AND sp.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS supplieramount,
+                    (
+                        SELECT
+                            ifnull(sum(trb.amount),
+                            0)
+                        FROM
+                            transactions AS trb
+                        WHERE
+                            trb.transaction_type = 'deposit' AND trb.account_id = b.id
+                            " . ($fromDate==null ? "" : " AND trb.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS depositamount,
+                    (
+                        SELECT
+                        ifnull(sum(trbw.amount),
+                            0)
+                        FROM
+                            transactions AS trbw
+                        WHERE
+                        trbw.transaction_type = 'withdraw' AND trbw.account_id = b.id
+                            " . ($fromDate==null ? "" : " AND trbw.date BETWEEN '$fromDate' AND '$toDate'") . "
+                    ) AS withdrawamount,
+                    (SELECT (saleamount+customeramount+depositamount) - (purchaseamount+supplieramount+withdrawamount)) AS totalbalance
+                    FROM
+                        bank_accounts b 
+                        WHERE 1 = 1
+                        " . ($id==null ? "" : " AND b.id = '$id'") . "
+                    ");
+    }
 }

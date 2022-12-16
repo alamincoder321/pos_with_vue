@@ -17,6 +17,7 @@ use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierPaymentController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,7 @@ Route::get("/delete_brand/{id}", [BrandController::class, "deleteBrand"]);
 Route::get("/get_bankaccount", [BankAccountController::class, "getBankAccount"]);
 Route::post("/save_bankaccount", [BankAccountController::class, "saveBankAccount"]);
 Route::get("/delete_bankaccount/{id}", [BankAccountController::class, "deleteBankAccount"]);
+Route::post("/getbank_balance", [BankAccountController::class, "bankBalance"]);
 //customerpayment
 Route::get("/get_customerpayment", [CustomerPaymentController::class, "getCustomerPayment"]);
 Route::post("/save_customerpayment", [CustomerPaymentController::class, "saveCustomerPayment"]);
@@ -60,6 +62,10 @@ Route::get("/delete_customerpayment/{id}", [CustomerPaymentController::class, "d
 Route::get("/get_supplierpayment", [SupplierPaymentController::class, "getSupplierPayment"]);
 Route::post("/save_supplierpayment", [SupplierPaymentController::class, "saveSupplierPayment"]);
 Route::get("/delete_supplierpayment/{id}", [SupplierPaymentController::class, "deleteSupplierPayment"]);
+//transaction
+Route::get("/get_transaction", [TransactionController::class, "getTransaction"]);
+Route::post("/save_transaction", [TransactionController::class, "saveTransaction"]);
+Route::get("/delete_transaction/{id}", [TransactionController::class, "deleteTransaction"]);
 //unit
 Route::get("/get_unit", [UnitController::class, "getUnit"]);
 Route::post("/save_unit", [UnitController::class, "saveUnit"]);

@@ -247,9 +247,6 @@ export default {
                 alert("Payment don't grather than due")
                 return
             }
-
-
-
             axios
                 .post(location.origin + "/api/save_customerpayment", this.customerpayment)
                 .then((res) => {
@@ -301,6 +298,7 @@ export default {
                 due: 0.00,
                 payment_amount: 0.00,
                 description: "",
+                added_by: this.user_id
             };
             this.selectedCustomer = null
             this.selectedBank = null

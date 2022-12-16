@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelTable;
 use App\Models\BankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,4 +48,10 @@ class BankAccountController extends Controller
         $data->delete();
         return "BankAccount Delete Successfully";
     }
+
+        // bank balance
+        public function bankBalance(Request $request)
+        {
+            return ModelTable::bankBalance($request->id, $request->fromDate, $request->toDate);
+        }
 }

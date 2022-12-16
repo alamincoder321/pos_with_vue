@@ -9,6 +9,7 @@ import brand from "./components/settings/brand.vue";
 import bank from "./components/account/bank.vue";
 import customerpayment from "./components/account/customerpayment.vue";
 import supplierpayment from "./components/account/supplierpayment.vue";
+import transaction from "./components/account/transaction.vue";
 import unit from "./components/settings/unit.vue";
 import city from "./components/settings/city.vue";
 import customer from "./components/administration/customer.vue";
@@ -47,6 +48,7 @@ const routes = [
     { path: "/bankaccounts", component: bank },
     { path: "/customerpayments", component: customerpayment },
     { path: "/supplierpayments", component: supplierpayment },
+    { path: "/transactions", component: transaction },
     //administration
     { path: "/customers", component: customer },
     { path: "/suppliers", component: supplier },

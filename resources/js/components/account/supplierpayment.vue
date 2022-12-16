@@ -245,8 +245,6 @@ export default {
                 alert("Payment don't grather than due")
                 return
             }
-
-            this.supplierpayment.bank_id = this.selectedBank.id
             this.supplierpayment.supplier_id = this.selectedSupplier.id
 
             axios.post(location.origin + "/api/save_supplierpayment", this.supplierpayment)
@@ -299,6 +297,7 @@ export default {
                 due: 0.00,
                 payment_amount: 0.00,
                 description: "",
+                added_by: this.user_id
             };
             this.selectedSupplier = null
             this.selectedBank = null

@@ -165,6 +165,15 @@ class PermissionSeeder extends Seeder
                 ],
             ],
             [
+                "group_name" => "transaction",
+                "permission" => [
+                    "transaction.index",
+                    "transaction.edit",
+                    "transaction.store",
+                    "transaction.delete",
+                ],
+            ],
+            [
                 "group_name" => "unit",
                 "permission" => [
                     "unit.index",

@@ -130,7 +130,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                     </nav>
                 </div>
                 @endif
-                @if(in_array("bankaccount.index", $useraccess) || in_array("customerpayment.index", $useraccess) || in_array("supplierpayment.index", $useraccess))
+                @if(in_array("transaction.index", $useraccess) || in_array("bankaccount.index", $useraccess) || in_array("customerpayment.index", $useraccess) || in_array("supplierpayment.index", $useraccess))
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-money-bill"></i></div>
                     Accounts Module
@@ -141,12 +141,16 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @if(in_array("bankaccount.index", $useraccess))
                         <router-link class="nav-link" to="/bankaccounts">Bank Account</router-link>
                         @endif
+                        @if(in_array("transaction.index", $useraccess))
+                        <router-link class="nav-link" to="/transactions">Transactions</router-link>
+                        @endif
                         @if(in_array("customerpayment.index", $useraccess))
                         <router-link class="nav-link" to="/customerpayments">CustomerPayment</router-link>
                         @endif
                         @if(in_array("supplierpayment.index", $useraccess))
                         <router-link class="nav-link" to="/supplierpayments">SupplierPayment</router-link>
                         @endif
+                        
                     </nav>
                 </div>
                 @endif
