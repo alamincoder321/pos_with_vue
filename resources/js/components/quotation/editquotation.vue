@@ -205,7 +205,7 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:30px;" id="discount"
+                                                    <input type="number" min="0" style="height:30px;" id="discount"
                                                         @input="TotalAmount" name="discount" v-model="quotation.discount"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
@@ -213,7 +213,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" id="discount_amount" name="discount_amount"
+                                                <input type="text" id="discount_amount" name="discount_amount"
                                                     v-model="quotation.discount_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
@@ -221,13 +221,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="transport_cost">Labour Cost/Transport Cost:</label>
-                                        <input type="number" id="transport_cost" name="transport_cost"
+                                        <input type="number" min="0" id="transport_cost" name="transport_cost"
                                             @input="TotalAmount" v-model="quotation.transport_cost"
                                             class="form-control shadow-none">
                                     </div>
                                     <div class="form-group">
                                         <label for="total">Total:</label>
-                                        <input type="number" id="total" name="total" v-model="quotation.total"
+                                        <input type="number" min="0" id="total" name="total" v-model="quotation.total"
                                             class="form-control shadow-none" readonly>
                                     </div>
                                     <div class="row mt-2">

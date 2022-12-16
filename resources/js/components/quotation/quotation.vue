@@ -194,7 +194,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" min="0" id="vat_amount" name="vat_amount"
+                                                <input type="text" id="vat_amount" name="vat_amount"
                                                     v-model="quotation.vat_amount" class="form-control shadow-none" readonly>
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" min="0" id="discount_amount" name="discount_amount"
+                                                <input type="text" id="discount_amount" name="discount_amount"
                                                     v-model="quotation.discount_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>

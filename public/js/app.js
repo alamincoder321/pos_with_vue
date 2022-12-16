@@ -15602,6 +15602,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "vat",
       name: "vat"
     },
@@ -15631,7 +15632,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "vat_amount",
       name: "vat_amount",
       readonly: ""
@@ -15670,6 +15671,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "discount",
       name: "discount"
     },
@@ -15699,7 +15701,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""
@@ -15729,6 +15731,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "transport_cost",
       name: "transport_cost"
     },
@@ -15849,6 +15852,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
@@ -16581,6 +16585,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "vat",
       name: "vat"
     },
@@ -16610,7 +16615,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "vat_amount",
       name: "vat_amount",
       readonly: ""
@@ -16649,6 +16654,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "discount",
       name: "discount"
     },
@@ -16678,7 +16684,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""
@@ -16708,6 +16714,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "transport_cost",
       name: "transport_cost"
     },
@@ -16828,6 +16835,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
@@ -17870,6 +17878,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "discount",
       name: "discount"
     },
@@ -17899,7 +17908,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""
@@ -17929,6 +17938,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "transport_cost",
       name: "transport_cost"
     },
@@ -17957,6 +17967,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "total",
       name: "total",
       readonly: ""
@@ -18620,8 +18631,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
-      min: "0",
+      type: "text",
       id: "vat_amount",
       name: "vat_amount",
       readonly: ""
@@ -18690,8 +18700,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
-      min: "0",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""
@@ -19690,6 +19699,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "vat",
       name: "vat"
     },
@@ -19719,7 +19729,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "vat_amount",
       name: "vat_amount",
       readonly: ""
@@ -19758,6 +19768,7 @@ var render = function render() {
     },
     attrs: {
       type: "number",
+      min: "0",
       id: "discount",
       name: "discount"
     },
@@ -19787,7 +19798,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""
@@ -19817,6 +19828,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0",
       id: "transport_cost",
       name: "transport_cost"
     },
@@ -19937,6 +19949,7 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
+      min: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedCustomer.customer_type == "G" ? true : false
@@ -20715,8 +20728,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
-      min: "0",
+      type: "text",
       id: "vat_amount",
       name: "vat_amount",
       readonly: ""
@@ -20785,8 +20797,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "number",
-      min: "0",
+      type: "text",
       id: "discount_amount",
       name: "discount_amount",
       readonly: ""

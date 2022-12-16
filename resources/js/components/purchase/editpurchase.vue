@@ -200,7 +200,7 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:30px;" id="vat" name="vat"
+                                                    <input type="number" min="0" style="height:30px;" id="vat" name="vat"
                                                         @input="TotalAmount" v-model="purchase.vat"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
@@ -208,7 +208,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" id="vat_amount" name="vat_amount"
+                                                <input type="text" id="vat_amount" name="vat_amount"
                                                     v-model="purchase.vat_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
@@ -219,7 +219,7 @@
                                         <div class="row">
                                             <div class="col-6 col-lg-7">
                                                 <div class="input-group">
-                                                    <input type="number" style="height:30px;" id="discount"
+                                                    <input type="number" min="0" style="height:30px;" id="discount"
                                                         @input="TotalAmount" name="discount" v-model="purchase.discount"
                                                         class="form-control shadow-none"><span
                                                         style="height:30px;line-height:1;"
@@ -227,7 +227,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 col-lg-5">
-                                                <input type="number" id="discount_amount" name="discount_amount"
+                                                <input type="text" id="discount_amount" name="discount_amount"
                                                     v-model="purchase.discount_amount" class="form-control shadow-none"
                                                     readonly>
                                             </div>
@@ -235,7 +235,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="transport_cost">Labour Cost/Transport Cost:</label>
-                                        <input type="number" id="transport_cost" name="transport_cost"
+                                        <input type="number" min="0" id="transport_cost" name="transport_cost"
                                             @input="TotalAmount" v-model="purchase.transport_cost"
                                             class="form-control shadow-none">
                                     </div>
@@ -260,7 +260,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
-                                        <input type="number" id="paid" name="paid" @input="TotalAmount"
+                                        <input type="number" min="0.01" id="paid" name="paid" @input="TotalAmount"
                                             v-model="purchase.paid" class="form-control shadow-none" :readonly="selectedSupplier.supplier_type =='G'?true:false">
                                     </div>
                                     <div class="row">
