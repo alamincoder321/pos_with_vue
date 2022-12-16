@@ -15852,7 +15852,8 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
-      min: "0.01",
+      min: "0",
+      step: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
@@ -16835,7 +16836,8 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
-      min: "0.01",
+      min: "0",
+      step: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedSupplier.supplier_type == "G" ? true : false
@@ -19949,7 +19951,8 @@ var render = function render() {
     staticClass: "form-control shadow-none",
     attrs: {
       type: "number",
-      min: "0.01",
+      min: "0",
+      step: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedCustomer.customer_type == "G" ? true : false
@@ -20950,6 +20953,7 @@ var render = function render() {
     attrs: {
       type: "number",
       min: "0",
+      step: "0.01",
       id: "paid",
       name: "paid",
       readonly: _vm.selectedCustomer.customer_type == "G" ? true : false

@@ -273,7 +273,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="paid">Paid:</label>
-                                        <input type="number" min="0.01" id="paid" name="paid" @input="TotalAmount"
+                                        <input type="number" min="0" step="0.01" id="paid" name="paid" @input="TotalAmount"
                                             v-model="sale.paid" class="form-control shadow-none"
                                             :readonly="selectedCustomer.customer_type == 'G' ? true : false">
                                     </div>
