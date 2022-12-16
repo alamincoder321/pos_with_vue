@@ -11089,7 +11089,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save BankAccount\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -11425,7 +11428,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Customerpayment\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -11791,7 +11797,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save SupplierPayment\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -12239,7 +12248,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Customer\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -12672,7 +12684,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Supplier\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -13844,7 +13859,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Employer\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -14930,7 +14948,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Damage\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -15418,7 +15439,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -16394,7 +16418,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -17095,7 +17122,10 @@ var render = function render() {
       click: _vm.getSearchPurchase
     }
   }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12"
+    staticClass: "col-lg-12 col-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-sm table-bordered border-primary",
     attrs: {
@@ -17607,7 +17637,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(2), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -18392,7 +18425,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(2), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -18939,7 +18975,10 @@ var render = function render() {
       click: _vm.getSearchQuotation
     }
   }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12"
+    staticClass: "col-lg-12 col-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-sm table-bordered border-primary",
     attrs: {
@@ -19486,7 +19525,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -20478,7 +20520,10 @@ var render = function render() {
   }, [_vm._v("AddToCart")])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card mt-2 border-0"
   }, [_c("div", {
-    staticClass: "card-body p-lg-0"
+    staticClass: "card-body p-lg-0",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-bordered"
   }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.carts, function (item, index) {
@@ -21190,7 +21235,10 @@ var render = function render() {
       click: _vm.getSearchSale
     }
   }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12"
+    staticClass: "col-lg-12 col-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("table", {
     staticClass: "table table-sm table-bordered border-primary",
     attrs: {
@@ -22222,7 +22270,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save Product\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,
@@ -22776,7 +22827,10 @@ var render = function render() {
   }, [_vm._v("\n                                    Save User\n                                ")])])])])])]), _vm._v(" "), _c("hr", {
     staticClass: "my-2"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
+    staticClass: "col-12 col-lg-12",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
   }, [_c("vue-good-table", {
     attrs: {
       columns: _vm.columns,

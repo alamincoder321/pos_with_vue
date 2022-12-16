@@ -110,7 +110,7 @@
                 </div>
             </div>
             <hr class="my-2" />
-            <div class="col-12 col-lg-12">
+            <div class="col-12 col-lg-12" style="overflow-x:auto;">
                 <vue-good-table :columns="columns" :rows="suppliers" :fixed-header="true" :pagination-options="{
                     enabled: true,
                     perPage: 15,

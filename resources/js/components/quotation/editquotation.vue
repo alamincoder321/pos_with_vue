@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="card mt-2 border-0">
-                    <div class="card-body p-lg-0">
+                    <div class="card-body p-lg-0" style="overflow-x:auto;">
                         <table class="table table-bordered">
                             <thead style="background: gray;color: white;">
                                 <tr>

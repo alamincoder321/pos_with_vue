@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 col-12">
+            <div class="col-lg-12 col-12" style="overflow-x:auto;">
                 <table id="getTable" class="table table-sm table-bordered border-primary">
                     <thead style="background: #897800;color: white;">
                         <tr class="text-center" style="font-size: 12px;">
