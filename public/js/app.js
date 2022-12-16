@@ -7900,12 +7900,12 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedSupplier.name == "") {
         alert("Select Supplier");
         document.querySelector("#supplier [type='search']").focus();
-        reutrn;
+        return;
       }
       if (this.carts.length == 0) {
         alert("Cart is Empty");
         document.querySelector("#product [type='search']").focus();
-        reutrn;
+        return;
       }
       var data = {
         purchase: this.purchase,
@@ -9477,12 +9477,12 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedCustomer.name == "") {
         alert("Select Customer");
         document.querySelector("#customer [type='search']").focus();
-        reutrn;
+        return;
       }
       if (this.carts.length == 0) {
         alert("Cart is Empty");
         document.querySelector("#product [type='search']").focus();
-        reutrn;
+        return;
       }
       var data = {
         sale: this.sale,

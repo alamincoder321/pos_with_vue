@@ -576,12 +576,12 @@ export default {
             if (this.selectedCustomer.name == "") {
                 alert("Select Customer")
                 document.querySelector("#customer [type='search']").focus()
-                reutrn
+                return
             }
             if (this.carts.length == 0) {
                 alert("Cart is Empty")
                 document.querySelector("#product [type='search']").focus()
-                reutrn
+                return
             }
             let data = {
                 sale: this.sale,

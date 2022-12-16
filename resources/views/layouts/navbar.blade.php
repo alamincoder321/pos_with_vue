@@ -1,12 +1,21 @@
+@php
+$useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("permission")->toArray();
+@endphp
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="{{url('home')}}">Dashboard</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
+        @if(in_array("sale.store", $useraccess))
         <router-link class="d-none d-md-block text-decoration-none btn btn-secondary btn-sm text-white shadow-none" style="margin-left: 10px !important;" to="/sales">POS SALE</router-link>
+        @endif
+        @if(in_array("purchase.store", $useraccess))
         <router-link class="d-none d-md-block text-decoration-none btn btn-secondary btn-sm text-white shadow-none" style="margin-left: 5px !important;" to="/purchases">PURCHASE</router-link>
+        @endif
+        @if(in_array("quotation.store", $useraccess))
         <router-link class="d-none d-md-block text-decoration-none btn btn-secondary btn-sm text-white shadow-none" style="margin-left: 5px !important;" to="/quotations">QUOTATION</router-link>
+        @endif
         <!-- Navbar Search-->
         <form class=" d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div style="background: #ffbcbc;width: 150px;height: 56px;display: flex;align-items: center;justify-content: center;font-size: 20px;font-weight: 500;" class="text-success" id="clock"></div>

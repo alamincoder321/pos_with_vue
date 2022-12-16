@@ -547,12 +547,12 @@ export default {
             if(this.selectedSupplier.name == ""){
                 alert("Select Supplier")
                 document.querySelector("#supplier [type='search']").focus()
-                reutrn
+                return
             }
             if(this.carts.length == 0){
                 alert("Cart is Empty")
                 document.querySelector("#product [type='search']").focus()
-                reutrn
+                return
             }
             let data = {
                 purchase: this.purchase,
