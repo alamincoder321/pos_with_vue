@@ -21,6 +21,9 @@ class PurchaseController extends Controller
         if (isset($request->invoice) && !empty($request->invoice)) {
             $clauses .= " AND p.invoice = '$request->invoice'";
         }
+        if (isset($request->supplier_id) && !empty($request->supplier_id)) {
+            $clauses .= " AND p.supplier_id = '$request->supplier_id'";
+        }
         $purchases = DB::select("SELECT
                             p.*,
                             s.id as supplier_id,
