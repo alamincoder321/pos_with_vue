@@ -244,10 +244,10 @@ export default {
                                 ${document.querySelector("#invoice").innerHTML}
                                 <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
                                     <div class='text-left'>
-                                        <span style='text-decoration:overline;'>Received By</span>
+                                        <span style='text-decoration:dashed overline;'>Received By</span>
                                     </div>
                                     <div class='text-end'>
-                                        <span style='text-decoration:overline;'>Authorized Signature</span>
+                                        <span style='text-decoration:dashed overline;'>Authorized Signature</span>
                                     </div>
                                 </div>
                                 <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
@@ -311,10 +311,10 @@ export default {
                                 ${document.querySelector("#invoice").innerHTML}
                                 <div style='width: 100%;display: flex;justify-content: space-between;position: fixed;bottom: 0;left: 0;padding-top:8px;'>
                                     <div class='text-left'>
-                                        <span style='text-decoration:overline;'>Received By</span>
+                                        <span style='text-decoration:dashed overline;'>Received By</span>
                                     </div>
                                     <div class='text-end'>
-                                        <span style='text-decoration:overline;'>Authorized Signature</span>
+                                        <span style='text-decoration:dashed overline;'>Authorized Signature</span>
                                     </div>
                                 </div>
                                 <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
