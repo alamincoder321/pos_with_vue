@@ -159,6 +159,9 @@ export default {
     created() {
         this.getSales()
         this.getCompany()
+        setTimeout(() => {
+            this.PrintInvoice()
+        }, 1500)
     },
 
     mounted() {
@@ -321,7 +324,7 @@ export default {
                 `);
             }
             myWindow.focus();
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 500));
             myWindow.print();
             myWindow.close();
         },

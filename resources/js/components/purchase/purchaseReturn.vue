@@ -32,7 +32,24 @@
 
             <div class="col-lg-12 col-12" style="overflow-x:auto;">
                 <table id="getTable" class="table table-sm table-bordered border-primary">
-
+                    <thead style="background: #897800;color: white;">
+                        <tr>
+                            <th>Sl</th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in purchases.purchaseDetails" :key="index">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.purchase_price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.total_amount }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -51,7 +68,7 @@ export default {
             selectedSupplier: null,
             invoices: [],
             selectedInvoice: null,
-            purchases: [],
+            purchases: {},
             useraccess: [],
             user_id: null,
         }
@@ -84,7 +101,7 @@ export default {
                 invoice: this.selectedInvoice.invoice
             }
             axios.post("/api/get_purchase", data).then((res) => {
-                this.purchases = res.data.purchases
+                this.purchases = res.data.purchases[0]
             });
         },
         getInvoice(id) {
