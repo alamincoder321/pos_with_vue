@@ -132,7 +132,7 @@ export default {
         this.getCompany()
         setTimeout(() => {
             this.PrintInvoice()
-        }, 1500)
+        }, 2000)
     },
 
     mounted() {

@@ -7000,7 +7000,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCompany();
     setTimeout(function () {
       _this.PrintInvoice();
-    }, 1500);
+    }, 2000);
   },
   mounted: function mounted() {
     document.title = "Purchases Invoice";
@@ -7087,7 +7087,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCompany();
     setTimeout(function () {
       _this.PrintInvoice();
-    }, 1500);
+    }, 2000);
   },
   mounted: function mounted() {
     document.title = "Quotations Invoice";
@@ -7174,7 +7174,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.getCompany();
     setTimeout(function () {
       _this.PrintInvoice();
-    }, 1500);
+    }, 2000);
   },
   mounted: function mounted() {
     document.title = "Sales Invoice";
