@@ -33,6 +33,10 @@ import salesinvoice from "./components/invoice/salesinvoice.vue";
 import purchaseinvoice from "./components/invoice/purchaseinvoice.vue";
 import quotationinvoice from "./components/invoice/quotationinvoice.vue";
 
+// report
+import stock from "./components/report/stock.vue";
+
+
 const routes = [
     { path: "/unauthorize", component: unauthorize },
     { path: "/home", component: home },
@@ -76,6 +80,9 @@ const routes = [
     { path: "/invoice/:id", component: salesinvoice },
     { path: "/purchase-invoice/:id", component: purchaseinvoice },
     { path: "/quotation-invoice/:id", component: quotationinvoice },
+    //report
+    { path: "/stocks", component: stock },
+
 
 ];
 

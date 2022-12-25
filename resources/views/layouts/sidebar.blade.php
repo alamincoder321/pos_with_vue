@@ -157,6 +157,16 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                     </nav>
                 </div>
                 @endif
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts7">
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file"></i></div>
+                    Report
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <router-link class="nav-link" to="/stocks">Stock</router-link>
+                    </nav>
+                </div>
                 @if(in_array("user.index", $useraccess))
                 <router-link class="nav-link" to="/users">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-user"></i></div>

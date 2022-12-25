@@ -25,14 +25,14 @@
                             </div>
                             <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
                                 <div class="form-group">
-                                    <label for="dateFrom">From Date:</label>
-                                    <VueDatePicker v-model="dateFrom" :style="color" format="DD-MM-YYYY" />
+                                    <label for="dateFrom">From Date:</label>                                    
+                                    <input type="date"  v-model="dateFrom" class="form-control shadow-none"/>
                                 </div>
                             </div>
                             <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
                                 <div class='form-group'>
-                                    <label>To Date:</label>
-                                    <VueDatePicker v-model="dateTo" :style="color" format="DD-MM-YYYY" />
+                                    <label>To Date:</label>                                    
+                                    <input type="date"  v-model="dateTo" class="form-control shadow-none"/>
                                 </div>
                             </div>
                             <div class="col-lg-1 mt-lg-0 mt-3">
@@ -103,11 +103,6 @@ var moment = require('moment');
 export default {
     data() {
         return {
-            color: {
-                background: '#ffadb4',
-                borderRadius: '0.2rem',
-                height: '28px',
-            },
             changeVal: "",
             dateFrom: moment(new Date()).format("YYYY-MM-DD"),
             dateTo: moment(new Date()).format("YYYY-MM-DD"),

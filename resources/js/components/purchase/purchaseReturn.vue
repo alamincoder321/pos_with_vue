@@ -8,8 +8,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="supplier">Supplier</label>
-                                    <v-select style="width:100% !important" :options="suppliers" label="display_name" id="supplier"
-                                        v-model="selectedSupplier" @input="onChangeSupplier">
+                                    <v-select style="width:100% !important" :options="suppliers" label="display_name"
+                                        id="supplier" v-model="selectedSupplier" @input="onChangeSupplier">
                                     </v-select>
                                 </div>
                             </div>
@@ -23,14 +23,29 @@
                             </div>
                             <div class="col-lg-1 mt-lg-0 mt-3">
                                 <label></label>
-                                <button type="button" @click="getPurchases" class="shadow-none btn btn-success btn-sm px-3">Submit</button>
+                                <button type="button" @click="getPurchases"
+                                    class="shadow-none btn btn-success btn-sm px-3">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-12 col-12" style="overflow-x:auto;">
+            <div class="col-lg-12 col-12" style="overflow-x:auto;" v-if="purchases.length > 0">
+                <div class="row my-3">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group" style="width:210px;">
+                            <label for="return_date">Return Date</label>
+                            <input type="date" class="form-control shadow-none" v-model="date">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 text-end">
+                        <h5>Supplier Information</h5>
+                        Name: {{ selectedSupplier.name }} <br />
+                        Phone: {{ selectedSupplier.phone }} <br />
+                        Address: {{ selectedSupplier.address }}
+                    </div>
+                </div>
                 <table id="getTable" class="table table-sm table-bordered border-primary">
                     <thead style="background: #897800;color: white;">
                         <tr>
@@ -38,16 +53,30 @@
                             <th>Product Name</th>
                             <th>Product Price</th>
                             <th>Quantity</th>
-                            <th>Total Amount</th>
+                            <th>Already return Qty</th>
+                            <th>Already return Price</th>
+                            <th>Return Qty</th>
+                            <th>Return Price</th>
+                            <th>Return Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in purchases.purchaseDetails" :key="index">
-                            <td>{{ index+1 }}</td>
+                        <tr v-for="(item, index) in purchases[0].purchaseDetails" :key="index">
+                            <td>{{ index + 1 }}</td>
                             <td>{{ item.name }}</td>
-                            <td>{{ item.purchase_price }}</td>
-                            <td>{{ item.quantity }}</td>
                             <td>{{ item.total_amount }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.return_quantity }}</td>
+                            <td>{{ item.return_price }}</td>
+                            <td>
+                                <input type="number" min="0" v-model="item.return_quantity"
+                                    class="form-control shadow-none">
+                            </td>
+                            <td>
+                                <input type="number" min="0" v-model="item.return_price"
+                                    class="form-control shadow-none">
+                            </td>
+                            <td>0.00</td>
                         </tr>
                     </tbody>
                 </table>
@@ -62,13 +91,12 @@ export default {
     data() {
         return {
             changeVal: "",
-            dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-            dateTo: moment(new Date()).format("YYYY-MM-DD"),
+            date: moment(new Date()).format("YYYY-MM-DD"),
             suppliers: [],
             selectedSupplier: null,
             invoices: [],
             selectedInvoice: null,
-            purchases: {},
+            purchases: [],
             useraccess: [],
             user_id: null,
         }
@@ -86,12 +114,12 @@ export default {
             });
         },
         getPurchases() {
-            if(this.selectedSupplier == null){
+            if (this.selectedSupplier == null) {
                 alert("Select supplier")
                 document.querySelector("#supplier [type='search']").focus()
                 return
             }
-            if(this.selectedInvoice == null){
+            if (this.selectedInvoice == null) {
                 alert("Select invoice")
                 document.querySelector("#invoice [type='search']").focus()
                 return
@@ -101,19 +129,19 @@ export default {
                 invoice: this.selectedInvoice.invoice
             }
             axios.post("/api/get_purchase", data).then((res) => {
-                this.purchases = res.data.purchases[0]
+                this.purchases = res.data.purchases
             });
         },
         getInvoice(id) {
-            axios.post("/api/get_purchase", {supplier_id: id}).then((res) => {
+            axios.post("/api/get_purchase", { supplier_id: id }).then((res) => {
                 this.invoices = res.data.purchases
             });
         },
 
-        onChangeSupplier(){
+        onChangeSupplier() {
             this.invoices = []
             this.selectedInvoice = null
-            if(this.selectedSupplier == null){
+            if (this.selectedSupplier == null) {
                 return
             }
             this.getInvoice(this.selectedSupplier.id);

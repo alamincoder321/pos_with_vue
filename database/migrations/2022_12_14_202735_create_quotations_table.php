@@ -15,9 +15,9 @@ class CreateQuotationsTable extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string("customer_name");
-            $table->string("customer_phone");
-            $table->string("customer_address");
+            $table->string("customer_name")->nullable();
+            $table->string("customer_phone")->nullable();
+            $table->string("customer_address")->nullable();
             $table->string("date");
             $table->string("invoice");
             $table->decimal("subtotal");
