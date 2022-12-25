@@ -238,7 +238,7 @@ export default {
                                         <h2 class="text-uppercase m-0">${this.company.name}</h2>
                                         <p class="m-0 text-uppercase">${this.company.owner_name}</p>
                                         <p class="m-0 text-uppercase">${this.company.phone}</p>
-                                        <address>${this.company.address}</address>
+                                        <address style="margin:0;">${this.company.address}</address>
                                     </div>
                                 </div>    
                                 ${document.querySelector("#invoice").innerHTML}
@@ -305,7 +305,7 @@ export default {
                                         <h2 class="text-uppercase m-0">${this.company.name}</h2>
                                         <p class="m-0 text-uppercase">${this.company.owner_name}</p>
                                         <p class="m-0 text-uppercase">${this.company.phone}</p>
-                                        <address>${this.company.address}</address>
+                                        <address style="margin:0;">${this.company.address}</address>
                                     </div>
                                 </div>    
                                 ${document.querySelector("#invoice").innerHTML}
