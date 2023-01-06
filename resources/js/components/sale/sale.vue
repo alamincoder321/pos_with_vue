@@ -182,7 +182,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center" colspan="2" style="font-weight: bold;"><span>Total:
+                                    <td class="text-center" colspan="3" style="font-weight: bold;"><span>Total:
                                         </span>{{ carts.reduce((acc,
                                                 c) => { return +acc + +c.total_amount }, 0).toFixed(2)
                                         }}</td>

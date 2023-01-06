@@ -177,9 +177,16 @@ export default {
                                     color: #939393 !important;
                                 }    
                                 @media print {
+                                    *{
+                                        margin:0 auto;
+                                    }
                                     .table thead {
                                         background: #897800 !important;
                                         color: white !important;
+                                    }
+                                    #stocks{
+                                        page-break-inside:avoid;
+                                        page-break-after:always;
                                     }
                                 }
                             </style>
