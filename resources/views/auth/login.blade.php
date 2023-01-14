@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{$profile->name}}</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
     <style>
@@ -191,10 +191,7 @@
 <body>
     <div id="app" class="wrapper bg-white">
         <div class="h2 text-center">
-            @php
-                $setting = App\Models\CompanyProfile::first();
-            @endphp
-            <img src="{{asset($setting->image != null ? $setting->image: 'no-image.jpg')}}" alt="{{$setting->company_name}}">
+            <img src="{{asset($profile->company_logo != null ? $profile->company_logo: 'no-image.jpg')}}" height="70" alt="{{$profile->name}}">
         </div>
         <form class="pt-3" onsubmit="AdminLogin(event)">
             <div class="form-group py-2">
@@ -229,6 +226,10 @@
                 <button type="submit" class="btn btn-block text-center my-3">Log in</button>
             </div>
         </form>
+    </div>
+
+    <div style="width: 100%;position:fixed;bottom:15px;left:0;">
+        <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
