@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+    use Authenticatable;
+    
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function showLoginForm()
     {
         return view("auth.login");
@@ -30,13 +33,23 @@ class LoginController extends Controller
                 return response()->json(["error" => $validator->errors()]);
             }
 
-            if (Auth::attempt(["username" => $request->username, "password" => $request->password])) {
-                return response()->json(["msg"=>"Login successfully", "user_id"=>Auth::user()->id]);
+            if (Auth::attempt($this->credentials($request->username, $request->password))) {
+                return response()->json(["msg" => "Login successfully", "user_id" => Auth::user()->id]);
             } else {
-                return response()->json(["unauthenticate" => "Invalid authentication"]);
+                return response()->json(["unauthenticate" => "Email/Username Or Password does not match"]);
             }
         } catch (\Throwable $e) {
             return "Opps! Something went wrong";
+        }
+    }
+
+    //credentials check
+    public function credentials($username, $password)
+    {
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            return ['email' => $username, 'password' => $password];
+        } else {
+            return ['username' => $username, 'password' => $password];
         }
     }
 

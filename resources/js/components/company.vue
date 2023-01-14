@@ -55,7 +55,7 @@
                                         <label for="facebook"
                                             class="col-5 col-lg-4 d-flex align-items-center">Facebook:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="facebook" id="facebook" name="facebook"
+                                            <input type="url" id="facebook" name="facebook"
                                                 class="form-control shadow-none" v-model="company.facebook"
                                                 autocomplete="off" />
                                         </div>
@@ -64,7 +64,7 @@
                                         <label for="instagram"
                                             class="col-5 col-lg-4 d-flex align-items-center">Instagram:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="instagram" id="instagram" name="instagram"
+                                            <input type="url" id="instagram" name="instagram"
                                                 class="form-control shadow-none" v-model="company.instagram"
                                                 autocomplete="off" />
                                         </div>
@@ -73,7 +73,7 @@
                                         <label for="linkedin"
                                             class="col-5 col-lg-4 d-flex align-items-center">Linkedin:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="linkedin" id="linkedin" name="linkedin"
+                                            <input type="url" id="linkedin" name="linkedin"
                                                 class="form-control shadow-none" v-model="company.linkedin"
                                                 autocomplete="off" />
                                         </div>
@@ -82,7 +82,7 @@
                                         <label for="twitter"
                                             class="col-5 col-lg-4 d-flex align-items-center">Twitter:</label>
                                         <div class="col-7 col-lg-8">
-                                            <input type="twitter" id="twitter" name="twitter"
+                                            <input type="url" id="twitter" name="twitter"
                                                 class="form-control shadow-none" v-model="company.twitter"
                                                 autocomplete="off" />
                                         </div>

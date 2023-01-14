@@ -15,7 +15,7 @@
                                             class="col-5 col-lg-4 d-flex align-items-center">Code:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="employer_code" name="employer_code" readonly
-                                                class="form-control shadow-none" v-model="employer_code"
+                                                class="form-control shadow-none" v-model="employer.employer_code"
                                                 autocomplete="off" />
                                         </div>
                                     </div>

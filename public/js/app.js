@@ -13747,7 +13747,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "facebook",
+      type: "url",
       id: "facebook",
       name: "facebook",
       autocomplete: "off"
@@ -13779,7 +13779,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "instagram",
+      type: "url",
       id: "instagram",
       name: "instagram",
       autocomplete: "off"
@@ -13811,7 +13811,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "linkedin",
+      type: "url",
       id: "linkedin",
       name: "linkedin",
       autocomplete: "off"
@@ -13843,7 +13843,7 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "twitter",
+      type: "url",
       id: "twitter",
       name: "twitter",
       autocomplete: "off"
@@ -14260,8 +14260,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.employer_code,
-      expression: "employer_code"
+      value: _vm.employer.employer_code,
+      expression: "employer.employer_code"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
@@ -14272,12 +14272,12 @@ var render = function render() {
       autocomplete: "off"
     },
     domProps: {
-      value: _vm.employer_code
+      value: _vm.employer.employer_code
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.employer_code = $event.target.value;
+        _vm.$set(_vm.employer, "employer_code", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {
