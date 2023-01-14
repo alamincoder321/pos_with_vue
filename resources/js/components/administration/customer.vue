@@ -15,7 +15,7 @@
                                             class="col-5 col-lg-4 d-flex align-items-center">Code:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="customer_code" name="customer_code" readonly
-                                                class="form-control shadow-none" v-model="customer_code"
+                                                class="form-control shadow-none" v-model="customer.customer_code"
                                                 autocomplete="off" />
                                         </div>
                                     </div>
@@ -169,6 +169,7 @@ export default {
             cities: [],
             customer: {
                 id: "",
+                customer_code: "",
                 name: "",
                 phone: "",
                 owner_name: "",
@@ -181,7 +182,6 @@ export default {
                 id: "",
                 name: "Select City"
             },
-            customer_code: "",
             useraccess: [],
             user_id: null,
             imageSrc: location.origin + "/no-image.jpg",
@@ -203,8 +203,8 @@ export default {
         },
         getCustomer() {
             axios.get("/api/get_customer").then((res) => {
-                this.customers = res.data.customers;
-                this.customer_code = res.data.gen_code;
+                this.customers = res.data.customers.filter(c => c.customer_type != "G");
+                this.customer.customer_code = res.data.gen_code;
             });
         },
 
@@ -241,15 +241,15 @@ export default {
 
         editRow(val) {
             this.customer = {
-                id: val.id,
-                name: val.name,
-                owner_name: val.owner_name,
-                phone: val.phone,
-                address: val.address,
-                previous_due: val.previous_due,
+                id           : val.id,
+                customer_code: val.customer_code,
+                name         : val.name,
+                owner_name   : val.owner_name,
+                phone        : val.phone,
+                address      : val.address,
+                previous_due : val.previous_due,
                 customer_type: val.customer_type,
             };
-            this.customer_code = val.customer_code
             this.selectedCity = {
                 id: val.city_id,
                 name: val.city_name
@@ -284,18 +284,18 @@ export default {
 
         clearData() {
             this.customer = {
-                id: "",
-                name: "",
-                phone: "",
-                owner_name: "",
-                address: "",
-                previous_due: 0.00,
+                id           : "",
+                name         : "",
+                phone        : "",
+                owner_name   : "",
+                address      : "",
+                previous_due : 0.00,
                 customer_type: "retail",
-                image: "",
+                image        : "",
             };
             this.selectedCity = {
                 id: "",
-                name: ""
+                name: "Select City"
             }
             this.getCustomer()
             this.imageSrc = location.origin + "/no-image.jpg"

@@ -13,7 +13,7 @@ class CustomerController extends Controller
     public function getCustomer()
     {
         $gen_code = $this->generateCode('Customer', 'C-');
-        $customers = DB::select("SELECT c.*, CONCAT(c.customer_code, ' - ', c.name) AS display_name, ci.name AS city_name FROM customers AS c LEFT JOIN cities AS ci ON ci.id=c.city_id WHERE c.customer_type !='G' ORDER BY name");
+        $customers = DB::select("SELECT c.*, CONCAT(c.customer_code, ' - ', c.name) AS display_name, ci.name AS city_name FROM customers AS c LEFT JOIN cities AS ci ON ci.id=c.city_id ORDER BY name");
         return response()->json(["gen_code" => $gen_code, "customers" => $customers]);
     }
 

@@ -64,7 +64,8 @@ class SaleController extends Controller
     public function saveSale(Request $request)
     {
         try {
-            DB::beginTransaction(); 
+            DB::beginTransaction();
+
             if ($request->sale['id'] == null) {
                 $data = new Sale();
             } else {
@@ -73,17 +74,17 @@ class SaleController extends Controller
 
             if ($request->customer['customer_type'] == 'G') {
                 if ($request->customer['id'] != null) {
-                    $s = Customer::find($request->customer['id']);
+                    $c = Customer::find($request->customer['id']);
                 } else {
-                    $s                = new Customer();
+                    $c                = new Customer();
                 }
-                $s->name          = $request->customer['name'];
-                $s->phone         = $request->customer['phone'];
-                $s->address       = $request->customer['address'];
-                $s->customer_type = $request->customer['customer_type'];
-                $s->save();
+                $c->name          = isset($request->customer['name']) ? $request->customer['name']:"";
+                $c->phone         = isset($request->customer['phone']) ? $request->customer['phone']:"";
+                $c->address       = isset($request->customer['address']) ? $request->customer['address']:"";
+                $c->customer_type = isset($request->customer['customer_type']) ? $request->customer['customer_type']:"G";
+                $c->save();
 
-                $customer_id = $s->id;
+                $customer_id = $c->id;
             } else {
                 $customer_id = $request->customer['id'];
             }
@@ -152,7 +153,7 @@ class SaleController extends Controller
             }
         } catch (\Throwable $e) {
             DB::rollback();
-            return "Opps! something went wrong";
+            return "Opps! something went wrong".$e->getMessage();
         }
     }
 

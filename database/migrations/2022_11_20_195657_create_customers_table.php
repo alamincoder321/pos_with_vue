@@ -16,13 +16,13 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string("customer_code")->nullable();
-            $table->string("name");
+            $table->string("name")->nullable();
             $table->string("owner_name")->nullable();
-            $table->string("phone");
+            $table->string("phone")->nullable();
             $table->integer("city_id")->nullable();
             $table->string("address")->nullable();
             $table->decimal("previous_due")->nullable();
-            $table->string("customer_type");
+            $table->string("customer_type")->nullable();
             $table->string("image")->nullable();
             $table->timestamps();
         });

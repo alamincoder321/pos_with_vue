@@ -5558,7 +5558,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getCustomer: function getCustomer() {
       var _this = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this.customers = res.data.customers;
+        _this.customers = res.data.customers.filter(function (c) {
+          return c.customer_type != "G";
+        });
         _this.customers.unshift({
           id: 0,
           display_name: 'Select Customer'
@@ -5771,7 +5773,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getSupplier: function getSupplier() {
       var _this = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this.suppliers = res.data.suppliers;
+        _this.suppliers = res.data.suppliers.filter(function (s) {
+          return s.supplier_type != "G";
+        });
         _this.suppliers.unshift({
           id: 0,
           display_name: 'Select Supplier'
@@ -6127,6 +6131,7 @@ __webpack_require__.r(__webpack_exports__);
       cities: [],
       customer: {
         id: "",
+        customer_code: "",
         name: "",
         phone: "",
         owner_name: "",
@@ -6139,7 +6144,6 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         name: "Select City"
       },
-      customer_code: "",
       useraccess: [],
       user_id: null,
       imageSrc: location.origin + "/no-image.jpg"
@@ -6166,8 +6170,10 @@ __webpack_require__.r(__webpack_exports__);
     getCustomer: function getCustomer() {
       var _this2 = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this2.customers = res.data.customers;
-        _this2.customer_code = res.data.gen_code;
+        _this2.customers = res.data.customers.filter(function (c) {
+          return c.customer_type != "G";
+        });
+        _this2.customer.customer_code = res.data.gen_code;
       });
     },
     saveCustomer: function saveCustomer(event) {
@@ -6201,6 +6207,7 @@ __webpack_require__.r(__webpack_exports__);
     editRow: function editRow(val) {
       this.customer = {
         id: val.id,
+        customer_code: val.customer_code,
         name: val.name,
         owner_name: val.owner_name,
         phone: val.phone,
@@ -6208,7 +6215,6 @@ __webpack_require__.r(__webpack_exports__);
         previous_due: val.previous_due,
         customer_type: val.customer_type
       };
-      this.customer_code = val.customer_code;
       this.selectedCity = {
         id: val.city_id,
         name: val.city_name
@@ -6252,7 +6258,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.selectedCity = {
         id: "",
-        name: ""
+        name: "Select City"
       };
       this.getCustomer();
       this.imageSrc = location.origin + "/no-image.jpg";
@@ -6323,6 +6329,7 @@ __webpack_require__.r(__webpack_exports__);
       cities: [],
       supplier: {
         id: "",
+        supplier_code: "",
         name: "",
         phone: "",
         owner_name: "",
@@ -6336,7 +6343,6 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         name: "Select City"
       },
-      supplier_code: "",
       useraccess: [],
       user_id: null,
       imageSrc: location.origin + "/no-image.jpg"
@@ -6363,8 +6369,10 @@ __webpack_require__.r(__webpack_exports__);
     getSupplier: function getSupplier() {
       var _this2 = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this2.suppliers = res.data.suppliers;
-        _this2.supplier_code = res.data.gen_code;
+        _this2.suppliers = res.data.suppliers.filter(function (s) {
+          return s.supplier_type != "G";
+        });
+        _this2.supplier.supplier_code = res.data.gen_code;
       });
     },
     saveSupplier: function saveSupplier(event) {
@@ -6398,6 +6406,7 @@ __webpack_require__.r(__webpack_exports__);
     editRow: function editRow(val) {
       this.supplier = {
         id: val.id,
+        supplier_code: val.supplier_code,
         name: val.name,
         owner_name: val.owner_name,
         phone: val.phone,
@@ -6405,7 +6414,6 @@ __webpack_require__.r(__webpack_exports__);
         previous_due: val.previous_due,
         supplier_type: val.supplier_type
       };
-      this.supplier_code = val.supplier_code;
       this.selectedCity = {
         id: val.city_id,
         name: val.city_name
@@ -6781,6 +6789,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       departments: [],
       employer: {
         id: "",
+        employer_code: "",
         name: "",
         designation: "",
         phone: "",
@@ -6800,7 +6809,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         id: "",
         name: "Select Department"
       },
-      employer_code: "",
       useraccess: [],
       user_id: null,
       imageSrc: location.origin + "/no-image.jpg"
@@ -6839,7 +6847,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var _this3 = this;
       axios.get("/api/get_employer").then(function (res) {
         _this3.employers = res.data.employers;
-        _this3.employer_code = res.data.gen_code;
+        _this3.employer.employer_code = res.data.gen_code;
       });
     },
     saveEmployer: function saveEmployer(event) {
@@ -6874,6 +6882,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     editRow: function editRow(val) {
       this.employer = {
         id: val.id,
+        employer_code: val.employer_code,
         name: val.name,
         designation: val.designation,
         phone: val.phone,
@@ -6884,7 +6893,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         dob: val.dob,
         join_date: val.join_date
       };
-      this.employer_code = val.employer_code;
       this.selectedCity = {
         id: val.city_id,
         name: val.city_name
@@ -7544,7 +7552,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getSupplier: function getSupplier() {
       var _this4 = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this4.suppliers = res.data.suppliers;
+        _this4.suppliers = res.data.suppliers.filter(function (s) {
+          return s.supplier_type != "G";
+        });
         _this4.suppliers.unshift({
           id: 0,
           display_name: "General Supplier",
@@ -7939,7 +7949,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getSupplier: function getSupplier() {
       var _this4 = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this4.suppliers = res.data.suppliers;
+        _this4.suppliers = res.data.suppliers.filter(function (s) {
+          return s.supplier_type != "G";
+        });
         _this4.suppliers.unshift({
           id: 0,
           display_name: "General Supplier",
@@ -8223,7 +8235,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getSupplier: function getSupplier() {
       var _this = this;
       axios.get("/api/get_supplier").then(function (res) {
-        _this.suppliers = res.data.suppliers;
+        _this.suppliers = res.data.suppliers.filter(function (s) {
+          return s.supplier_type != "G";
+        });
+        _this.suppliers.unshift({
+          id: "0",
+          display_name: "General Supplier"
+        });
       });
     },
     getPurchases: function getPurchases() {
@@ -8251,7 +8269,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_purchase", {
         supplier_id: id
       }).then(function (res) {
-        _this3.invoices = res.data.purchases;
+        if (_this3.selectedSupplier.id == "0") {
+          _this3.invoices = res.data.purchases.filter(function (inv) {
+            return inv.supplier_type == "G";
+          });
+        } else {
+          _this3.invoices = res.data.purchases;
+        }
       });
     },
     onChangeSupplier: function onChangeSupplier() {
@@ -8260,7 +8284,12 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       if (this.selectedSupplier == null) {
         return;
       }
-      this.getInvoice(this.selectedSupplier.id);
+      if (this.selectedSupplier.id == "0") {
+        this.getInvoice();
+        this.invoices;
+      } else {
+        this.getInvoice(this.selectedSupplier.id);
+      }
     },
     formatDate: function formatDate(date) {
       return moment(date).format("DD-MM-YYYY");
@@ -9132,9 +9161,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.getBrand();
       } else if (this.changeVal == "category") {
         this.getCategory();
-      } else if (this.changeVal == "product") {
+      } else if (this.changeVal == "current") {
         this.getProduct();
-      } else {}
+      } else {
+        this.getProduct();
+      }
     },
     getStock: function getStock() {
       var _this5 = this;
@@ -9157,6 +9188,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         } else if (_this5.changeVal == "brand") {
           _this5.stocks = res.data.filter(function (p) {
             return p.brand_id == _this5.selectedBrand.id;
+          });
+        } else if (_this5.changeVal == "current") {
+          _this5.stocks = res.data.filter(function (p) {
+            return p.stock > 0;
           });
         } else {
           _this5.stocks = res.data;
@@ -9345,7 +9380,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getCustomer: function getCustomer() {
       var _this4 = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this4.customers = res.data.customers;
+        _this4.customers = res.data.customers.filter(function (c) {
+          return c.customer_type != "G";
+        });
         _this4.customers.unshift({
           id: 0,
           display_name: "General Customer",
@@ -9755,7 +9792,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getCustomer: function getCustomer() {
       var _this4 = this;
       axios.get("/api/get_customer").then(function (res) {
-        _this4.customers = res.data.customers;
+        _this4.customers = res.data.customers.filter(function (c) {
+          return c.customer_type != "G";
+        });
         _this4.customers.unshift({
           id: 0,
           display_name: "General Customer",
@@ -10526,6 +10565,7 @@ __webpack_require__.r(__webpack_exports__);
       units: [],
       product: {
         id: "",
+        product_code: "",
         name: "",
         re_order: 0,
         purchase_price: "",
@@ -10545,7 +10585,6 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         name: "Select Unit"
       },
-      product_code: "",
       useraccess: [],
       user_id: null,
       imageSrc: location.origin + "/no-image.jpg"
@@ -10595,7 +10634,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       axios.get("/api/get_product").then(function (res) {
         _this4.products = res.data.products;
-        _this4.product_code = res.data.gen_code;
+        _this4.product.product_code = res.data.gen_code;
       });
     },
     saveProduct: function saveProduct(event) {
@@ -10627,13 +10666,13 @@ __webpack_require__.r(__webpack_exports__);
     editRow: function editRow(val) {
       this.product = {
         id: val.id,
+        product_code: val.product_code,
         name: val.name,
         re_order: val.re_order,
         purchase_price: val.purchase_price,
         selling_price: val.selling_price,
         description: val.description
       };
-      this.product_code = val.product_code;
       this.selectedBrand = {
         id: val.brand_id,
         name: val.brand_name
@@ -12675,8 +12714,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.customer_code,
-      expression: "customer_code"
+      value: _vm.customer.customer_code,
+      expression: "customer.customer_code"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
@@ -12687,12 +12726,12 @@ var render = function render() {
       autocomplete: "off"
     },
     domProps: {
-      value: _vm.customer_code
+      value: _vm.customer.customer_code
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.customer_code = $event.target.value;
+        _vm.$set(_vm.customer, "customer_code", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {
@@ -13111,8 +13150,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.supplier_code,
-      expression: "supplier_code"
+      value: _vm.supplier.supplier_code,
+      expression: "supplier.supplier_code"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
@@ -13123,12 +13162,12 @@ var render = function render() {
       autocomplete: "off"
     },
     domProps: {
-      value: _vm.supplier_code
+      value: _vm.supplier.supplier_code
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.supplier_code = $event.target.value;
+        _vm.$set(_vm.supplier, "supplier_code", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {
@@ -16731,7 +16770,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
@@ -17715,11 +17757,17 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
-    staticClass: "btn btn-success shadow-none w-100"
+    staticClass: "btn btn-success shadow-none w-100",
+    attrs: {
+      type: "submit"
+    }
   }, [_vm._v("Purchase")])])]);
 }];
 render._withStripped = true;
@@ -18104,11 +18152,15 @@ var render = function render() {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), _c("span", {
+    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), item.supplier_type == "G" ? _c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Previous Due:")]), _vm._v(" " + _vm._s(item.previous_due) + "\n                        ")]), _vm._v(" "), _c("td", [_c("span", {
+    }, [_vm._v("General Supplier")]) : _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Previous Due: " + _vm._s(item.previous_due))])]), _vm._v(" "), _c("td", [_c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
@@ -20125,6 +20177,10 @@ var render = function render() {
     }
   }, [_vm._v("All")]), _vm._v(" "), _c("option", {
     attrs: {
+      value: "current"
+    }
+  }, [_vm._v("Current Stock")]), _vm._v(" "), _c("option", {
+    attrs: {
       value: "brand"
     }
   }, [_vm._v("Brand Wise")]), _vm._v(" "), _c("option", {
@@ -20212,16 +20268,22 @@ var render = function render() {
       click: _vm.getStock
     }
   }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12",
-    staticStyle: {
-      "overflow-x": "auto"
-    }
+    staticClass: "col-12 col-lg-12"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "text-end"
   }, [_vm.stocks.length > 0 ? _c("button", {
     staticClass: "btn btn-warning btn-sm shadow-none text-white px-3",
     on: {
       click: _vm.print
     }
-  }, [_vm._v("Print")]) : _vm._e(), _vm._v(" "), _c("table", {
+  }, [_vm._v("Print")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
+  }, [_c("table", {
     staticClass: "table table-sm table-bordered border-primary",
     attrs: {
       id: "stocks"
@@ -20234,17 +20296,56 @@ var render = function render() {
   }, [_vm._l(_vm.stocks, function (item, index) {
     return _c("tr", {
       key: index
-    }, [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.product_code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.stock) + " " + _vm._s(item.unit_name))])]);
+    }, [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.product_code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", {
+      attrs: {
+        align: "center"
+      }
+    }, [_vm._v(_vm._s(item.stock) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", {
+      attrs: {
+        align: "center"
+      }
+    }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
+      attrs: {
+        align: "center"
+      }
+    }, [_vm._v(_vm._s((item.selling_price * item.stock).toFixed(2)))])]);
   }), _vm._v(" "), _c("tr", {
+    style: {
+      display: _vm.stocks.length == 0 ? "none" : ""
+    }
+  }, [_c("th", {
+    staticStyle: {
+      "text-align": "right"
+    },
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("Total Stock Qty")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_vm._v(_vm._s(_vm.stocks.reduce(function (acc, pre) {
+    return acc + +pre.stock;
+  }, 0)))]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v("Total Stock Value")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_vm._v(_vm._s(_vm.stocks.reduce(function (acc, pre) {
+    return acc + +pre.stock * pre.selling_price;
+  }, 0).toFixed(2)) + " ")])]), _vm._v(" "), _c("tr", {
     style: {
       display: _vm.stocks.length == 0 ? "" : "none"
     }
   }, [_c("td", {
     staticClass: "text-center",
     attrs: {
-      colspan: "4"
+      colspan: "6"
     }
-  }, [_vm._v("Not Found Data")])])], 2)])])])]);
+  }, [_vm._v("Not Found Data")])])], 2)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -20259,7 +20360,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Product Code")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Stock")])])]);
+  }, [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Product Code")]), _vm._v(" "), _c("th", [_vm._v("Product Name")]), _vm._v(" "), _c("th", [_vm._v("Stock")]), _vm._v(" "), _c("th", [_vm._v("Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -21254,7 +21355,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
@@ -22255,7 +22359,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
@@ -22451,11 +22558,15 @@ var render = function render() {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), _c("span", {
+    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), item.customer_type == "G" ? _c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
-    }, [_vm._v("Previous Due:")]), _vm._v(" " + _vm._s(item.previous_due) + "\n                        ")]), _vm._v(" "), _c("td", [_c("span", {
+    }, [_vm._v("General Customer")]) : _c("span", {
+      staticStyle: {
+        "font-weight": "bold"
+      }
+    }, [_vm._v("Previous Due: " + _vm._s(item.previous_due))])]), _vm._v(" "), _c("td", [_c("span", {
       staticStyle: {
         "font-weight": "bold"
       }
@@ -23162,8 +23273,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.product_code,
-      expression: "product_code"
+      value: _vm.product.product_code,
+      expression: "product.product_code"
     }],
     staticClass: "form-control shadow-none",
     attrs: {
@@ -23174,12 +23285,12 @@ var render = function render() {
       autocomplete: "off"
     },
     domProps: {
-      value: _vm.product_code
+      value: _vm.product.product_code
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.product_code = $event.target.value;
+        _vm.$set(_vm.product, "product_code", $event.target.value);
       }
     }
   })])]), _vm._v(" "), _c("div", {

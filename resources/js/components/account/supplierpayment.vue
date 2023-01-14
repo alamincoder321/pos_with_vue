@@ -196,7 +196,7 @@ export default {
     methods: {
         getSupplier() {
             axios.get("/api/get_supplier").then((res) => {
-                this.suppliers = res.data.suppliers;
+                this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G");
                 this.suppliers.unshift({ id: 0, display_name: 'Select Supplier' })
             });
         },

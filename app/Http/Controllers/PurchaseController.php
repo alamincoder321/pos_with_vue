@@ -81,10 +81,10 @@ class PurchaseController extends Controller
                 } else {
                     $s                = new Supplier();
                 }
-                $s->name          = $request->supplier['name'];
-                $s->phone         = $request->supplier['phone'];
-                $s->address       = $request->supplier['address'];
-                $s->supplier_type = $request->supplier['supplier_type'];
+                $s->name          = isset($request->supplier['name']) ? $request->supplier['name']:"";
+                $s->phone         = isset($request->supplier['phone']) ? $request->supplier['phone']:"";
+                $s->address       = isset($request->supplier['address']) ? $request->supplier['address']:"";
+                $s->supplier_type = isset($request->supplier['supplier_type']) ? $request->supplier['supplier_type']:"G";
                 $s->save();
 
                 $supplier_id = $s->id;

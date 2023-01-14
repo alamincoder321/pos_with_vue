@@ -13,6 +13,9 @@
     <link href="{{asset('backend/css/styles.css')}}" rel="stylesheet" />
 
     <style>
+        *{
+            font-family: monospace !important;
+        }
         .router-link-exact-active {
             background: #eb971a !important;
             color: white !important;

@@ -197,7 +197,7 @@ export default {
     methods: {
         getCustomer() {
             axios.get("/api/get_customer").then((res) => {
-                this.customers = res.data.customers;
+                this.customers = res.data.customers.filter(c => c.customer_type != "G");
                 this.customers.unshift({ id: 0, display_name: 'Select Customer' })
             });
         },

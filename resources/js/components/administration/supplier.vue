@@ -15,7 +15,7 @@
                                             class="col-5 col-lg-4 d-flex align-items-center">Code:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="supplier_code" name="supplier_code" readonly
-                                                class="form-control shadow-none" v-model="supplier_code"
+                                                class="form-control shadow-none" v-model="supplier.supplier_code"
                                                 autocomplete="off" />
                                         </div>
                                     </div>
@@ -169,6 +169,7 @@ export default {
             cities: [],
             supplier: {
                 id: "",
+                supplier_code: "",
                 name: "",
                 phone: "",
                 owner_name: "",
@@ -182,7 +183,6 @@ export default {
                 id: "",
                 name: "Select City"
             },
-            supplier_code: "",
             useraccess: [],
             user_id: null,
             imageSrc: location.origin + "/no-image.jpg",
@@ -204,8 +204,8 @@ export default {
         },
         getSupplier() {
             axios.get("/api/get_supplier").then((res) => {
-                this.suppliers = res.data.suppliers;
-                this.supplier_code = res.data.gen_code;
+                this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G");
+                this.supplier.supplier_code = res.data.gen_code;
             });
         },
 
@@ -243,6 +243,7 @@ export default {
         editRow(val) {
             this.supplier = {
                 id: val.id,
+                supplier_code: val.supplier_code,
                 name: val.name,
                 owner_name: val.owner_name,
                 phone: val.phone,
@@ -250,7 +251,6 @@ export default {
                 previous_due: val.previous_due,
                 supplier_type: val.supplier_type,
             };
-            this.supplier_code = val.supplier_code
             this.selectedCity = {
                 id: val.city_id,
                 name: val.city_name

@@ -63,7 +63,8 @@
                                 <span style="font-weight: bold;">Name:</span> {{ item.name }}<br />
                                 <span style="font-weight: bold;">Phone:</span> {{ item.phone }} <br />
                                 <span style="font-weight: bold;">Address:</span> {{ item.address }} <br />
-                                <span style="font-weight: bold;">Previous Due:</span> {{ item.previous_due }}
+                                <span style="font-weight: bold;" v-if="item.customer_type == 'G'">General Customer</span> 
+                                <span style="font-weight: bold;" v-else>Previous Due: {{ item.previous_due }}</span> 
                             </td>
                             <td>
                                 <span style="font-weight: bold;">SubTotal:</span> {{ item.subtotal }} <br />

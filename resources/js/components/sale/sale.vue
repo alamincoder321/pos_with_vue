@@ -298,7 +298,7 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-5">
-                                            <button class="btn btn-secondary shadow-none w-100">Reset</button>
+                                            <button type="button" class="btn btn-secondary shadow-none w-100">Reset</button>
                                         </div>
                                         <div class="col-7">
                                             <button class="btn btn-success shadow-none w-100">Sale</button>
@@ -422,7 +422,7 @@ export default {
         },
         getCustomer() {
             axios.get("/api/get_customer").then((res) => {
-                this.customers = res.data.customers;
+                this.customers = res.data.customers.filter(c => c.customer_type != "G");
                 this.customers.unshift({ id: 0, display_name: "General Customer", customer_type: "G" })
             });
         },

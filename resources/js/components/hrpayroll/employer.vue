@@ -212,6 +212,7 @@ export default {
             departments: [],
             employer: {
                 id: "",
+                employer_code: "",
                 name: "",
                 designation: "",
                 phone: "",
@@ -231,7 +232,6 @@ export default {
                 id: "",
                 name: "Select Department"
             },
-            employer_code: "",
             useraccess: [],
             user_id: null,
             imageSrc: location.origin + "/no-image.jpg",
@@ -261,7 +261,7 @@ export default {
         getEmployer() {
             axios.get("/api/get_employer").then((res) => {
                 this.employers = res.data.employers;
-                this.employer_code = res.data.gen_code;
+                this.employer.employer_code = res.data.gen_code;
             });
         },
 
@@ -300,6 +300,7 @@ export default {
         editRow(val) {
             this.employer = {
                 id: val.id,
+                employer_code: val.employer_code,
                 name: val.name,
                 designation: val.designation,
                 phone: val.phone,
@@ -310,7 +311,6 @@ export default {
                 dob: val.dob,
                 join_date: val.join_date,
             };
-            this.employer_code = val.employer_code
             this.selectedCity = {
                 id: val.city_id,
                 name: val.city_name

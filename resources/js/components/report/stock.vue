@@ -10,6 +10,7 @@
                                     <select class="form-control shadow-none" v-model="changeVal"
                                         @change="onChangeValue">
                                         <option value="">All</option>
+                                        <option value="current">Current Stock</option>
                                         <option value="brand">Brand Wise</option>
                                         <option value="category">Category Wise</option>
                                         <option value="product">Product Wise</option>
@@ -18,18 +19,20 @@
                             </div>
                             <div class="col-lg-3" :style="{ display: changeVal == 'brand' ? '' : 'none' }">
                                 <div class="form-group">
-                                    <v-select style="width:100% !important;" :options="brands" v-model="selectedBrand" label="name"></v-select>
+                                    <v-select style="width:100% !important;" :options="brands" v-model="selectedBrand"
+                                        label="name"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-3" :style="{ display: changeVal == 'category' ? '' : 'none' }">
                                 <div class="form-group">
-                                    <v-select style="width:100% !important;" :options="categories" v-model="selectedCategory" label="name"></v-select>
+                                    <v-select style="width:100% !important;" :options="categories"
+                                        v-model="selectedCategory" label="name"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-3" :style="{ display: changeVal == 'product' ? '' : 'none' }">
                                 <div class="form-group">
-                                    <v-select style="width:100% !important;" :options="products" v-model="selectedProduct"
-                                        label="display_name"></v-select>
+                                    <v-select style="width:100% !important;" :options="products"
+                                        v-model="selectedProduct" label="display_name"></v-select>
                                 </div>
                             </div>
                             <div class="col-lg-1">
@@ -39,30 +42,46 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-12" style="overflow-x:auto;">
-                <button v-if="stocks.length > 0" class="btn btn-warning btn-sm shadow-none text-white px-3"
-                    @click="print">Print</button>
-                <table id="stocks" class="table table-sm table-bordered border-primary">
-                    <thead style="background: #897800;color: white;">
-                        <tr class="text-center" style="font-size: 12px;">
-                            <th>Sl</th>
-                            <th>Product Code</th>
-                            <th>Product Name</th>
-                            <th>Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody style="border:0; font-size: 12px;">
-                        <tr v-for="(item, index) in stocks" :key="index">
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ item.product_code }}</td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.stock }} {{ item.unit_name }}</td>
-                        </tr>
-                        <tr :style="{ display: stocks.length == 0 ? '' : 'none' }">
-                            <td colspan="4" class="text-center">Not Found Data</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-12 col-lg-12">
+                <div class="card">
+                    <div class="text-end">
+                        <button v-if="stocks.length > 0" class="btn btn-warning btn-sm shadow-none text-white px-3"
+                            @click="print">Print</button>
+                    </div>
+                    <div class="card-body" style="overflow-x:auto;">
+                        <table id="stocks" class="table table-sm table-bordered border-primary">
+                            <thead style="background: #897800;color: white;">
+                                <tr class="text-center" style="font-size: 12px;">
+                                    <th>Sl</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody style="border:0; font-size: 12px;">
+                                <tr v-for="(item, index) in stocks" :key="index">
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ item.product_code }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td align="center">{{ item.stock }} {{ item.unit_name }}</td>
+                                    <td align="center">{{ item.selling_price }}</td>
+                                    <td align="center">{{ (item.selling_price * item.stock).toFixed(2) }}</td>
+                                </tr>
+                                <tr :style="{ display: stocks.length == 0 ? 'none' : '' }">
+                                    <th colspan="3" style="text-align:right;">Total Stock Qty</th>
+                                    <th style="text-align:center;">{{ stocks.reduce((acc, pre) => {return acc + +pre.stock}, 0) }}</th>
+                                    <th style="text-align:right;">Total Stock Value</th>
+                                    <th style="text-align:center;">{{ (stocks.reduce((acc, pre) => {return acc + +pre.stock * pre.selling_price}, 0) ).toFixed(2) }} </th>
+                                </tr>
+                                <tr :style="{ display: stocks.length == 0 ? '' : 'none' }">
+                                    <td colspan="6" class="text-center">Not Found Data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -127,10 +146,10 @@ export default {
                 this.getBrand()
             } else if (this.changeVal == "category") {
                 this.getCategory()
-            } else if (this.changeVal == "product") {
+            } else if (this.changeVal == "current") {
                 this.getProduct()
             } else {
-
+                this.getProduct()
             }
         },
         getStock() {
@@ -152,8 +171,10 @@ export default {
                         this.stocks = res.data.filter(p => p.category_id == this.selectedCategory.id)
                     } else if (this.changeVal == "brand") {
                         this.stocks = res.data.filter(p => p.brand_id == this.selectedBrand.id)
-                    } else {
-                        this.stocks = res.data;
+                    } else if(this.changeVal == "current") {
+                        this.stocks = res.data.filter(p => p.stock > 0);
+                    }else{
+                        this.stocks = res.data
                     }
                 })
         },

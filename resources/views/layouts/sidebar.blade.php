@@ -101,7 +101,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
 
                 @if(in_array("supplier.index", $useraccess) || in_array("customer.index", $useraccess))
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-cogs"></i></div>
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-user-plus"></i></div>
                     Administration
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>

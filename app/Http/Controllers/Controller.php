@@ -43,7 +43,7 @@ class Controller extends BaseController
 
     public function generateCode($model, $prefix = '')
     {
-        $code = "00001";
+        $code = "000001";
         $model = '\\App\\Models\\' . $model;
         $num_rows = $model::count();
         if ($num_rows != 0) {
@@ -58,7 +58,7 @@ class Controller extends BaseController
     {
         $purchase = Purchase::latest()->first();
         if (empty($purchase->invoice)) {
-            $invoice = date('Y') . '00001';
+            $invoice = date('Y') . '000001';
             return $invoice;
         } else {
             return $purchase->invoice +1;
@@ -68,7 +68,7 @@ class Controller extends BaseController
     {
         $sale = Sale::latest()->first();
         if (empty($sale->invoice)) {
-            $invoice = date('Y') . '00001';
+            $invoice = date('Y') . '000001';
             return $invoice;
         } else {
             return $sale->invoice +1;
@@ -78,7 +78,7 @@ class Controller extends BaseController
     {
         $quotation = Quotation::latest()->first();
         if (empty($quotation->invoice)) {
-            $invoice = date('Y') . '00001';
+            $invoice = date('Y') . '000001';
             return $invoice;
         } else {
             return $quotation->invoice +1;

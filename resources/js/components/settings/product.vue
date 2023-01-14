@@ -15,7 +15,7 @@
                                             class="col-5 col-lg-4 d-flex align-items-center">Code:</label>
                                         <div class="col-7 col-lg-8">
                                             <input type="text" id="product_code" name="product_code" readonly
-                                                class="form-control shadow-none" v-model="product_code"
+                                                class="form-control shadow-none" v-model="product.product_code"
                                                 autocomplete="off" />
                                         </div>
                                     </div>
@@ -180,6 +180,7 @@ export default {
             units: [],
             product: {
                 id: "",
+                product_code: "",
                 name: "",
                 re_order: 0,
                 purchase_price: "",
@@ -199,7 +200,6 @@ export default {
                 id: "",
                 name: "Select Unit"
             },
-            product_code: "",
             useraccess: [],
             user_id: null,
             imageSrc: location.origin + "/no-image.jpg",
@@ -236,7 +236,7 @@ export default {
         getProduct() {
             axios.get("/api/get_product").then((res) => {
                 this.products = res.data.products;
-                this.product_code = res.data.gen_code;
+                this.product.product_code = res.data.gen_code;
             });
         },
 
@@ -272,13 +272,13 @@ export default {
         editRow(val) {
             this.product = {
                 id: val.id,
+                product_code: val.product_code,
                 name: val.name,
                 re_order: val.re_order,
                 purchase_price: val.purchase_price,
                 selling_price: val.selling_price,
                 description: val.description,
             };
-            this.product_code = val.product_code
             this.selectedBrand = {
                 id: val.brand_id,
                 name: val.brand_name

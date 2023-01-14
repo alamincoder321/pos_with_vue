@@ -283,7 +283,7 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-5">
-                                            <button class="btn btn-secondary shadow-none w-100">Reset</button>
+                                            <button type="button" class="btn btn-secondary shadow-none w-100">Reset</button>
                                         </div>
                                         <div class="col-7">
                                             <button class="btn btn-success shadow-none w-100">Purchase</button>
@@ -405,7 +405,7 @@ export default {
         },
         getSupplier() {
             axios.get("/api/get_supplier").then((res) => {
-                this.suppliers = res.data.suppliers;
+                this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G");
                 this.suppliers.unshift({ id: 0, display_name: "General Supplier", supplier_type: "G" })
             });
         },
