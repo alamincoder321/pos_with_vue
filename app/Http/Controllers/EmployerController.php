@@ -11,7 +11,7 @@ class EmployerController extends Controller
 {
     public function getEmployer()
     {
-        $gen_code = $this->generateCode('Employer', 'E-');
+        $gen_code = $this->generateCode('Employer', 'E');
         $employers = DB::select("SELECT e.*, ci.name AS city_name, d.name AS department_name FROM employers AS e LEFT JOIN cities AS ci ON ci.id=e.city_id LEFT JOIN departments AS d ON d.id=e.department_id ORDER BY name");
         return response()->json(["gen_code" => $gen_code, "employers" => $employers]);
     }

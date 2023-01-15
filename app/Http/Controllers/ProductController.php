@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function getProduct()
     {
-        $gen_code = $this->generateCode('Product', 'P-');
+        $gen_code = $this->generateCode('Product', 'P');
         $products = DB::select("SELECT p.*, CONCAT(p.product_code, ' - ', p.name) AS display_name, ifnull(b.name, 0) AS brand_name, ifnull(c.name, 0) AS category_name, ifnull(u.name, 0) AS unit_name FROM products AS p LEFT JOIN brands AS b ON b.id=p.brand_id LEFT JOIN categories AS c ON c.id=p.category_id LEFT JOIN units AS u ON u.id=p.unit_id ORDER BY name");
         return response()->json(["gen_code" => $gen_code, "products" => $products]);
     }

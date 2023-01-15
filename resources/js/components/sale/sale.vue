@@ -669,12 +669,6 @@ export default {
 
 
 
-
-
-
-
-
-
 <style>
 #category {
     width: 100% !important;

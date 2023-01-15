@@ -638,13 +638,6 @@ export default {
 </script>
 
 
-
-
-
-
-
-
-
 <style>
 #category {
     width: 100% !important;

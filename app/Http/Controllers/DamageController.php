@@ -11,7 +11,7 @@ class DamageController extends Controller
 {
     public function getDamage()
     {
-        $gen_code = $this->generateCode('Damage', 'D-');
+        $gen_code = $this->generateCode('Damage', 'D');
         $damages = DB::select("SELECT d.*, CONCAT(p.product_code, ' - ', p.name) AS display_name, p.name FROM damages AS d LEFT JOIN products AS p ON p.id=d.product_id ORDER BY name");
         return response()->json(["gen_code" => $gen_code, "damages" => $damages]);
     }
