@@ -55,7 +55,7 @@ class SaleController extends Controller
                                 WHERE sd.sale_id = ?", [$sale->id]);
         }
 
-        $invoice = $this->invoiceNumberSale();
+        $invoice = $this->invoiceGenerate("Sale", "SI");
         return response()->json(['invoice' => $invoice, 'sales' => $sales]);
     }
  

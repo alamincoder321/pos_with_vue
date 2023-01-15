@@ -5,18 +5,18 @@
                 <div class="card" style="border-bottom:none;">
                     <div class="card-header">
                         <div class="row">
-                            <label for="invoice" class="col-4 col-lg-1">Invoice:</label>
+                            <label for="invoice" class="col-4 col-lg-1 d-flex align-items-center m-0">Invoice:</label>
                             <div class="col-8 col-lg-2">
                                 <input type="text" v-model="sale.invoice" readonly class="form-control shadow-none">
                             </div>
 
-                            <label for="category" class="col-4 col-lg-2">Category:</label>
+                            <label for="category" class="col-4 col-lg-2 d-flex align-items-center m-0">Category:</label>
                             <div class="col-8 col-lg-3">
                                 <v-select label="name" id="category" name="category_id" :options="categories"
                                     v-model="selectedCategory" @input="CategoryChange"></v-select>
                             </div>
 
-                            <label for="invoice" class="col-4 col-lg-1">Brand:</label>
+                            <label for="invoice" class="col-4 col-lg-1 d-flex align-items-center m-0">Brand:</label>
                             <div class="col-8 col-lg-3">
                                 <v-select label="name" @input="BrandChange" id="brand" name="brand_id" :options="brands"
                                     v-model="selectedBrand">
@@ -434,7 +434,7 @@ export default {
             });
         },
         getSale() {
-            axios.post("/api/get_sale", { id: '1' }).then((res) => {
+            axios.post("/api/get_sale", { invoice: '' }).then((res) => {
                 this.sale.invoice = res.data.invoice;
             });
         },

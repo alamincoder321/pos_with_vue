@@ -41,7 +41,7 @@ class QuotationController extends Controller
                                 WHERE qud.quotation_id = ?", [$quotation->id]);
         }
 
-        $invoice = $this->invoiceNumberQuotation();
+        $invoice = $this->invoiceGenerate("Quotation", "QI");
         return response()->json(['invoice' => $invoice, 'quotations' => $quotations]);
     }
 

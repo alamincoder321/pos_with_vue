@@ -54,34 +54,16 @@ class Controller extends BaseController
         return $prefix . $code;
     }
 
-    function invoiceNumberPurchase()
+    public function invoiceGenerate($model, $prefix = '')
     {
-        $purchase = Purchase::latest()->first();
-        if (empty($purchase->invoice)) {
-            $invoice = date('Y') . '000001';
-            return $invoice;
-        } else {
-            return $purchase->invoice +1;
+        $code = "00000001";
+        $model = '\\App\\Models\\' . $model;
+        $num_rows = $model::count();
+        if ($num_rows != 0) {
+            $newCode = $num_rows + 1;
+            $zeros = ['0', '00', '000', '0000', '00000', '000000', '0000000'];
+            $code = strlen($newCode) > count($zeros) ? $newCode : $zeros[count($zeros) - strlen($newCode)] . $newCode;
         }
-    }
-    function invoiceNumberSale()
-    {
-        $sale = Sale::latest()->first();
-        if (empty($sale->invoice)) {
-            $invoice = date('Y') . '000001';
-            return $invoice;
-        } else {
-            return $sale->invoice +1;
-        }
-    }
-    function invoiceNumberQuotation()
-    {
-        $quotation = Quotation::latest()->first();
-        if (empty($quotation->invoice)) {
-            $invoice = date('Y') . '000001';
-            return $invoice;
-        } else {
-            return $quotation->invoice +1;
-        }
+        return $prefix . $code;
     }
 }

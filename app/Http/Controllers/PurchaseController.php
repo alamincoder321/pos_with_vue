@@ -59,7 +59,7 @@ class PurchaseController extends Controller
                                 WHERE pd.purchase_id = ?", [$purchase->id]);
         }
 
-        $invoice = $this->invoiceNumberPurchase();
+        $invoice = $this->invoiceGenerate("Purchase", "PI");
         return response()->json(['invoice' => $invoice, 'purchases' => $purchases]);
     }
 

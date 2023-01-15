@@ -45,7 +45,9 @@ h2 {
                         Sales Invoice</h6>
                 </div>
                 <div class="col-6 mb-3" style="line-height: 20px;">
-                    <span style="font-weight: 500;">Customer Id: </span>{{ sales.code?sales.code:"General Customer" }}<br>
+                    <span style="font-weight: 500;">Customer Id: </span>{{
+                        sales.code ? sales.code : "General Customer"
+                    }}<br>
                     <span style="font-weight: 500;">Customer Name: </span>{{ sales.name }}<br>
                     <span style="font-weight: 500;">Customer Address: </span>{{ sales.address }}<br>
                     <span style="font-weight: 500;">Customer Mobile: </span>{{ sales.phone }}
@@ -76,7 +78,7 @@ h2 {
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
                                 <td class="text-center">{{ item.selling_price }}</td>
-                                <td class="text-center">{{ item.warranty }}</td>
+                                <td class="text-center">{{ convertYear(item.warranty) }}</td>
                                 <td class="text-center">{{ item.total_amount }}</td>
                             </tr>
                         </tbody>
@@ -111,12 +113,16 @@ h2 {
                             <td style="text-align: right;">{{ sales.subtotal }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">VAT {{ sales.vat != 0?"("+sales.vat+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">VAT {{ sales.vat != 0 ? "(" + sales.vat + "%)" : '' }}
+                            </td>
                             <td>:</td>
                             <td style="text-align: right;">{{ sales.vat_amount }}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;width: 130px;">Discount {{ sales.discount != 0?"("+sales.discount+"%)":'' }}</td>
+                            <td style="font-weight: 600;width: 130px;">Discount {{
+                                sales.discount !=
+                                    0 ? "(" + sales.discount + "%)" : ''
+                            }}</td>
                             <td>:</td>
                             <td style="text-align: right;">{{ sales.discount_amount }}</td>
                         </tr>
@@ -169,6 +175,14 @@ export default {
     },
 
     methods: {
+        convertYear(warranty) {
+            let str = Number(warranty) / 12;
+            let year = str.toString().split(".")[0];
+            let month = warranty - (Number(year) * 12);
+            let checkmonth = month == 0 ? "" : month + ' m';
+            let checkyear = year == 1 ? year + ' yr ' : year + ' yrs ';
+            return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "" : warranty + ' month'
+        },
         getCompany() {
             axios.get("/api/get_company_profile").then((res) => {
                 this.company = res.data;
@@ -185,7 +199,7 @@ export default {
 
         async PrintInvoice() {
             var myWindow = window.open('', '', `width=${window.screen.width},height=${window.screen.height}`);
-            if(this.company.paper_type == "3"){
+            if (this.company.paper_type == "3") {
                 myWindow.document.write(`
                     <html>
                         <head>
@@ -255,7 +269,7 @@ export default {
                         </body>
                     </html>
                 `);
-            }else{
+            } else {
                 myWindow.document.write(`
                     <html>
                         <head>

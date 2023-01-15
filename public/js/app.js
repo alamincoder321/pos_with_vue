@@ -7188,6 +7188,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     document.title = "Sales Invoice";
   },
   methods: {
+    convertYear: function convertYear(warranty) {
+      var str = Number(warranty) / 12;
+      var year = str.toString().split(".")[0];
+      var month = warranty - Number(year) * 12;
+      var checkmonth = month == 0 ? "" : month + ' m';
+      var checkyear = year == 1 ? year + ' yr ' : year + ' yrs ';
+      return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "" : warranty + ' month';
+    },
     getCompany: function getCompany() {
       var _this2 = this;
       axios.get("/api/get_company_profile").then(function (res) {
@@ -7973,7 +7981,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getPurchase: function getPurchase() {
       var _this6 = this;
       axios.post("/api/get_purchase", {
-        id: '1'
+        invoice: ''
       }).then(function (res) {
         _this6.purchase.invoice = res.data.invoice;
       });
@@ -8816,7 +8824,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getQuotation: function getQuotation() {
       var _this4 = this;
       axios.post("/api/get_quotation", {
-        id: '1'
+        invoice: ''
       }).then(function (res) {
         _this4.quotation.invoice = res.data.invoice;
       });
@@ -9816,7 +9824,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     getSale: function getSale() {
       var _this6 = this;
       axios.post("/api/get_sale", {
-        id: '1'
+        invoice: ''
       }).then(function (res) {
         _this6.sale.invoice = res.data.invoice;
       });
@@ -15267,7 +15275,7 @@ var render = function render() {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(item.warranty))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(_vm.convertYear(item.warranty)))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.total_amount))])]);
   }), 0)])]), _vm._v(" "), _c("div", {
@@ -15326,7 +15334,7 @@ var render = function render() {
       "font-weight": "600",
       width: "130px"
     }
-  }, [_vm._v("VAT " + _vm._s(_vm.sales.vat != 0 ? "(" + _vm.sales.vat + "%)" : ""))]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
+  }, [_vm._v("VAT " + _vm._s(_vm.sales.vat != 0 ? "(" + _vm.sales.vat + "%)" : "") + "\n                        ")]), _vm._v(" "), _c("td", [_vm._v(":")]), _vm._v(" "), _c("td", {
     staticStyle: {
       "text-align": "right"
     }
@@ -15829,7 +15837,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -15857,7 +15865,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -15881,7 +15889,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "brand"
     }
@@ -16816,7 +16824,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -16844,7 +16852,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -16868,7 +16876,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -18290,7 +18298,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -18318,7 +18326,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -18342,7 +18350,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "brand"
     }
@@ -19081,7 +19089,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -19109,7 +19117,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -19133,7 +19141,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -20398,7 +20406,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -20426,7 +20434,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -20450,7 +20458,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "brand"
     }
@@ -21401,7 +21409,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
@@ -21429,7 +21437,7 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-2",
+    staticClass: "col-4 col-lg-2 d-flex align-items-center m-0",
     attrs: {
       "for": "category"
     }
@@ -21453,7 +21461,7 @@ var render = function render() {
       expression: "selectedCategory"
     }
   })], 1), _vm._v(" "), _c("label", {
-    staticClass: "col-4 col-lg-1",
+    staticClass: "col-4 col-lg-1 d-flex align-items-center m-0",
     attrs: {
       "for": "invoice"
     }
