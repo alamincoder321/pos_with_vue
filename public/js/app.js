@@ -7192,9 +7192,9 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var str = Number(warranty) / 12;
       var year = str.toString().split(".")[0];
       var month = warranty - Number(year) * 12;
-      var checkmonth = month == 0 ? "" : month + ' m';
-      var checkyear = year == 1 ? year + ' yr ' : year + ' yrs ';
-      return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "" : warranty + ' month';
+      var checkmonth = month == 0 ? "" : month + 'm';
+      var checkyear = year == 1 ? year + 'yr ' : year + 'yrs ';
+      return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "-" : warranty + 'm';
     },
     getCompany: function getCompany() {
       var _this2 = this;

@@ -18,7 +18,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
         @endif
         <!-- Navbar Search-->
         <form class=" d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div style="background: #ffbcbc;width: 150px;height: 56px;display: flex;align-items: center;justify-content: center;font-size: 20px;font-weight: 500;" class="text-success" id="clock"></div>
+            <div style="margin: 0px;background: linear-gradient(45deg, #0fd3d3, #e14747);height: 100%;display: flex;align-items: center;padding: 15px;color: white !important;font-weight: 800;padding:15px 25px !important;font-size: 17px;" class="text-success" id="clock"></div>
         </form>
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

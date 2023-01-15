@@ -56,12 +56,12 @@ class Controller extends BaseController
 
     public function invoiceGenerate($model, $prefix = '')
     {
-        $code = "00000001";
+        $code = "000000001";
         $model = '\\App\\Models\\' . $model;
         $num_rows = $model::count();
         if ($num_rows != 0) {
             $newCode = $num_rows + 1;
-            $zeros = ['0', '00', '000', '0000', '00000', '000000', '0000000'];
+            $zeros = ['0', '00', '000', '0000', '00000', '000000', '0000000', '00000000'];
             $code = strlen($newCode) > count($zeros) ? $newCode : $zeros[count($zeros) - strlen($newCode)] . $newCode;
         }
         return $prefix . $code;
