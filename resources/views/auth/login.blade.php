@@ -3,237 +3,176 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$profile->name}}</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap');
-
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+        .register {
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+            /* margin-top: 3%;
+            padding: 3%; */
+            height: 100vh;
         }
 
-        body {
-            background-color: #eee;
-            height: 90vh;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to top, #fff 10%, rgba(93, 42, 141, 0.4) 90%) no-repeat;
-        }
-
-        .wrapper {
-            max-width: 500px;
-            border-radius: 10px;
-            margin: 50px auto;
-            padding: 30px 40px;
-            box-shadow: 20px 20px 80px rgb(206, 206, 206);
-        }
-
-        .h2 {
-            font-family: 'Kaushan Script', cursive;
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #400485;
-            font-style: italic;
-        }
-
-        .h4 {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .input-field {
-            border-radius: 5px;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            border: 1px solid #400485;
-            color: #400485;
-        }
-
-        .input-field:hover {
-            color: #7b4ca0;
-            border: 1px solid #7b4ca0;
-        }
-
-        input {
-            border: none;
-            outline: none;
-            box-shadow: none;
-            width: 100%;
-            padding: 0px 2px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .fa-eye-slash.btn {
-            border: none;
-            outline: none;
-            box-shadow: none;
-        }
-
-        a {
-            text-decoration: none;
-            color: #400485;
-            font-weight: 700;
-        }
-
-        a:hover {
-            text-decoration: none;
-            color: #7b4ca0;
-        }
-
-        .option {
-            position: relative;
-            padding-left: 30px;
-            cursor: pointer;
-        }
-
-        .option label.text-muted {
-            display: block;
-            cursor: pointer;
-        }
-
-        .option input {
-            display: none;
-        }
-
-        .checkmark {
-            position: absolute;
-            top: 0px;
-            left: 0;
-            height: 20px;
-            width: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .option input:checked~.checkmark:after {
-            display: block;
-        }
-
-        .option .checkmark:after {
-            content: "";
-            width: 13px;
-            height: 13px;
-            display: block;
-            background: #400485;
-            position: absolute;
-            top: 48%;
-            left: 53%;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: 300ms ease-in-out 0s;
-        }
-
-        .option input[type="radio"]:checked~.checkmark {
-            background: #fff;
-            transition: 300ms ease-in-out 0s;
-            border: 1px solid #400485;
-        }
-
-        .option input[type="radio"]:checked~.checkmark:after {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .btn.btn-block {
-            border-radius: 20px;
-            background-color: #400485;
+        .register-left {
+            text-align: center;
             color: #fff;
+            margin-top: 4%;
         }
 
-        .btn.btn-block:hover {
-            background-color: #55268be0;
+        .register-left input {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
         }
 
-        @media(max-width: 575px) {
-            .wrapper {
-                margin: 10px;
+        .register-right {
+            background: #f8f9fa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+        }
+
+        .register-left img {
+            margin-top: 15%;
+            margin-bottom: 5%;
+            width: 25%;
+            -webkit-animation: mover 2s infinite alternate;
+            animation: mover 1s infinite alternate;
+        }
+
+        @-webkit-keyframes mover {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-20px);
             }
         }
 
-        @media(max-width:424px) {
-            .wrapper {
-                padding: 30px 10px;
-                margin: 5px;
+        @keyframes mover {
+            0% {
+                transform: translateY(0);
             }
 
-            .option {
-                position: relative;
-                padding-left: 22px;
+            100% {
+                transform: translateY(-20px);
             }
+        }
 
-            .option label.text-muted {
-                font-size: 0.95rem;
-            }
+        .register-left p {
+            font-weight: lighter;
+            padding: 12%;
+            margin-top: -9%;
+        }
 
-            .checkmark {
-                position: absolute;
-                top: 2px;
-            }
+        .register .register-form {
+            padding: 10%;
+            margin-top: 10%;
+        }
 
-            .option .checkmark:after {
-                top: 50%;
-            }
+        .btnRegister {
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            background: #0062cc;
+            color: #fff;
+            font-weight: 600;
+            width: 50%;
+            cursor: pointer;
+        }
 
-            #forgot {
-                font-size: 0.95rem;
-            }
+        .register .nav-tabs {
+            margin-top: 3%;
+            border: none;
+            background: #0062cc;
+            border-radius: 1.5rem;
+            width: 28%;
+            float: right;
+        }
+
+        .register .nav-tabs .nav-link {
+            padding: 2%;
+            height: 34px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .register .nav-tabs .nav-link:hover {
+            border: none;
+        }
+
+        .register .nav-tabs .nav-link.active {
+            width: 100px;
+            color: #0062cc;
+            border: 2px solid #0062cc;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+
+        .register-heading {
+            text-align: center;
+            margin-top: 8%;
+            margin-bottom: -15%;
+            color: #495057;
         }
     </style>
 </head>
 
 <body>
-    <div id="app" class="wrapper bg-white">
-        <div class="h2 text-center">
-            <img src="{{asset($profile->company_logo != null ? $profile->company_logo: 'no-image.jpg')}}" height="70" alt="{{$profile->name}}">
+    <div class="container-fluid register">
+        <div class="row">
+            <div class="col-md-3 register-left">
+                <img src="{{asset($profile->company_logo != null ? $profile->company_logo: 'no-image.jpg')}}" alt="{{$profile->name}}" />
+                <h3>Welcome</h3>
+                <p>{{$profile->name}}</p>
+            </div>
+            <div class="col-md-9 register-right">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3 class="register-heading">{{$profile->name}}</h3>
+                        <form onsubmit="AdminLogin(event)">
+                            <div class="row register-form">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" name="username" id="username" class="form-control shadow-none" placeholder="Username or Email Address" autocomplete="off" />
+                                        <span class="text-danger error error-username"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" class="form-control shadow-none" placeholder="Enter your Password" autocomplete="off" />
+                                        <span class="text-danger error error-password"></span>
+                                    </div>
+                                    <input type="submit" class="btnRegister" value="Login" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form class="pt-3" onsubmit="AdminLogin(event)">
-            <div class="form-group py-2">
-                <div class="input-field">
-                    <span class="far fa-user p-2"></span>
-                    <input type="text" name="username" placeholder="Username or Email Address" autocomplete="off">
-                </div>
-                <span class="text-danger error error-username"></span>
-            </div>
-            <div class="form-group py-1 pb-2">
-                <div class="input-field">
-                    <span class="fas fa-lock p-2"></span>
-                    <input type="password" name="password" placeholder="Enter your Password" autocomplete="off">
-                    <button type="button" onclick="passwordShow()" class="btn bg-white text-muted" style="padding: 0 5px;">
-                        <span id="Eye" class="far fa-eye-slash"></span>
-                    </button>
-                </div>
-                <span class="text-danger error error-password"></span>
-            </div>
-            <div class="d-flex align-items-start pt-3">
-                <div class="remember">
-                    <label class="option text-muted"> Remember me
-                        <input type="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="ml-auto">
-                    <a href="#" id="forgot">Forgot Password?</a>
-                </div>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-block text-center my-3">Log in</button>
-            </div>
-        </form>
-    </div>
-
-    <div style="width: 100%;position:fixed;bottom:15px;left:0;">
-        <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
+        <div class="row" style="width:100%;position: fixed;bottom:25px;left:0;">
+            <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Developed By Al Amin Islam</marquee>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{{asset('js/app.js')}}"></script>
     <script>
         $.ajaxSetup({
             headers: {
