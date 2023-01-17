@@ -17,6 +17,7 @@
             background: -webkit-linear-gradient(left, #3931af, #00c6ff);
             /* margin-top: 3%;
             padding: 3%; */
+            width: 100%;
             height: 100vh;
         }
 
@@ -43,6 +44,7 @@
             background: #f8f9fa;
             border-top-left-radius: 10% 50%;
             border-bottom-left-radius: 10% 50%;
+            margin-top: 20px;
         }
 
         .register-left img {
@@ -51,6 +53,15 @@
             width: 25%;
             -webkit-animation: mover 2s infinite alternate;
             animation: mover 1s infinite alternate;
+        }
+
+        @media screen and (min-device-width: 360px) and (max-device-width: 768px) {
+            .register-right{
+                margin-top: 0;
+            }
+            marquee{
+                display: none;
+            }
         }
 
         @-webkit-keyframes mover {
@@ -140,7 +151,7 @@
     <div class="container-fluid register">
         <div class="row">
             <div class="col-md-3 register-left">
-                <img src="{{asset($profile->company_logo != null ? $profile->company_logo: 'no-image.jpg')}}" alt="{{$profile->name}}" />
+                <img src="{{asset($profile->company_logo != null ? $profile->company_logo: 'no-image.jpg')}}" alt="{{$profile->name}}" style="width: 150px;" />
                 <h3>Welcome</h3>
                 <p>{{$profile->name}}</p>
             </div>
@@ -166,9 +177,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="width:100%;position: fixed;bottom:25px;left:0;">
-            <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Developed By Al Amin Islam</marquee>
+            <div style="width:100%;position: absolute;bottom:25px;left:0;">
+                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Developed By Al Amin Islam</marquee>
+            </div>
         </div>
     </div>
 
