@@ -27,7 +27,7 @@
                                                 <v-select label="name" :options="categories"
                                                     v-model="selectedCategory"></v-select>
                                                 <a href="/categories" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;width: 13%;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -39,7 +39,7 @@
                                                 <v-select label="name" name="brand_id" :options="brands"
                                                     v-model="selectedBrand"></v-select>
                                                 <a href="/brands" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;width: 13%;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                                 <v-select label="name" name="unit_id" :options="units"
                                                     v-model="selectedUnit"></v-select>
                                                 <a href="/units" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;width: 13%;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>

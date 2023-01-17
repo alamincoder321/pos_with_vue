@@ -77,7 +77,7 @@
                                                 <v-select label="name" name="department_id" :options="departments"
                                                     v-model="selectedDepartment"></v-select>
                                                 <a href="/departments" target="_blank"
-                                                    class="btn btn-success shadow-none" style="padding: 4px 8px;"><i
+                                                    class="btn btn-success shadow-none" style="padding: 4px 8px;width: 13%;"><i
                                                         class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                                 <v-select label="name" name="city_id" :options="cities"
                                                     v-model="selectedCity"></v-select>
                                                 <a href="/cities" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;width: 13%;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>

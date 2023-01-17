@@ -46,7 +46,7 @@
                                                 :options="suppliers" v-model="selectedSupplier"
                                                 @input="onChangeSupplier"></v-select>
                                             <a href="/suppliers" target="_blank" class="btn btn-success shadow-none"
-                                                style="padding: 4px 6px;"><i class="fas fa-plus"></i></a>
+                                                style="padding: 4px 6px;width: 13%;"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                                 :options="products" v-model="selectedProduct" @input="onChangeProduct">
                                             </v-select>
                                             <a href="/products" target="_blank" class="btn btn-success shadow-none"
-                                                style="padding: 4px 6px;"><i class="fas fa-plus"></i></a>
+                                                style="padding: 4px 6px;width: 13%;"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>

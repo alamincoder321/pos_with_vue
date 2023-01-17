@@ -11979,7 +11979,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/bankaccounts",
@@ -11994,7 +11995,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/customers",
@@ -12348,7 +12350,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/bankaccounts",
@@ -12363,7 +12366,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/suppliers",
@@ -13096,7 +13100,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/cities",
@@ -13532,7 +13537,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/cities",
@@ -14707,7 +14713,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/departments",
@@ -14722,7 +14729,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/cities",
@@ -15796,7 +15804,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -16724,7 +16733,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/suppliers",
@@ -16739,7 +16749,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -17711,7 +17722,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/suppliers",
@@ -17726,7 +17738,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -18967,7 +18980,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -19763,7 +19777,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -21250,7 +21265,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/customers",
@@ -21265,7 +21281,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -22255,7 +22272,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/customers",
@@ -22270,7 +22288,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 6px"
+      padding: "4px 6px",
+      width: "13%"
     },
     attrs: {
       href: "/products",
@@ -23548,7 +23567,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/categories",
@@ -23563,7 +23583,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/brands",
@@ -23578,7 +23599,8 @@ var staticRenderFns = [function () {
   return _c("a", {
     staticClass: "btn btn-success shadow-none",
     staticStyle: {
-      padding: "4px 8px"
+      padding: "4px 8px",
+      width: "13%"
     },
     attrs: {
       href: "/units",

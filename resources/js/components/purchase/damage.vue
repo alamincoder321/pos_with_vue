@@ -35,7 +35,7 @@
                                                     @input="onChangeProduct">
                                                 </v-select>
                                                 <a href="/products" target="_blank" class="btn btn-success shadow-none"
-                                                    style="padding: 4px 8px;"><i class="fas fa-plus"></i></a>
+                                                    style="padding: 4px 8px;width: 13%;"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
