@@ -15,8 +15,8 @@
     <style>
         .register {
             background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-            /* margin-top: 3%;
-            padding: 3%; */
+            /* margin-top: 3%; */
+            /* padding: 3%;  */
             width: 100%;
             height: 100vh;
         }
@@ -58,9 +58,6 @@
         @media screen and (min-device-width: 360px) and (max-device-width: 768px) {
             .register-right{
                 margin-top: 0;
-            }
-            marquee{
-                display: none;
             }
         }
 
@@ -177,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width:100%;position: absolute;bottom:25px;left:0;">
+            <div class="d-md-block d-none" style="width:100%;position: absolute;bottom:25px;left:0;">
                 <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Developed By Al Amin Islam</marquee>
             </div>
         </div>
