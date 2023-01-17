@@ -7101,6 +7101,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     document.title = "Quotations Invoice";
   },
   methods: {
+    convertYear: function convertYear(warranty) {
+      var str = Number(warranty) / 12;
+      var year = str.toString().split(".")[0];
+      var month = warranty - Number(year) * 12;
+      var checkmonth = month == 0 ? "" : month + 'm';
+      var checkyear = year == 1 ? year + 'yr ' : year + 'yrs ';
+      return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "-" : warranty + 'm';
+    },
     getCompany: function getCompany() {
       var _this2 = this;
       axios.get("/api/get_company_profile").then(function (res) {
@@ -8344,14 +8352,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      changeVal: "",
-      dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-      dateTo: moment(new Date()).format("YYYY-MM-DD"),
+      searchBy: "",
+      dateFrom: moment().format("YYYY-MM-DD"),
+      dateTo: moment().format("YYYY-MM-DD"),
       invoices: [],
-      selectedInvoice: {
-        id: "",
-        invoice: ""
-      },
+      selectedInvoice: null,
       purchases: [],
       useraccess: [],
       user_id: null
@@ -8367,10 +8372,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getSearchPurchase: function getSearchPurchase() {
       var _this = this;
+      if (this.searchBy == "invoice" && this.selectedInvoice == null) {
+        alert("Select first Invoice");
+        document.querySelector("#invoice [type='search']").focus();
+        return;
+      }
       var data = {
-        dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
-        dateTo: this.dateTo,
-        invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
+        invoice: this.searchBy != "" ? this.selectedInvoice.invoice : "",
+        dateFrom: this.searchBy != "" ? "" : this.dateFrom,
+        dateTo: this.searchBy != "" ? "" : this.dateTo
       };
       axios.post("/api/get_purchase", data).then(function (res) {
         _this.purchases = res.data.purchases;
@@ -8381,14 +8391,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_purchase").then(function (res) {
         _this2.invoices = res.data.purchases;
       });
-    },
-    onChangeValue: function onChangeValue() {
-      if (this.changeVal == '') {
-        this.selectedInvoice = {
-          id: "",
-          invoice: ""
-        };
-      }
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
@@ -8419,6 +8421,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   watch: {
+    searchBy: function searchBy() {
+      if (this.searchBy == "") {
+        this.selectedInvoice = null;
+      }
+    },
     useraccess: function useraccess() {
       this.useraccess.includes("purchase.index") ? "" : location.href = "/unauthorize";
     }
@@ -9011,14 +9018,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      changeVal: "",
-      dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-      dateTo: moment(new Date()).format("YYYY-MM-DD"),
+      searchBy: "",
+      dateFrom: moment().format("YYYY-MM-DD"),
+      dateTo: moment().format("YYYY-MM-DD"),
       invoices: [],
-      selectedInvoice: {
-        id: "",
-        invoice: ""
-      },
+      selectedInvoice: null,
       quotations: [],
       useraccess: [],
       user_id: null
@@ -9034,10 +9038,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getSearchQuotation: function getSearchQuotation() {
       var _this = this;
+      if (this.searchBy == "invoice" && this.selectedInvoice == null) {
+        alert("Select first Invoice");
+        document.querySelector("#invoice [type='search']").focus();
+        return;
+      }
       var data = {
-        dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
-        dateTo: this.dateTo,
-        invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
+        invoice: this.searchBy != "" ? this.selectedInvoice.invoice : "",
+        dateFrom: this.searchBy != "" ? "" : this.dateFrom,
+        dateTo: this.searchBy != "" ? "" : this.dateTo
       };
       axios.post("/api/get_quotation", data).then(function (res) {
         _this.quotations = res.data.quotations;
@@ -9048,14 +9057,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_quotation").then(function (res) {
         _this2.invoices = res.data.quotations;
       });
-    },
-    onChangeValue: function onChangeValue() {
-      if (this.changeVal == '') {
-        this.selectedInvoice = {
-          id: "",
-          invoice: ""
-        };
-      }
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
@@ -9086,6 +9087,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   watch: {
+    searchBy: function searchBy() {
+      if (this.searchBy == "") {
+        this.selectedInvoice = null;
+      }
+    },
     useraccess: function useraccess() {
       this.useraccess.includes("quotation.index") ? "" : location.href = "/unauthorize";
     }
@@ -10077,14 +10083,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      changeVal: "",
-      dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-      dateTo: moment(new Date()).format("YYYY-MM-DD"),
+      searchBy: "",
+      dateFrom: moment().format("YYYY-MM-DD"),
+      dateTo: moment().format("YYYY-MM-DD"),
       invoices: [],
-      selectedInvoice: {
-        id: "",
-        invoice: ""
-      },
+      selectedInvoice: null,
       sales: [],
       useraccess: [],
       user_id: null
@@ -10100,10 +10103,15 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getSearchSale: function getSearchSale() {
       var _this = this;
+      if (this.searchBy == "invoice" && this.selectedInvoice == null) {
+        alert("Select first Invoice");
+        document.querySelector("#invoice [type='search']").focus();
+        return;
+      }
       var data = {
-        dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
-        dateTo: this.dateTo,
-        invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
+        invoice: this.searchBy != "" ? this.selectedInvoice.invoice : "",
+        dateFrom: this.searchBy != "" ? "" : this.dateFrom,
+        dateTo: this.searchBy != "" ? "" : this.dateTo
       };
       axios.post("/api/get_sale", data).then(function (res) {
         _this.sales = res.data.sales;
@@ -10114,14 +10122,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       axios.post("/api/get_sale").then(function (res) {
         _this2.invoices = res.data.sales;
       });
-    },
-    onChangeValue: function onChangeValue() {
-      if (this.changeVal == '') {
-        this.selectedInvoice = {
-          id: "",
-          invoice: ""
-        };
-      }
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
@@ -10152,6 +10152,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   watch: {
+    searchBy: function searchBy() {
+      if (this.searchBy == "") {
+        this.selectedInvoice = null;
+      }
+    },
     useraccess: function useraccess() {
       this.useraccess.includes("sale.index") ? "" : location.href = "/unauthorize";
     }
@@ -15072,7 +15077,7 @@ var render = function render() {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(item.warranty))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(_vm.convertYear(item.warranty)))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._v(_vm._s(item.total_amount))])]);
   }), 0)])]), _vm._v(" "), _c("div", {
@@ -17996,64 +18001,66 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-xl-12 col-md-12"
+    staticClass: "col-12 col-lg-12"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "card-header",
+    staticStyle: {
+      background: "linear-gradient(45deg, #bb3a87, #000000d1)"
+    }
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.getSearchPurchase.apply(null, arguments);
+      }
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-2"
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "changeVal"
-    }
-  }), _vm._v(" "), _c("select", {
+    staticClass: "form-group m-0"
+  }, [_c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.changeVal,
-      expression: "changeVal"
+      value: _vm.searchBy,
+      expression: "searchBy"
     }],
-    staticClass: "form-control shadow-none",
+    staticClass: "form-select shadow-none",
     on: {
-      change: [function ($event) {
+      change: function change($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.changeVal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, _vm.onChangeValue]
+        _vm.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
     }
   }, [_c("option", {
     attrs: {
       value: ""
     }
-  }, [_vm._v("By Current Date")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("All")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "invoice"
     }
-  }, [_vm._v("By Invoice")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-4",
+  }, [_vm._v(" By Invoice ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3",
     style: {
-      display: _vm.changeVal == "invoice" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "" : "none"
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
+    staticClass: "form-group m-0"
+  }, [_c("v-select", {
     attrs: {
-      "for": "invoice"
-    }
-  }, [_vm._v("Invoice")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "invoice",
+      options: _vm.invoices,
       id: "invoice",
-      options: _vm.invoices
+      label: "invoice"
     },
     model: {
       value: _vm.selectedInvoice,
@@ -18065,15 +18072,11 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "dateFrom"
-    }
-  }, [_vm._v("From Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -18096,11 +18099,11 @@ var render = function render() {
   })])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("To Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -18120,99 +18123,40 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-1 mt-lg-0 mt-3"
-  }, [_c("label"), _vm._v(" "), _c("button", {
-    staticClass: "searchBtn",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: _vm.getSearchPurchase
-    }
-  }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12",
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
+    },
+    style: {
+      display: _vm.purchases.length > 0 ? "" : "none"
     }
   }, [_c("table", {
-    staticClass: "table table-sm table-bordered border-primary",
-    attrs: {
-      id: "getTable"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
-    staticStyle: {
-      border: "0",
-      "font-size": "12px"
-    }
-  }, [_vm._l(_vm.purchases, function (item, index) {
-    return _c("tr", {
-      key: index
-    }, [_c("td", [_vm._v("#" + _vm._s(item.invoice))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_c("span", {
+    staticClass: "table table-bordered m-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.purchases, function (item, index) {
+    return [_c("tr", [_c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                              " + _vm._s(index + 1) + "\n                           ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                              " + _vm._s(item.invoice) + "\n                           ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                              " + _vm._s(_vm.formatDate(item.date)) + "\n                           ")]), _vm._v(" "), _c("td", [_c("span", [_vm._v("Supplier Name:\n                              " + _vm._s(item.name))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Mobile: " + _vm._s(item.phone))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address:\n                              " + _vm._s(item.address))]), _c("br"), _vm._v(" "), item.supplier_type != "G" ? _c("span", [_vm._v("Previous Due:\n                              " + _vm._s(item.previous_due))]) : _c("span", [_vm._v("General Supplier")])]), _vm._v(" "), _c("td", [_c("span", [_vm._v("SubTotal:\n                              " + _vm._s(item.subtotal))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Total: " + _vm._s(item.total))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Due: " + _vm._s(item.due))]), _c("br"), _vm._v(" "), item.discount != 0 ? _c("span", [_vm._v("Discount (" + _vm._s(item.discount) + "%):\n                              " + _vm._s(item.discount_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.vat != 0 ? _c("span", [_vm._v("Vat (" + _vm._s(item.vat) + "%):\n                              " + _vm._s(item.vat_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.transport_cost != 0 ? _c("span", [_vm._v("Transport Cost:\n                              " + _vm._s(item.transport_cost))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("div", {
+      staticClass: "input-group gap-2"
+    }, [_c("router-link", {
+      staticClass: "bg-common",
       staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Name:")]), _vm._v(" " + _vm._s(item.name)), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Phone:")]), _vm._v(" " + _vm._s(item.phone) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), item.supplier_type == "G" ? _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("General Supplier")]) : _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Previous Due: " + _vm._s(item.previous_due))])]), _vm._v(" "), _c("td", [_c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("SubTotal:")]), _vm._v(" " + _vm._s(item.subtotal) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Total:")]), _vm._v(" " + _vm._s(item.total) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Paid:")]), _vm._v(" " + _vm._s(item.paid) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Due:")]), _vm._v(" " + _vm._s(item.due) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Vat (" + _vm._s(item.vat) + ")%:")]), _vm._v(" " + _vm._s(item.vat_amount) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Discount (" + _vm._s(item.discount) + ")%:")]), _vm._v(" " + _vm._s(item.discount_amount) + "\n                        ")]), _vm._v(" "), _c("td", {
-      staticClass: "hideAction"
-    }, [_c("span", {
-      staticStyle: {
-        cursor: "pointer",
-        "margin-right": "5px"
+        padding: "2px 6px"
       },
       attrs: {
-        title: "purchase-delete"
-      },
-      on: {
-        click: function click($event) {
-          return _vm.InvoiceDelete(item.id);
+        title: "Purchase Invoice",
+        to: {
+          path: "/purchase-invoice/" + item.invoice
         }
       }
     }, [_c("i", {
-      staticClass: "fas fa-trash text-danger"
+      staticClass: "fas fa-file text-info"
     })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        "margin-right": "5px"
-      },
+      staticClass: "bg-common",
       attrs: {
         title: "purchase-edit",
         to: {
@@ -18221,46 +18165,64 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fa fa-edit text-primary"
-    })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        cursor: "pointer"
-      },
+    })]), _vm._v(" "), _c("button", {
+      staticClass: "shadow-none outline-none border-0",
       attrs: {
-        title: "invoice",
-        to: {
-          path: "/purchase-invoice/" + item.invoice
+        title: "Purchase Delete",
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.InvoiceDelete(item.id, index);
         }
       }
     }, [_c("i", {
-      staticClass: "fas fa-file text-info"
-    })])], 1)]);
-  }), _vm._v(" "), _c("tr", {
+      staticClass: "fas fa-trash text-danger"
+    })])], 1)])])];
+  })], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     style: {
-      display: _vm.purchases.length == 0 ? "" : "none"
+      display: _vm.purchases.length > 0 ? "none" : ""
     }
-  }, [_c("td", {
-    staticClass: "text-center",
-    attrs: {
-      colspan: "5"
-    }
-  }, [_vm._v("Not Found Data")])])], 2)])])])]);
+  }, [_c("p", {
+    staticClass: "m-0 text-center"
+  }, [_vm._v("Not Found Data in Table")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("button", {
+    staticClass: "btn btn-info btn-sm text-white shadow-none px-3",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                           Submit\n                           ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("thead", {
+    staticClass: "bg-info text-white text-center"
+  }, [_c("tr", [_c("th", {
     staticStyle: {
-      background: "#897800",
-      color: "white"
+      width: "8%"
     }
-  }, [_c("tr", {
-    staticClass: "text-center",
+  }, [_vm._v("\n                           Sl\n                        ")]), _vm._v(" "), _c("th", {
     staticStyle: {
-      "font-size": "12px"
+      width: "10%"
     }
-  }, [_c("th", [_vm._v("Invoice No.")]), _vm._v(" "), _c("th", [_vm._v("Date")]), _vm._v(" "), _c("th", [_vm._v("Supplier Details")]), _vm._v(" "), _c("th", [_vm._v("Purchase Amount Details")]), _vm._v(" "), _c("th", {
-    staticClass: "hideAction"
-  }, [_vm._v("Action")])])]);
+  }, [_vm._v("\n                           #Invoice\n                        ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("\n                           Date\n                        ")]), _vm._v(" "), _c("th", [_vm._v("\n                           Supplier Details\n                        ")]), _vm._v(" "), _c("th", [_vm._v("\n                           Amount Details\n                        ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "12%"
+    }
+  }, [_vm._v("\n                           Action\n                        ")])])]);
 }];
 render._withStripped = true;
 
@@ -18528,7 +18490,8 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "text",
+      type: "number",
+      min: "0",
       id: "warranty",
       name: "warranty",
       autocomplete: "off"
@@ -18725,7 +18688,7 @@ var render = function render() {
       "font-weight": "bold"
     },
     attrs: {
-      colspan: "2"
+      colspan: "3"
     }
   }, [_c("span", [_vm._v("Total:\n                                    ")]), _vm._v(_vm._s(_vm.carts.reduce(function (acc, c) {
     return +acc + +c.total_amount;
@@ -19046,7 +19009,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
@@ -19319,7 +19285,8 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "text",
+      type: "number",
+      min: "0",
       id: "warranty",
       name: "warranty",
       autocomplete: "off"
@@ -19516,7 +19483,7 @@ var render = function render() {
       "font-weight": "bold"
     },
     attrs: {
-      colspan: "2"
+      colspan: "3"
     }
   }, [_c("span", [_vm._v("Total:\n                                    ")]), _vm._v(_vm._s(_vm.carts.reduce(function (acc, c) {
     return +acc + +c.total_amount;
@@ -19838,7 +19805,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-5"
   }, [_c("button", {
-    staticClass: "btn btn-secondary shadow-none w-100"
+    staticClass: "btn btn-secondary shadow-none w-100",
+    attrs: {
+      type: "button"
+    }
   }, [_vm._v("Reset")])]), _vm._v(" "), _c("div", {
     staticClass: "col-7"
   }, [_c("button", {
@@ -19870,64 +19840,66 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-xl-12 col-md-12"
+    staticClass: "col-lg-12 col-12"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "card-header",
+    staticStyle: {
+      background: "linear-gradient(45deg, #bb3a87, #000000d1)"
+    }
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.getSearchQuotation.apply(null, arguments);
+      }
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-2"
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "changeVal"
-    }
-  }), _vm._v(" "), _c("select", {
+    staticClass: "form-group m-0"
+  }, [_c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.changeVal,
-      expression: "changeVal"
+      value: _vm.searchBy,
+      expression: "searchBy"
     }],
-    staticClass: "form-control shadow-none",
+    staticClass: "form-select shadow-none",
     on: {
-      change: [function ($event) {
+      change: function change($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.changeVal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, _vm.onChangeValue]
+        _vm.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
     }
   }, [_c("option", {
     attrs: {
       value: ""
     }
-  }, [_vm._v("By Current Date")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("All")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "invoice"
     }
-  }, [_vm._v("By Invoice")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-4",
+  }, [_vm._v(" By Invoice ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3",
     style: {
-      display: _vm.changeVal == "invoice" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "" : "none"
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
+    staticClass: "form-group m-0"
+  }, [_c("v-select", {
     attrs: {
-      "for": "invoice"
-    }
-  }, [_vm._v("Invoice")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "invoice",
+      options: _vm.invoices,
       id: "invoice",
-      options: _vm.invoices
+      label: "invoice"
     },
     model: {
       value: _vm.selectedInvoice,
@@ -19939,15 +19911,11 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "dateFrom"
-    }
-  }, [_vm._v("From Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -19970,11 +19938,11 @@ var render = function render() {
   })])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("To Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -19994,75 +19962,53 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-1 mt-lg-0 mt-3"
-  }, [_c("label"), _vm._v(" "), _c("button", {
-    staticClass: "searchBtn",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: _vm.getSearchQuotation
-    }
-  }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12",
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
+    },
+    style: {
+      display: _vm.quotations.length > 0 ? "" : "none"
     }
   }, [_c("table", {
-    staticClass: "table table-sm table-bordered border-primary",
-    attrs: {
-      id: "getTable"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
-    staticStyle: {
-      border: "0",
-      "font-size": "12px"
-    }
-  }, [_vm._l(_vm.quotations, function (item, index) {
-    return _c("tr", {
-      key: index
-    }, [_c("td", [_vm._v("#" + _vm._s(item.invoice))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_c("span", {
+    staticClass: "table table-bordered m-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.quotations, function (item, index) {
+    return [_c("tr", [_c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(index + 1) + "\n                                    ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(item.invoice) + "\n                                    ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(_vm.formatDate(item.date)) + "\n                                    ")]), _vm._v(" "), _c("td", [_c("span", [_vm._v("Customer Name:\n                                            " + _vm._s(item.customer_name))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Mobile: " + _vm._s(item.customer_phone))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address:\n                                            " + _vm._s(item.customer_address))])]), _vm._v(" "), _c("td", [_c("span", [_vm._v("SubTotal:\n                                            " + _vm._s(item.subtotal))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Total: " + _vm._s(item.total))]), _c("br"), _vm._v(" "), item.discount != 0 ? _c("span", [_vm._v("Discount (" + _vm._s(item.discount) + "%):\n                                            " + _vm._s(item.discount_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.vat != 0 ? _c("span", [_vm._v("Vat (" + _vm._s(item.vat) + "%):\n                                            " + _vm._s(item.vat_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.transport_cost != 0 ? _c("span", [_vm._v("Transport Cost:\n                                            " + _vm._s(item.transport_cost))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("div", {
+      staticClass: "input-group gap-2"
+    }, [_c("router-link", {
+      staticClass: "bg-common",
       staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Name:")]), _vm._v(" " + _vm._s(item.customer_name)), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Phone:")]), _vm._v(" " + _vm._s(item.customer_phone) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.customer_address) + "\n                        ")]), _vm._v(" "), _c("td", [_c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("SubTotal:")]), _vm._v(" " + _vm._s(item.subtotal) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Total:")]), _vm._v(" " + _vm._s(item.total) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Vat (" + _vm._s(item.vat) + ")%:")]), _vm._v(" " + _vm._s(item.vat_amount) + "\n                            "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Discount (" + _vm._s(item.discount) + ")%:")]), _vm._v(" " + _vm._s(item.discount_amount)), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Transport Cost ")]), _vm._v(" " + _vm._s(item.transport_cost) + "\n                        ")]), _vm._v(" "), _c("td", {
-      staticClass: "hideAction"
-    }, [_c("span", {
-      staticStyle: {
-        cursor: "pointer",
-        "margin-right": "5px"
+        padding: "2px 6px"
       },
       attrs: {
-        title: "Invoice Delete"
+        title: "Sale Invoice",
+        to: {
+          path: "/quotation-invoice/" + item.invoice
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-file text-info"
+    })]), _vm._v(" "), _c("router-link", {
+      staticClass: "bg-common",
+      attrs: {
+        title: "Sale-edit",
+        to: {
+          path: "/quotations-edit/" + item.invoice
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-edit text-primary"
+    })]), _vm._v(" "), _c("button", {
+      staticClass: "shadow-none outline-none border-0",
+      attrs: {
+        title: "Sale Delete",
+        type: "button"
       },
       on: {
         click: function click($event) {
@@ -20071,58 +20017,51 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash text-danger"
-    })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        "margin-right": "5px"
-      },
-      attrs: {
-        title: "Quotations Edit",
-        to: {
-          path: "/quotations-edit/" + item.invoice
-        }
-      }
-    }, [_c("i", {
-      staticClass: "fa fa-edit text-primary"
-    })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        cursor: "pointer"
-      },
-      attrs: {
-        title: "invoice",
-        to: {
-          path: "/quotation-invoice/" + item.invoice
-        }
-      }
-    }, [_c("i", {
-      staticClass: "fas fa-file text-info"
-    })])], 1)]);
-  }), _vm._v(" "), _c("tr", {
+    })])], 1)])])];
+  })], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     style: {
-      display: _vm.quotations.length == 0 ? "" : "none"
+      display: _vm.quotations.length > 0 ? "none" : ""
     }
-  }, [_c("td", {
-    staticClass: "text-center",
-    attrs: {
-      colspan: "5"
-    }
-  }, [_vm._v("Not Found Data")])])], 2)])])])]);
+  }, [_c("p", {
+    staticClass: "m-0 text-center"
+  }, [_vm._v("Not Found Data in Table")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("button", {
+    staticClass: "btn btn-info btn-sm text-white shadow-none px-3",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                                        Submit\n                                    ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("thead", {
+    staticClass: "bg-info text-white text-center"
+  }, [_c("tr", [_c("th", {
     staticStyle: {
-      background: "#897800",
-      color: "white"
+      width: "8%"
     }
-  }, [_c("tr", {
-    staticClass: "text-center",
+  }, [_vm._v("\n                                    Sl\n                                ")]), _vm._v(" "), _c("th", {
     staticStyle: {
-      "font-size": "12px"
+      width: "10%"
     }
-  }, [_c("th", [_vm._v("Invoice No.")]), _vm._v(" "), _c("th", [_vm._v("Date")]), _vm._v(" "), _c("th", [_vm._v("Customer Details")]), _vm._v(" "), _c("th", [_vm._v("Sale Amount Details")]), _vm._v(" "), _c("th", {
-    staticClass: "hideAction"
-  }, [_vm._v("Action")])])]);
+  }, [_vm._v("\n                                    #Invoice\n                                ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("\n                                    Date\n                                ")]), _vm._v(" "), _c("th", [_vm._v("\n                                    Customer Details\n                                ")]), _vm._v(" "), _c("th", [_vm._v("\n                                    Amount Details\n                                ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "12%"
+    }
+  }, [_vm._v("\n                                    Action\n                                ")])])]);
 }];
 render._withStripped = true;
 
@@ -20670,7 +20609,8 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "text",
+      type: "number",
+      min: "0",
       id: "warranty",
       name: "warranty",
       autocomplete: "off"
@@ -21673,7 +21613,8 @@ var render = function render() {
     }],
     staticClass: "form-control shadow-none",
     attrs: {
-      type: "text",
+      type: "number",
+      min: "0",
       id: "warranty",
       name: "warranty",
       autocomplete: "off"
@@ -22402,64 +22343,66 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-xl-12 col-md-12"
+    staticClass: "col-lg-12 col-12"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "card-header",
+    staticStyle: {
+      background: "linear-gradient(45deg, #bb3a87, #000000d1)"
+    }
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.getSearchSale.apply(null, arguments);
+      }
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-2"
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "changeVal"
-    }
-  }), _vm._v(" "), _c("select", {
+    staticClass: "form-group m-0"
+  }, [_c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.changeVal,
-      expression: "changeVal"
+      value: _vm.searchBy,
+      expression: "searchBy"
     }],
-    staticClass: "form-control shadow-none",
+    staticClass: "form-select shadow-none",
     on: {
-      change: [function ($event) {
+      change: function change($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.changeVal = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }, _vm.onChangeValue]
+        _vm.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
     }
   }, [_c("option", {
     attrs: {
       value: ""
     }
-  }, [_vm._v("By Current Date")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("All")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "invoice"
     }
-  }, [_vm._v("By Invoice")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-4",
+  }, [_vm._v(" By Invoice ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3",
     style: {
-      display: _vm.changeVal == "invoice" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "" : "none"
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
+    staticClass: "form-group m-0"
+  }, [_c("v-select", {
     attrs: {
-      "for": "invoice"
-    }
-  }, [_vm._v("Invoice")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "invoice",
+      options: _vm.invoices,
       id: "invoice",
-      options: _vm.invoices
+      label: "invoice"
     },
     model: {
       value: _vm.selectedInvoice,
@@ -22471,15 +22414,11 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "dateFrom"
-    }
-  }, [_vm._v("From Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -22502,11 +22441,11 @@ var render = function render() {
   })])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-2",
     style: {
-      display: _vm.changeVal == "" ? "" : "none"
+      display: _vm.searchBy == "invoice" ? "none" : ""
     }
   }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("To Date:")]), _vm._v(" "), _c("input", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -22526,87 +22465,53 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-1 mt-lg-0 mt-3"
-  }, [_c("label"), _vm._v(" "), _c("button", {
-    staticClass: "searchBtn",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: _vm.getSearchSale
-    }
-  }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-12",
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
+    },
+    style: {
+      display: _vm.sales.length > 0 ? "" : "none"
     }
   }, [_c("table", {
-    staticClass: "table table-sm table-bordered border-primary",
-    attrs: {
-      id: "getTable"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
-    staticStyle: {
-      border: "0",
-      "font-size": "12px"
-    }
-  }, [_vm._l(_vm.sales, function (item, index) {
-    return _c("tr", {
-      key: index
-    }, [_c("td", [_vm._v("#" + _vm._s(item.invoice))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_c("span", {
+    staticClass: "table table-bordered m-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.sales, function (item, index) {
+    return [_c("tr", [_c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(index + 1) + "\n                                    ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(item.invoice) + "\n                                    ")]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_vm._v("\n                                        " + _vm._s(_vm.formatDate(item.date)) + "\n                                    ")]), _vm._v(" "), _c("td", [_c("span", [_vm._v("Customer Name:\n                                            " + _vm._s(item.name))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Mobile: " + _vm._s(item.phone))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address:\n                                            " + _vm._s(item.address))]), _c("br"), _vm._v(" "), item.customer_type != "G" ? _c("span", [_vm._v("Previous Due:\n                                            " + _vm._s(item.previous_due))]) : _c("span", [_vm._v("General Customer")])]), _vm._v(" "), _c("td", [_c("span", [_vm._v("SubTotal:\n                                            " + _vm._s(item.subtotal))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Total: " + _vm._s(item.total))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Due: " + _vm._s(item.due))]), _c("br"), _vm._v(" "), item.discount != 0 ? _c("span", [_vm._v("Discount (" + _vm._s(item.discount) + "%):\n                                            " + _vm._s(item.discount_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.vat != 0 ? _c("span", [_vm._v("Vat (" + _vm._s(item.vat) + "%):\n                                            " + _vm._s(item.vat_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.transport_cost != 0 ? _c("span", [_vm._v("Transport Cost:\n                                            " + _vm._s(item.transport_cost))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("div", {
+      staticClass: "input-group gap-2"
+    }, [_c("router-link", {
+      staticClass: "bg-common",
       staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Name:")]), _vm._v(" " + _vm._s(item.name)), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Phone:")]), _vm._v(" " + _vm._s(item.phone) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Address:")]), _vm._v(" " + _vm._s(item.address) + " "), _c("br"), _vm._v(" "), item.customer_type == "G" ? _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("General Customer")]) : _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Previous Due: " + _vm._s(item.previous_due))])]), _vm._v(" "), _c("td", [_c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("SubTotal:")]), _vm._v(" " + _vm._s(item.subtotal) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Total:")]), _vm._v(" " + _vm._s(item.total) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Paid:")]), _vm._v(" " + _vm._s(item.paid) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Due:")]), _vm._v(" " + _vm._s(item.due) + " "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Vat (" + _vm._s(item.vat) + ")%:")]), _vm._v(" " + _vm._s(item.vat_amount) + "\n                            "), _c("br"), _vm._v(" "), _c("span", {
-      staticStyle: {
-        "font-weight": "bold"
-      }
-    }, [_vm._v("Discount (" + _vm._s(item.discount) + ")%:")]), _vm._v(" " + _vm._s(item.discount_amount) + "\n                        ")]), _vm._v(" "), _c("td", {
-      staticClass: "hideAction"
-    }, [_c("span", {
-      staticStyle: {
-        cursor: "pointer",
-        "margin-right": "5px"
+        padding: "2px 6px"
       },
       attrs: {
-        title: "Invoice Delete"
+        title: "Sale Invoice",
+        to: {
+          path: "/invoice/" + item.invoice
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-file text-info"
+    })]), _vm._v(" "), _c("router-link", {
+      staticClass: "bg-common",
+      attrs: {
+        title: "Sale-edit",
+        to: {
+          path: "/sales-edit/" + item.invoice
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-edit text-primary"
+    })]), _vm._v(" "), _c("button", {
+      staticClass: "shadow-none outline-none border-0",
+      attrs: {
+        title: "Sale Delete",
+        type: "button"
       },
       on: {
         click: function click($event) {
@@ -22615,58 +22520,51 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash text-danger"
-    })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        "margin-right": "5px"
-      },
-      attrs: {
-        title: "Sales Edit",
-        to: {
-          path: "/sales-edit/" + item.invoice
-        }
-      }
-    }, [_c("i", {
-      staticClass: "fa fa-edit text-primary"
-    })]), _vm._v(" "), _c("router-link", {
-      staticStyle: {
-        cursor: "pointer"
-      },
-      attrs: {
-        title: "invoice",
-        to: {
-          path: "/invoice/" + item.invoice
-        }
-      }
-    }, [_c("i", {
-      staticClass: "fas fa-file text-info"
-    })])], 1)]);
-  }), _vm._v(" "), _c("tr", {
+    })])], 1)])])];
+  })], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body",
     style: {
-      display: _vm.sales.length == 0 ? "" : "none"
+      display: _vm.sales.length > 0 ? "none" : ""
     }
-  }, [_c("td", {
-    staticClass: "text-center",
-    attrs: {
-      colspan: "5"
-    }
-  }, [_vm._v("Not Found Data")])])], 2)])])])]);
+  }, [_c("p", {
+    staticClass: "m-0 text-center"
+  }, [_vm._v("Not Found Data in Table")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("button", {
+    staticClass: "btn btn-info btn-sm text-white shadow-none px-3",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                                        Submit\n                                    ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("thead", {
+    staticClass: "bg-info text-white text-center"
+  }, [_c("tr", [_c("th", {
     staticStyle: {
-      background: "#897800",
-      color: "white"
+      width: "8%"
     }
-  }, [_c("tr", {
-    staticClass: "text-center",
+  }, [_vm._v("\n                                    Sl\n                                ")]), _vm._v(" "), _c("th", {
     staticStyle: {
-      "font-size": "12px"
+      width: "10%"
     }
-  }, [_c("th", [_vm._v("Invoice No.")]), _vm._v(" "), _c("th", [_vm._v("Date")]), _vm._v(" "), _c("th", [_vm._v("Customer Details")]), _vm._v(" "), _c("th", [_vm._v("Sale Amount Details")]), _vm._v(" "), _c("th", {
-    staticClass: "hideAction"
-  }, [_vm._v("Action")])])]);
+  }, [_vm._v("\n                                    #Invoice\n                                ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "10%"
+    }
+  }, [_vm._v("\n                                    Date\n                                ")]), _vm._v(" "), _c("th", [_vm._v("\n                                    Customer Details\n                                ")]), _vm._v(" "), _c("th", [_vm._v("\n                                    Amount Details\n                                ")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "12%"
+    }
+  }, [_vm._v("\n                                    Action\n                                ")])])]);
 }];
 render._withStripped = true;
 
@@ -41373,7 +41271,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice {\r\n    width: 100% !important;\n}\n.searchBtn {\r\n    border: none;\r\n    background: green;\r\n    color: white;\r\n    padding: 3px 12px;\r\n    font-size: 15px;\r\n    border-radius: 0.2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice {\r\n    width: 100% !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41445,7 +41343,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice {\r\n    width: 100% !important;\n}\n.searchBtn {\r\n    border: none;\r\n    background: green;\r\n    color: white;\r\n    padding: 3px 12px;\r\n    font-size: 15px;\r\n    border-radius: 0.2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#invoice {\r\n    width: 100% !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

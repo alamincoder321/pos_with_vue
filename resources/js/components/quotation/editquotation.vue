@@ -78,7 +78,7 @@
                                     <label for="warranty"
                                         class="col-5 col-lg-4 d-flex align-items-center">Warranty:</label>
                                     <div class="col-7 col-lg-3 pe-lg-0">
-                                        <input type="text" id="warranty" name="warranty"
+                                        <input type="number" min="0" id="warranty" name="warranty"
                                             class="form-control shadow-none" v-model="selectedProduct.warranty" autocomplete="off" />
                                     </div>
                                     <label for="quantity" class="col-5 col-lg-1 d-flex align-items-center">Qty:</label>
@@ -154,7 +154,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center" colspan="2" style="font-weight: bold;"><span>Total:
+                                    <td class="text-center" colspan="3" style="font-weight: bold;"><span>Total:
                                         </span>{{ carts.reduce((acc,
                                                 c) => { return +acc + +c.total_amount }, 0).toFixed(2)
                                         }}</td>
@@ -232,7 +232,7 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-5">
-                                            <button class="btn btn-secondary shadow-none w-100">Reset</button>
+                                            <button type="button" class="btn btn-secondary shadow-none w-100">Reset</button>
                                         </div>
                                         <div class="col-7">
                                             <button class="btn btn-success shadow-none w-100">Quotation</button>

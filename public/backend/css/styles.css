@@ -1983,9 +1983,9 @@ progress {
 .table > thead, .dataTable-table > thead {
   vertical-align: bottom;
 }
-.table > :not(:first-child), .dataTable-table > :not(:first-child) {
+/* .table > :not(:first-child), .dataTable-table > :not(:first-child) {
   border-top: 2px solid currentColor;
-}
+} */
 
 .caption-top {
   caption-side: top;
@@ -2188,7 +2188,7 @@ progress {
 .form-control, .dataTable-input {
   display: block;
   width: 100%;
-  padding: 0.2rem 0.5rem;
+  padding: 0.35rem 0.5rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -3134,18 +3134,24 @@ textarea.form-control-lg {
   border-color: #198754;
 }
 
+.bg-common{
+  background: #F0F0F0;padding: 2px 6px;
+  display: flex;
+  align-items: center;
+}
+
 .btn-info {
   color: #000;
   background-color: #0dcaf0;
   border-color: #0dcaf0;
 }
 .btn-info:hover {
-  color: #000;
+  color: #fff;
   background-color: #31d2f2;
   border-color: #25cff2;
 }
 .btn-check:focus + .btn-info, .btn-info:focus {
-  color: #000;
+  color: #fff;
   background-color: #31d2f2;
   border-color: #25cff2;
   box-shadow: 0 0 0 0.25rem rgba(11, 172, 204, 0.5);
@@ -3503,7 +3509,7 @@ textarea.form-control-lg {
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.25rem 0.5rem;
+  padding: 0.45rem 0.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
 }
@@ -11482,7 +11488,7 @@ body {
 }
 
 .sb-sidenav-dark {
-  background-color: #212529;
+  background: linear-gradient(45deg, #3863ff, #000000);
   color: rgba(255, 255, 255, 0.5);
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {

@@ -75,7 +75,7 @@ h2 {
                                 <td>{{ item.name }}</td>
                                 <td class="text-center">{{ item.quantity }} {{ item.unit_name }}</td>
                                 <td class="text-center">{{ item.selling_price }}</td>
-                                <td class="text-center">{{ item.warranty }}</td>
+                                <td class="text-center">{{ convertYear(item.warranty) }}</td>
                                 <td class="text-center">{{ item.total_amount }}</td>
                             </tr>
                         </tbody>
@@ -140,6 +140,15 @@ export default {
     },
 
     methods: {
+        convertYear(warranty) {
+            let str = Number(warranty) / 12;
+            let year = str.toString().split(".")[0];
+            let month = warranty - (Number(year) * 12);
+            let checkmonth = month == 0 ? "" : month + 'm';
+            let checkyear = year == 1 ? year + 'yr ' : year + 'yrs ';
+            return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "-" : warranty + 'm'
+        },
+
         getCompany() {
             axios.get("/api/get_company_profile").then((res) => {
                 this.company = res.data;

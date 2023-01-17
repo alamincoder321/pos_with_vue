@@ -18,7 +18,7 @@ class CreateSaleDetailsTable extends Migration
             $table->foreignId("sale_id")->constrained("sales", "id")->onDelete("cascade");
             $table->integer("product_id");
             $table->integer("quantity");
-            $table->string("warranty")->default(0);
+            $table->integer("warranty")->default(0);
             $table->decimal("selling_price");
             $table->decimal("total_amount"); 
             $table->timestamps();

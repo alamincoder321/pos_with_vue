@@ -1,98 +1,128 @@
 <template>
     <div class="container-fluid px-3 mt-2">
         <div class="row">
-            <div class="col-xl-12 col-md-12">
+            <div class="col-lg-12 col-12">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="changeVal"></label>
-                                    <select class="form-control shadow-none" v-model="changeVal"
-                                        @change="onChangeValue">
-                                        <option value="">By Current Date</option>
-                                        <option value="invoice">By Invoice</option>
-                                    </select>
+                    <div class="card-header" style="background:linear-gradient(45deg, #bb3a87, #000000d1);">
+                        <form @submit.prevent="getSearchQuotation">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group m-0">
+                                        <select class="form-select shadow-none" v-model="searchBy">
+                                            <option value="">All</option>
+                                            <option value="invoice"> By Invoice </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3" :style="{ display: searchBy == 'invoice' ? '' : 'none' }">
+                                    <div class="form-group m-0">
+                                        <v-select :options="invoices" id="invoice" v-model="selectedInvoice"
+                                            label="invoice"></v-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2" :style="{ display: searchBy == 'invoice' ? 'none' : '' }">
+                                    <div class="form-group m-0">
+                                        <input type="date" class="form-control shadow-none" v-model="dateFrom" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2" :style="{ display: searchBy == 'invoice' ? 'none' : '' }">
+                                    <div class="form-group m-0">
+                                        <input type="date" class="form-control shadow-none" v-model="dateTo" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group m-0">
+                                        <button type="submit" class="btn btn-info btn-sm text-white shadow-none px-3">
+                                            Submit
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4" :style="{ display: changeVal == 'invoice' ? '' : 'none' }">
-                                <div class="form-group">
-                                    <label for="invoice">Invoice</label>
-                                    <v-select label="invoice" id="invoice" :options="invoices"
-                                        v-model="selectedInvoice">
-                                    </v-select>
-                                </div>
-                            </div>
-                            <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
-                                <div class="form-group">
-                                    <label for="dateFrom">From Date:</label>                                    
-                                    <input type="date"  v-model="dateFrom" class="form-control shadow-none"/>
-                                </div>
-                            </div>
-                            <div class="col-lg-2" :style="{ display: changeVal == '' ? '' : 'none' }">
-                                <div class='form-group'>
-                                    <label>To Date:</label>                                    
-                                    <input type="date"  v-model="dateTo" class="form-control shadow-none"/>
-                                </div>
-                            </div>
-                            <div class="col-lg-1 mt-lg-0 mt-3">
-                                <label></label>
-                                <button type="button" @click="getSearchQuotation" class="searchBtn">Submit</button>
-                            </div>
-                        </div>
+                        </form>
+                    </div>
+                    <div class="card-body" style="overflow-x:auto;"
+                        :style="{ display: quotations.length > 0 ? '' : 'none' }">
+                        <table class="table table-bordered m-0">
+                            <thead class="bg-info text-white text-center">
+                                <tr>
+                                    <th style="width: 8%">
+                                        Sl
+                                    </th>
+                                    <th style="width: 10%">
+                                        #Invoice
+                                    </th>
+                                    <th style="width: 10%">
+                                        Date
+                                    </th>
+                                    <th>
+                                        Customer Details
+                                    </th>
+                                    <th>
+                                        Amount Details
+                                    </th>
+                                    <th style="width: 12%">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-for="(item, index) in quotations">
+                                    <tr>
+                                        <td class="text-center">
+                                            {{ index + 1 }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ item.invoice }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formatDate(item.date) }}
+                                        </td>
+                                        <td>
+                                            <span>Customer Name:
+                                                {{ item.customer_name }}</span><br />
+                                            <span>Mobile: {{ item.customer_phone }}</span><br />
+                                            <span>Address:
+                                                {{ item.customer_address }}</span>
+                                        </td>
+                                        <td>
+                                            <span>SubTotal:
+                                                {{ item.subtotal }}</span><br />
+                                            <span>Total: {{ item.total }}</span><br />
+                                            <span v-if="item.discount != 0">Discount ({{
+                                                item.discount
+                                            }}%):
+                                                {{ item.discount_amount }}</span><br />
+                                            <span v-if="item.vat != 0">Vat ({{ item.vat }}%):
+                                                {{ item.vat_amount }}</span><br />
+                                            <span v-if="item.transport_cost != 0">Transport Cost:
+                                                {{ item.transport_cost }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="input-group gap-2">
+                                                <router-link class="bg-common" style="padding:2px 6px;"
+                                                    title="Sale Invoice"
+                                                    :to="{ path: '/quotation-invoice/' + item.invoice }"><i
+                                                        class="fas fa-file text-info"></i>
+                                                </router-link>
+                                                <router-link class="bg-common" title="Sale-edit"
+                                                    :to="{ path: '/quotations-edit/' + item.invoice }">
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </router-link>
+                                                <button title="Sale Delete" @click="InvoiceDelete(item.id, index)"
+                                                    type="button" class="shadow-none outline-none border-0">
+                                                    <i class="fas fa-trash text-danger"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body" :style="{ display: quotations.length > 0 ? 'none' : '' }">
+                        <p class="m-0 text-center">Not Found Data in Table</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-12 col-12" style="overflow-x:auto;">
-                <table id="getTable" class="table table-sm table-bordered border-primary">
-                    <thead style="background: #897800;color: white;">
-                        <tr class="text-center" style="font-size: 12px;">
-                            <th>Invoice No.</th>
-                            <th>Date</th>
-                            <th>Customer Details</th>
-                            <th>Sale Amount Details</th>
-                            <th class="hideAction">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody style="border:0; font-size: 12px;">
-                        <tr v-for="(item, index) in quotations" :key="index">
-                            <td>#{{ item.invoice }}</td>
-                            <td>{{ formatDate(item.date) }}</td>
-                            <td>
-                                <span style="font-weight: bold;">Name:</span> {{ item.customer_name }}<br />
-                                <span style="font-weight: bold;">Phone:</span> {{ item.customer_phone }} <br />
-                                <span style="font-weight: bold;">Address:</span> {{ item.customer_address }}
-                            </td>
-                            <td>
-                                <span style="font-weight: bold;">SubTotal:</span> {{ item.subtotal }} <br />
-                                <span style="font-weight: bold;">Total:</span> {{ item.total }} <br />
-                                <span style="font-weight: bold;">Vat ({{ item.vat }})%:</span> {{ item.vat_amount }}
-                                <br />
-                                <span style="font-weight: bold;">Discount ({{ item.discount }})%:</span> {{
-                                        item.discount_amount
-                                }}<br />
-                                <span style="font-weight: bold;">Transport Cost </span> {{
-                                        item.transport_cost
-                                }}
-                            </td>
-                            <td class="hideAction">
-                                <span title="Invoice Delete" @click="InvoiceDelete(item.id, index)"
-                                    style="cursor:pointer; margin-right: 5px;"><i
-                                        class="fas fa-trash text-danger"></i></span>
-                                <router-link title="Quotations Edit" style="margin-right: 5px;"
-                                    :to="{ path: '/quotations-edit/' + item.invoice }">
-                                    <i class="fa fa-edit text-primary"></i>
-                                </router-link>
-                                <router-link title="invoice" :to="{ path: '/quotation-invoice/' + item.invoice }"
-                                    style="cursor:pointer;"><i class="fas fa-file text-info"></i></router-link>
-                            </td>
-                        </tr>
-                        <tr :style="{ display: quotations.length == 0 ? '' : 'none' }">
-                            <td colspan="5" class="text-center">Not Found Data</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -103,15 +133,11 @@ var moment = require('moment');
 export default {
     data() {
         return {
-            changeVal: "",
-            dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-            dateTo: moment(new Date()).format("YYYY-MM-DD"),
+            searchBy: "",
+            dateFrom: moment().format("YYYY-MM-DD"),
+            dateTo: moment().format("YYYY-MM-DD"),
             invoices: [],
-            selectedInvoice: {
-                id: "",
-                invoice: "",
-            },
-
+            selectedInvoice: null,
             quotations: [],
             useraccess: [],
             user_id: null,
@@ -126,11 +152,17 @@ export default {
     },
     methods: {
         getSearchQuotation() {
-            let data = {
-                dateFrom: this.selectedInvoice.invoice ? "" : this.dateFrom,
-                dateTo: this.dateTo,
-                invoice: this.selectedInvoice != null || this.selectedInvoice.invoice != "" ? this.selectedInvoice.invoice : ""
+            if (this.searchBy == "invoice" && this.selectedInvoice == null) {
+                alert("Select first Invoice");
+                document.querySelector("#invoice [type='search']").focus();
+                return;
             }
+
+            let data = {
+                invoice: this.searchBy != "" ? this.selectedInvoice.invoice : "",
+                dateFrom: this.searchBy != "" ? "" : this.dateFrom,
+                dateTo: this.searchBy != "" ? "" : this.dateTo,
+            };
             axios.post("/api/get_quotation", data).then((res) => {
                 this.quotations = res.data.quotations
             });
@@ -139,14 +171,6 @@ export default {
             axios.post("/api/get_quotation").then((res) => {
                 this.invoices = res.data.quotations
             });
-        },
-        onChangeValue() {
-            if (this.changeVal == '') {
-                this.selectedInvoice = {
-                    id: "",
-                    invoice: ""
-                }
-            }
         },
 
         InvoiceDelete(id, sl) {
@@ -180,6 +204,11 @@ export default {
     },
 
     watch: {
+        searchBy() {
+            if (this.searchBy == "") {
+                this.selectedInvoice = null;
+            }
+        },
         useraccess() {
             this.useraccess.includes("quotation.index") ? "" : location.href = "/unauthorize"
         }
@@ -194,14 +223,5 @@ export default {
 <style>
 #invoice {
     width: 100% !important;
-}
-
-.searchBtn {
-    border: none;
-    background: green;
-    color: white;
-    padding: 3px 12px;
-    font-size: 15px;
-    border-radius: 0.2rem;
 }
 </style>

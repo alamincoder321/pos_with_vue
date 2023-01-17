@@ -18,7 +18,7 @@ class CreateQuotationDetailsTable extends Migration
             $table->foreignId("quotation_id")->constrained("quotations", "id")->onDelete("cascade");
             $table->integer("product_id");
             $table->integer("quantity");
-            $table->string("warranty")->default(0);
+            $table->integer("warranty")->default(0);
             $table->decimal("selling_price");
             $table->decimal("total_amount");
             $table->timestamps();
