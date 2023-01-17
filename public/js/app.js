@@ -18134,7 +18134,11 @@ var render = function render() {
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
   }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.purchases, function (item, index) {
-    return [_c("tr", [_c("td", {
+    return [_c("tr", {
+      attrs: {
+        title: item.user_name
+      }
+    }, [_c("td", {
       staticClass: "text-center"
     }, [_vm._v("\n                              " + _vm._s(index + 1) + "\n                           ")]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
@@ -19973,7 +19977,11 @@ var render = function render() {
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
   }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.quotations, function (item, index) {
-    return [_c("tr", [_c("td", {
+    return [_c("tr", {
+      attrs: {
+        title: item.user_name
+      }
+    }, [_c("td", {
       staticClass: "text-center"
     }, [_vm._v("\n                                        " + _vm._s(index + 1) + "\n                                    ")]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
@@ -22476,7 +22484,11 @@ var render = function render() {
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
   }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.sales, function (item, index) {
-    return [_c("tr", [_c("td", {
+    return [_c("tr", {
+      attrs: {
+        title: item.user_name
+      }
+    }, [_c("td", {
       staticClass: "text-center"
     }, [_vm._v("\n                                        " + _vm._s(index + 1) + "\n                                    ")]), _vm._v(" "), _c("td", {
       staticClass: "text-center"

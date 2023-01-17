@@ -67,7 +67,7 @@
                             </thead>
                             <tbody>
                                 <template v-for="(item, index) in quotations">
-                                    <tr>
+                                    <tr :title="item.user_name">
                                         <td class="text-center">
                                             {{ index + 1 }}
                                         </td>
