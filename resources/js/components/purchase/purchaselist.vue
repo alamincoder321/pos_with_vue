@@ -40,7 +40,7 @@
                      </div>
                   </form>
                </div>
-               <div class="card-body" style="overflow-x:auto;" :style="{ display: purchases.length > 0 ? '' : 'none' }">
+               <div class="card-body" style="overflow-x:auto;" v-if="purchases.length > 0">
                   <table class="table table-bordered m-0">
                      <thead class="bg-info text-white text-center">
                         <tr>
@@ -121,8 +121,8 @@
                      </tbody>
                   </table>
                </div>
-               <div class="card-body" :style="{ display: purchases.length > 0 ? 'none' : '' }">
-                  <p class="m-0 text-center">Not Found Data in Table</p>
+               <div class="card-body text-center" v-else>
+                  Not found data in Table
                </div>
             </div>
          </div>
@@ -133,11 +133,11 @@
             <div class="modal-content">
                <div class="modal-body p-5">
                   <h4 class="text-center text-decoration-underline">Invoice: <span></span></h4>
-                  <table class="table table-hover">
-                     <thead>
+                  <table class="table table-hover table-bordered">
+                     <thead class="text-white text-center" style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">
                         <tr>
                            <th>Sl</th>
-                           <th>Item Name</th>
+                           <th>Description</th>
                            <th>Quantity</th>
                            <th>Unit Price</th>
                            <th>Total</th>
@@ -150,6 +150,10 @@
                            <td>{{ item.quantity }} {{ item.unit_name }}</td>
                            <td>{{ item.purchase_price }}</td>
                            <td>{{ item.total_amount }}</td>
+                        </tr>
+                        <tr>
+                           <th colspan="4" class="text-end">Total:</th>
+                           <th>{{ detail.reduce((acc, pre) => {return acc + +pre.total_amount}, 0).toFixed(2) }}</th>
                         </tr>
                      </tbody>
                   </table>

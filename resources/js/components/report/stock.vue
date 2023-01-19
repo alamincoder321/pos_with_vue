@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
@@ -40,16 +40,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-12">
-                <div class="card">
-                    <div class="text-end">
-                        <button v-if="stocks.length > 0" class="btn btn-warning btn-sm shadow-none text-white px-3"
+                    <div class="card-body position-relative" v-if="stocks.length > 0">
+                        <button style="position: absolute;right: 0;top: -30px;border-radius: 0;" class="btn btn-warning btn-sm shadow-none text-white px-4"
                             @click="print">Print</button>
-                    </div>
-                    <div class="card-body" style="overflow-x:auto;">
-                        <table id="stocks" class="table table-sm table-bordered border-primary">
+
+                        <table id="stocks" class="table table-sm table-hover table-bordered">
                             <thead style="background: #897800;color: white;">
                                 <tr class="text-center" style="font-size: 12px;">
                                     <th>Sl</th>
@@ -60,7 +55,7 @@
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody style="border:0; font-size: 12px;">
+                            <tbody>
                                 <tr v-for="(item, index) in stocks" :key="index">
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ item.product_code }}</td>
@@ -71,15 +66,26 @@
                                 </tr>
                                 <tr :style="{ display: stocks.length == 0 ? 'none' : '' }">
                                     <th colspan="3" style="text-align:right;">Total Stock Qty</th>
-                                    <th style="text-align:center;">{{ stocks.reduce((acc, pre) => {return acc + +pre.stock}, 0) }}</th>
+                                    <th style="text-align:center;">{{
+                                        stocks.reduce((acc, pre) => {
+                                            return acc +
+                                                +pre.stock
+                                        }, 0)
+                                    }}</th>
                                     <th style="text-align:right;">Total Stock Value</th>
-                                    <th style="text-align:center;">{{ (stocks.reduce((acc, pre) => {return acc + +pre.stock * pre.selling_price}, 0) ).toFixed(2) }} </th>
+                                    <th style="text-align:center;">{{ (stocks.reduce((acc, pre) => {
+                                        return acc +
+                                            +pre.stock * pre.selling_price
+                                    }, 0)).toFixed(2) }} </th>
                                 </tr>
                                 <tr :style="{ display: stocks.length == 0 ? '' : 'none' }">
                                     <td colspan="6" class="text-center">Not Found Data</td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-body text-center" v-else>
+                        Not found data in Table
                     </div>
                 </div>
             </div>
@@ -171,9 +177,9 @@ export default {
                         this.stocks = res.data.filter(p => p.category_id == this.selectedCategory.id)
                     } else if (this.changeVal == "brand") {
                         this.stocks = res.data.filter(p => p.brand_id == this.selectedBrand.id)
-                    } else if(this.changeVal == "current") {
+                    } else if (this.changeVal == "current") {
                         this.stocks = res.data.filter(p => p.stock > 0);
-                    }else{
+                    } else {
                         this.stocks = res.data
                     }
                 })

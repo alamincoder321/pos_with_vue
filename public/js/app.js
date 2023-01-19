@@ -18154,13 +18154,10 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _vm.purchases.length > 0 ? _c("div", {
     staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
-    },
-    style: {
-      display: _vm.purchases.length > 0 ? "" : "none"
     }
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
@@ -18219,14 +18216,9 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fas fa-trash text-danger"
     })])], 1)])])];
-  })], 2)])]), _vm._v(" "), _c("div", {
-    staticClass: "card-body",
-    style: {
-      display: _vm.purchases.length > 0 ? "none" : ""
-    }
-  }, [_c("p", {
-    staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+  })], 2)])]) : _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n               Not found data in Table\n            ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "showModal",
@@ -18239,10 +18231,17 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-body p-5"
   }, [_vm._m(2), _vm._v(" "), _c("table", {
-    staticClass: "table table-hover"
-  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    staticClass: "table table-hover table-bordered"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.detail, function (item, index) {
     return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.purchase_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
-  }), 0)])])])])])]);
+  }), _vm._v(" "), _c("tr", [_c("th", {
+    staticClass: "text-end",
+    attrs: {
+      colspan: "4"
+    }
+  }, [_vm._v("Total:")]), _vm._v(" "), _c("th", [_vm._v(_vm._s(_vm.detail.reduce(function (acc, pre) {
+    return acc + +pre.total_amount;
+  }, 0).toFixed(2)))])])], 2)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -18288,7 +18287,12 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
+  return _c("thead", {
+    staticClass: "text-white text-center",
+    staticStyle: {
+      background: "linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))"
+    }
+  }, [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Description")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -20030,13 +20034,10 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _vm.quotations.length > 0 ? _c("div", {
     staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
-    },
-    style: {
-      display: _vm.quotations.length > 0 ? "" : "none"
     }
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
@@ -20095,14 +20096,9 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fas fa-trash text-danger"
     })])], 1)])])];
-  })], 2)])]), _vm._v(" "), _c("div", {
-    staticClass: "card-body",
-    style: {
-      display: _vm.quotations.length > 0 ? "none" : ""
-    }
-  }, [_c("p", {
-    staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+  })], 2)])]) : _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n                    Not found data in Table\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "showModal",
@@ -20115,10 +20111,17 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-body p-5"
   }, [_vm._m(2), _vm._v(" "), _c("table", {
-    staticClass: "table table-hover"
-  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    staticClass: "table table-hover table-bordered"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.detail, function (item, index) {
     return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
-  }), 0)])])])])])]);
+  }), _vm._v(" "), _c("tr", [_c("th", {
+    staticClass: "text-end",
+    attrs: {
+      colspan: "4"
+    }
+  }, [_vm._v("Total:")]), _vm._v(" "), _c("th", [_vm._v(_vm._s(_vm.detail.reduce(function (acc, pre) {
+    return acc + +pre.total_amount;
+  }, 0).toFixed(2)))])])], 2)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -20164,7 +20167,12 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
+  return _c("thead", {
+    staticClass: "text-white text-center",
+    staticStyle: {
+      background: "linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))"
+    }
+  }, [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Description")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -20195,7 +20203,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "card-header"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -20317,33 +20325,25 @@ var render = function render() {
     on: {
       click: _vm.getStock
     }
-  }, [_vm._v("Submit")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-lg-12"
-  }, [_c("div", {
-    staticClass: "card"
-  }, [_c("div", {
-    staticClass: "text-end"
-  }, [_vm.stocks.length > 0 ? _c("button", {
-    staticClass: "btn btn-warning btn-sm shadow-none text-white px-3",
+  }, [_vm._v("Submit")])])])]), _vm._v(" "), _vm.stocks.length > 0 ? _c("div", {
+    staticClass: "card-body position-relative"
+  }, [_c("button", {
+    staticClass: "btn btn-warning btn-sm shadow-none text-white px-4",
+    staticStyle: {
+      position: "absolute",
+      right: "0",
+      top: "-30px",
+      "border-radius": "0"
+    },
     on: {
       click: _vm.print
     }
-  }, [_vm._v("Print")]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "card-body",
-    staticStyle: {
-      "overflow-x": "auto"
-    }
-  }, [_c("table", {
-    staticClass: "table table-sm table-bordered border-primary",
+  }, [_vm._v("Print")]), _vm._v(" "), _c("table", {
+    staticClass: "table table-sm table-hover table-bordered",
     attrs: {
       id: "stocks"
     }
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", {
-    staticStyle: {
-      border: "0",
-      "font-size": "12px"
-    }
-  }, [_vm._l(_vm.stocks, function (item, index) {
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.stocks, function (item, index) {
     return _c("tr", {
       key: index
     }, [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.product_code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", {
@@ -20395,7 +20395,9 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v("Not Found Data")])])], 2)])])])])])]);
+  }, [_vm._v("Not Found Data")])])], 2)])]) : _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n                    Not found data in Table\n                ")])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -22572,13 +22574,10 @@ var render = function render() {
         _vm.dateTo = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _vm.sales.length > 0 ? _c("div", {
     staticClass: "card-body",
     staticStyle: {
       "overflow-x": "auto"
-    },
-    style: {
-      display: _vm.sales.length > 0 ? "" : "none"
     }
   }, [_c("table", {
     staticClass: "table table-bordered m-0"
@@ -22637,14 +22636,9 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fas fa-trash text-danger"
     })])], 1)])])];
-  })], 2)])]), _vm._v(" "), _c("div", {
-    staticClass: "card-body",
-    style: {
-      display: _vm.sales.length > 0 ? "none" : ""
-    }
-  }, [_c("p", {
-    staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+  })], 2)])]) : _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n                    Not found data in Table\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "showModal",
@@ -22657,10 +22651,17 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-body p-5"
   }, [_vm._m(2), _vm._v(" "), _c("table", {
-    staticClass: "table table-hover"
-  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    staticClass: "table table-hover table-bordered"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.detail, function (item, index) {
     return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
-  }), 0)])])])])])]);
+  }), _vm._v(" "), _c("tr", [_c("th", {
+    staticClass: "text-end",
+    attrs: {
+      colspan: "4"
+    }
+  }, [_vm._v("Total:")]), _vm._v(" "), _c("th", [_vm._v(_vm._s(_vm.detail.reduce(function (acc, pre) {
+    return acc + +pre.total_amount;
+  }, 0).toFixed(2)))])])], 2)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -22706,7 +22707,12 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
+  return _c("thead", {
+    staticClass: "text-white text-center",
+    staticStyle: {
+      background: "linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))"
+    }
+  }, [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Description")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
