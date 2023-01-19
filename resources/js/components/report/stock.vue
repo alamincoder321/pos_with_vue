@@ -230,7 +230,7 @@ export default {
                                 </div>
                                 <div class="row">
                                     <h2 style="margin:0;text-align:center">Stock Report</h2>
-                                    <table class="table table-bordered m-0">
+                                    <table class="table table-sm table-bordered m-0">
                                         ${document.querySelector("#stocks").innerHTML}
                                     </table>
                                 </div>
