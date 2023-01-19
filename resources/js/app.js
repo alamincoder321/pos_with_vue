@@ -21,6 +21,10 @@ Vue.use(VueDatePicker);
 //moment
 import moment from 'moment';
 
+// jquery use
+import $ from "jquery"
+window.$ = window.jQuery = require('jquery/dist/jquery');
+
 // router
 import routes from "./routes.js";
 import Vue from 'vue';

@@ -67,7 +67,7 @@
                             </thead>
                             <tbody>
                                 <template v-for="(item, index) in sales">
-                                    <tr :title="item.user_name">
+                                    <tr :title="item.user_name" @dblclick="showDetail(item.saleDetails, item.invoice)">
                                         <td class="text-center">
                                             {{ index + 1 }}
                                         </td>
@@ -104,8 +104,7 @@
                                         <td>
                                             <div class="input-group gap-2">
                                                 <router-link class="bg-common" style="padding:2px 6px;"
-                                                    title="Sale Invoice"
-                                                    :to="{ path: '/invoice/' + item.invoice }"><i
+                                                    title="Sale Invoice" :to="{ path: '/invoice/' + item.invoice }"><i
                                                         class="fas fa-file text-info"></i>
                                                 </router-link>
                                                 <router-link class="bg-common" title="Sale-edit"
@@ -129,6 +128,37 @@
                 </div>
             </div>
         </div>
+
+        <div id="showModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body p-5">
+                        <h4 class="text-center text-decoration-underline">Invoice: <span></span></h4>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="detail.length > 0" v-for="(item, index) in detail">
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.quantity }} {{ item.unit_name }}</td>
+                                    <td>{{ item.selling_price }}</td>
+                                    <td>{{ item.total_amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -143,6 +173,7 @@ export default {
             invoices: [],
             selectedInvoice: null,
             sales: [],
+            detail: [],
             useraccess: [],
             user_id: null,
         }
@@ -155,6 +186,11 @@ export default {
         this.logOut();
     },
     methods: {
+        showDetail(products, inv) {
+            $('#showModal').modal('show');
+            $('#showModal').find('h4 span').text(inv);
+            this.detail = products
+        },
         getSearchSale() {
             if (this.searchBy == "invoice" && this.selectedInvoice == null) {
                 alert("Select first Invoice");

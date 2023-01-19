@@ -8358,6 +8358,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       invoices: [],
       selectedInvoice: null,
       purchases: [],
+      detail: [],
       useraccess: [],
       user_id: null
     };
@@ -8370,6 +8371,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.logOut();
   },
   methods: {
+    showDetail: function showDetail(products, inv) {
+      $('#showModal').modal('show');
+      $('#showModal').find('h4 span').text(inv);
+      this.detail = products;
+    },
     getSearchPurchase: function getSearchPurchase() {
       var _this = this;
       if (this.searchBy == "invoice" && this.selectedInvoice == null) {
@@ -9024,6 +9030,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       invoices: [],
       selectedInvoice: null,
       quotations: [],
+      detail: [],
       useraccess: [],
       user_id: null
     };
@@ -9036,6 +9043,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.logOut();
   },
   methods: {
+    showDetail: function showDetail(products, inv) {
+      $('#showModal').modal('show');
+      $('#showModal').find('h4 span').text(inv);
+      this.detail = products;
+    },
     getSearchQuotation: function getSearchQuotation() {
       var _this = this;
       if (this.searchBy == "invoice" && this.selectedInvoice == null) {
@@ -10089,6 +10101,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       invoices: [],
       selectedInvoice: null,
       sales: [],
+      detail: [],
       useraccess: [],
       user_id: null
     };
@@ -10101,6 +10114,11 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     this.logOut();
   },
   methods: {
+    showDetail: function showDetail(products, inv) {
+      $('#showModal').modal('show');
+      $('#showModal').find('h4 span').text(inv);
+      this.detail = products;
+    },
     getSearchSale: function getSearchSale() {
       var _this = this;
       if (this.searchBy == "invoice" && this.selectedInvoice == null) {
@@ -18150,6 +18168,11 @@ var render = function render() {
     return [_c("tr", {
       attrs: {
         title: item.user_name
+      },
+      on: {
+        dblclick: function dblclick($event) {
+          return _vm.showDetail(item.purchaseDetails, item.invoice);
+        }
       }
     }, [_c("td", {
       staticClass: "text-center"
@@ -18157,7 +18180,7 @@ var render = function render() {
       staticClass: "text-center"
     }, [_vm._v("\n                              " + _vm._s(item.invoice) + "\n                           ")]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
-    }, [_vm._v("\n                              " + _vm._s(_vm.formatDate(item.date)) + "\n                           ")]), _vm._v(" "), _c("td", [_c("span", [_vm._v("Supplier Name:\n                              " + _vm._s(item.name))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Mobile: " + _vm._s(item.phone))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address:\n                              " + _vm._s(item.address))]), _c("br"), _vm._v(" "), item.supplier_type != "G" ? _c("span", [_vm._v("Previous Due:\n                              " + _vm._s(item.previous_due))]) : _c("span", [_vm._v("General Supplier")])]), _vm._v(" "), _c("td", [_c("span", [_vm._v("SubTotal:\n                              " + _vm._s(item.subtotal))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Total: " + _vm._s(item.total))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Due: " + _vm._s(item.due))]), _c("br"), _vm._v(" "), item.discount != 0 ? _c("span", [_vm._v("Discount (" + _vm._s(item.discount) + "%):\n                              " + _vm._s(item.discount_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.vat != 0 ? _c("span", [_vm._v("Vat (" + _vm._s(item.vat) + "%):\n                              " + _vm._s(item.vat_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.transport_cost != 0 ? _c("span", [_vm._v("Transport Cost:\n                              " + _vm._s(item.transport_cost))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("div", {
+    }, [_vm._v("\n                              " + _vm._s(_vm.formatDate(item.date)) + "\n                           ")]), _vm._v(" "), _c("td", [_c("span", [_vm._v("Supplier Name:\n                                 " + _vm._s(item.name))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Mobile: " + _vm._s(item.phone))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address:\n                                 " + _vm._s(item.address))]), _c("br"), _vm._v(" "), item.supplier_type != "G" ? _c("span", [_vm._v("Previous Due:\n                                 " + _vm._s(item.previous_due))]) : _c("span", [_vm._v("General Supplier")])]), _vm._v(" "), _c("td", [_c("span", [_vm._v("SubTotal:\n                                 " + _vm._s(item.subtotal))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Total: " + _vm._s(item.total))]), _c("br"), _vm._v(" "), _c("span", [_vm._v("Due: " + _vm._s(item.due))]), _c("br"), _vm._v(" "), item.discount != 0 ? _c("span", [_vm._v("Discount (" + _vm._s(item.discount) + "%):\n                                 " + _vm._s(item.discount_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.vat != 0 ? _c("span", [_vm._v("Vat (" + _vm._s(item.vat) + "%):\n                                 " + _vm._s(item.vat_amount))]) : _vm._e(), _c("br"), _vm._v(" "), item.transport_cost != 0 ? _c("span", [_vm._v("Transport Cost:\n                                 " + _vm._s(item.transport_cost))]) : _vm._e()]), _vm._v(" "), _c("td", [_c("div", {
       staticClass: "input-group gap-2"
     }, [_c("router-link", {
       staticClass: "bg-common",
@@ -18203,7 +18226,23 @@ var render = function render() {
     }
   }, [_c("p", {
     staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])])]);
+  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "showModal",
+      tabindex: "-1"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-lg"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-body p-5"
+  }, [_vm._m(2), _vm._v(" "), _c("table", {
+    staticClass: "table table-hover"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.purchase_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
+  }), 0)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -18217,7 +18256,7 @@ var staticRenderFns = [function () {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("\n                           Submit\n                           ")])])]);
+  }, [_vm._v("\n                              Submit\n                           ")])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -18240,6 +18279,16 @@ var staticRenderFns = [function () {
       width: "12%"
     }
   }, [_vm._v("\n                           Action\n                        ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("h4", {
+    staticClass: "text-center text-decoration-underline"
+  }, [_vm._v("Invoice: "), _c("span")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -19995,6 +20044,11 @@ var render = function render() {
     return [_c("tr", {
       attrs: {
         title: item.user_name
+      },
+      on: {
+        dblclick: function dblclick($event) {
+          return _vm.showDetail(item.quotationDetails, item.invoice);
+        }
       }
     }, [_c("td", {
       staticClass: "text-center"
@@ -20048,7 +20102,23 @@ var render = function render() {
     }
   }, [_c("p", {
     staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])])]);
+  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "showModal",
+      tabindex: "-1"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-lg"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-body p-5"
+  }, [_vm._m(2), _vm._v(" "), _c("table", {
+    staticClass: "table table-hover"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
+  }), 0)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -20085,6 +20155,16 @@ var staticRenderFns = [function () {
       width: "12%"
     }
   }, [_vm._v("\n                                    Action\n                                ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("h4", {
+    staticClass: "text-center text-decoration-underline"
+  }, [_vm._v("Invoice: "), _c("span")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -22506,6 +22586,11 @@ var render = function render() {
     return [_c("tr", {
       attrs: {
         title: item.user_name
+      },
+      on: {
+        dblclick: function dblclick($event) {
+          return _vm.showDetail(item.saleDetails, item.invoice);
+        }
       }
     }, [_c("td", {
       staticClass: "text-center"
@@ -22559,7 +22644,23 @@ var render = function render() {
     }
   }, [_c("p", {
     staticClass: "m-0 text-center"
-  }, [_vm._v("Not Found Data in Table")])])])])])]);
+  }, [_vm._v("Not Found Data in Table")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "showModal",
+      tabindex: "-1"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-lg"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-body p-5"
+  }, [_vm._m(2), _vm._v(" "), _c("table", {
+    staticClass: "table table-hover"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.detail, function (item, index) {
+    return _vm.detail.length > 0 ? _c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.quantity) + " " + _vm._s(item.unit_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.selling_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.total_amount))])]) : _vm._e();
+  }), 0)])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -22596,6 +22697,16 @@ var staticRenderFns = [function () {
       width: "12%"
     }
   }, [_vm._v("\n                                    Action\n                                ")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("h4", {
+    staticClass: "text-center text-decoration-underline"
+  }, [_vm._v("Invoice: "), _c("span")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Sl")]), _vm._v(" "), _c("th", [_vm._v("Item Name")]), _vm._v(" "), _c("th", [_vm._v("Quantity")]), _vm._v(" "), _c("th", [_vm._v("Unit Price")]), _vm._v(" "), _c("th", [_vm._v("Total")])])]);
 }];
 render._withStripped = true;
 
@@ -24485,7 +24596,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mathieustan_vue_datepicker_dist_vue_datepicker_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mathieustan/vue-datepicker/dist/vue-datepicker.min.css */ "./node_modules/@mathieustan/vue-datepicker/dist/vue-datepicker.min.css");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./routes.js */ "./resources/js/routes.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./routes.js */ "./resources/js/routes.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
@@ -24507,12 +24620,16 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(_mathieustan_vue_datepicker__WEB
 //moment
 
 
+// jquery use
+
+window.$ = window.jQuery = __webpack_require__(/*! jquery/dist/jquery */ "./node_modules/jquery/dist/jquery.js");
+
 // router
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
-  routes: _routes_js__WEBPACK_IMPORTED_MODULE_9__["default"]
+  routes: _routes_js__WEBPACK_IMPORTED_MODULE_10__["default"]
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   router: router,
@@ -41233,7 +41350,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.searchBtn {\r\n    border: none;\r\n    background: green;\r\n    color: white;\r\n    padding: 3px 12px;\r\n    font-size: 15px;\r\n    border-radius: 0.2rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.searchBtn {\r\n   border: none;\r\n   background: green;\r\n   color: white;\r\n   padding: 3px 12px;\r\n   font-size: 15px;\r\n   border-radius: 0.2rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
