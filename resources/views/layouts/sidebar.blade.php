@@ -168,7 +168,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts8" aria-expanded="false" aria-controls="collapseLayouts8">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file"></i></div>
+                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file-text"></i></div>
                     All Ledger
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
