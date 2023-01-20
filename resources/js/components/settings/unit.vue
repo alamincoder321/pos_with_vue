@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         getUnit() {
-            axios.get("/api/get_unit").then((res) => {
+            axios.get("/api/get-unit").then((res) => {
                 this.units = res.data;
             });
         },
@@ -101,7 +101,7 @@ export default {
             let formdata = new FormData(event.target)
             formdata.append("id", this.unit.id)
             axios
-                .post(location.origin + "/api/save_unit", formdata)
+                .post(location.origin + "/api/save-unit", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -118,7 +118,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_unit/" + id).then((res) => {
+                axios.get("/api/delete-unit/" + id).then((res) => {
                     alert(res.data);
                     this.getUnit();
                 });
@@ -131,7 +131,7 @@ export default {
             };
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

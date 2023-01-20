@@ -112,7 +112,7 @@ export default {
     },
     methods: {
         getCategory() {
-            axios.get("/api/get_category").then((res) => {
+            axios.get("/api/get-category").then((res) => {
                 this.categories = res.data;
             });
         },
@@ -127,7 +127,7 @@ export default {
             formdata.append("image", this.category.image)
             formdata.append("id", this.category.id)
             axios
-                .post(location.origin + "/api/save_category", formdata)
+                .post(location.origin + "/api/save-category", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -147,7 +147,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_category/" + id).then((res) => {
+                axios.get("/api/delete-category/" + id).then((res) => {
                     alert(res.data);
                     this.getCategory();
                 });
@@ -180,7 +180,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

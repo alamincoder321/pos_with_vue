@@ -145,7 +145,7 @@ export default {
     },
     methods: {
         getCompany() {
-            axios.get("/api/get_company_profile").then((res) => {
+            axios.get("/api/get-company-profile").then((res) => {
                 this.company = res.data;
                 this.imageSrc = res.data.company_logo ? res.data.company_logo : location.origin + "/no-image.jpg";
             });
@@ -168,7 +168,7 @@ export default {
             formdata.append("company_logo", this.company.company_logo)
             formdata.append("id", this.company.id)
             axios
-                .post(location.origin + "/api/save_company", formdata)
+                .post(location.origin + "/api/save-company", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.getCompany();
@@ -191,7 +191,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

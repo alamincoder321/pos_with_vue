@@ -317,19 +317,19 @@ export default {
 
     methods: {
         getCategory() {
-            axios.get("/api/get_category").then((res) => {
+            axios.get("/api/get-category").then((res) => {
                 this.categories = res.data;
                 this.categories.unshift({ id: 0, name: "Select Category" })
             });
         },
         getBrand() {
-            axios.get("/api/get_brand").then((res) => {
+            axios.get("/api/get-brand").then((res) => {
                 this.brands = res.data;
                 this.brands.unshift({ id: 0, name: "Select Brand" })
             });
         },
         getProduct() {
-            axios.get("/api/get_product").then((res) => {
+            axios.get("/api/get-product").then((res) => {
                 this.products = res.data.products;
                 this.products1 = res.data.products;
                 this.products.unshift({ id: 0, display_name: "Select Product" })
@@ -337,7 +337,7 @@ export default {
         },
         getQuotation() {
             let data = { invoice: this.$route.params.id }
-            axios.post("/api/get_quotation", data).then((res) => {
+            axios.post("/api/get-quotation", data).then((res) => {
                 this.quotation = res.data.quotations[0]
                 this.carts = res.data.quotations[0].quotationDetails
             });
@@ -425,7 +425,7 @@ export default {
                 quotation: this.quotation,
                 carts: this.carts,
             }
-            axios.post("/api/save_quotation", data)
+            axios.post("/api/save-quotation", data)
                 .then(res => {
                     alert(res.data.msg)
                     if (confirm("Are you sure want print")) {
@@ -475,7 +475,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

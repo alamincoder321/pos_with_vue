@@ -109,7 +109,7 @@ export default {
     },
     methods: {
         getUser() {
-            axios.get(location.origin+"/api/edit_user/"+this.user_id).then((res) => {
+            axios.get(location.origin+"/api/edit-user/"+this.user_id).then((res) => {
                 this.user = {
                     id      : res.data[0].id,
                     name    : res.data[0].name,
@@ -144,7 +144,7 @@ export default {
             formdata.append("id", this.user.id)
             formdata.append("role", this.user.role)
             axios
-                .post(location.origin + "/api/save_user", formdata)
+                .post(location.origin + "/api/save-user", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.getUser();

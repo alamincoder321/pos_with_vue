@@ -206,19 +206,19 @@ export default {
             dateTo: this.searchBy != "" ? "" : this.dateTo,
          };
 
-         axios.post("/api/get_purchase", data).then((res) => {
+         axios.post("/api/get-purchase", data).then((res) => {
             this.purchases = res.data.purchases;
          });
       },
       getPurchases() {
-         axios.post("/api/get_purchase").then((res) => {
+         axios.post("/api/get-purchase").then((res) => {
             this.invoices = res.data.purchases;
          });
       },
 
       InvoiceDelete(id, sl) {
          if (confirm("Are you sure want to delete")) {
-            axios.get("/api/delete_purchase/" + id).then((res) => {
+            axios.get("/api/delete-purchase/" + id).then((res) => {
                alert(res.data);
                var index = this.purchases.indexOf(sl);
                this.purchases.splice(index, 1);
@@ -231,7 +231,7 @@ export default {
       },
 
       getPermission() {
-         axios.get("/api/get_permission/" + this.user_id).then((res) => {
+         axios.get("/api/get-permission/" + this.user_id).then((res) => {
             this.useraccess = Array.from(res.data);
          });
       },

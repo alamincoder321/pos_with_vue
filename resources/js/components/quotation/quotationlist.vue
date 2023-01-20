@@ -204,19 +204,19 @@ export default {
                 dateFrom: this.searchBy != "" ? "" : this.dateFrom,
                 dateTo: this.searchBy != "" ? "" : this.dateTo,
             };
-            axios.post("/api/get_quotation", data).then((res) => {
+            axios.post("/api/get-quotation", data).then((res) => {
                 this.quotations = res.data.quotations
             });
         },
         getQuotation() {
-            axios.post("/api/get_quotation").then((res) => {
+            axios.post("/api/get-quotation").then((res) => {
                 this.invoices = res.data.quotations
             });
         },
 
         InvoiceDelete(id, sl) {
             if (confirm("Are you sure want to delete")) {
-                axios.get("/api/delete_quotation/" + id).then((res) => {
+                axios.get("/api/delete-quotation/" + id).then((res) => {
                     alert(res.data);
                     var index = this.quotations.indexOf(sl);
                     this.quotations.splice(index, 1);
@@ -229,7 +229,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

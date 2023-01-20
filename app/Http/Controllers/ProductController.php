@@ -72,4 +72,36 @@ class ProductController extends Controller
     {
         return ModelTable::Stock($request->id);
     }
+
+    // product ledger
+    public function ProductLedger(Request $request)
+    {
+        return DB::select("SELECT
+                'a' AS sequence,
+                pm.date AS date,
+                concat('Purchase Invoice: ',pm.invoice) AS description,
+                pd.quantity AS in_stock,
+                pd.purchase_price AS in_stockvalue,
+                0 AS out_stock,
+                0.00 as out_stockvalue
+                FROM purchase_details pd
+                LEFT JOIN purchases pm ON pm.id = pd.purchase_id
+                WHERE pm.date BETWEEN '$request->dateFrom' AND '$request->dateTo' 
+                AND pd.product_id = '$request->id'
+            UNION
+                SELECT
+                'b' AS sequence,
+                sm.date AS date,
+                concat('Sale Invoice: ',sm.invoice) AS description,
+                0 AS in_stock,
+                0.00 as in_stockvalue,
+                sd.quantity AS out_stock,
+                sd.selling_price AS out_stockvalue
+                FROM sale_details sd
+                LEFT JOIN sales sm ON sm.id = sd.sale_id
+                WHERE sm.date BETWEEN '$request->dateFrom' AND '$request->dateTo' 
+                AND sd.product_id = '$request->id'
+                
+                ORDER BY date, sequence");
+    }
 }

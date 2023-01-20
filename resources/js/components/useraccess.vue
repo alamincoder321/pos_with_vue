@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         getUserAccess() {
-            axios.get("/api/get_useraccess").then((res) => {
+            axios.get("/api/get-useraccess").then((res) => {
                 this.permissions = res.data.group;
                 this.useraccess = res.data.permission;
             });
@@ -83,7 +83,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.$route.params.id).then((res) => {
+            axios.get("/api/get-permission/" + this.$route.params.id).then((res) => {
                 this.alluserPermision = Array.from(res.data);
             });
         },
@@ -106,7 +106,7 @@ export default {
             }
         },
         getCheckPermission(){
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.checkUserPermission = Array.from(res.data);
             });
         },

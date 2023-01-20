@@ -109,7 +109,7 @@ export default {
     },
     methods: {
         getSupplier() {
-            axios.get("/api/get_supplier").then((res) => {
+            axios.get("/api/get-supplier").then((res) => {
                 this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G")
                 this.suppliers.unshift({id: "0", display_name: "General Supplier"})
             });
@@ -129,12 +129,12 @@ export default {
                 supplier_id: this.selectedSupplier.id,
                 invoice: this.selectedInvoice.invoice
             }
-            axios.post("/api/get_purchase", data).then((res) => {
+            axios.post("/api/get-purchase", data).then((res) => {
                 this.purchases = res.data.purchases
             });
         },
         getInvoice(id) {
-            axios.post("/api/get_purchase", { supplier_id: id }).then((res) => {
+            axios.post("/api/get-purchase", { supplier_id: id }).then((res) => {
                 if (this.selectedSupplier.id == "0") {
                     this.invoices = res.data.purchases.filter(inv => inv.supplier_type == "G");
                 } else {
@@ -162,7 +162,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

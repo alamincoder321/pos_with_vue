@@ -160,12 +160,12 @@ export default {
     },
     methods: {
         getBank() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.accounts = res.data;
             });
         },
         getTransaction() {
-            axios.get("/api/get_transaction").then((res) => {
+            axios.get("/api/get-transaction").then((res) => {
                 this.transactions = res.data;
             });
         },
@@ -176,7 +176,7 @@ export default {
                 return
             }
             this.transaction.account_id = this.selectedAccount.id
-            axios.post(location.origin+"/api/getbank_balance", {id: this.selectedAccount.id})
+            axios.post(location.origin+"/api/getbank-balance", {id: this.selectedAccount.id})
                 .then(res => {
                     this.balance = res.data[0].totalbalance
                 })
@@ -201,7 +201,7 @@ export default {
             }
 
             axios
-                .post(location.origin + "/api/save_transaction", this.transaction)
+                .post(location.origin + "/api/save-transaction", this.transaction)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -222,7 +222,7 @@ export default {
                 id: val.account_id,
                 display_name: val.display_name
             }
-            axios.post(location.origin+"/api/getbank_balance", {id: this.selectedAccount.id})
+            axios.post(location.origin+"/api/getbank-balance", {id: this.selectedAccount.id})
                 .then(res => {
                     this.balance = res.data[0].totalbalance
                 })
@@ -230,7 +230,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_transaction/" + id).then((res) => {
+                axios.get("/api/delete-transaction/" + id).then((res) => {
                     alert(res.data);
                     this.getTransaction();
                 });
@@ -252,7 +252,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

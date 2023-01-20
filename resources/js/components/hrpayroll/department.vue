@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         getDepartment() {
-            axios.get("/api/get_department").then((res) => {
+            axios.get("/api/get-department").then((res) => {
                 this.departments = res.data;
             });
         },
@@ -101,7 +101,7 @@ export default {
             let formdata = new FormData(event.target)
             formdata.append("id", this.department.id)
             axios
-                .post(location.origin + "/api/save_department", formdata)
+                .post(location.origin + "/api/save-department", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -118,7 +118,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_department/" + id).then((res) => {
+                axios.get("/api/delete-department/" + id).then((res) => {
                     alert(res.data);
                     this.getDepartment();
                 });
@@ -132,7 +132,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

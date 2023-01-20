@@ -150,12 +150,12 @@ export default {
         },
 
         getCompany() {
-            axios.get("/api/get_company_profile").then((res) => {
+            axios.get("/api/get-company-profile").then((res) => {
                 this.company = res.data;
             });
         },
         getQuotations() {
-            axios.post("/api/get_quotation", { invoice: this.$route.params.id }).then((res) => {
+            axios.post("/api/get-quotation", { invoice: this.$route.params.id }).then((res) => {
                 this.quotations = res.data.quotations[0]
             });
         },

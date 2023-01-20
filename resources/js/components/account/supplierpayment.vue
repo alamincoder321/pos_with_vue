@@ -195,19 +195,19 @@ export default {
     },
     methods: {
         getSupplier() {
-            axios.get("/api/get_supplier").then((res) => {
+            axios.get("/api/get-supplier").then((res) => {
                 this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G");
                 this.suppliers.unshift({ id: 0, display_name: 'Select Supplier' })
             });
         },
         getBank() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.banks = res.data;
                 this.banks.unshift({ id: 0, display_name: 'Select Bank' })
             });
         },
         getSupplierPayment() {
-            axios.get("/api/get_supplierpayment").then((res) => {
+            axios.get("/api/get-supplierpayment").then((res) => {
                 this.supplierpayments = res.data;
             });
         },
@@ -218,7 +218,7 @@ export default {
                 this.supplierpayment.due = 0
                 return
             }
-            axios.post("/api/get_supduetotal", {id: this.selectedSupplier.id}).then((res) => {             
+            axios.post("/api/get-supduetotal", {id: this.selectedSupplier.id}).then((res) => {             
                 this.supplierpayment.due = res.data[0].dueAmount
             });
         },
@@ -247,7 +247,7 @@ export default {
             }
             this.supplierpayment.supplier_id = this.selectedSupplier.id
 
-            axios.post(location.origin + "/api/save_supplierpayment", this.supplierpayment)
+            axios.post(location.origin + "/api/save-supplierpayment", this.supplierpayment)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -280,7 +280,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_supplierpayment/" + id).then((res) => {
+                axios.get("/api/delete-supplierpayment/" + id).then((res) => {
                     alert(res.data);
                     this.getSupplierPayment();
                 });
@@ -304,7 +304,7 @@ export default {
             this.getSupplierPayment()
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

@@ -350,7 +350,7 @@ export default {
             carts: [],
             purchase: {
                 id: "",
-                date: moment(new Date()).format("YYYY-MM-DD"),
+                date: moment().format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
                 paid: 0,
@@ -386,31 +386,31 @@ export default {
 
     methods: {
         getBank() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.accounts = res.data;
                 this.accounts.unshift({ id: 0, display_name: "Select Bank" })
             });
         },
         getCategory() {
-            axios.get("/api/get_category").then((res) => {
+            axios.get("/api/get-category").then((res) => {
                 this.categories = res.data;
                 this.categories.unshift({ id: 0, name: "Select Category" })
             });
         },
         getBrand() {
-            axios.get("/api/get_brand").then((res) => {
+            axios.get("/api/get-brand").then((res) => {
                 this.brands = res.data;
                 this.brands.unshift({ id: 0, name: "Select Brand" })
             });
         },
         getSupplier() {
-            axios.get("/api/get_supplier").then((res) => {
+            axios.get("/api/get-supplier").then((res) => {
                 this.suppliers = res.data.suppliers.filter(s => s.supplier_type != "G");
                 this.suppliers.unshift({ id: 0, display_name: "General Supplier", supplier_type: "G" })
             });
         },
         getProduct() {
-            axios.get("/api/get_product").then((res) => {
+            axios.get("/api/get-product").then((res) => {
                 this.products = res.data.products;
                 this.products1 = res.data.products;
                 this.products.unshift({ id: 0, display_name: "Select Product" })
@@ -418,7 +418,7 @@ export default {
         },
         getPurchase() {
             let data = { invoice: this.$route.params.id }
-            axios.post("/api/get_purchase", data).then((res) => {
+            axios.post("/api/get-purchase", data).then((res) => {
                 this.purchase = res.data.purchases[0]
                 this.carts = res.data.purchases[0].purchaseDetails
                 if(res.data.purchases[0].account_id){
@@ -478,7 +478,7 @@ export default {
                 this.TotalAmount()
                 return
             }
-            axios.post("/api/get_supduetotal", { id: this.selectedSupplier.id }).then((res) => {
+            axios.post("/api/get-supduetotal", { id: this.selectedSupplier.id }).then((res) => {
                 this.purchase.previous_due = res.data[0].dueAmount
             });
         },
@@ -572,7 +572,7 @@ export default {
                 carts: this.carts,
                 supplier: this.selectedSupplier
             }
-            axios.post("/api/save_purchase", data)
+            axios.post("/api/save-purchase", data)
                 .then(res => {
                     alert(res.data.msg)
                     if (confirm("Are you sure want print")) {
@@ -588,7 +588,7 @@ export default {
 
         clearData() {
             this.purchase = {
-                date: moment(new Date()).format("YYYY-MM-DD"),
+                date: moment().format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
                 paid: 0,
@@ -627,7 +627,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

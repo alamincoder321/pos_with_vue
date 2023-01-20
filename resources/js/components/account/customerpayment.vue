@@ -196,19 +196,19 @@ export default {
     },
     methods: {
         getCustomer() {
-            axios.get("/api/get_customer").then((res) => {
+            axios.get("/api/get-customer").then((res) => {
                 this.customers = res.data.customers.filter(c => c.customer_type != "G");
                 this.customers.unshift({ id: 0, display_name: 'Select Customer' })
             });
         },
         getBank() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.banks = res.data;
                 this.banks.unshift({ id: 0, display_name: 'Select Bank' })
             });
         },
         getCustomerPayment() {
-            axios.get("/api/get_customerpayment").then((res) => {
+            axios.get("/api/get-customerpayment").then((res) => {
                 this.customerpayments = res.data;
             });
         },
@@ -219,7 +219,7 @@ export default {
                 this.customerpayment.due = 0
                 return
             }
-            axios.post("/api/get_custduetotal", { id: this.selectedCustomer.id }).then((res) => {
+            axios.post("/api/get-custduetotal", { id: this.selectedCustomer.id }).then((res) => {
                 this.customerpayment.due = res.data[0].dueAmount
             });
         },
@@ -248,7 +248,7 @@ export default {
                 return
             }
             axios
-                .post(location.origin + "/api/save_customerpayment", this.customerpayment)
+                .post(location.origin + "/api/save-customerpayment", this.customerpayment)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -281,7 +281,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_customerpayment/" + id).then((res) => {
+                axios.get("/api/delete-customerpayment/" + id).then((res) => {
                     alert(res.data);
                     this.getCustomerPayment();
                 });
@@ -305,7 +305,7 @@ export default {
             this.getCustomerPayment()
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

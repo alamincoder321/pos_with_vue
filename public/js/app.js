@@ -5388,7 +5388,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getBankAccount: function getBankAccount() {
       var _this = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
+      axios.get("/api/get-bankaccount").then(function (res) {
         _this.bankaccounts = res.data;
       });
     },
@@ -5416,7 +5416,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       var formdata = new FormData(event.target);
       formdata.append("id", this.bankaccount.id);
-      axios.post(location.origin + "/api/save_bankaccount", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-bankaccount", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getBankAccount();
@@ -5437,7 +5437,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_bankaccount/" + id).then(function (res) {
+        axios.get("/api/delete-bankaccount/" + id).then(function (res) {
           alert(res.data);
           _this3.getBankAccount();
         });
@@ -5458,7 +5458,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -5557,7 +5557,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCustomer: function getCustomer() {
       var _this = this;
-      axios.get("/api/get_customer").then(function (res) {
+      axios.get("/api/get-customer").then(function (res) {
         _this.customers = res.data.customers.filter(function (c) {
           return c.customer_type != "G";
         });
@@ -5569,7 +5569,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBank: function getBank() {
       var _this2 = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
+      axios.get("/api/get-bankaccount").then(function (res) {
         _this2.banks = res.data;
         _this2.banks.unshift({
           id: 0,
@@ -5579,7 +5579,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getCustomerPayment: function getCustomerPayment() {
       var _this3 = this;
-      axios.get("/api/get_customerpayment").then(function (res) {
+      axios.get("/api/get-customerpayment").then(function (res) {
         _this3.customerpayments = res.data;
       });
     },
@@ -5590,7 +5590,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.customerpayment.due = 0;
         return;
       }
-      axios.post("/api/get_custduetotal", {
+      axios.post("/api/get-custduetotal", {
         id: this.selectedCustomer.id
       }).then(function (res) {
         _this4.customerpayment.due = res.data[0].dueAmount;
@@ -5619,7 +5619,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         alert("Payment don't grather than due");
         return;
       }
-      axios.post(location.origin + "/api/save_customerpayment", this.customerpayment).then(function (res) {
+      axios.post(location.origin + "/api/save-customerpayment", this.customerpayment).then(function (res) {
         alert(res.data);
         _this5.clearData();
         _this5.getCustomerPayment();
@@ -5649,7 +5649,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     deleteRow: function deleteRow(id) {
       var _this6 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_customerpayment/" + id).then(function (res) {
+        axios.get("/api/delete-customerpayment/" + id).then(function (res) {
           alert(res.data);
           _this6.getCustomerPayment();
         });
@@ -5673,7 +5673,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this7 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this7.useraccess = Array.from(res.data);
       });
     },
@@ -5772,7 +5772,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getSupplier: function getSupplier() {
       var _this = this;
-      axios.get("/api/get_supplier").then(function (res) {
+      axios.get("/api/get-supplier").then(function (res) {
         _this.suppliers = res.data.suppliers.filter(function (s) {
           return s.supplier_type != "G";
         });
@@ -5784,7 +5784,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBank: function getBank() {
       var _this2 = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
+      axios.get("/api/get-bankaccount").then(function (res) {
         _this2.banks = res.data;
         _this2.banks.unshift({
           id: 0,
@@ -5794,7 +5794,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getSupplierPayment: function getSupplierPayment() {
       var _this3 = this;
-      axios.get("/api/get_supplierpayment").then(function (res) {
+      axios.get("/api/get-supplierpayment").then(function (res) {
         _this3.supplierpayments = res.data;
       });
     },
@@ -5805,7 +5805,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.supplierpayment.due = 0;
         return;
       }
-      axios.post("/api/get_supduetotal", {
+      axios.post("/api/get-supduetotal", {
         id: this.selectedSupplier.id
       }).then(function (res) {
         _this4.supplierpayment.due = res.data[0].dueAmount;
@@ -5835,7 +5835,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         return;
       }
       this.supplierpayment.supplier_id = this.selectedSupplier.id;
-      axios.post(location.origin + "/api/save_supplierpayment", this.supplierpayment).then(function (res) {
+      axios.post(location.origin + "/api/save-supplierpayment", this.supplierpayment).then(function (res) {
         alert(res.data);
         _this5.clearData();
         _this5.getSupplierPayment();
@@ -5865,7 +5865,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     deleteRow: function deleteRow(id) {
       var _this6 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_supplierpayment/" + id).then(function (res) {
+        axios.get("/api/delete-supplierpayment/" + id).then(function (res) {
           alert(res.data);
           _this6.getSupplierPayment();
         });
@@ -5889,7 +5889,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this7 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this7.useraccess = Array.from(res.data);
       });
     },
@@ -5976,13 +5976,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getBank: function getBank() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get_bankaccount").then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get-bankaccount").then(function (res) {
         _this.accounts = res.data;
       });
     },
     getTransaction: function getTransaction() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get_transaction").then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get-transaction").then(function (res) {
         _this2.transactions = res.data;
       });
     },
@@ -5993,7 +5993,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         return;
       }
       this.transaction.account_id = this.selectedAccount.id;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/getbank_balance", {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/getbank-balance", {
         id: this.selectedAccount.id
       }).then(function (res) {
         _this3.balance = res.data[0].totalbalance;
@@ -6017,7 +6017,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           return;
         }
       }
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/save_transaction", this.transaction).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/save-transaction", this.transaction).then(function (res) {
         alert(res.data);
         _this4.clearData();
         _this4.getTransaction();
@@ -6037,7 +6037,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         id: val.account_id,
         display_name: val.display_name
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/getbank_balance", {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(location.origin + "/api/getbank-balance", {
         id: this.selectedAccount.id
       }).then(function (res) {
         _this5.balance = res.data[0].totalbalance;
@@ -6046,7 +6046,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     deleteRow: function deleteRow(id) {
       var _this6 = this;
       if (confirm("Are you sure")) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/delete_transaction/" + id).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/delete-transaction/" + id).then(function (res) {
           alert(res.data);
           _this6.getTransaction();
         });
@@ -6067,7 +6067,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this7 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/get-permission/" + this.user_id).then(function (res) {
         _this7.useraccess = Array.from(res.data);
       });
     },
@@ -6159,7 +6159,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCity: function getCity() {
       var _this = this;
-      axios.get("/api/get_city").then(function (res) {
+      axios.get("/api/get-city").then(function (res) {
         _this.cities = res.data;
         _this.cities.unshift({
           id: 0,
@@ -6169,7 +6169,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCustomer: function getCustomer() {
       var _this2 = this;
-      axios.get("/api/get_customer").then(function (res) {
+      axios.get("/api/get-customer").then(function (res) {
         _this2.customers = res.data.customers.filter(function (c) {
           return c.customer_type != "G";
         });
@@ -6198,7 +6198,7 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("image", this.customer.image);
       formdata.append("id", this.customer.id);
       formdata.append("city_id", this.selectedCity.id);
-      axios.post(location.origin + "/api/save_customer", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-customer", formdata).then(function (res) {
         alert(res.data);
         _this3.clearData();
         _this3.getCustomer();
@@ -6224,7 +6224,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this4 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_customer/" + id).then(function (res) {
+        axios.get("/api/delete-customer/" + id).then(function (res) {
           alert(res.data);
           _this4.getCustomer();
         });
@@ -6265,7 +6265,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this6 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this6.useraccess = Array.from(res.data);
       });
     },
@@ -6358,7 +6358,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCity: function getCity() {
       var _this = this;
-      axios.get("/api/get_city").then(function (res) {
+      axios.get("/api/get-city").then(function (res) {
         _this.cities = res.data;
         _this.cities.unshift({
           id: 0,
@@ -6368,7 +6368,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getSupplier: function getSupplier() {
       var _this2 = this;
-      axios.get("/api/get_supplier").then(function (res) {
+      axios.get("/api/get-supplier").then(function (res) {
         _this2.suppliers = res.data.suppliers.filter(function (s) {
           return s.supplier_type != "G";
         });
@@ -6397,7 +6397,7 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("image", this.supplier.image);
       formdata.append("id", this.supplier.id);
       formdata.append("city_id", this.selectedCity.id);
-      axios.post(location.origin + "/api/save_supplier", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-supplier", formdata).then(function (res) {
         alert(res.data);
         _this3.clearData();
         _this3.getSupplier();
@@ -6423,7 +6423,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this4 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_supplier/" + id).then(function (res) {
+        axios.get("/api/delete-supplier/" + id).then(function (res) {
           alert(res.data);
           _this4.getSupplier();
         });
@@ -6464,7 +6464,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this6 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this6.useraccess = Array.from(res.data);
       });
     },
@@ -6518,7 +6518,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCompany: function getCompany() {
       var _this = this;
-      axios.get("/api/get_company_profile").then(function (res) {
+      axios.get("/api/get-company-profile").then(function (res) {
         _this.company = res.data;
         _this.imageSrc = res.data.company_logo ? res.data.company_logo : location.origin + "/no-image.jpg";
       });
@@ -6540,7 +6540,7 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData(event.target);
       formdata.append("company_logo", this.company.company_logo);
       formdata.append("id", this.company.id);
-      axios.post(location.origin + "/api/save_company", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-company", formdata).then(function (res) {
         alert(res.data);
         _this2.getCompany();
       });
@@ -6562,7 +6562,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -6613,7 +6613,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getPermission: function getPermission() {
       var _this = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this.useraccess = Array.from(res.data);
       });
     },
@@ -6677,7 +6677,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDepartment: function getDepartment() {
       var _this = this;
-      axios.get("/api/get_department").then(function (res) {
+      axios.get("/api/get-department").then(function (res) {
         _this.departments = res.data;
       });
     },
@@ -6689,7 +6689,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       var formdata = new FormData(event.target);
       formdata.append("id", this.department.id);
-      axios.post(location.origin + "/api/save_department", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-department", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getDepartment();
@@ -6704,7 +6704,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_department/" + id).then(function (res) {
+        axios.get("/api/delete-department/" + id).then(function (res) {
           alert(res.data);
           _this3.getDepartment();
         });
@@ -6718,7 +6718,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -6825,7 +6825,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCity: function getCity() {
       var _this = this;
-      axios.get("/api/get_city").then(function (res) {
+      axios.get("/api/get-city").then(function (res) {
         _this.cities = res.data;
         _this.cities.unshift({
           id: 0,
@@ -6835,7 +6835,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getDepartment: function getDepartment() {
       var _this2 = this;
-      axios.get("/api/get_department").then(function (res) {
+      axios.get("/api/get-department").then(function (res) {
         _this2.departments = res.data;
         _this2.departments.unshift({
           id: 0,
@@ -6845,7 +6845,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getEmployer: function getEmployer() {
       var _this3 = this;
-      axios.get("/api/get_employer").then(function (res) {
+      axios.get("/api/get-employer").then(function (res) {
         _this3.employers = res.data.employers;
         _this3.employer.employer_code = res.data.gen_code;
       });
@@ -6873,7 +6873,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       formdata.append("id", this.employer.id);
       formdata.append("city_id", this.selectedCity.id);
       formdata.append("department_id", this.selectedDepartment.id);
-      axios.post(location.origin + "/api/save_employer", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-employer", formdata).then(function (res) {
         alert(res.data);
         _this4.clearData();
         _this4.getEmployer();
@@ -6906,7 +6906,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     deleteRow: function deleteRow(id) {
       var _this5 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_employer/" + id).then(function (res) {
+        axios.get("/api/delete-employer/" + id).then(function (res) {
           alert(res.data);
           _this5.getEmployer();
         });
@@ -6954,7 +6954,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this7 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this7.useraccess = Array.from(res.data);
       });
     },
@@ -7016,13 +7016,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCompany: function getCompany() {
       var _this2 = this;
-      axios.get("/api/get_company_profile").then(function (res) {
+      axios.get("/api/get-company-profile").then(function (res) {
         _this2.company = res.data;
       });
     },
     getPurchases: function getPurchases() {
       var _this3 = this;
-      axios.post("/api/get_purchase", {
+      axios.post("/api/get-purchase", {
         invoice: this.$route.params.id
       }).then(function (res) {
         _this3.purchases = res.data.purchases[0];
@@ -7111,13 +7111,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getCompany: function getCompany() {
       var _this2 = this;
-      axios.get("/api/get_company_profile").then(function (res) {
+      axios.get("/api/get-company-profile").then(function (res) {
         _this2.company = res.data;
       });
     },
     getQuotations: function getQuotations() {
       var _this3 = this;
-      axios.post("/api/get_quotation", {
+      axios.post("/api/get-quotation", {
         invoice: this.$route.params.id
       }).then(function (res) {
         _this3.quotations = res.data.quotations[0];
@@ -7206,13 +7206,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getCompany: function getCompany() {
       var _this2 = this;
-      axios.get("/api/get_company_profile").then(function (res) {
+      axios.get("/api/get-company-profile").then(function (res) {
         _this2.company = res.data;
       });
     },
     getSales: function getSales() {
       var _this3 = this;
-      axios.post("/api/get_sale", {
+      axios.post("/api/get-sale", {
         invoice: this.$route.params.id
       }).then(function (res) {
         _this3.sales = res.data.sales[0];
@@ -7251,6 +7251,89 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         }, _callee);
       }))();
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      dateFrom: moment().format("YYYY-MM-DD"),
+      dateTo: moment().format("YYYY-MM-DD"),
+      products: [],
+      selectedProduct: null,
+      ledgers: [],
+      useraccess: [],
+      user_id: null
+    };
+  },
+  created: function created() {
+    this.user_id = localStorage.getItem("user_id");
+    this.getProduct();
+    this.getLedger();
+    this.getPermission();
+    this.logOut();
+  },
+  methods: {
+    getLedger: function getLedger() {
+      var _this = this;
+      if (this.selectedProduct == null) {
+        alert("Select first Product");
+        document.querySelector("#product [type='search']").focus();
+        return;
+      }
+      var data = {
+        id: this.selectedProduct != null ? this.selectedProduct.id : "",
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo
+      };
+      axios.post("/api/get_ledger", data).then(function (res) {
+        _this.purchases = res.data.purchases;
+      });
+    },
+    formatDate: function formatDate(date) {
+      return moment(date).format("DD-MM-YYYY");
+    },
+    getPermission: function getPermission() {
+      var _this2 = this;
+      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+        _this2.useraccess = Array.from(res.data);
+      });
+    },
+    logOut: function logOut() {
+      if (this.user_id === null) {
+        axios.get(location.origin + "/logout").then(function (res) {
+          alert("Logout");
+          location.reload();
+        });
+      }
+    }
+  },
+  watch: {
+    searchBy: function searchBy() {
+      if (this.searchBy == "") {
+        this.selectedInvoice = null;
+      }
+    },
+    useraccess: function useraccess() {
+      this.useraccess.includes("purchase.index") ? "" : location.href = "/unauthorize";
+    }
+  },
+  mounted: function mounted() {
+    document.title = "Purchase List Page";
   }
 });
 
@@ -7326,14 +7409,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getDamage: function getDamage() {
       var _this = this;
-      axios.get("/api/get_damage").then(function (res) {
+      axios.get("/api/get-damage").then(function (res) {
         _this.damage.damage_code = res.data.gen_code;
         _this.damages = res.data.damages;
       });
     },
     getProduct: function getProduct() {
       var _this2 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this2.products = res.data.products;
         _this2.products.unshift({
           id: 0,
@@ -7345,7 +7428,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var _this3 = this;
       this.damage.product_id = this.selectedProduct.id;
       this.damage.price = this.selectedProduct.purchase_price;
-      axios.post(location.origin + "/api/get_product_stock", {
+      axios.post(location.origin + "/api/get-product-stock", {
         id: this.selectedProduct.id
       }).then(function (res) {
         _this3.stocks = res.data[0];
@@ -7369,7 +7452,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         alert("Quantity is empty");
         return;
       }
-      axios.post(location.origin + "/api/save_damage", this.damage).then(function (res) {
+      axios.post(location.origin + "/api/save-damage", this.damage).then(function (res) {
         alert(res.data);
         _this4.stocks = "";
         _this4.clearData();
@@ -7395,7 +7478,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     deleteRow: function deleteRow(id) {
       var _this5 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_damage/" + id).then(function (res) {
+        axios.get("/api/delete-damage/" + id).then(function (res) {
           alert(res.data);
           _this5.getDamage();
         });
@@ -7405,7 +7488,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.damage = {
         id: "",
         damage_code: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         product_id: "",
         quantity: 0,
         price: 0,
@@ -7416,7 +7499,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this6 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this6.useraccess = Array.from(res.data);
       });
     },
@@ -7501,7 +7584,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       carts: [],
       purchase: {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -7537,7 +7620,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getBank: function getBank() {
       var _this = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
+      axios.get("/api/get-bankaccount").then(function (res) {
         _this.accounts = res.data;
         _this.accounts.unshift({
           id: 0,
@@ -7547,7 +7630,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getCategory: function getCategory() {
       var _this2 = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this2.categories = res.data;
         _this2.categories.unshift({
           id: 0,
@@ -7557,7 +7640,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBrand: function getBrand() {
       var _this3 = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this3.brands = res.data;
         _this3.brands.unshift({
           id: 0,
@@ -7567,7 +7650,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getSupplier: function getSupplier() {
       var _this4 = this;
-      axios.get("/api/get_supplier").then(function (res) {
+      axios.get("/api/get-supplier").then(function (res) {
         _this4.suppliers = res.data.suppliers.filter(function (s) {
           return s.supplier_type != "G";
         });
@@ -7580,7 +7663,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getProduct: function getProduct() {
       var _this5 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this5.products = res.data.products;
         _this5.products1 = res.data.products;
         _this5.products.unshift({
@@ -7594,7 +7677,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var data = {
         invoice: this.$route.params.id
       };
-      axios.post("/api/get_purchase", data).then(function (res) {
+      axios.post("/api/get-purchase", data).then(function (res) {
         _this6.purchase = res.data.purchases[0];
         _this6.carts = res.data.purchases[0].purchaseDetails;
         if (res.data.purchases[0].account_id) {
@@ -7655,7 +7738,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.TotalAmount();
         return;
       }
-      axios.post("/api/get_supduetotal", {
+      axios.post("/api/get-supduetotal", {
         id: this.selectedSupplier.id
       }).then(function (res) {
         _this7.purchase.previous_due = res.data[0].dueAmount;
@@ -7751,7 +7834,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         carts: this.carts,
         supplier: this.selectedSupplier
       };
-      axios.post("/api/save_purchase", data).then(function (res) {
+      axios.post("/api/save-purchase", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this9.$router.push({
@@ -7769,7 +7852,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     clearData: function clearData() {
       this.purchase = {
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -7813,7 +7896,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this12 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this12.useraccess = Array.from(res.data);
       });
     },
@@ -7898,7 +7981,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       carts: [],
       purchase: {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -7934,7 +8017,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getBank: function getBank() {
       var _this = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
+      axios.get("/api/get-bankaccount").then(function (res) {
         _this.accounts = res.data;
         _this.accounts.unshift({
           id: 0,
@@ -7944,7 +8027,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getCategory: function getCategory() {
       var _this2 = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this2.categories = res.data;
         _this2.categories.unshift({
           id: 0,
@@ -7954,7 +8037,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBrand: function getBrand() {
       var _this3 = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this3.brands = res.data;
         _this3.brands.unshift({
           id: 0,
@@ -7964,7 +8047,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getSupplier: function getSupplier() {
       var _this4 = this;
-      axios.get("/api/get_supplier").then(function (res) {
+      axios.get("/api/get-supplier").then(function (res) {
         _this4.suppliers = res.data.suppliers.filter(function (s) {
           return s.supplier_type != "G";
         });
@@ -7977,7 +8060,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getProduct: function getProduct() {
       var _this5 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this5.products = res.data.products;
         _this5.products1 = res.data.products;
         _this5.products.unshift({
@@ -7988,7 +8071,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPurchase: function getPurchase() {
       var _this6 = this;
-      axios.post("/api/get_purchase", {
+      axios.post("/api/get-purchase", {
         invoice: ''
       }).then(function (res) {
         _this6.purchase.invoice = res.data.invoice;
@@ -8025,7 +8108,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.TotalAmount();
         return;
       }
-      axios.post("/api/get_supduetotal", {
+      axios.post("/api/get-supduetotal", {
         id: this.selectedSupplier.id
       }).then(function (res) {
         _this7.purchase.previous_due = res.data[0].dueAmount;
@@ -8131,7 +8214,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         carts: this.carts,
         supplier: this.selectedSupplier
       };
-      axios.post("/api/save_purchase", data).then(function (res) {
+      axios.post("/api/save-purchase", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this9.$router.push({
@@ -8146,7 +8229,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     clearData: function clearData() {
       this.purchase = {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -8190,7 +8273,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this12 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this12.useraccess = Array.from(res.data);
       });
     },
@@ -8250,7 +8333,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getSupplier: function getSupplier() {
       var _this = this;
-      axios.get("/api/get_supplier").then(function (res) {
+      axios.get("/api/get-supplier").then(function (res) {
         _this.suppliers = res.data.suppliers.filter(function (s) {
           return s.supplier_type != "G";
         });
@@ -8276,13 +8359,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         supplier_id: this.selectedSupplier.id,
         invoice: this.selectedInvoice.invoice
       };
-      axios.post("/api/get_purchase", data).then(function (res) {
+      axios.post("/api/get-purchase", data).then(function (res) {
         _this2.purchases = res.data.purchases;
       });
     },
     getInvoice: function getInvoice(id) {
       var _this3 = this;
-      axios.post("/api/get_purchase", {
+      axios.post("/api/get-purchase", {
         supplier_id: id
       }).then(function (res) {
         if (_this3.selectedSupplier.id == "0") {
@@ -8312,7 +8395,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -8388,20 +8471,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         dateFrom: this.searchBy != "" ? "" : this.dateFrom,
         dateTo: this.searchBy != "" ? "" : this.dateTo
       };
-      axios.post("/api/get_purchase", data).then(function (res) {
+      axios.post("/api/get-purchase", data).then(function (res) {
         _this.purchases = res.data.purchases;
       });
     },
     getPurchases: function getPurchases() {
       var _this2 = this;
-      axios.post("/api/get_purchase").then(function (res) {
+      axios.post("/api/get-purchase").then(function (res) {
         _this2.invoices = res.data.purchases;
       });
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
       if (confirm("Are you sure want to delete")) {
-        axios.get("/api/delete_purchase/" + id).then(function (res) {
+        axios.get("/api/delete-purchase/" + id).then(function (res) {
           alert(res.data);
           var index = _this3.purchases.indexOf(sl);
           _this3.purchases.splice(index, 1);
@@ -8413,7 +8496,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -8521,7 +8604,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCategory: function getCategory() {
       var _this = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this.categories = res.data;
         _this.categories.unshift({
           id: 0,
@@ -8531,7 +8614,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBrand: function getBrand() {
       var _this2 = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this2.brands = res.data;
         _this2.brands.unshift({
           id: 0,
@@ -8541,7 +8624,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getProduct: function getProduct() {
       var _this3 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this3.products = res.data.products;
         _this3.products1 = res.data.products;
         _this3.products.unshift({
@@ -8555,7 +8638,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var data = {
         invoice: this.$route.params.id
       };
-      axios.post("/api/get_quotation", data).then(function (res) {
+      axios.post("/api/get-quotation", data).then(function (res) {
         _this4.quotation = res.data.quotations[0];
         _this4.carts = res.data.quotations[0].quotationDetails;
       });
@@ -8645,7 +8728,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         quotation: this.quotation,
         carts: this.carts
       };
-      axios.post("/api/save_quotation", data).then(function (res) {
+      axios.post("/api/save-quotation", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this6.$router.push({
@@ -8702,7 +8785,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this9 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this9.useraccess = Array.from(res.data);
       });
     },
@@ -8805,7 +8888,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCategory: function getCategory() {
       var _this = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this.categories = res.data;
         _this.categories.unshift({
           id: 0,
@@ -8815,7 +8898,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getBrand: function getBrand() {
       var _this2 = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this2.brands = res.data;
         _this2.brands.unshift({
           id: 0,
@@ -8825,7 +8908,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getProduct: function getProduct() {
       var _this3 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this3.products = res.data.products;
         _this3.products1 = res.data.products;
         _this3.products.unshift({
@@ -8836,7 +8919,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getQuotation: function getQuotation() {
       var _this4 = this;
-      axios.post("/api/get_quotation", {
+      axios.post("/api/get-quotation", {
         invoice: ''
       }).then(function (res) {
         _this4.quotation.invoice = res.data.invoice;
@@ -8931,7 +9014,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         quotation: this.quotation,
         carts: this.carts
       };
-      axios.post("/api/save_quotation", data).then(function (res) {
+      axios.post("/api/save-quotation", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
           _this6.$router.push({
@@ -8946,7 +9029,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     clearData: function clearData() {
       this.quotation = {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         customer_name: "",
         customer_phone: "",
         customer_address: "",
@@ -8984,7 +9067,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this9 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this9.useraccess = Array.from(res.data);
       });
     },
@@ -9060,20 +9143,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         dateFrom: this.searchBy != "" ? "" : this.dateFrom,
         dateTo: this.searchBy != "" ? "" : this.dateTo
       };
-      axios.post("/api/get_quotation", data).then(function (res) {
+      axios.post("/api/get-quotation", data).then(function (res) {
         _this.quotations = res.data.quotations;
       });
     },
     getQuotation: function getQuotation() {
       var _this2 = this;
-      axios.post("/api/get_quotation").then(function (res) {
+      axios.post("/api/get-quotation").then(function (res) {
         _this2.invoices = res.data.quotations;
       });
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
       if (confirm("Are you sure want to delete")) {
-        axios.get("/api/delete_quotation/" + id).then(function (res) {
+        axios.get("/api/delete-quotation/" + id).then(function (res) {
           alert(res.data);
           var index = _this3.quotations.indexOf(sl);
           _this3.quotations.splice(index, 1);
@@ -9085,7 +9168,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -9156,25 +9239,25 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   methods: {
     getCompany: function getCompany() {
       var _this = this;
-      axios.get("/api/get_company_profile").then(function (res) {
+      axios.get("/api/get-company-profile").then(function (res) {
         _this.company = res.data;
       });
     },
     getBrand: function getBrand() {
       var _this2 = this;
-      axios.get(location.origin + "/api/get_brand").then(function (res) {
+      axios.get(location.origin + "/api/get-brand").then(function (res) {
         _this2.brands = res.data;
       });
     },
     getCategory: function getCategory() {
       var _this3 = this;
-      axios.get(location.origin + "/api/get_category").then(function (res) {
+      axios.get(location.origin + "/api/get-category").then(function (res) {
         _this3.categories = res.data;
       });
     },
     getProduct: function getProduct() {
       var _this4 = this;
-      axios.get(location.origin + "/api/get_product").then(function (res) {
+      axios.get(location.origin + "/api/get-product").then(function (res) {
         _this4.products = res.data.products;
       });
     },
@@ -9206,7 +9289,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       var data = {
         id: this.selectedProduct != null ? this.selectedProduct.id : ""
       };
-      axios.post(location.origin + "/api/get_product_stock", data).then(function (res) {
+      axios.post(location.origin + "/api/get-product-stock", data).then(function (res) {
         if (_this5.changeVal == "category") {
           _this5.stocks = res.data.filter(function (p) {
             return p.category_id == _this5.selectedCategory.id;
@@ -9252,7 +9335,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this7 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this7.useraccess = Array.from(res.data);
       });
     },
@@ -9338,7 +9421,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       carts: [],
       sale: {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -9374,42 +9457,42 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   },
   methods: {
     getBank: function getBank() {
-      var _this = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
-        _this.accounts = res.data;
-        _this.accounts.unshift({
+      var _this2 = this;
+      axios.get("/api/get-bankaccount").then(function (res) {
+        _this2.accounts = res.data;
+        _this2.accounts.unshift({
           id: 0,
           display_name: "Select Bank"
         });
       });
     },
     getCategory: function getCategory() {
-      var _this2 = this;
-      axios.get("/api/get_category").then(function (res) {
-        _this2.categories = res.data;
-        _this2.categories.unshift({
+      var _this3 = this;
+      axios.get("/api/get-category").then(function (res) {
+        _this3.categories = res.data;
+        _this3.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this3 = this;
-      axios.get("/api/get_brand").then(function (res) {
-        _this3.brands = res.data;
-        _this3.brands.unshift({
+      var _this4 = this;
+      axios.get("/api/get-brand").then(function (res) {
+        _this4.brands = res.data;
+        _this4.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getCustomer: function getCustomer() {
-      var _this4 = this;
-      axios.get("/api/get_customer").then(function (res) {
-        _this4.customers = res.data.customers.filter(function (c) {
+      var _this5 = this;
+      axios.get("/api/get-customer").then(function (res) {
+        _this5.customers = res.data.customers.filter(function (c) {
           return c.customer_type != "G";
         });
-        _this4.customers.unshift({
+        _this5.customers.unshift({
           id: 0,
           display_name: "General Customer",
           customer_type: "G"
@@ -9417,32 +9500,32 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this5 = this;
-      axios.get("/api/get_product").then(function (res) {
-        _this5.products = res.data.products;
-        _this5.products1 = res.data.products;
-        _this5.products.unshift({
+      var _this6 = this;
+      axios.get("/api/get-product").then(function (res) {
+        _this6.products = res.data.products;
+        _this6.products1 = res.data.products;
+        _this6.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getSale: function getSale() {
-      var _this6 = this;
+      var _this7 = this;
       var data = {
         invoice: this.$route.params.id
       };
-      axios.post("/api/get_sale", data).then(function (res) {
-        _this6.sale = res.data.sales[0];
-        _this6.carts = res.data.sales[0].saleDetails;
+      axios.post("/api/get-sale", data).then(function (res) {
+        _this7.sale = res.data.sales[0];
+        _this7.carts = res.data.sales[0].saleDetails;
         if (res.data.sales[0].account_id) {
-          _this6.selectedAccount = {
+          _this7.selectedAccount = {
             id: res.data.sales[0].account_id,
             display_name: res.data.sales[0].bank_display_name
           };
         }
         if (res.data.sales[0].customer_type == "G") {
-          _this6.selectedCustomer = {
+          _this7.selectedCustomer = {
             id: res.data.sales[0].customer_id,
             name: res.data.sales[0].name,
             display_name: "General Supplier",
@@ -9451,7 +9534,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             customer_type: res.data.sales[0].customer_type
           };
         } else {
-          _this6.selectedCustomer = {
+          _this7.selectedCustomer = {
             id: res.data.sales[0].customer_id,
             name: res.data.sales[0].name,
             display_name: res.data.sales[0].display_name,
@@ -9475,7 +9558,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
     },
     onChangeCustomer: function onChangeCustomer() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedCustomer == null) {
         this.selectedCustomer = {
           id: "",
@@ -9493,14 +9576,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.TotalAmount();
         return;
       }
-      axios.post("/api/get_custduetotal", {
+      axios.post("/api/get-custduetotal", {
         id: this.selectedCustomer.id
       }).then(function (res) {
-        _this7.sale.previous_due = res.data[0].dueAmount;
+        _this8.sale.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedProduct == null) {
         this.selectedProduct = {
           id: "",
@@ -9513,20 +9596,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
         return;
       }
-      axios.post(location.origin + "/api/get_product_stock", {
+      axios.post(location.origin + "/api/get-product-stock", {
         id: this.selectedProduct.id
       }).then(function (res) {
-        _this8.stocks = res.data[0];
+        _this9.stocks = res.data[0];
       });
     },
     cartQtySaleChange: function cartQtySaleChange() {
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.id == _this9.selectedProduct.id;
+          return p.id == _this10.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -9596,31 +9679,31 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this10 = this;
+      var _this11 = this;
       var data = {
         sale: this.sale,
         carts: this.carts,
         customer: this.selectedCustomer
       };
-      axios.post("/api/save_sale", data).then(function (res) {
+      axios.post("/api/save-sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this10.$router.push({
+          _this11.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         } else {
-          _this10.$router.push({
+          _this11.$router.push({
             path: "/sales-list"
           });
         }
-        _this10.clearData();
-        _this10.getSale();
-        _this10.carts = [];
+        _this11.clearData();
+        _this11.getSale();
+        _this11.carts = [];
       });
     },
     clearData: function clearData() {
       this.sale = {
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -9643,29 +9726,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this11 = this;
+      var _this12 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this11.selectedCategory.id;
+        return p.category_id == _this12.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this12 = this;
+      var _this13 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this12.selectedBrand.id;
+        return p.brand_id == _this13.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this13 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this13.useraccess = Array.from(res.data);
+      var _this14 = this;
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
+        _this14.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -9683,6 +9766,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   mounted: function mounted() {
+    var _this = this;
+    window.addEventListener("keyup", function (event) {
+      console.log(event.key);
+      if (event.key == "s") {
+        _this.saveSale();
+      } else if (event.key == "p") {
+        document.querySelector("#product [type='search']").focus();
+      } else if (event.key == "c") {
+        document.querySelector("#customer [type='search']").focus();
+      } else {}
+    });
     document.title = "Sale Edit Page";
   }
 });
@@ -9750,7 +9844,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       carts: [],
       sale: {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -9786,42 +9880,42 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   },
   methods: {
     getBank: function getBank() {
-      var _this = this;
-      axios.get("/api/get_bankaccount").then(function (res) {
-        _this.accounts = res.data;
-        _this.accounts.unshift({
+      var _this2 = this;
+      axios.get("/api/get-bankaccount").then(function (res) {
+        _this2.accounts = res.data;
+        _this2.accounts.unshift({
           id: 0,
           display_name: "Select Bank"
         });
       });
     },
     getCategory: function getCategory() {
-      var _this2 = this;
-      axios.get("/api/get_category").then(function (res) {
-        _this2.categories = res.data;
-        _this2.categories.unshift({
+      var _this3 = this;
+      axios.get("/api/get-category").then(function (res) {
+        _this3.categories = res.data;
+        _this3.categories.unshift({
           id: 0,
           name: "Select Category"
         });
       });
     },
     getBrand: function getBrand() {
-      var _this3 = this;
-      axios.get("/api/get_brand").then(function (res) {
-        _this3.brands = res.data;
-        _this3.brands.unshift({
+      var _this4 = this;
+      axios.get("/api/get-brand").then(function (res) {
+        _this4.brands = res.data;
+        _this4.brands.unshift({
           id: 0,
           name: "Select Brand"
         });
       });
     },
     getCustomer: function getCustomer() {
-      var _this4 = this;
-      axios.get("/api/get_customer").then(function (res) {
-        _this4.customers = res.data.customers.filter(function (c) {
+      var _this5 = this;
+      axios.get("/api/get-customer").then(function (res) {
+        _this5.customers = res.data.customers.filter(function (c) {
           return c.customer_type != "G";
         });
-        _this4.customers.unshift({
+        _this5.customers.unshift({
           id: 0,
           display_name: "General Customer",
           customer_type: "G"
@@ -9829,22 +9923,22 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       });
     },
     getProduct: function getProduct() {
-      var _this5 = this;
-      axios.get("/api/get_product").then(function (res) {
-        _this5.products = res.data.products;
-        _this5.products1 = res.data.products;
-        _this5.products.unshift({
+      var _this6 = this;
+      axios.get("/api/get-product").then(function (res) {
+        _this6.products = res.data.products;
+        _this6.products1 = res.data.products;
+        _this6.products.unshift({
           id: 0,
           display_name: "Select Product"
         });
       });
     },
     getSale: function getSale() {
-      var _this6 = this;
-      axios.post("/api/get_sale", {
+      var _this7 = this;
+      axios.post("/api/get-sale", {
         invoice: ''
       }).then(function (res) {
-        _this6.sale.invoice = res.data.invoice;
+        _this7.sale.invoice = res.data.invoice;
       });
     },
     AccountChange: function AccountChange() {
@@ -9860,7 +9954,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }
     },
     onChangeCustomer: function onChangeCustomer() {
-      var _this7 = this;
+      var _this8 = this;
       if (this.selectedCustomer == null) {
         this.selectedCustomer = {
           id: "",
@@ -9878,14 +9972,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         this.sale.previous_due = 0.00;
         return;
       }
-      axios.post("/api/get_custduetotal", {
+      axios.post("/api/get-custduetotal", {
         id: this.selectedCustomer.id
       }).then(function (res) {
-        _this7.sale.previous_due = res.data[0].dueAmount;
+        _this8.sale.previous_due = res.data[0].dueAmount;
       });
     },
     onChangeProduct: function onChangeProduct() {
-      var _this8 = this;
+      var _this9 = this;
       if (this.selectedProduct == null) {
         this.selectedProduct = {
           id: "",
@@ -9896,20 +9990,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         };
         return;
       }
-      axios.post(location.origin + "/api/get_product_stock", {
+      axios.post(location.origin + "/api/get-product-stock", {
         id: this.selectedProduct.id
       }).then(function (res) {
-        _this8.stocks = res.data[0];
+        _this9.stocks = res.data[0];
       });
     },
     cartQtySaleChange: function cartQtySaleChange() {
       this.selectedProduct.total_amount = (this.selectedProduct.quantity * this.selectedProduct.selling_price).toFixed(2);
     },
     AddToCart: function AddToCart() {
-      var _this9 = this;
+      var _this10 = this;
       if (this.selectedProduct.id != "") {
         var cartInd = this.carts.findIndex(function (p) {
-          return p.product_id == _this9.selectedProduct.id;
+          return p.product_id == _this10.selectedProduct.id;
         });
         if (cartInd > -1) {
           this.carts.splice(cartInd, 1);
@@ -9980,7 +10074,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       this.TotalAmount();
     },
     saveSale: function saveSale(event) {
-      var _this10 = this;
+      var _this11 = this;
       if (this.selectedCustomer.name == "") {
         alert("Select Customer");
         document.querySelector("#customer [type='search']").focus();
@@ -9996,22 +10090,22 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         carts: this.carts,
         customer: this.selectedCustomer
       };
-      axios.post("/api/save_sale", data).then(function (res) {
+      axios.post("/api/save-sale", data).then(function (res) {
         alert(res.data.msg);
         if (confirm("Are you sure want print")) {
-          _this10.$router.push({
+          _this11.$router.push({
             path: '/invoice/' + res.data.invoice
           });
         }
-        _this10.clearData();
-        _this10.getSale();
-        _this10.carts = [];
+        _this11.clearData();
+        _this11.getSale();
+        _this11.carts = [];
       });
     },
     clearData: function clearData() {
       this.sale = {
         id: "",
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment().format("YYYY-MM-DD"),
         subtotal: 0,
         total: 0,
         paid: 0,
@@ -10034,29 +10128,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       };
     },
     CategoryChange: function CategoryChange() {
-      var _this11 = this;
+      var _this12 = this;
       if (this.selectedCategory.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.category_id == _this11.selectedCategory.id;
+        return p.category_id == _this12.selectedCategory.id;
       });
     },
     BrandChange: function BrandChange() {
-      var _this12 = this;
+      var _this13 = this;
       if (this.selectedBrand.id == 0) {
         this.products = this.products1;
         return;
       }
       this.products = this.products1.filter(function (p) {
-        return p.brand_id == _this12.selectedBrand.id;
+        return p.brand_id == _this13.selectedBrand.id;
       });
     },
     getPermission: function getPermission() {
-      var _this13 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
-        _this13.useraccess = Array.from(res.data);
+      var _this14 = this;
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
+        _this14.useraccess = Array.from(res.data);
       });
     },
     logOut: function logOut() {
@@ -10074,6 +10168,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     }
   },
   mounted: function mounted() {
+    var _this = this;
+    window.addEventListener("keyup", function (event) {
+      console.log(event.key);
+      if (event.key == "s") {
+        _this.saveSale();
+      } else if (event.key == "p") {
+        document.querySelector("#product [type='search']").focus();
+      } else if (event.key == "c") {
+        document.querySelector("#customer [type='search']").focus();
+      } else {}
+    });
     document.title = "Sale Entry Page";
   }
 });
@@ -10131,20 +10236,20 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         dateFrom: this.searchBy != "" ? "" : this.dateFrom,
         dateTo: this.searchBy != "" ? "" : this.dateTo
       };
-      axios.post("/api/get_sale", data).then(function (res) {
+      axios.post("/api/get-sale", data).then(function (res) {
         _this.sales = res.data.sales;
       });
     },
     getSale: function getSale() {
       var _this2 = this;
-      axios.post("/api/get_sale").then(function (res) {
+      axios.post("/api/get-sale").then(function (res) {
         _this2.invoices = res.data.sales;
       });
     },
     InvoiceDelete: function InvoiceDelete(id, sl) {
       var _this3 = this;
       if (confirm("Are you sure want to delete")) {
-        axios.get("/api/delete_sale/" + id).then(function (res) {
+        axios.get("/api/delete-sale/" + id).then(function (res) {
           alert(res.data);
           var index = _this3.sales.indexOf(sl);
           _this3.sales.splice(index, 1);
@@ -10156,7 +10261,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -10232,7 +10337,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getBrand: function getBrand() {
       var _this = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this.brands = res.data;
       });
     },
@@ -10245,7 +10350,7 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData(event.target);
       formdata.append("image", this.brand.image);
       formdata.append("id", this.brand.id);
-      axios.post(location.origin + "/api/save_brand", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-brand", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getBrand();
@@ -10262,7 +10367,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_brand/" + id).then(function (res) {
+        axios.get("/api/delete-brand/" + id).then(function (res) {
           alert(res.data);
           _this3.getBrand();
         });
@@ -10294,7 +10399,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this5 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this5.useraccess = Array.from(res.data);
       });
     },
@@ -10365,7 +10470,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCategory: function getCategory() {
       var _this = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this.categories = res.data;
       });
     },
@@ -10378,7 +10483,7 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData(event.target);
       formdata.append("image", this.category.image);
       formdata.append("id", this.category.id);
-      axios.post(location.origin + "/api/save_category", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-category", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getCategory();
@@ -10395,7 +10500,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_category/" + id).then(function (res) {
+        axios.get("/api/delete-category/" + id).then(function (res) {
           alert(res.data);
           _this3.getCategory();
         });
@@ -10427,7 +10532,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this5 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this5.useraccess = Array.from(res.data);
       });
     },
@@ -10491,7 +10596,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCity: function getCity() {
       var _this = this;
-      axios.get("/api/get_city").then(function (res) {
+      axios.get("/api/get-city").then(function (res) {
         _this.cities = res.data;
       });
     },
@@ -10503,7 +10608,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       var formdata = new FormData(event.target);
       formdata.append("id", this.city.id);
-      axios.post(location.origin + "/api/save_city", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-city", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getCity();
@@ -10518,7 +10623,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_city/" + id).then(function (res) {
+        axios.get("/api/delete-city/" + id).then(function (res) {
           alert(res.data);
           _this3.getCity();
         });
@@ -10532,7 +10637,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -10633,7 +10738,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getBrand: function getBrand() {
       var _this = this;
-      axios.get("/api/get_brand").then(function (res) {
+      axios.get("/api/get-brand").then(function (res) {
         _this.brands = res.data;
         _this.brands.unshift({
           id: 0,
@@ -10643,7 +10748,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCategory: function getCategory() {
       var _this2 = this;
-      axios.get("/api/get_category").then(function (res) {
+      axios.get("/api/get-category").then(function (res) {
         _this2.categories = res.data;
         _this2.categories.unshift({
           id: 0,
@@ -10653,7 +10758,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getUnit: function getUnit() {
       var _this3 = this;
-      axios.get("/api/get_unit").then(function (res) {
+      axios.get("/api/get-unit").then(function (res) {
         _this3.units = res.data;
         _this3.units.unshift({
           id: 0,
@@ -10663,7 +10768,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getProduct: function getProduct() {
       var _this4 = this;
-      axios.get("/api/get_product").then(function (res) {
+      axios.get("/api/get-product").then(function (res) {
         _this4.products = res.data.products;
         _this4.product.product_code = res.data.gen_code;
       });
@@ -10688,7 +10793,7 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("brand_id", this.selectedBrand.id);
       formdata.append("category_id", this.selectedCategory.id);
       formdata.append("unit_id", this.selectedUnit.id);
-      axios.post(location.origin + "/api/save_product", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-product", formdata).then(function (res) {
         alert(res.data);
         _this5.clearData();
         _this5.getProduct();
@@ -10721,7 +10826,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this6 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_product/" + id).then(function (res) {
+        axios.get("/api/delete-product/" + id).then(function (res) {
           alert(res.data);
           _this6.getProduct();
         });
@@ -10769,7 +10874,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this8 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this8.useraccess = Array.from(res.data);
       });
     },
@@ -10833,7 +10938,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getUnit: function getUnit() {
       var _this = this;
-      axios.get("/api/get_unit").then(function (res) {
+      axios.get("/api/get-unit").then(function (res) {
         _this.units = res.data;
       });
     },
@@ -10845,7 +10950,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       var formdata = new FormData(event.target);
       formdata.append("id", this.unit.id);
-      axios.post(location.origin + "/api/save_unit", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-unit", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getUnit();
@@ -10860,7 +10965,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_unit/" + id).then(function (res) {
+        axios.get("/api/delete-unit/" + id).then(function (res) {
           alert(res.data);
           _this3.getUnit();
         });
@@ -10874,7 +10979,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.useraccess = Array.from(res.data);
       });
     },
@@ -10973,7 +11078,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getUser: function getUser() {
       var _this = this;
-      axios.get("/api/get_user").then(function (res) {
+      axios.get("/api/get-user").then(function (res) {
         _this.users = res.data.filter(function (data) {
           return data.id != _this.user_id;
         });
@@ -11000,7 +11105,7 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData(event.target);
       formdata.append("image", this.user.image);
       formdata.append("id", this.user.id);
-      axios.post(location.origin + "/api/save_user", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-user", formdata).then(function (res) {
         alert(res.data);
         _this2.clearData();
         _this2.getUser();
@@ -11019,7 +11124,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(id) {
       var _this3 = this;
       if (confirm("Are you sure")) {
-        axios.get("/api/delete_user/" + id).then(function (res) {
+        axios.get("/api/delete-user/" + id).then(function (res) {
           alert(res.data);
           _this3.getUser();
         });
@@ -11054,7 +11159,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this5 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this5.useraccess = Array.from(res.data);
       });
     },
@@ -11127,7 +11232,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getUser: function getUser() {
       var _this = this;
-      axios.get(location.origin + "/api/edit_user/" + this.user_id).then(function (res) {
+      axios.get(location.origin + "/api/edit-user/" + this.user_id).then(function (res) {
         _this.user = {
           id: res.data[0].id,
           name: res.data[0].name,
@@ -11160,7 +11265,7 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("image", this.user.image);
       formdata.append("id", this.user.id);
       formdata.append("role", this.user.role);
-      axios.post(location.origin + "/api/save_user", formdata).then(function (res) {
+      axios.post(location.origin + "/api/save-user", formdata).then(function (res) {
         alert(res.data);
         _this2.getUser();
       });
@@ -11230,7 +11335,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getUserAccess: function getUserAccess() {
       var _this = this;
-      axios.get("/api/get_useraccess").then(function (res) {
+      axios.get("/api/get-useraccess").then(function (res) {
         _this.permissions = res.data.group;
         _this.useraccess = res.data.permission;
       });
@@ -11252,7 +11357,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermission: function getPermission() {
       var _this3 = this;
-      axios.get("/api/get_permission/" + this.$route.params.id).then(function (res) {
+      axios.get("/api/get-permission/" + this.$route.params.id).then(function (res) {
         _this3.alluserPermision = Array.from(res.data);
       });
     },
@@ -11278,7 +11383,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCheckPermission: function getCheckPermission() {
       var _this4 = this;
-      axios.get("/api/get_permission/" + this.user_id).then(function (res) {
+      axios.get("/api/get-permission/" + this.user_id).then(function (res) {
         _this4.checkUserPermission = Array.from(res.data);
       });
     },
@@ -15472,6 +15577,136 @@ var staticRenderFns = [function () {
       width: "15%"
     }
   }, [_vm._v("Total")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container-fluid px-3 mt-2"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg-12"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header",
+    staticStyle: {
+      background: "linear-gradient(45deg, #bb3a87, #000000d1)"
+    }
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.getLedger.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-lg-3"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("v-select", {
+    attrs: {
+      options: _vm.products,
+      id: "product",
+      label: "display_name"
+    },
+    model: {
+      value: _vm.selectedProduct,
+      callback: function callback($$v) {
+        _vm.selectedProduct = $$v;
+      },
+      expression: "selectedProduct"
+    }
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.dateFrom,
+      expression: "dateFrom"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.dateFrom
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.dateFrom = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.dateTo,
+      expression: "dateTo"
+    }],
+    staticClass: "form-control shadow-none",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.dateTo
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.dateTo = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _vm.ledgers.length > 0 ? _c("div", {
+    staticClass: "card-body",
+    staticStyle: {
+      "overflow-x": "auto"
+    }
+  }) : _c("div", {
+    staticClass: "card-body text-center"
+  }, [_vm._v("\n               Not found data in Table\n            ")])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-lg-2"
+  }, [_c("div", {
+    staticClass: "form-group m-0"
+  }, [_c("button", {
+    staticClass: "btn btn-info btn-sm text-white shadow-none px-3",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n                              Submit\n                           ")])])]);
 }];
 render._withStripped = true;
 
@@ -24728,6 +24963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_invoice_purchaseinvoice_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/invoice/purchaseinvoice.vue */ "./resources/js/components/invoice/purchaseinvoice.vue");
 /* harmony import */ var _components_invoice_quotationinvoice_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/invoice/quotationinvoice.vue */ "./resources/js/components/invoice/quotationinvoice.vue");
 /* harmony import */ var _components_report_stock_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/report/stock.vue */ "./resources/js/components/report/stock.vue");
+/* harmony import */ var _components_ledger_productLedger_vue__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./components/ledger/productLedger.vue */ "./resources/js/components/ledger/productLedger.vue");
 
 
 
@@ -24763,6 +24999,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // report
+
+
+// ledger
 
 var routes = [{
   path: "/unauthorize",
@@ -24886,6 +25125,11 @@ var routes = [{
 {
   path: "/stocks",
   component: _components_report_stock_vue__WEBPACK_IMPORTED_MODULE_33__["default"]
+},
+//ledger
+{
+  path: "/product-ledger",
+  component: _components_ledger_productLedger_vue__WEBPACK_IMPORTED_MODULE_34__["default"]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -92244,6 +92488,45 @@ component.options.__file = "resources/js/components/invoice/salesinvoice.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ledger/productLedger.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/ledger/productLedger.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./productLedger.vue?vue&type=template&id=31cdb0dd& */ "./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd&");
+/* harmony import */ var _productLedger_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./productLedger.vue?vue&type=script&lang=js& */ "./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _productLedger_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__.render,
+  _productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ledger/productLedger.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/purchase/damage.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/purchase/damage.vue ***!
@@ -93291,6 +93574,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_productLedger_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./productLedger.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_productLedger_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/purchase/damage.vue?vue&type=script&lang=js&":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/purchase/damage.vue?vue&type=script&lang=js& ***!
@@ -93844,6 +94143,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_salesinvoice_vue_vue_type_template_id_c9bcb0e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./salesinvoice.vue?vue&type=template&id=c9bcb0e4& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/invoice/salesinvoice.vue?vue&type=template&id=c9bcb0e4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_productLedger_vue_vue_type_template_id_31cdb0dd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./productLedger.vue?vue&type=template&id=31cdb0dd& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ledger/productLedger.vue?vue&type=template&id=31cdb0dd&");
 
 
 /***/ }),

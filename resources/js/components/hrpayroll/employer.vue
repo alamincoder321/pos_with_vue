@@ -247,19 +247,19 @@ export default {
     },
     methods: {
         getCity() {
-            axios.get("/api/get_city").then((res) => {
+            axios.get("/api/get-city").then((res) => {
                 this.cities = res.data;
                 this.cities.unshift({ id: 0, name: "Select City" })
             });
         },
         getDepartment() {
-            axios.get("/api/get_department").then((res) => {
+            axios.get("/api/get-department").then((res) => {
                 this.departments = res.data;
                 this.departments.unshift({ id: 0, name: "Select Department" })
             });
         },
         getEmployer() {
-            axios.get("/api/get_employer").then((res) => {
+            axios.get("/api/get-employer").then((res) => {
                 this.employers = res.data.employers;
                 this.employer.employer_code = res.data.gen_code;
             });
@@ -289,7 +289,7 @@ export default {
             formdata.append("city_id", this.selectedCity.id)
             formdata.append("department_id", this.selectedDepartment.id)
             axios
-                .post(location.origin + "/api/save_employer", formdata)
+                .post(location.origin + "/api/save-employer", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -325,7 +325,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_employer/" + id).then((res) => {
+                axios.get("/api/delete-employer/" + id).then((res) => {
                     alert(res.data);
                     this.getEmployer();
                 });
@@ -373,7 +373,7 @@ export default {
             this.imageSrc = location.origin + "/no-image.jpg"
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

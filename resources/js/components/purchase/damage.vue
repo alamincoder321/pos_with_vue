@@ -193,13 +193,13 @@ export default {
     },
     methods: {
         getDamage() {
-            axios.get("/api/get_damage").then((res) => {
+            axios.get("/api/get-damage").then((res) => {
                 this.damage.damage_code = res.data.gen_code;
                 this.damages = res.data.damages;
             });
         },
         getProduct() {
-            axios.get("/api/get_product").then((res) => {
+            axios.get("/api/get-product").then((res) => {
                 this.products = res.data.products;
                 this.products.unshift({ id: 0, display_name: "Select Product" })
             });
@@ -208,7 +208,7 @@ export default {
         onChangeProduct() {
             this.damage.product_id = this.selectedProduct.id;
             this.damage.price = this.selectedProduct.purchase_price;
-            axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
+            axios.post(location.origin + "/api/get-product-stock", { id: this.selectedProduct.id })
                 .then(res => {
                     this.stocks = res.data[0]
                 })
@@ -235,7 +235,7 @@ export default {
 
 
             axios
-                .post(location.origin + "/api/save_damage", this.damage)
+                .post(location.origin + "/api/save-damage", this.damage)
                 .then((res) => {
                     alert(res.data);
                     this.stocks = "";
@@ -263,7 +263,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_damage/" + id).then((res) => {
+                axios.get("/api/delete-damage/" + id).then((res) => {
                     alert(res.data);
                     this.getDamage();
                 });
@@ -274,7 +274,7 @@ export default {
             this.damage = {
                 id: "",
                 damage_code: "",
-                date: moment(new Date()).format("YYYY-MM-DD"),
+                date: moment().format("YYYY-MM-DD"),
                 product_id: "",
                 quantity: 0,
                 price: 0,
@@ -285,7 +285,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

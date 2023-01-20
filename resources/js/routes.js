@@ -36,6 +36,9 @@ import quotationinvoice from "./components/invoice/quotationinvoice.vue";
 // report
 import stock from "./components/report/stock.vue";
 
+// ledger
+import productLedger from "./components/ledger/productLedger.vue";
+
 
 const routes = [
     { path: "/unauthorize", component: unauthorize },
@@ -82,6 +85,8 @@ const routes = [
     { path: "/quotation-invoice/:id", component: quotationinvoice },
     //report
     { path: "/stocks", component: stock },
+    //ledger
+    { path: "/product-ledger", component: productLedger },
 
 
 ];

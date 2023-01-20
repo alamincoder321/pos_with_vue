@@ -120,24 +120,24 @@ export default {
     },
     methods: {
         getCompany() {
-            axios.get("/api/get_company_profile").then((res) => {
+            axios.get("/api/get-company-profile").then((res) => {
                 this.company = res.data;
             });
         },
         getBrand() {
-            axios.get(location.origin + "/api/get_brand")
+            axios.get(location.origin + "/api/get-brand")
                 .then(res => {
                     this.brands = res.data
                 })
         },
         getCategory() {
-            axios.get(location.origin + "/api/get_category")
+            axios.get(location.origin + "/api/get-category")
                 .then(res => {
                     this.categories = res.data
                 })
         },
         getProduct() {
-            axios.get(location.origin + "/api/get_product")
+            axios.get(location.origin + "/api/get-product")
                 .then(res => {
                     this.products = res.data.products
                 })
@@ -171,7 +171,7 @@ export default {
                 id: this.selectedProduct != null ? this.selectedProduct.id : "",
             }
 
-            axios.post(location.origin + "/api/get_product_stock", data)
+            axios.post(location.origin + "/api/get-product-stock", data)
                 .then(res => {
                     if (this.changeVal == "category") {
                         this.stocks = res.data.filter(p => p.category_id == this.selectedCategory.id)
@@ -246,7 +246,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

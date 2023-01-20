@@ -167,7 +167,7 @@ export default {
     },
     methods: {
         getBankAccount() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.bankaccounts = res.data;
             });
         },
@@ -197,7 +197,7 @@ export default {
             let formdata = new FormData(event.target)
             formdata.append("id", this.bankaccount.id)
             axios
-                .post(location.origin + "/api/save_bankaccount", formdata)
+                .post(location.origin + "/api/save-bankaccount", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -220,7 +220,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_bankaccount/" + id).then((res) => {
+                axios.get("/api/delete-bankaccount/" + id).then((res) => {
                     alert(res.data);
                     this.getBankAccount();
                 });
@@ -241,7 +241,7 @@ export default {
             this.getBankAccount()
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

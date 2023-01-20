@@ -196,13 +196,13 @@ export default {
     },
     methods: {
         getCity() {
-            axios.get("/api/get_city").then((res) => {
+            axios.get("/api/get-city").then((res) => {
                 this.cities = res.data;
                 this.cities.unshift({id:0, name:"Select City"})
             });
         },
         getCustomer() {
-            axios.get("/api/get_customer").then((res) => {
+            axios.get("/api/get-customer").then((res) => {
                 this.customers = res.data.customers.filter(c => c.customer_type != "G");
                 this.customer.customer_code = res.data.gen_code;
             });
@@ -231,7 +231,7 @@ export default {
             formdata.append("id", this.customer.id)
             formdata.append("city_id", this.selectedCity.id)
             axios
-                .post(location.origin + "/api/save_customer", formdata)
+                .post(location.origin + "/api/save-customer", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -260,7 +260,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_customer/" + id).then((res) => {
+                axios.get("/api/delete-customer/" + id).then((res) => {
                     alert(res.data);
                     this.getCustomer();
                 });
@@ -301,7 +301,7 @@ export default {
             this.imageSrc = location.origin + "/no-image.jpg"
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

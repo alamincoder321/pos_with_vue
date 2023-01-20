@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         getCity() {
-            axios.get("/api/get_city").then((res) => {
+            axios.get("/api/get-city").then((res) => {
                 this.cities = res.data;
             });
         },
@@ -101,7 +101,7 @@ export default {
             let formdata = new FormData(event.target)
             formdata.append("id", this.city.id)
             axios
-                .post(location.origin + "/api/save_city", formdata)
+                .post(location.origin + "/api/save-city", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -118,7 +118,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_city/" + id).then((res) => {
+                axios.get("/api/delete-city/" + id).then((res) => {
                     alert(res.data);
                     this.getCity();
                 });
@@ -132,7 +132,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

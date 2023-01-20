@@ -170,12 +170,12 @@ export default {
 
     methods: {
         getCompany() {
-            axios.get("/api/get_company_profile").then((res) => {
+            axios.get("/api/get-company-profile").then((res) => {
                 this.company = res.data;
             });
         },
         getPurchases() {
-            axios.post("/api/get_purchase", { invoice: this.$route.params.id }).then((res) => {
+            axios.post("/api/get-purchase", { invoice: this.$route.params.id }).then((res) => {
                 this.purchases = res.data.purchases[0]
             });
         },

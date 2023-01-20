@@ -184,12 +184,12 @@ export default {
             return Number(year) > 0 ? checkyear + checkmonth : warranty == 0 ? "-" : warranty + 'm'
         },
         getCompany() {
-            axios.get("/api/get_company_profile").then((res) => {
+            axios.get("/api/get-company-profile").then((res) => {
                 this.company = res.data;
             });
         },
         getSales() {
-            axios.post("/api/get_sale", { invoice: this.$route.params.id }).then((res) => {
+            axios.post("/api/get-sale", { invoice: this.$route.params.id }).then((res) => {
                 this.sales = res.data.sales[0]
             });
         },

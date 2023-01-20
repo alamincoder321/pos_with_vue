@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         getBrand() {
-            axios.get("/api/get_brand").then((res) => {
+            axios.get("/api/get-brand").then((res) => {
                 this.brands = res.data;
             });
         },
@@ -128,7 +128,7 @@ export default {
             formdata.append("image", this.brand.image)
             formdata.append("id", this.brand.id)
             axios
-                .post(location.origin + "/api/save_brand", formdata)
+                .post(location.origin + "/api/save-brand", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -148,7 +148,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_brand/" + id).then((res) => {
+                axios.get("/api/delete-brand/" + id).then((res) => {
                     alert(res.data);
                     this.getBrand();
                 });
@@ -181,7 +181,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

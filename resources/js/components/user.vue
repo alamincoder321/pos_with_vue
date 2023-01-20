@@ -160,7 +160,7 @@ export default {
     },
     methods: {
         getUser() {
-            axios.get("/api/get_user").then((res) => {
+            axios.get("/api/get-user").then((res) => {
                 this.users = res.data.filter((data) => data.id != this.user_id);
             });
         },
@@ -187,7 +187,7 @@ export default {
             formdata.append("image", this.user.image)
             formdata.append("id", this.user.id)
             axios
-                .post(location.origin + "/api/save_user", formdata)
+                .post(location.origin + "/api/save-user", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -209,7 +209,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_user/" + id).then((res) => {
+                axios.get("/api/delete-user/" + id).then((res) => {
                     alert(res.data);
                     this.getUser();
                 });
@@ -245,7 +245,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },

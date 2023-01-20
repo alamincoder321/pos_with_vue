@@ -366,7 +366,7 @@ export default {
             carts: [],
             sale: {
                 id: "",
-                date: moment(new Date()).format("YYYY-MM-DD"),
+                date: moment().format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
                 paid: 0,
@@ -403,38 +403,38 @@ export default {
 
     methods: {
         getBank() {
-            axios.get("/api/get_bankaccount").then((res) => {
+            axios.get("/api/get-bankaccount").then((res) => {
                 this.accounts = res.data;
                 this.accounts.unshift({ id: 0, display_name: "Select Bank" })
             });
         },
         getCategory() {
-            axios.get("/api/get_category").then((res) => {
+            axios.get("/api/get-category").then((res) => {
                 this.categories = res.data;
                 this.categories.unshift({ id: 0, name: "Select Category" })
             });
         },
         getBrand() {
-            axios.get("/api/get_brand").then((res) => {
+            axios.get("/api/get-brand").then((res) => {
                 this.brands = res.data;
                 this.brands.unshift({ id: 0, name: "Select Brand" })
             });
         },
         getCustomer() {
-            axios.get("/api/get_customer").then((res) => {
+            axios.get("/api/get-customer").then((res) => {
                 this.customers = res.data.customers.filter(c => c.customer_type != "G");
                 this.customers.unshift({ id: 0, display_name: "General Customer", customer_type: "G" })
             });
         },
         getProduct() {
-            axios.get("/api/get_product").then((res) => {
+            axios.get("/api/get-product").then((res) => {
                 this.products = res.data.products;
                 this.products1 = res.data.products;
                 this.products.unshift({ id: 0, display_name: "Select Product" })
             });
         },
         getSale() {
-            axios.post("/api/get_sale", { invoice: '' }).then((res) => {
+            axios.post("/api/get-sale", { invoice: '' }).then((res) => {
                 this.sale.invoice = res.data.invoice;
             });
         },
@@ -472,7 +472,7 @@ export default {
                 return
             }
 
-            axios.post("/api/get_custduetotal", { id: this.selectedCustomer.id }).then((res) => {
+            axios.post("/api/get-custduetotal", { id: this.selectedCustomer.id }).then((res) => {
                 this.sale.previous_due = res.data[0].dueAmount
             });
         },
@@ -488,7 +488,7 @@ export default {
                 return
             }
 
-            axios.post(location.origin + "/api/get_product_stock", { id: this.selectedProduct.id })
+            axios.post(location.origin + "/api/get-product-stock", { id: this.selectedProduct.id })
                 .then(res => {
                     this.stocks = res.data[0]
                 })
@@ -589,7 +589,7 @@ export default {
                 customer: this.selectedCustomer
             }
 
-            axios.post("/api/save_sale", data)
+            axios.post("/api/save-sale", data)
                 .then(res => {
                     alert(res.data.msg)
                     if (confirm("Are you sure want print")) {
@@ -604,7 +604,7 @@ export default {
         clearData() {
             this.sale = {
                 id: "",
-                date: moment(new Date()).format("YYYY-MM-DD"),
+                date: moment().format("YYYY-MM-DD"),
                 subtotal: 0,
                 total: 0,
                 paid: 0,
@@ -643,7 +643,7 @@ export default {
         },
 
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },
@@ -662,6 +662,17 @@ export default {
         },
     },
     mounted() {
+        let _this = this;
+        window.addEventListener("keyup", event => {
+            console.log(event.key);
+            if(event.key == "s"){
+                _this.saveSale()
+            }else if(event.key == "p"){
+                document.querySelector("#product [type='search']").focus()
+            }else if(event.key == "c"){
+                document.querySelector("#customer [type='search']").focus()
+            }else{}
+        })
         document.title = "Sale Entry Page"
     },
 };

@@ -216,25 +216,25 @@ export default {
     },
     methods: {
         getBrand() {
-            axios.get("/api/get_brand").then((res) => {
+            axios.get("/api/get-brand").then((res) => {
                 this.brands = res.data;
                 this.brands.unshift({id:0, name:"Select Brand"})
             });
         },
         getCategory() {
-            axios.get("/api/get_category").then((res) => {
+            axios.get("/api/get-category").then((res) => {
                 this.categories = res.data;
                 this.categories.unshift({id:0, name:"Select Category"})
             });
         },
         getUnit() {
-            axios.get("/api/get_unit").then((res) => {
+            axios.get("/api/get-unit").then((res) => {
                 this.units = res.data;
                 this.units.unshift({id:0, name:"Select Unit"})
             });
         },
         getProduct() {
-            axios.get("/api/get_product").then((res) => {
+            axios.get("/api/get-product").then((res) => {
                 this.products = res.data.products;
                 this.product.product_code = res.data.gen_code;
             });
@@ -261,7 +261,7 @@ export default {
             formdata.append("category_id", this.selectedCategory.id)
             formdata.append("unit_id", this.selectedUnit.id)
             axios
-                .post(location.origin + "/api/save_product", formdata)
+                .post(location.origin + "/api/save-product", formdata)
                 .then((res) => {
                     alert(res.data);
                     this.clearData();
@@ -297,7 +297,7 @@ export default {
 
         deleteRow(id) {
             if (confirm("Are you sure")) {
-                axios.get("/api/delete_product/" + id).then((res) => {
+                axios.get("/api/delete-product/" + id).then((res) => {
                     alert(res.data);
                     this.getProduct();
                 });
@@ -345,7 +345,7 @@ export default {
             this.imageSrc = location.origin + "/no-image.jpg"
         },
         getPermission() {
-            axios.get("/api/get_permission/" + this.user_id).then((res) => {
+            axios.get("/api/get-permission/" + this.user_id).then((res) => {
                 this.useraccess = Array.from(res.data);
             });
         },
