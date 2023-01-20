@@ -76,32 +76,43 @@ class ProductController extends Controller
     // product ledger
     public function ProductLedger(Request $request)
     {
-        return DB::select("SELECT
+        $result = DB::select("SELECT
                 'a' AS sequence,
                 pm.date AS date,
                 concat('Purchase Invoice: ',pm.invoice) AS description,
-                pd.quantity AS in_stock,
-                pd.purchase_price AS in_stockvalue,
-                0 AS out_stock,
+                pd.quantity AS in_quantity,
+                pd.total_amount AS in_stockvalue,
+                0 AS out_quantity,
                 0.00 as out_stockvalue
                 FROM purchase_details pd
                 LEFT JOIN purchases pm ON pm.id = pd.purchase_id
-                WHERE pm.date BETWEEN '$request->dateFrom' AND '$request->dateTo' 
-                AND pd.product_id = '$request->id'
+                WHERE pd.product_id = '$request->id'
             UNION
                 SELECT
                 'b' AS sequence,
                 sm.date AS date,
                 concat('Sale Invoice: ',sm.invoice) AS description,
-                0 AS in_stock,
+                0 AS in_quantity,
                 0.00 as in_stockvalue,
-                sd.quantity AS out_stock,
-                sd.selling_price AS out_stockvalue
+                sd.quantity AS out_quantity,
+                sd.total_amount AS out_stockvalue
                 FROM sale_details sd
                 LEFT JOIN sales sm ON sm.id = sd.sale_id
-                WHERE sm.date BETWEEN '$request->dateFrom' AND '$request->dateTo' 
-                AND sd.product_id = '$request->id'
+                WHERE sd.product_id = '$request->id'
                 
-                ORDER BY date, sequence");
+                ORDER BY date, sequence ASC");
+
+        $ledger = array_map(function ($key, $row) use ($result) {
+            $row->stock = $key == 0 ? $row->in_quantity - $row->out_quantity : ($result[$key - 1]->stock + ($row->in_quantity - $row->out_quantity));
+            return $row;
+        }, array_keys($result), $result);
+
+        $previousRows = array_filter($ledger, function ($row) use ($request) {
+            return $row->date < $request->dateFrom;
+        });
+
+        $previousStock = empty($previousRows) ? 0 : end($previousRows)->stock;
+
+        return ['ledger'=> $ledger, 'previousStock' => $previousStock];
     }
 }

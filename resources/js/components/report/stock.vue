@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header position-relative"
+                        style="background:linear-gradient(45deg, #bb3a87, #000000d1);">
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
@@ -36,14 +37,18 @@
                                 </div>
                             </div>
                             <div class="col-lg-1">
-                                <button type="button" @click="getStock" class="searchBtn">Submit</button>
+                                <button type="button" @click="getStock"
+                                    class="btn btn-info btn-sm text-white shadow-none px-3">
+                                    Submit
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body position-relative" v-if="stocks.length > 0">
-                        <button style="position: absolute;right: 0;top: -30px;border-radius: 0;" class="btn btn-warning btn-sm shadow-none text-white px-4"
-                            @click="print">Print</button>
 
+                        <button style="position: absolute;right: 0;bottom: 0px;border-radius: 0;"
+                            v-if="stocks.length > 0" class="btn btn-warning btn-sm shadow-none text-white px-4"
+                            @click="print">Print</button>
+                    </div>
+                    <div class="card-body" v-if="stocks.length > 0">
                         <table id="stocks" class="table table-sm table-hover table-bordered">
                             <thead style="background: #897800;color: white;">
                                 <tr class="text-center" style="font-size: 12px;">

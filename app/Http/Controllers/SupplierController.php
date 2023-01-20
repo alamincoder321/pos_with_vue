@@ -71,4 +71,51 @@ class SupplierController extends Controller
     {
         return ModelTable::supplierDue($request->id);
     }
+
+        // ledger
+        public function SupplierLedger(Request $request)
+        {
+            $supDue = DB::select("SELECT s.previous_due AS previousDue FROM suppliers s WHERE s.id = '$request->id'");
+    
+            $result = DB::select("SELECT
+                            'a' AS sequence,
+                            pm.date AS date,
+                            concat('Sale Invoice: ',pm.invoice) AS description,
+                            pm.total AS billAmount,
+                            pm.paid AS paidAmount,
+                            pm.due AS dueAmount
+                            FROM purchases pm
+                            WHERE pm.supplier_id = '$request->id'
+                            
+                        UNION
+                            SELECT
+                            'b' AS sequence,
+                            sp.date AS date,
+                            'Supplier Payment' AS description,
+                            0.00 AS billAmount,
+                            sp.payment_amount AS paidAmount,
+                            0.00 AS dueAmount
+                            FROM supplier_payments sp
+                            WHERE sp.supplier_id = '$request->id'
+                            ORDER BY date, sequence ASC");
+    
+            $ledger = array_map(function ($key, $row) use ($result) {
+                $row->due = $key == 0 ? $row->billAmount - $row->paidAmount : ($result[$key - 1]->due + ($row->billAmount - $row->paidAmount));
+                return $row;
+            }, array_keys($result), $result);
+    
+            $preDue = $supDue[0]->previousDue;
+            if (count($ledger) > 0) {
+                foreach($ledger as $val){
+                    $val->due += $preDue;
+                }
+            }
+    
+            $previousRows = array_filter($ledger, function ($row) use ($request) {
+                return $row->date < $request->dateFrom;
+            });
+            $previousDue = empty($previousRows) ? $preDue : end($previousRows)->due;
+    
+            return ["ledger" => $ledger, "previousDue" => $previousDue];
+        }
 }

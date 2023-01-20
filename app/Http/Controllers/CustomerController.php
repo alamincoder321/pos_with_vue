@@ -71,4 +71,51 @@ class CustomerController extends Controller
     {
         return ModelTable::customerDue($request->id);
     }
+
+    // ledger
+    public function CustomerLedger(Request $request)
+    {
+        $cusDue = DB::select("SELECT c.previous_due AS previousDue FROM customers c WHERE c.id = '$request->id'");
+
+        $result = DB::select("SELECT
+                        'a' AS sequence,
+                        sm.date AS date,
+                        concat('Sale Invoice: ',sm.invoice) AS description,
+                        sm.total AS billAmount,
+                        sm.paid AS paidAmount,
+                        sm.due AS dueAmount
+                        FROM sales sm
+                        WHERE sm.customer_id = '$request->id'
+                        
+                    UNION
+                        SELECT
+                        'b' AS sequence,
+                        cp.date AS date,
+                        'Customer Payment' AS description,
+                        0.00 AS billAmount,
+                        cp.payment_amount AS paidAmount,
+                        0.00 AS dueAmount
+                        FROM customer_payments cp
+                        WHERE cp.customer_id = '$request->id'
+                        ORDER BY date, sequence ASC");
+
+        $ledger = array_map(function ($key, $row) use ($result) {
+            $row->due = $key == 0 ? $row->billAmount - $row->paidAmount : ($result[$key - 1]->due + ($row->billAmount - $row->paidAmount));
+            return $row;
+        }, array_keys($result), $result);
+
+        $preDue = $cusDue[0]->previousDue;
+        if (count($ledger) > 0) {
+            foreach($ledger as $val){
+                $val->due += $preDue;
+            }
+        }
+
+        $previousRows = array_filter($ledger, function ($row) use ($request) {
+            return $row->date < $request->dateFrom;
+        });
+        $previousDue = empty($previousRows) ? $preDue : end($previousRows)->due;
+
+        return ["ledger" => $ledger, "previousDue" => $previousDue];
+    }
 }
