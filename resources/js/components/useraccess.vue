@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import $ from "jquery";
 export default {
     data() {
         return {
@@ -73,7 +72,7 @@ export default {
             if ($(".permission_name").is(':checked')) {
                 let formdata = new FormData(event.target)
                 formdata.append("user_id", this.$route.params.id)
-                axios.post("/api/save_permission", formdata).then((res) => {
+                axios.post("/api/save-permission", formdata).then((res) => {
                     alert(res.data);
                     this.$router.push({ path: "/users" });
                 });

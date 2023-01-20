@@ -11617,9 +11617,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11647,10 +11644,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     savePermission: function savePermission(event) {
       var _this2 = this;
-      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(".permission_name").is(':checked')) {
+      if ($(".permission_name").is(':checked')) {
         var formdata = new FormData(event.target);
         formdata.append("user_id", this.$route.params.id);
-        axios.post("/api/save_permission", formdata).then(function (res) {
+        axios.post("/api/save-permission", formdata).then(function (res) {
           alert(res.data);
           _this2.$router.push({
             path: "/users"
@@ -11673,13 +11670,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     allCheck: function allCheck(event) {
       if (event.target.checked) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()("[type='checkbox']").prop("checked", true);
+        $("[type='checkbox']").prop("checked", true);
       } else {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()("[type='checkbox']").prop("checked", false);
+        $("[type='checkbox']").prop("checked", false);
       }
     },
     groupChecked: function groupChecked(event) {
-      var className = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".checked-" + event.target.value + " [type='checkbox']");
+      var className = $(".checked-" + event.target.value + " [type='checkbox']");
       if (event.target.checked) {
         className.prop("checked", true);
       } else {
