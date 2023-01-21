@@ -80,7 +80,7 @@ class SupplierController extends Controller
             $result = DB::select("SELECT
                             'a' AS sequence,
                             pm.date AS date,
-                            concat('Sale Invoice: ',pm.invoice) AS description,
+                            concat('Purchase Invoice: ',pm.invoice) AS description,
                             pm.total AS billAmount,
                             pm.paid AS paidAmount,
                             pm.due AS dueAmount

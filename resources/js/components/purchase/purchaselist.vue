@@ -90,6 +90,7 @@
                                  <span>SubTotal:
                                     {{ item.subtotal }}</span><br />
                                  <span>Total: {{ item.total }}</span><br />
+                                 <span>Paid: {{ item.paid }}</span><br />
                                  <span>Due: {{ item.due }}</span><br />
                                  <span v-if="item.discount != 0">Discount ({{
                                     item.discount
