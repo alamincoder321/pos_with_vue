@@ -16144,7 +16144,9 @@ var render = function render() {
       colspan: "6"
     }
   }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousBalance.toFixed(2)))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
-    return [_c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.transaction_type))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.deposit))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.withdraw))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.balance.toFixed(2)))])])];
+    return [_c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", {
+      staticClass: "text-capitalize text-center"
+    }, [_vm._v(_vm._s(item.transaction_type))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.deposit))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.withdraw))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.balance.toFixed(2)))])])];
   })], 2)])]) : _c("div", {
     staticClass: "card-body text-center"
   }, [_vm._v("\n                    Not found data in Table\n                ")])])])])]);
@@ -19050,7 +19052,10 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
-    staticClass: "card-body"
+    staticClass: "card-body",
+    staticStyle: {
+      background: "linear-gradient(45deg, #bb3a87, #000000d1)"
+    }
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -19058,6 +19063,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
+    staticClass: "text-white",
     attrs: {
       "for": "supplier"
     }
@@ -19085,6 +19091,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
+    staticClass: "text-white",
     attrs: {
       "for": "invoice"
     }
@@ -19104,7 +19111,7 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-1 mt-lg-0 mt-3"
   }, [_c("label"), _vm._v(" "), _c("button", {
-    staticClass: "shadow-none btn btn-success btn-sm px-3",
+    staticClass: "shadow-none btn btn-info text-white btn-sm px-3",
     attrs: {
       type: "button"
     },

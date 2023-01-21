@@ -60,7 +60,7 @@
                                         <td>{{ index + 1 }}</td>
                                         <td>{{ item.description }}</td>
                                         <td>{{ formatDate(item.date) }}</td>
-                                        <td>{{ item.transaction_type }}</td>
+                                        <td class="text-capitalize text-center">{{ item.transaction_type }}</td>
                                         <td>{{ item.deposit }}</td>
                                         <td>{{ item.withdraw }}</td>
                                         <td>{{ (item.balance).toFixed(2) }}</td>

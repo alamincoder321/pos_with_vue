@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-xl-12 col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="background:linear-gradient(45deg, #bb3a87, #000000d1);">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label for="supplier">Supplier</label>
+                                    <label for="supplier" class="text-white">Supplier</label>
                                     <v-select style="width:100% !important" :options="suppliers" label="display_name"
                                         id="supplier" v-model="selectedSupplier" @input="onChangeSupplier">
                                     </v-select>
@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label for="invoice">Invoice</label>
+                                    <label for="invoice" class="text-white">Invoice</label>
                                     <v-select label="invoice" id="invoice" :options="invoices"
                                         v-model="selectedInvoice">
                                     </v-select>
@@ -24,7 +24,7 @@
                             <div class="col-lg-1 mt-lg-0 mt-3">
                                 <label></label>
                                 <button type="button" @click="getPurchases"
-                                    class="shadow-none btn btn-success btn-sm px-3">Submit</button>
+                                    class="shadow-none btn btn-info text-white btn-sm px-3">Submit</button>
                             </div>
                         </div>
                     </div>
