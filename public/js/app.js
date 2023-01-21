@@ -16015,7 +16015,7 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousDue))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
+  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousDue.toFixed(2)))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
     return [_c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.billAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.paidAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.dueAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.due.toFixed(2)))])])];
   })], 2)])]) : _c("div", {
     staticClass: "card-body text-center"
@@ -16351,7 +16351,7 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousDue))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
+  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousDue.toFixed(2)))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
     return [_c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.billAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.paidAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.dueAmount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.due.toFixed(2)))])])];
   })], 2)])]) : _c("div", {
     staticClass: "card-body text-center"

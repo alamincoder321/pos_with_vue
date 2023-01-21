@@ -50,7 +50,7 @@
                       <tbody>
                          <tr>
                             <th colspan="6" style="padding-left:44px;">Previous Due</th>
-                            <td>{{ previousDue }}</td>
+                            <td>{{ previousDue.toFixed(2) }}</td>
                          </tr>
                          <template v-for="(item, index) in ledgers">
                             <tr>
