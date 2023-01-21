@@ -10,7 +10,7 @@ class TransactionController extends Controller
 {
     public function getTransaction()
     {
-        return DB::select("SELECT t.*, ba.bank_name, CONCAT(ba.account_no, '-(', ba.bank_name, ')') AS display_name FROM transactions AS t LEFT JOIN bank_accounts AS ba ON ba.id = t.account_id ORDER BY date");
+        return DB::select("SELECT t.*, ba.bank_name, CONCAT(ba.account_no, '-(', ba.bank_name, ')') AS display_name FROM transactions AS t LEFT JOIN bank_accounts AS ba ON ba.id = t.account_id ORDER BY date DESC");
     }
 
     public function saveTransaction(Request $request)
