@@ -52,7 +52,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th colspan="6" style="padding-left:44px;">Previous Due</th>
+                                    <th colspan="6" style="padding-left:44px;">Previous Balance</th>
                                     <td>{{ previousBalance.toFixed(2) }}</td>
                                 </tr>
                                 <template v-for="(item, index) in ledgers">

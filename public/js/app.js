@@ -16143,7 +16143,7 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v("Previous Due")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousBalance.toFixed(2)))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
+  }, [_vm._v("Previous Balance")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.previousBalance.toFixed(2)))])]), _vm._v(" "), _vm._l(_vm.ledgers, function (item, index) {
     return [_c("tr", [_c("td", [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDate(item.date)))]), _vm._v(" "), _c("td", {
       staticClass: "text-capitalize text-center"
     }, [_vm._v(_vm._s(item.transaction_type))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.deposit))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.withdraw))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.balance.toFixed(2)))])])];
