@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="d-md-block d-none" style="width:100%;position: absolute;bottom:25px;left:0;">
-                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Developed By Al Amin Islam</marquee>
+                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Design and Developed By Al Amin Islam</marquee>
             </div>
         </div>
     </div>
