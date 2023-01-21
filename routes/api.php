@@ -119,4 +119,5 @@ Route::get("/delete-quotation/{id}", [QuotationController::class, "deleteQuotati
 Route::post("/getproduct-ledger", [ProductController::class, "ProductLedger"]);
 Route::post("/getcustomer-ledger", [CustomerController::class, "CustomerLedger"]);
 Route::post("/getsupplier-ledger", [SupplierController::class, "SupplierLedger"]);
+Route::post("/getbank-ledger", [BankAccountController::class, "BankLedger"]);
 

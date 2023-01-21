@@ -40,6 +40,7 @@ import stock from "./components/report/stock.vue";
 import productLedger from "./components/ledger/productLedger.vue";
 import customerLedger from "./components/ledger/customerLedger.vue";
 import supplierLedger from "./components/ledger/supplierLedger.vue";
+import bankLedger from "./components/ledger/bankLedger.vue";
 
 
 const routes = [
@@ -91,6 +92,7 @@ const routes = [
     { path: "/product-ledger", component: productLedger },
     { path: "/customer-ledger", component: customerLedger },
     { path: "/supplier-ledger", component: supplierLedger },
+    { path: "/bank-ledger", component: bankLedger },
 
 
 ];

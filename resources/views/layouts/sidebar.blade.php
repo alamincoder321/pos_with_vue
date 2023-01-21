@@ -177,6 +177,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         <router-link class="nav-link" to="/product-ledger">Product Ledger</router-link>
                         <router-link class="nav-link" to="/customer-ledger">Customer Ledger</router-link>
                         <router-link class="nav-link" to="/supplier-ledger">Supplier Ledger</router-link>
+                        <router-link class="nav-link" to="/bank-ledger">Bank Ledger</router-link>
                     </nav>
                 </div>
                 @if(in_array("user.index", $useraccess))
