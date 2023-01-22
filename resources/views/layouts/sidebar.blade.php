@@ -130,6 +130,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @if(in_array("employer.index", $useraccess))
                         <router-link class="nav-link" to="/employers">Employer</router-link>
                         @endif
+                        <router-link class="nav-link" to="/salary-generate">Salary Generate</router-link>
                     </nav>
                 </div>
                 @endif

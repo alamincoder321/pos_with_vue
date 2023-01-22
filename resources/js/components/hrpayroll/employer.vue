@@ -218,8 +218,8 @@ export default {
                 phone: "",
                 father_name: "",
                 mother_name: "",
-                dob: moment(new Date()).format("YYYY-MM-DD"),
-                join_date: moment(new Date()).format("YYYY-MM-DD"),
+                dob: moment().format("YYYY-MM-DD"),
+                join_date: moment().format("YYYY-MM-DD"),
                 address: "",
                 salary: 0.00,
                 image: "",
@@ -288,6 +288,8 @@ export default {
             formdata.append("id", this.employer.id)
             formdata.append("city_id", this.selectedCity.id)
             formdata.append("department_id", this.selectedDepartment.id)
+            formdata.append("dob", this.employer.dob)
+            formdata.append("join_date", this.employer.join_date)
             axios
                 .post(location.origin + "/api/save-employer", formdata)
                 .then((res) => {
@@ -355,8 +357,8 @@ export default {
                 phone: "",
                 father_name: "",
                 mother_name: "",
-                dob: new Date(),
-                join_date: new Date(),
+                dob: moment().format("YYYY-MM-DD"),
+                join_date: moment().format("YYYY-MM-DD"),
                 address: "",
                 salary: 0.00,
                 image: "",

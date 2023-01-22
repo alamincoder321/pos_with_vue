@@ -24,6 +24,10 @@ import moment from 'moment';
 // jquery use
 import $ from "jquery"
 window.$ = window.jQuery = require('jquery/dist/jquery');
+// chart
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 // router
 import routes from "./routes.js";

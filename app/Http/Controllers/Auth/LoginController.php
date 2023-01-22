@@ -36,7 +36,7 @@ class LoginController extends Controller
             if (Auth::attempt($this->credentials($request->username, $request->password))) {
                 return response()->json(["msg" => "Login successfully", "user_id" => Auth::user()->id]);
             } else {
-                return response()->json(["unauthenticate" => "Email/Username Or Password does not match"]);
+                return response()->json(["unauthenticate" => "Username Or Password not match"]);
             }
         } catch (\Throwable $e) {
             return "Opps! Something went wrong";

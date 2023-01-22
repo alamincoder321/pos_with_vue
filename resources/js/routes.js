@@ -16,6 +16,7 @@ import customer from "./components/administration/customer.vue";
 import supplier from "./components/administration/supplier.vue";
 import department from "./components/hrpayroll/department.vue";
 import employer from "./components/hrpayroll/employer.vue";
+import salaryGenerate from "./components/hrpayroll/salaryGenerate.vue";
 import product from "./components/settings/product.vue";
 import purchase from "./components/purchase/purchase.vue";
 import purchaselist from "./components/purchase/purchaselist.vue";
@@ -66,6 +67,7 @@ const routes = [
     //hrpayrol
     { path: "/departments", component: department },
     { path: "/employers", component: employer },
+    { path: "/salary-generate", component: salaryGenerate },
     //content
     { path: "/products", component: product },
     //purchase

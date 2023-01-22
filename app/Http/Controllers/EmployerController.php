@@ -54,7 +54,7 @@ class EmployerController extends Controller
                 return "Employer updated successfully";
             }
         } catch (\Throwable $e) {
-            return "Opps! something went wrong";
+            return "Opps! something went wrong".$e->getMessage();
         }
     }
 
