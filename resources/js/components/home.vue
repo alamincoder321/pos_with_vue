@@ -50,8 +50,8 @@
                 </div>
             </div>
 
-            <div class="col-lg-12">
-                <apexchart width="70%" type="bar" :options="options" :series="series"></apexchart>
+            <div class="col-lg-8 offset-lg-2">
+                <apexchart width="100%" type="bar" :options="options" :series="series"></apexchart>
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@ export default {
             },
             series: [{
                 name: 'series-1',
-                data: [30, 40, 45, 50, 49, 60, 70, 280]
+                data: [30, 40, 45, 50, 49, 60, 70, 100]
             }]
         }
     },
