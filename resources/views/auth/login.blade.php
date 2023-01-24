@@ -33,8 +33,8 @@
 
         @media (min-width: 769px) {
             .gradient-custom-2 {
-                border-top-right-radius: .3rem;
-                border-bottom-right-radius: .3rem;
+                border-top-left-radius: .3rem;
+                border-bottom-left-radius: .3rem;
             }
         }
 
@@ -70,7 +70,7 @@
 
 <body style="position: relative;">
     <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container py-5 h-100">
+        <div class="container pb-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10" title="প্রোপাইটরঃ {{$profile->owner_name}}">
                     <div class="card rounded-3 text-black">
@@ -85,7 +85,7 @@
                                 <div class="card-body p-md-5 mx-md-4">
 
                                     <div class="text-center register-left">
-                                        <img src="{{asset($profile->company_logo != null ? $profile->company_logo : 'no-image.jpg')}}" title="{{$profile->name}}" style="width: 185px;border-radius:20px;" alt="logo">
+                                        <img src="{{asset($profile->company_logo != null ? $profile->company_logo : 'no-image.jpg')}}" title="{{$profile->name}}" style="width: 150px;border-radius:20px;" alt="logo">
                                         <h4 class="mt-1 mb-5 pb-1"></h4>
                                     </div>
 

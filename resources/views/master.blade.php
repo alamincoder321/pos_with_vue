@@ -76,9 +76,7 @@
     <script src="{{asset('backend/js/scripts.js')}}"></script>
     <script>
         function Logout() {
-            if (confirm("Are you sure")) {
-                location.href = "{{route('logout')}}"
-            }
+            location.href = "{{route('logout')}}"
         }
 
         // window.onload = displayClock();
