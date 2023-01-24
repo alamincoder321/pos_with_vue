@@ -39,7 +39,6 @@
         }
 
         .register-left img {
-            margin-top: 15%;
             margin-bottom: 5%;
             width: 25%;
             -webkit-animation: mover 2s infinite alternate;
