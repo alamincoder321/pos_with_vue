@@ -29,6 +29,14 @@ import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
+//toastr
+import VueToastr from "vue-toastr";
+Vue.use(VueToastr, {
+  defaultPosition: "toast-bottom-left",
+  defaultStyle: { fontSize: "14px", width: "350px"}
+});
+// sweetalert2
+import 'sweetalert2/src/sweetalert2.scss'
 // router
 import routes from "./routes.js";
 import Vue from 'vue';

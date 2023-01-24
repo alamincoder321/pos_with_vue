@@ -591,7 +591,7 @@ export default {
 
             axios.post("/api/save-sale", data)
                 .then(res => {
-                    alert(res.data.msg)
+                    this.$toastr.s(res.data.msg, "Success!");
                     if (confirm("Are you sure want print")) {
                         this.$router.push({ path: '/invoice/' + res.data.invoice })
                     }

@@ -170,7 +170,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-company", formdata)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getCompany();
                 });
         },

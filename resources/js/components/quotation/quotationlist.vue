@@ -165,6 +165,7 @@
 
 <script>
 var moment = require('moment');
+const Swal = require('sweetalert2')
 export default {
     data() {
         return {
@@ -217,7 +218,7 @@ export default {
         InvoiceDelete(id, sl) {
             if (confirm("Are you sure want to delete")) {
                 axios.get("/api/delete-quotation/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     var index = this.quotations.indexOf(sl);
                     this.quotations.splice(index, 1);
                 });
@@ -256,6 +257,9 @@ export default {
     },
 
     mounted() {
+        setTimeout(() => {
+            Swal.fire('If you want to show quotation details then doubleClick on quotations table row')
+        }, 1000);
         document.title = "Quotation List Page"
     },
 };

@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{display: useraccess.includes('unit.store')?'':'none'}">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Unit Create</h4>
                     </div>
@@ -103,7 +103,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-unit", formdata)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.clearData();
                     this.getUnit();
                 });
@@ -119,7 +119,7 @@ export default {
         deleteRow(id) {
             if (confirm("Are you sure")) {
                 axios.get("/api/delete-unit/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getUnit();
                 });
             }

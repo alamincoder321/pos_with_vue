@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{ display: useraccess.includes('damage.store') ? '' : 'none' }">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Damage Entry</h4>
                     </div>
@@ -81,8 +81,10 @@
                                 </div>
                                 <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
                                     <div class="card" style="border-radius:0;width: 75% !important;">
-                                        <div class="card-header text-center" :class="stocks.stock >= 0 ? 'bg-success text-white':'bg-danger text-white'">Stock</div>
-                                        <div class="card-body text-center">{{stocks.stock}} {{stocks.unit_name}}</div>
+                                        <div class="card-header text-center"
+                                            :class="stocks.stock >= 0 ? 'bg-success text-white' : 'bg-danger text-white'">
+                                            Stock</div>
+                                        <div class="card-body text-center">{{ stocks.stock }} {{ stocks.unit_name }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +230,7 @@ export default {
                 alert("Unavailable Stock");
                 return
             }
-            if(this.damage.quantity <= 0){
+            if (this.damage.quantity <= 0) {
                 alert("Quantity is empty")
                 return
             }
@@ -237,7 +239,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-damage", this.damage)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.stocks = "";
                     this.clearData();
                     this.getDamage();
@@ -264,7 +266,7 @@ export default {
         deleteRow(id) {
             if (confirm("Are you sure")) {
                 axios.get("/api/delete-damage/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getDamage();
                 });
             }

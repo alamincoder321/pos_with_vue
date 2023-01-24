@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{ display: useraccess.includes('user.store') ? '' : 'none' }">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">User Create</h4>
                     </div>

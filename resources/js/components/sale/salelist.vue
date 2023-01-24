@@ -168,6 +168,7 @@
 
 <script>
 var moment = require('moment');
+const Swal = require('sweetalert2')
 export default {
     data() {
         return {
@@ -220,7 +221,7 @@ export default {
         InvoiceDelete(id, sl) {
             if (confirm("Are you sure want to delete")) {
                 axios.get("/api/delete-sale/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     var index = this.sales.indexOf(sl);
                     this.sales.splice(index, 1);
                 });
@@ -259,6 +260,9 @@ export default {
     },
 
     mounted() {
+        setTimeout(() => {
+            Swal.fire('If you want to show sale details then doubleClick on sales table row')
+        },1000)
         document.title = "Sale List Page"
     },
 };

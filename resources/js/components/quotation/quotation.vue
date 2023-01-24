@@ -431,7 +431,7 @@ export default {
 
             axios.post("/api/save-quotation", data)
                 .then(res => {
-                    alert(res.data.msg)
+                    this.$toastr.s(res.data.msg, "Success!");
                     if (confirm("Are you sure want print")) {
                         this.$router.push({ path: '/quotation-invoice/' + res.data.invoice })
                     }

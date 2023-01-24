@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{display: useraccess.includes('supplier.store')?'':'none'}">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Supplier Create</h4>
                     </div>
@@ -234,7 +234,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-supplier", formdata)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.clearData();
                     this.getSupplier();
                 });
@@ -262,7 +262,7 @@ export default {
         deleteRow(id) {
             if (confirm("Are you sure")) {
                 axios.get("/api/delete-supplier/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getSupplier();
                 });
             }

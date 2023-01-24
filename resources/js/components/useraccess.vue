@@ -73,8 +73,10 @@ export default {
                 let formdata = new FormData(event.target)
                 formdata.append("user_id", this.$route.params.id)
                 axios.post("/api/save-permission", formdata).then((res) => {
-                    alert(res.data);
-                    this.$router.push({ path: "/users" });
+                    this.$toastr.s(res.data, "Success!");
+                    setTimeout(() => {
+                        this.$router.push({ path: "/users" });
+                    }, 1000)
                 });
             } else {
                 alert("Must be checked permission")

@@ -28,9 +28,11 @@
         "apexcharts": "^3.36.3",
         "jquery": "^3.6.1",
         "moment": "^2.29.4",
+        "sweetalert2": "^11.7.0",
         "vue-apexcharts": "^1.6.2",
         "vue-good-table": "^2.21.11",
         "vue-router": "^3.6.5",
-        "vue-select": "^3.20.0"
+        "vue-select": "^3.20.0",
+        "vue-toastr": "^2.1.2"
     }
 }

@@ -2,7 +2,7 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" :style="{ display: useraccess.includes('customerpayment.store') ? '' : 'none' }">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Customer Payment Create</h4>
                     </div>
@@ -250,7 +250,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-customerpayment", this.customerpayment)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.clearData();
                     this.getCustomerPayment();
                 });
@@ -282,7 +282,7 @@ export default {
         deleteRow(id) {
             if (confirm("Are you sure")) {
                 axios.get("/api/delete-customerpayment/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getCustomerPayment();
                 });
             }

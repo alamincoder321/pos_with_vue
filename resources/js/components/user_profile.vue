@@ -146,7 +146,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-user", formdata)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getUser();
                 });
         },

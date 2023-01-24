@@ -167,6 +167,7 @@
 
 <script>
 var moment = require("moment");
+const Swal = require('sweetalert2')
 export default {
    data() {
       return {
@@ -220,7 +221,7 @@ export default {
       InvoiceDelete(id, sl) {
          if (confirm("Are you sure want to delete")) {
             axios.get("/api/delete-purchase/" + id).then((res) => {
-               alert(res.data);
+               this.$toastr.s(res.data, "Success!");
                var index = this.purchases.indexOf(sl);
                this.purchases.splice(index, 1);
             });
@@ -261,6 +262,9 @@ export default {
    },
 
    mounted() {
+      setTimeout(() => {
+         Swal.fire('If you want to show purchase details then doubleClick on purchases table row')
+      }, 1000)
       document.title = "Purchase List Page";
    },
 };
