@@ -66,7 +66,7 @@
 </head>
 
 <body>
-    <section class="h-100 gradient-form" style="background-color: #37227e;">
+    <section class="h-100 gradient-form" style="background: repeating-linear-gradient(45deg, #002236, #c1b31000 100px);">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10" title="প্রোপাইটরঃ {{$profile->owner_name}}">
