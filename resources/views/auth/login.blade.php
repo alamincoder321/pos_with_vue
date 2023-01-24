@@ -17,10 +17,8 @@
         .gradient-custom-2 {
             /* fallback for old browsers */
             background: #fccb90;
-
             /* Chrome 10-25, Safari 5.1-6 */
             background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
         }
@@ -34,7 +32,7 @@
         @media (min-width: 769px) {
             .gradient-custom-2 {
                 border-top-left-radius: .3rem;
-                border-bottom-left-radius: .3rem;
+                /* border-bottom-left-radius: .3rem; */
             }
         }
 
@@ -67,9 +65,9 @@
     </style>
 </head>
 
-<body style="position: relative;">
-    <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container pb-5 h-100">
+<body>
+    <section class="h-100 gradient-form" style="background-color: #37227e;">
+        <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10" title="প্রোপাইটরঃ {{$profile->owner_name}}">
                     <div class="card rounded-3 text-black">
@@ -85,7 +83,7 @@
 
                                     <div class="text-center register-left">
                                         <img src="{{asset($profile->company_logo != null ? $profile->company_logo : 'no-image.jpg')}}" title="{{$profile->name}}" style="width: 150px;border-radius:20px;" alt="logo">
-                                        <h4 class="mt-1 mb-5 pb-1"></h4>
+                                        <h4 class="mt-1 mb-2 pb-1"></h4>
                                     </div>
 
                                     <form onsubmit="AdminLogin(event)">
@@ -107,10 +105,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-white d-flex py-1" style="background:linear-gradient(45deg, #ff4419, #4c1fff)">
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Design and Developed By Al Amin Islam</marquee>
+                    </div>
                 </div>
-            </div>
-            <div class="text-white d-flex py-1" style="background:linear-gradient(45deg, #ff4419, #4c1fff)">
-                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: white;font-weight: 800;">Design and Developed By Al Amin Islam</marquee>
             </div>
         </div>
     </section>
