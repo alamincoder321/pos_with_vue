@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\DamageController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
@@ -66,6 +67,10 @@ Route::get("/delete-supplierpayment/{id}", [SupplierPaymentController::class, "d
 Route::get("/get-transaction", [TransactionController::class, "getTransaction"]);
 Route::post("/save-transaction", [TransactionController::class, "saveTransaction"]);
 Route::get("/delete-transaction/{id}", [TransactionController::class, "deleteTransaction"]);
+//expense
+Route::get("/get-expense", [ExpenseController::class, "getExpense"]);
+Route::post("/save-expense", [ExpenseController::class, "saveExpense"]);
+Route::get("/delete-expense/{id}", [ExpenseController::class, "deleteExpense"]);
 //unit
 Route::get("/get-unit", [UnitController::class, "getUnit"]);
 Route::post("/save-unit", [UnitController::class, "saveUnit"]);

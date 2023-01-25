@@ -104,8 +104,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 var moment = require('moment');
 export default {
     data() {

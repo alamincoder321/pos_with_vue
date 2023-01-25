@@ -154,6 +154,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @if(in_array("supplierpayment.index", $useraccess))
                         <router-link class="nav-link" to="/supplierpayments">SupplierPayment</router-link>
                         @endif
+                        <router-link class="nav-link" to="/expenses">Expense</router-link>
                         
                     </nav>
                 </div>
