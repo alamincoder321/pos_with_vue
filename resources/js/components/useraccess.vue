@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div class="form-group">
-                                    <input type="checkbox" @change="allCheck" id="all"> <label for="all">All</label>
+                                    <input type="checkbox" class="form-check-input" @change="allCheck" id="all"> <label for="all">All</label>
                                 </div>
                                 <div class="form-group">
                                     <router-link to="/users" class="btn btn-outline-danger shadow-none">Back User
@@ -21,15 +21,15 @@
                             <hr>
                             <div class="row" v-for="(item, index) in permissions" :key="index">
                                 <div class="col-4">
-                                    <input @change="groupChecked" type="checkbox" :value="item.group_name"
+                                    <input @change="groupChecked" class="form-check-input" type="checkbox" :value="item.group_name"
                                         :id="'group-' + item.id"> <label :for="'group-' + item.id">{{
                                                 item.group_name.charAt().toUpperCase() + item.group_name.slice(1)
                                         }}</label>
                                 </div>
                                 <div class="col-8" :class="'checked-' + item.group_name">
                                     <span v-for="per in groupName(item.group_name)" :key="per.id">
-                                        <input type="checkbox" :checked="alluserPermision.includes(per.permission)"
-                                            name="permission[]" class="permission_name" :value="per.id"
+                                        <input type="checkbox" class="form-check-input permission_name" :checked="alluserPermision.includes(per.permission)"
+                                            name="permission[]" :value="per.id"
                                             :id="'permission-' + per.id">
                                         <label :for="'permission-' + per.id">{{ per.permission }}</label><br />
                                     </span>
