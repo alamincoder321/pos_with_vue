@@ -13,9 +13,10 @@
     <link href="{{asset('backend/css/styles.css')}}" rel="stylesheet" />
 
     <style>
-        *{
+        * {
             font-family: monospace !important;
         }
+
         .router-link-exact-active {
             background: #eb971a !important;
             color: white !important;
@@ -44,6 +45,14 @@
             cursor: pointer;
             font-family: monospace;
             text-transform: uppercase;
+        }
+
+        @media only screen and (max-width: 600px) and (min-width: 320px) {
+            #clock {
+                padding: 5px 15px !important;
+                font-size: 10px !important;
+            }
+
         }
     </style>
 
@@ -83,7 +92,7 @@
         function displayClock() {
             var display = new Date().toLocaleTimeString();
             var dispalyDate = new Date().toDateString();
-            document.getElementById("clock").innerText = dispalyDate + ', '+ display;
+            document.getElementById("clock").innerText = dispalyDate + ', ' + display;
             setTimeout(displayClock, 1000);
         }
         displayClock();

@@ -189,7 +189,7 @@ export default {
             axios
                 .post(location.origin + "/api/save-user", formdata)
                 .then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.clearData();
                     this.getUser();
                 });
@@ -210,7 +210,7 @@ export default {
         deleteRow(id) {
             if (confirm("Are you sure")) {
                 axios.get("/api/delete-user/" + id).then((res) => {
-                    alert(res.data);
+                    this.$toastr.s(res.data, "Success!");
                     this.getUser();
                 });
             }
