@@ -96,8 +96,8 @@
                 <footer class="py-2 bg-dark mt-auto">
                     <div class="container-fluid px-4" style="padding-left: 0 !important;">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="width: 32%;background: #646464;padding: 3px 7px;" class="text-white">Design and Developed By <span class="text-uppercase AlAmin">Md. Al Amin Islam</span></div>
-                            <div style="width: 68%;">
+                            <div style="width: 31%;background: #646464;padding: 3px 10.5px;padding-right:0;" class="text-white">Design and Developed By <span class="text-uppercase AlAmin">Md. Al Amin Islam</span></div>
+                            <div style="width: 69%;">
                                 <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
                             </div>
                         </div>
