@@ -113,7 +113,7 @@
                                     </router-link>
                                     <button title="Purchase Delete" @click="InvoiceDelete(item.id, index)" type="button"
                                        class="shadow-none outline-none border-0">
-                                       <i class="fas fa-trash text-danger"></i>
+                                       <i class="bi bi-trash text-danger"></i>
                                     </button>
                                  </div>
                               </td>

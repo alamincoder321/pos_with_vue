@@ -54,6 +54,32 @@
             }
 
         }
+
+        .AlAmin{
+            padding: 0.39rem 27px;
+            color: white;
+            animation: example;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes example {
+            0% {
+                background: red;
+            }
+            
+            25% {
+                background: purple;
+            }
+
+            50% {
+                background: blue;
+            }
+
+            100% {
+                background: green;
+            }
+        }
     </style>
 
 </head>
@@ -70,7 +96,7 @@
                 <footer class="py-2 bg-dark mt-auto">
                     <div class="container-fluid px-4" style="padding-left: 0 !important;">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="width: 32%;background: #646464;padding: 3px 7px;" class="text-white">Design and Developed By <span class="text-warning text-uppercase">Md. Al Amin Islam</span></div>
+                            <div style="width: 32%;background: #646464;padding: 3px 7px;" class="text-white">Design and Developed By <span class="text-uppercase AlAmin">Md. Al Amin Islam</span></div>
                             <div style="width: 68%;">
                                 <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
                             </div>

@@ -6,7 +6,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
         <div class="sb-sidenav-menu">
             <div class="nav">
                 @if(in_array("dashboard", $useraccess))
-                <router-link class="nav-link" exact to="/home">
+                <router-link class="nav-link text-uppercase" exact to="/home">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </router-link>
@@ -82,7 +82,7 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
 
                 @if(in_array("quotation.index", $useraccess) || in_array("quotation.store", $useraccess))
-                <a class="nav-link collapsed text-uppercase" style="background: #4e4e4e;" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts6">
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts6">
                     <div class="sb-nav-link-icon text-white"><i class="bi bi-journal-check"></i></div>
                     Quotation
                     <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
@@ -195,9 +195,9 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
             </div>
         </div>
-        <div class="sb-sidenav-footer text-center">
-            <div class="small" style="background: rebeccapurple;padding: 5px 0;">Logged in as:</div>
-            {{Auth::user()->name}}
+        <div class="sb-sidenav-footer text-center text-uppercase">
+            <div class="small" style="background: black;padding: 5px 0;">Logged in as:</div>
+            {{Auth::user()->role}}
         </div>
     </nav>
 </div>

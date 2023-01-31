@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class LoginController extends Controller
 {
     use Authenticatable;
-    
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
