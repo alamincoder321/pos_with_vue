@@ -27,11 +27,11 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 <a class="nav-link text-danger" title="{{Auth::user()->name}}" id="navbarDropdown" style="background: linen;border-radius: 50%;margin: 0px;padding: 0px;border: 5px dashed #2e240c;" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><img src="{{asset(Auth::user()->image != null ? Auth::user()->image:'no-image.jpg')}}" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><router-link class="dropdown-item" to="/user-edit"><i class="fas fa-cog"></i> Settings</<router-link></li>
+                    <li><router-link class="dropdown-item" to="/user-edit"><i class="bi bi-gear"></i> Settings</<router-link></li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a style="cursor: pointer;" class="dropdown-item" onclick="Logout()"><i class="fas fa-sign-out"></i> Logout</a></li>
+                    <li><a style="cursor: pointer;" class="dropdown-item" onclick="Logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>

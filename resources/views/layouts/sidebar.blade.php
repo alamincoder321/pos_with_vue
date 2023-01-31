@@ -13,10 +13,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
                 <div class="sb-sidenav-menu-heading">Interface</div>
                 @if(in_array("city.index", $useraccess) || in_array("category.index", $useraccess) || in_array("brand.index", $useraccess) || in_array("unit.index", $useraccess) || in_array("product.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-connectdevelop"></i></div>
                     Settings
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -40,10 +40,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
 
                 @if(in_array("purchase.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-shopping-cart"></i></div>
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-cart-plus"></i></div>
                     Purchase
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -64,10 +64,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
 
                 @if(in_array("sale.index", $useraccess) || in_array("sale.store", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-shopping-cart"></i></div>
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-cart-dash"></i></div>
                     Sale
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -82,10 +82,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
 
                 @if(in_array("quotation.index", $useraccess) || in_array("quotation.store", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts6">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file-text"></i></div>
+                <a class="nav-link collapsed text-uppercase" style="background: #4e4e4e;" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts6">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-journal-check"></i></div>
                     Quotation
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -100,10 +100,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 @endif
 
                 @if(in_array("supplier.index", $useraccess) || in_array("customer.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-user-plus"></i></div>
                     Administration
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -117,10 +117,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </div>
                 @endif
                 @if(in_array("department.index", $useraccess) || in_array("employer.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-users"></i></div>
                     HR & Payroll
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -135,10 +135,10 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                 </div>
                 @endif
                 @if(in_array("transaction.index", $useraccess) || in_array("bankaccount.index", $useraccess) || in_array("customerpayment.index", $useraccess) || in_array("supplierpayment.index", $useraccess))
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
                     <div class="sb-nav-link-icon text-white"><i class="fas fa-money-bill"></i></div>
                     Accounts Module
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -154,25 +154,24 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                         @if(in_array("supplierpayment.index", $useraccess))
                         <router-link class="nav-link" to="/supplierpayments">SupplierPayment</router-link>
                         @endif
-                        <router-link class="nav-link" to="/expenses">Expense</router-link>
-                        
+                        <router-link class="nav-link" to="/expenses">Expense</router-link>                        
                     </nav>
                 </div>
                 @endif
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts7">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file"></i></div>
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts7" aria-expanded="false" aria-controls="collapseLayouts7">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-file-earmark-text"></i></div>
                     Report
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <router-link class="nav-link" to="/stocks">Stock</router-link>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts8" aria-expanded="false" aria-controls="collapseLayouts8">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-file-text"></i></div>
+                <a class="nav-link collapsed text-uppercase" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts8" aria-expanded="false" aria-controls="collapseLayouts8">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-file-earmark-ruled"></i></div>
                     All Ledger
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts8" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
@@ -183,14 +182,14 @@ $useraccess = App\Models\UserAccess::where("user_id", Auth::user()->id)->pluck("
                     </nav>
                 </div>
                 @if(in_array("user.index", $useraccess))
-                <router-link class="nav-link" to="/users">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-user"></i></div>
+                <router-link class="nav-link text-uppercase" to="/users">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-person-circle"></i></div>
                     Users
                 </router-link>
                 @endif
                 @if(in_array("companyprofile.index", $useraccess))
-                <router-link class="nav-link" to="/company_profile">
-                    <div class="sb-nav-link-icon text-white"><i class="fas fa-university"></i></div>
+                <router-link class="nav-link text-uppercase" to="/company_profile">
+                    <div class="sb-nav-link-icon text-white"><i class="bi bi-bank2"></i></div>
                     Company Profile
                 </router-link>
                 @endif
