@@ -3034,7 +3034,8 @@ textarea.form-control-lg {
   }
 }
 .btn:hover {
-  color: #212529;
+  background: #e1347d !important;
+  border-color: #e1347d !important;
 }
 .btn-check:focus + .btn, .btn:focus {
   outline: 0;
@@ -11467,6 +11468,8 @@ body {
   padding-top: 5px;
   padding-bottom: 5px;
   position: relative;
+  color: #fff;
+  font-size: 14px;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
   font-size: 1.4rem;
@@ -11488,7 +11491,8 @@ body {
 }
 
 .sb-sidenav-dark {
-  background: repeating-linear-gradient(45deg, black, #0036b1 100px);
+  /* background: repeating-linear-gradient(45deg, black, #0036b1 100px); */
+  background: #1d2c9b;
   color: rgba(255, 255, 255, 0.5);
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {

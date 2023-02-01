@@ -44,9 +44,8 @@
                             </div>
                         </div>
 
-                        <button style="position: absolute;right: 0;bottom: 0px;border-radius: 0;"
-                            v-if="stocks.length > 0" class="btn btn-warning btn-sm shadow-none text-white px-4"
-                            @click="print">Print</button>
+                        <button v-if="stocks.length > 0" class="btn btn-sm shadow-none text-white btn-print"
+                            @click="print"><i class="bi bi-printer"></i> Print</button>
                     </div>
                     <div class="card-body" v-if="stocks.length > 0">
                         <table id="stocks" class="table table-sm table-hover table-bordered">

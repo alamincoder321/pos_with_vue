@@ -32,7 +32,7 @@
                      </div>
                   </form>
 
-                  <button style="position:absolute;bottom:0;right:0;border-radius: 0;" class="btn btn-warning btn-sm shadow-none text-white px-4" @click="print" v-if="ledgers.length > 0">Print</button>
+                  <button class="btn btn-sm shadow-none text-white btn-print" @click="print" v-if="ledgers.length > 0"><i class="bi bi-printer"></i> Print</button>
                </div>
                <div class="card-body" style="overflow-x:auto;" v-if="ledgers.length > 0">
                   <table class="table table-sm table-hover table-bordered" id="ledgers">

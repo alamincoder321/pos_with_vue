@@ -662,17 +662,6 @@ export default {
         },
     },
     mounted() {
-        let _this = this;
-        window.addEventListener("keyup", event => {
-            console.log(event.key);
-            if(event.key == "s"){
-                _this.saveSale()
-            }else if(event.key == "p"){
-                document.querySelector("#product [type='search']").focus()
-            }else if(event.key == "c"){
-                document.querySelector("#customer [type='search']").focus()
-            }else{}
-        })
         document.title = "Sale Entry Page"
     },
 };

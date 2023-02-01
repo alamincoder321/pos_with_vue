@@ -35,7 +35,7 @@ h2 {
 <template>
     <div style="width:80%;margin:auto;">
         <div class="container text-end">
-            <button class="btn btn-warning btn-sm text-white shadow-none px-4 my-3" @click="PrintInvoice">Print</button>
+            <button class="btn btn-invoice btn-sm text-white shadow-none px-4 my-3" @click="PrintInvoice"><i class="bi bi-printer"></i> Print</button>
         </div>
         <div class="container" id="invoice">
             <div class="row">

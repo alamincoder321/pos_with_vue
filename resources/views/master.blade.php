@@ -18,8 +18,24 @@
         }
 
         .router-link-exact-active {
-            background: #eb971a !important;
+            background: #6e2cd4 !important;
             color: white !important;
+        }
+
+        .btn-print {
+            position: absolute;
+            bottom: 6px;
+            right: 13px;
+            background: #e1347d;
+            border-color: #e1347d;
+            font-size: 13px;
+            padding: 4px 12px;
+        }
+
+        .btn-invoice{
+            background: #e1347d;
+            border-color: #e1347d;
+            font-size: 13px;
         }
 
         .ImageBackground .imageShow {
@@ -55,8 +71,8 @@
 
         }
 
-        .AlAmin{
-            padding: 0.39rem 27px;
+        .AlAmin {
+            /* padding: 0.39rem 27px; */
             color: white;
             animation: example;
             animation-duration: 4s;
@@ -67,7 +83,7 @@
             0% {
                 background: red;
             }
-            
+
             25% {
                 background: purple;
             }
@@ -93,12 +109,12 @@
                 <main>
                     <router-view></router-view>
                 </main>
-                <footer class="py-2 bg-dark mt-auto">
-                    <div class="container-fluid px-4" style="padding-left: 0 !important;">
+                <footer class="py-2 bg-dark mt-auto position-relative">
+                    <div class="container-fluid p-lg-0 p-md-0">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="width: 31%;background: #646464;padding: 3px 10.5px;padding-right:0;" class="text-white">Design and Developed By <span class="text-uppercase AlAmin">Md. Al Amin Islam</span></div>
-                            <div style="width: 69%;">
-                                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: #10ef17;font-weight: 800;">Welcome To {{$profile->name}}</marquee>
+                            <div style="padding-left:5px;width: 31%;background: #50206d9e;height: 100%;position: absolute;left:0;z-index:999999;display: flex;align-items: center;" class="text-white AlAmin">Design and Developed By<span class="text-uppercase text-warning" style="margin-left: 25px;"> Md. Al Amin Islam </span></div>
+                            <div style="width: 100%;display:flex;align-items:center;">
+                                <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: rgb(40 255 185);font-weight: 800;font-size: 14px;">Welcome To {{$profile->name}}</marquee>
                             </div>
                         </div>
                     </div>
