@@ -112,7 +112,7 @@
                 <footer class="py-2 bg-dark mt-auto position-relative">
                     <div class="container-fluid p-lg-0 p-md-0">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div style="padding-left:5px;width: 31%;background: #50206d9e;height: 100%;position: absolute;left:0;z-index:999999;display: flex;align-items: center;" class="text-white AlAmin">Design and Developed By<span class="text-uppercase text-warning" style="margin-left: 25px;"> Md. Al Amin Islam </span></div>
+                            <div style="padding-left:5px;width: 31%;background: #50206d9e;height: 100%;position: absolute;left:0;z-index:999999;display: flex;align-items: center;" class="text-white AlAmin">Design and Developed By<span class="text-uppercase text-warning" style="margin-left: 25px;font-size: 14px;font-weight: 900;"> Md. Al Amin Islam </span></div>
                             <div style="width: 100%;display:flex;align-items:center;">
                                 <marquee onmouseover="this.stop()" onmouseout="this.start()" behavior="scroll" scrollamount="3" style="color: rgb(40 255 185);font-weight: 800;font-size: 14px;">Welcome To {{$profile->name}}</marquee>
                             </div>
