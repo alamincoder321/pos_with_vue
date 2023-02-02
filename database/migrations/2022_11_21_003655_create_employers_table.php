@@ -27,6 +27,7 @@ class CreateEmployersTable extends Migration
             $table->integer("city_id");
             $table->string("address");
             $table->decimal("salary");
+            $table->decimal("dailySalary");
             $table->string("image")->nullable();
             $table->timestamps();
         });

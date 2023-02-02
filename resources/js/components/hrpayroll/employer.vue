@@ -118,6 +118,15 @@
                                                 autocomplete="off" />
                                         </div>
                                     </div>
+                                    <div class="row mt-2">
+                                        <label for="dailySalary"
+                                            class="col-5 col-lg-4 d-flex align-items-center">Daily Salary:</label>
+                                        <div class="col-7 col-lg-8">
+                                            <input type="number" id="dailySalary" name="dailySalary"
+                                                class="form-control shadow-none" v-model="employer.dailySalary"
+                                                autocomplete="off" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-2 d-flex justify-content-center align-items-center">
                                     <div class="form-group ImageBackground">
@@ -203,6 +212,11 @@ export default {
                     type: "number",
                 },
                 {
+                    label: "Daily Salaray",
+                    field: "dailySalary",
+                    type: "number",
+                },
+                {
                     label: "Action",
                     field: "before",
                 },
@@ -222,6 +236,7 @@ export default {
                 join_date: moment().format("YYYY-MM-DD"),
                 address: "",
                 salary: 0.00,
+                dailySalary: 0.00,
                 image: "",
             },
             selectedCity: {
@@ -301,17 +316,18 @@ export default {
 
         editRow(val) {
             this.employer = {
-                id: val.id,
+                id           : val.id,
                 employer_code: val.employer_code,
-                name: val.name,
-                designation: val.designation,
-                phone: val.phone,
-                father_name: val.father_name,
-                mother_name: val.mother_name,
-                address: val.address,
-                salary: val.salary,
-                dob: val.dob,
-                join_date: val.join_date,
+                name         : val.name,
+                designation  : val.designation,
+                phone        : val.phone,
+                father_name  : val.father_name,
+                mother_name  : val.mother_name,
+                address      : val.address,
+                salary       : val.salary,
+                dailySalary  : val.dailySalary,
+                dob          : val.dob,
+                join_date    : val.join_date,
             };
             this.selectedCity = {
                 id: val.city_id,
@@ -361,6 +377,7 @@ export default {
                 join_date: moment().format("YYYY-MM-DD"),
                 address: "",
                 salary: 0.00,
+                dailySalary: 0.00,
                 image: "",
             };
             this.selectedCity = {

@@ -39,6 +39,7 @@ class EmployerController extends Controller
             $data->city_id       = $request->city_id;
             $data->address       = $request->address;
             $data->salary        = $request->salary;
+            $data->dailySalary   = $request->dailySalary;
             if ($request->hasFile("image")) {
                 if (isset($old)) {
                     if (File::exists($old)) {
@@ -92,7 +93,7 @@ class EmployerController extends Controller
                         $data                 = new SalaryGenerate();
                         $data->employee_id    = $item->id;
                         $data->month          = $request->monthName;
-                        $data->salary         = $item->salary;
+                        $data->salary         = $item->dailySalary;
                         $data->overTimeBonus  = 0;
                         $data->leaveDeduction = 0;
                         $data->advance        = 0;
@@ -101,10 +102,13 @@ class EmployerController extends Controller
                     }
                 }
             }
+            foreach($employers as $val){
+                $val->salaryGenerate = SalaryGenerate::with('employee')->where("month", $request->monthName)->where('status', 'p')->get();
+            }
+            return $employers;
 
-            return SalaryGenerate::where("month", $request->monthName)->where('status', 'p')->get();
         }catch(\Throwable $e){
-            return "Opps! somehting went wrong";
+            return "Opps! somehting went wrong".$e->getMessage();
         }
     }
 }

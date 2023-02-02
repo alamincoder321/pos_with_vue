@@ -14,10 +14,10 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <input type="month" v-model="monthName" :min="minMonth" class="form-control"/>
+                                    <input type="month" v-model="monthName" :min="minMonth" class="form-control" />
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-1">
                                 <button type="button" @click="getSalary"
                                     class="btn btn-info btn-sm text-white shadow-none px-3">
@@ -27,7 +27,35 @@
                         </div>
                     </div>
                     <div class="card-body" v-if="salaries.length > 0">
-
+                        <template v-for="(salary, index) in salaries">
+                            <table id="stocks" class="table table-sm table-hover table-bordered">
+                                <thead style="background: #897800;color: white;">
+                                    <tr>
+                                        <th colspan="7" class="text-center">{{ salary.name }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Payment Date</th>
+                                        <th>Salary</th>
+                                        <th>Advance</th>
+                                        <th>OverTimeBonus</th>
+                                        <th>LeaveDeduction</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr v-for="(item, sl) in salary.salaryGenerate">
+                                        <td>{{ sl + 1 }}</td>
+                                        <td><input type="date" v-model="item.date"></td>
+                                        <td><input type="number" min="0" step="0.01" v-model="item.salary"></td>
+                                        <td><input type="number" min="0" step="0.01" v-model="item.advance"></td>
+                                        <td><input type="number" min="0" step="0.01" v-model="item.overTimeBonus"></td>
+                                        <td><input type="number" min="0" step="0.01" v-model="item.leaveDeduction"></td>
+                                        <td><input type="text" v-model="item.description"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </template>
                     </div>
                     <div class="card-body text-center" v-else>
                         Not found data in Table
@@ -63,24 +91,24 @@ export default {
         getEmployee() {
             axios.get("/api/get-employer").then((res) => {
                 this.employers = res.data.employers;
-                this.employers.unshift({id: "", name: "All"})
+                this.employers.unshift({ id: "", name: "All" })
             });
         },
 
-        getSalary(){
-            if(this.selectedEmployee == null ){
+        getSalary() {
+            if (this.selectedEmployee == null) {
                 alert("Select employee first")
                 return
             }
 
             let data = {
                 employerId: this.selectedEmployee.id,
-                monthName : this.monthName,
-                added_by  : this.user_id
+                monthName: this.monthName,
+                added_by: this.user_id
             }
             axios.post("/api/salary-generate", data)
                 .then(res => {
-                    console.log(res.data)
+                    this.salaries = res.data;
                 })
         },
 
@@ -109,7 +137,7 @@ export default {
 };
 </script>
 <style>
-#employee{
+#employee {
     width: 100% !important;
 }
 </style>
