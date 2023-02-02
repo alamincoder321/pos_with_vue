@@ -98,6 +98,7 @@ Route::post("/get-supduetotal", [SupplierController::class, "totalDue"]);
 Route::get("/get-employer", [EmployerController::class, "getEmployer"]);
 Route::post("/save-employer", [EmployerController::class, "saveEmployer"]);
 Route::get("/delete-employer/{id}", [EmployerController::class, "deleteEmployer"]);
+Route::post("/salary-generate", [EmployerController::class, "salaryGenerate"]);
 //product
 Route::get("/get-product", [ProductController::class, "getProduct"]);
 Route::post("/save-product", [ProductController::class, "saveProduct"]);

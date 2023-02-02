@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <input type="month" v-model="monthId" class="form-control"/>
+                                    <input type="month" v-model="monthName" :min="minMonth" class="form-control"/>
                                 </div>
                             </div>
                             
@@ -44,7 +44,8 @@ export default {
 
     data() {
         return {
-            monthId: moment().format("YYYY-MM"),
+            minMonth: moment().format("YYYY-MM"),
+            monthName: moment().format("YYYY-MM"),
             employers: [],
             selectedEmployee: null,
             salaries: [],
@@ -62,10 +63,26 @@ export default {
         getEmployee() {
             axios.get("/api/get-employer").then((res) => {
                 this.employers = res.data.employers;
+                this.employers.unshift({id: "", name: "All"})
             });
         },
 
-        getSalary(){},
+        getSalary(){
+            if(this.selectedEmployee == null ){
+                alert("Select employee first")
+                return
+            }
+
+            let data = {
+                employerId: this.selectedEmployee.id,
+                monthName : this.monthName,
+                added_by  : this.user_id
+            }
+            axios.post("/api/salary-generate", data)
+                .then(res => {
+                    console.log(res.data)
+                })
+        },
 
         getPermission() {
             axios.get("/api/get-permission/" + this.user_id).then((res) => {

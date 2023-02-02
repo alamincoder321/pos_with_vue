@@ -23,7 +23,7 @@ class CreateSalaryGeneratesTable extends Migration
             $table->decimal("leaveDeduction")->nullable();
             $table->decimal("advance")->nullable();
             $table->text("description")->nullable();
-            $table->char("status", 5)->default("a");
+            $table->char("status", 5)->default("p");
             $table->integer("added_by");
             $table->timestamps();
         });
