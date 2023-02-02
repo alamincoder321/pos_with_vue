@@ -54,9 +54,9 @@ h2 {
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Sales By:</span>{{ sales.user_name }}<br>
+                        <span style="font-weight: 500;">Sale By:</span>{{ sales.user_name }}<br>
                         <span style="font-weight: 500;">Invoice:</span>#{{ sales.invoice }}<br>
-                        <span style="font-weight: 500;">Sales Date:</span> {{ formatDate(sales.date) }}
+                        <span style="font-weight: 500;">Sale Date:</span> {{ formatDate(sales.date) }}
                     </div>
                 </div>
                 <!-- product details -->

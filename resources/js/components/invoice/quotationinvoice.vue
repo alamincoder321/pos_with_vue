@@ -51,9 +51,9 @@ h2 {
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Quotations By:</span>{{ quotations.user_name }}<br>
+                        <span style="font-weight: 500;">Quotation By:</span>{{ quotations.user_name }}<br>
                         <span style="font-weight: 500;">Invoice:</span>#{{ quotations.invoice }}<br>
-                        <span style="font-weight: 500;">Quotations Date:</span> {{ formatDate(quotations.date) }}
+                        <span style="font-weight: 500;">Quotation Date:</span> {{ formatDate(quotations.date) }}
                     </div>
                 </div>
                 <!-- product details -->

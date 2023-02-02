@@ -52,9 +52,9 @@ h2 {
                 </div>
                 <div class="col-6 mb-3">
                     <div class="text-end">
-                        <span style="font-weight: 500;">Purchases By:</span>{{ purchases.user_name }}<br>
+                        <span style="font-weight: 500;">Purchase By:</span>{{ purchases.user_name }}<br>
                         <span style="font-weight: 500;">Invoice:</span>#{{ purchases.invoice }}<br>
-                        <span style="font-weight: 500;">Purchases Date:</span> {{ formatDate(purchases.date) }}
+                        <span style="font-weight: 500;">Purchase Date:</span> {{ formatDate(purchases.date) }}
                     </div>
                 </div>
                 <!-- product details -->
