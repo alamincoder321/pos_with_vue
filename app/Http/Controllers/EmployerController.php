@@ -77,10 +77,10 @@ class EmployerController extends Controller
         try{
             $clauses = "";
             if(!empty($request->employeeId)){
-                $clauses = " AND e.id = '$request->employeeId'";
+                $clauses .= " AND e.id = '$request->employeeId'";
             }
             $employers = DB::select("SELECT e.* FROM employers e WHERE 1 = 1 $clauses");
-
+            
             $monthyear = explode("-", $request->monthName);
             $month = $monthyear[1];
             $year = $monthyear[0];
@@ -94,6 +94,7 @@ class EmployerController extends Controller
                         $data->employee_id    = $item->id;
                         $data->month          = $request->monthName;
                         $data->salary         = $item->dailySalary;
+                        $data->due            = 0;
                         $data->overTimeBonus  = 0;
                         $data->leaveDeduction = 0;
                         $data->advance        = 0;
@@ -103,12 +104,37 @@ class EmployerController extends Controller
                 }
             }
             foreach($employers as $val){
-                $val->salaryGenerate = SalaryGenerate::with('employee')->where("month", $request->monthName)->where('status', 'p')->get();
+                $val->salaryGenerate = SalaryGenerate::where('employee_id', $val->id)->where("month", $request->monthName)->where('status', $request->status)->get();
             }
             return $employers;
 
         }catch(\Throwable $e){
             return "Opps! somehting went wrong".$e->getMessage();
+        }
+    }
+
+    // salary payment
+    public function salaryPayment(Request $request){
+        try{
+            $check                = SalaryGenerate::where("date", $request->date)->where("employee_id", $request->employee_id)->first();
+            if (empty($check) || $request->status == 'd') {
+                $data                 = SalaryGenerate::where("id", $request->id)->first();
+                $data->date           = $request->date;
+                $data->salary         = $request->salary;
+                $data->advance        = $request->advance;
+                $data->overTimeBonus  = $request->overTimeBonus;
+                $data->salary         = $request->paymentStatus == 'd' ? $request->salary - $request->due : $request->salary + $request->due;
+                $data->due            = $request->paymentStatus == 'd' ? $request->due : 0;
+                $data->leaveDeduction = $request->leaveDeduction;
+                $data->description    = $request->description;
+                $data->status         = $request->paymentStatus;
+                $data->save();
+                return response()->json(["msg"=>"Payment Salary successfully"]);
+            }else{
+                return response()->json(["error"=>"Salary payment this date(".$request->date.")"]);
+            }
+        }catch(\Throwable $e){
+            return "Opps! something went wrong";
         }
     }
 }

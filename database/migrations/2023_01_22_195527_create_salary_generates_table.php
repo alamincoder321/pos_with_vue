@@ -19,11 +19,12 @@ class CreateSalaryGeneratesTable extends Migration
             $table->string("month", 50);
             $table->string("date")->nullable();
             $table->decimal("salary");
+            $table->decimal("due");
             $table->decimal("overTimeBonus")->nullable();
             $table->decimal("leaveDeduction")->nullable();
             $table->decimal("advance")->nullable();
             $table->text("description")->nullable();
-            $table->char("status", 5)->default("p");
+            $table->char("status", 5)->default("p")->comment("p=Pending, d=Due, a=Payment Complete");
             $table->integer("added_by");
             $table->timestamps();
         });
