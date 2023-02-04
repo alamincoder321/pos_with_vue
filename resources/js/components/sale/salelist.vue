@@ -125,7 +125,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="d-none" :class="'showDetails-'+index">
+                                    <tr :title="'Invoice: '+item.invoice" class="d-none" :class="'showDetails-'+index">
                                         <td colspan="6">
                                             <table class="table table-hover table-bordered">
                                                 <thead class="text-white text-center" style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">

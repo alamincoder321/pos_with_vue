@@ -123,7 +123,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="d-none" :class="'showDetails-' + index">
+                                    <tr :title="'Invoice: '+item.invoice" class="d-none" :class="'showDetails-' + index">
                                         <td colspan="6">
                                             <table class="table table-hover table-bordered">
                                                 <thead class="text-white text-center"
