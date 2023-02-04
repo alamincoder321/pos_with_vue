@@ -127,7 +127,7 @@
                                     </tr>
                                     <tr :title="'Invoice: '+item.invoice" class="d-none" :class="'showDetails-'+index">
                                         <td colspan="6">
-                                            <table class="table table-hover table-bordered">
+                                            <table class="table table-sm table-hover table-bordered">
                                                 <thead class="text-white text-center" style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">
                                                     <tr>
                                                         <th>Sl</th>
@@ -141,13 +141,13 @@
                                                     <tr v-for="(detail, index) in item.saleDetails">
                                                         <td>{{ index + 1 }}</td>
                                                         <td>{{ detail.name }}</td>
-                                                        <td>{{ detail.quantity }} {{ detail.unit_name }}</td>
-                                                        <td>{{ detail.selling_price }}</td>
-                                                        <td>{{ detail.total_amount }}</td>
+                                                        <td class="text-center">{{ detail.quantity }} {{ detail.unit_name }}</td>
+                                                        <td class="text-center">{{ detail.selling_price }}</td>
+                                                        <td class="text-end">{{ detail.total_amount }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th colspan="4" class="text-end">Total:</th>
-                                                        <th>{{ item.saleDetails.reduce((acc, pre) => {return acc + +pre.total_amount}, 0).toFixed(2) }}</th>
+                                                        <th colspan="4" class="text-center">Total:</th>
+                                                        <th class="text-end">{{ item.saleDetails.reduce((acc, pre) => {return acc + +pre.total_amount}, 0).toFixed(2) }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

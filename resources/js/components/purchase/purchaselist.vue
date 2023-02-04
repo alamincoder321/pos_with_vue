@@ -127,7 +127,7 @@
                            </tr>
                            <tr :title="'Invoice: '+item.invoice" class="d-none" :class="'showDetails-'+index">
                               <td colspan="6">
-                                 <table class="table table-hover table-bordered table-sm">
+                                 <table class="table table-sm table-hover table-bordered">
                                     <thead class="text-white text-center"
                                        style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">
                                        <tr>
@@ -142,13 +142,13 @@
                                        <tr v-for="(detial, index) in item.purchaseDetails">
                                           <td>{{ index + 1 }}</td>
                                           <td>{{ detial.name }}</td>
-                                          <td>{{ detial.quantity }} {{ detial.unit_name }}</td>
-                                          <td>{{ detial.purchase_price }}</td>
-                                          <td>{{ detial.total_amount }}</td>
+                                          <td class="text-center">{{ detial.quantity }} {{ detial.unit_name }}</td>
+                                          <td class="text-center">{{ detial.purchase_price }}</td>
+                                          <td class="text-end">{{ detial.total_amount }}</td>
                                        </tr>
                                        <tr>
-                                          <th colspan="4" class="text-end">Total:</th>
-                                          <th>{{
+                                          <th colspan="4" class="text-center">Total:</th>
+                                          <th class="text-end">{{
                                              item.purchaseDetails.reduce((acc, pre) => { return acc + +pre.total_amount },
                                                 0).toFixed(2)
                                           }}</th>
