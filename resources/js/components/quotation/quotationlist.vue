@@ -66,8 +66,7 @@
                             </thead>
                             <tbody>
                                 <template v-for="(item, index) in quotations">
-                                    <tr :title="item.user_name"
-                                        @dblclick="showDetail(item.quotationDetails, item.invoice)">
+                                    <tr :title="item.user_name">
                                         <td class="text-center">
                                             {{ index + 1 }}
                                         </td>
@@ -97,8 +96,17 @@
                                             <span v-if="item.transport_cost != 0">Transport Cost:
                                                 {{ item.transport_cost }}</span>
                                         </td>
-                                        <td>
+                                        <td style="width: 13%;">
                                             <div class="input-group gap-2">
+                                                <button @click="showDetail(index)" title="Show Quotation Details"
+                                                    class="shadow-none outline-none border-0" :class="'ShowBtn-' + index"
+                                                    type="button"><i
+                                                        class="bi bi-info-circle-fill text-primary"></i></button>
+                                                <button @click="hideDetail(index)" title="Close Quotation Details"
+                                                    class="shadow-none d-none outline-none border-0"
+                                                    :class="'CloseBtn-' + index" type="button">
+                                                    <i class="bi bi-x-square-fill text-danger"></i>
+                                                </button>
                                                 <router-link class="bg-common" style="padding:2px 6px;"
                                                     title="Sale Invoice"
                                                     :to="{ path: '/quotation-invoice/' + item.invoice }"><i
@@ -115,6 +123,40 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr class="d-none" :class="'showDetails-' + index">
+                                        <td colspan="6">
+                                            <table class="table table-hover table-bordered">
+                                                <thead class="text-white text-center"
+                                                    style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">
+                                                    <tr>
+                                                        <th>Sl</th>
+                                                        <th>Description</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(detail, index) in item.quotationDetails">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td>{{ detail.name }}</td>
+                                                        <td>{{ detail.quantity }} {{ detail.unit_name }}</td>
+                                                        <td>{{ detail.selling_price }}</td>
+                                                        <td>{{ detail.total_amount }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Total:</th>
+                                                        <th>{{
+                                                            item.quotationDetails.reduce((acc, pre) => {
+                                                                return acc +
+                                                                    +pre.total_amount
+                                                            }, 0).toFixed(2)
+                                                        }}</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
                                 </template>
                             </tbody>
                         </table>
@@ -125,47 +167,11 @@
                 </div>
             </div>
         </div>
-
-        <div id="showModal" class="modal fade" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body p-5">
-                        <h4 class="text-center text-decoration-underline">Invoice: <span></span></h4>
-                        <table class="table table-hover table-bordered">
-                            <thead class="text-white text-center" style="background:linear-gradient(180deg, rgb(255 14 14), rgb(0 243 255))">
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="detail.length > 0" v-for="(item, index) in detail">
-                                    <td>{{ index + 1 }}</td>
-                                    <td>{{ item.name }}</td>
-                                    <td>{{ item.quantity }} {{ item.unit_name }}</td>
-                                    <td>{{ item.selling_price }}</td>
-                                    <td>{{ item.total_amount }}</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="4" class="text-end">Total:</th>
-                                    <th>{{ detail.reduce((acc, pre) => {return acc + +pre.total_amount}, 0).toFixed(2) }}</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </template>
 
 <script>
 var moment = require('moment');
-const Swal = require('sweetalert2')
 export default {
     data() {
         return {
@@ -175,7 +181,6 @@ export default {
             invoices: [],
             selectedInvoice: null,
             quotations: [],
-            detail: [],
             useraccess: [],
             user_id: null,
         }
@@ -188,10 +193,15 @@ export default {
         this.logOut();
     },
     methods: {
-        showDetail(products, inv) {
-            $('#showModal').modal('show');
-            $('#showModal').find('h4 span').text(inv);
-            this.detail = products
+        showDetail(index) {
+            $(".ShowBtn-" + index).addClass("d-none")
+            $(".CloseBtn-" + index).removeClass("d-none")
+            $(".showDetails-" + index).removeClass("d-none");
+        },
+        hideDetail(index) {
+            $(".ShowBtn-" + index).removeClass("d-none")
+            $(".CloseBtn-" + index).addClass("d-none")
+            $(".showDetails-" + index).addClass("d-none");
         },
         getSearchQuotation() {
             if (this.searchBy == "invoice" && this.selectedInvoice == null) {
@@ -257,9 +267,6 @@ export default {
     },
 
     mounted() {
-        setTimeout(() => {
-            Swal.fire('If you want to show quotation details then doubleClick on quotations table row')
-        }, 1000);
         document.title = "Quotation List Page"
     },
 };
