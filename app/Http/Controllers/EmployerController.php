@@ -134,7 +134,26 @@ class EmployerController extends Controller
                 return response()->json(["error"=>"Salary payment this date(".$request->date.")"]);
             }
         }catch(\Throwable $e){
-            return "Opps! something went wrong";
+            return ['msg' => "Opps! something went wrong"];
+        }
+    }
+
+    public function salaryReport(Request $request)
+    {
+        try{
+            $clauses = '';
+            if (isset($request->dateFrom) && !empty($request->dateFrom)) {
+                $clauses .= " AND sg.date BETWEEN '$request->dateFrom' AND '$request->dateTo'";
+            }
+            $employers = DB::select("SELECT e.* FROM employers e WHERE 1 = 1" .($request->employeeId == "" ? "" : " AND e.id = '$request->employeeId'"));
+
+            foreach($employers as $item){
+                $item->salary = DB::select("SELECT sg.* FROM salary_generates sg WHERE sg.status = 'a' AND sg.employee_id = '$item->id' $clauses ORDER BY sg.date DESC");
+            }
+            return $employers;
+
+        }catch(\Throwable $e){
+            return "Opps something went wrong";
         }
     }
 }

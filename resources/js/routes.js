@@ -18,6 +18,7 @@ import supplier from "./components/administration/supplier.vue";
 import department from "./components/hrpayroll/department.vue";
 import employer from "./components/hrpayroll/employer.vue";
 import salaryGenerate from "./components/hrpayroll/salaryGenerate.vue";
+import salaryReport from "./components/hrpayroll/salaryReport.vue";
 import product from "./components/settings/product.vue";
 import purchase from "./components/purchase/purchase.vue";
 import purchaselist from "./components/purchase/purchaselist.vue";
@@ -70,6 +71,7 @@ const routes = [
     { path: "/departments", component: department },
     { path: "/employers", component: employer },
     { path: "/salary-generate", component: salaryGenerate },
+    { path: "/salary-report", component: salaryReport },
     //content
     { path: "/products", component: product },
     //purchase

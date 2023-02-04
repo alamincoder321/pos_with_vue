@@ -66,18 +66,17 @@
                                     <td>{{ item.name }}</td>
                                     <td align="center">{{ item.stock }} {{ item.unit_name }}</td>
                                     <td align="center">{{ item.selling_price }}</td>
-                                    <td align="center">{{ (item.selling_price * item.stock).toFixed(2) }}</td>
+                                    <td align="right">{{ (item.selling_price * item.stock).toFixed(2) }}</td>
                                 </tr>
                                 <tr :style="{ display: stocks.length == 0 ? 'none' : '' }">
-                                    <th colspan="3" style="text-align:right;">Total Stock Qty</th>
+                                    <th colspan="3" style="text-align:center;">Total:</th>
                                     <th style="text-align:center;">{{
                                         stocks.reduce((acc, pre) => {
                                             return acc +
                                                 +pre.stock
                                         }, 0)
                                     }}</th>
-                                    <th style="text-align:right;">Total Stock Value</th>
-                                    <th style="text-align:center;">{{ (stocks.reduce((acc, pre) => {
+                                    <th colspan="2" style="text-align:right;">{{ (stocks.reduce((acc, pre) => {
                                         return acc +
                                             +pre.stock * pre.selling_price
                                     }, 0)).toFixed(2) }} </th>
