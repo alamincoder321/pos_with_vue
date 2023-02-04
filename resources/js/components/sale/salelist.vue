@@ -114,7 +114,7 @@
                                                     title="Sale Invoice" :to="{ path: '/invoice/' + item.invoice }"><i
                                                         class="fas fa-file text-info"></i>
                                                 </router-link>
-                                                <router-link class="bg-common" title="Sale-edit"
+                                                <router-link class="bg-common" title="Sale Edit"
                                                     :to="{ path: '/sales-edit/' + item.invoice }">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </router-link>

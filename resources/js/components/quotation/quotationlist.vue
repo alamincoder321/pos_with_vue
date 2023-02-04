@@ -108,15 +108,15 @@
                                                     <i class="bi bi-x-square-fill text-danger"></i>
                                                 </button>
                                                 <router-link class="bg-common" style="padding:2px 6px;"
-                                                    title="Sale Invoice"
+                                                    title="Quotation Invoice"
                                                     :to="{ path: '/quotation-invoice/' + item.invoice }"><i
                                                         class="fas fa-file text-info"></i>
                                                 </router-link>
-                                                <router-link class="bg-common" title="Sale-edit"
+                                                <router-link class="bg-common" title="Quotation Edit"
                                                     :to="{ path: '/quotations-edit/' + item.invoice }">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </router-link>
-                                                <button title="Sale Delete" @click="InvoiceDelete(item.id, index)"
+                                                <button title="Quotation Delete" @click="InvoiceDelete(item.id, index)"
                                                     type="button" class="shadow-none outline-none border-0">
                                                     <i class="bi bi-trash text-danger"></i>
                                                 </button>

@@ -114,7 +114,7 @@
                                        :to="{ path: '/purchase-invoice/' + item.invoice }"><i
                                           class="fas fa-file text-info"></i>
                                     </router-link>
-                                    <router-link class="bg-common" title="purchase-edit"
+                                    <router-link class="bg-common" title="Purchase Edit"
                                        :to="{ path: '/purchases-edit/' + item.invoice }">
                                        <i class="fa fa-edit text-primary"></i>
                                     </router-link>
