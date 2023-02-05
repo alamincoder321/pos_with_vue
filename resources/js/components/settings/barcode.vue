@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="form-group text-center mt-3">
-                            <button type="button" class="btn btn-sm shadow-none text-white btn-invoice"><i
+                            <button @click="print" type="button" class="btn btn-sm shadow-none text-white btn-invoice"><i
                                     class="bi bi-printer"></i> Print</button>
                             <button @click="BarcodeGenerate" type="button"
                                 class="btn btn-sm btn-outline-success px-3 shadow-none">BarcodeGenerate</button>
@@ -56,17 +56,22 @@
             </div>
         </div>
 
-        <div class="row" v-if="products.length > 0">
+        <div class="row QR" v-if="products.length > 0">
             <template v-for="(item, index) in products">
-
+                <div style="width:200px;">
+                    <barcode v-bind:value="product.product_code"></barcode>
+                </div>
             </template>
         </div>
     </div>
 </template>
 
 <script>
-
+import VueBarcode from 'vue-barcode';
 export default {
+    components: {
+        'barcode': VueBarcode
+    },
     data() {
         return {
             quantity: 0,
@@ -97,6 +102,12 @@ export default {
                 i++;
             }
 
+        },
+        async print(){
+            let printWindow = window.open("", "", `width=${window.screen.width}, height=${window.screen.height}`)
+            printWindow.document.write(`
+                ${document.querySelector(".QR").innerHTML}
+            `)
         },
         getPermission() {
             axios.get("/api/get-permission/" + this.user_id).then((res) => {
