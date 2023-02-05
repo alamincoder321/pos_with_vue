@@ -17,6 +17,11 @@ class ProductController extends Controller
         return response()->json(["gen_code" => $gen_code, "products" => $products]);
     }
 
+    public function fetch($id)
+    {
+        return Product::find($id);
+    }
+
     public function saveProduct(Request $request)
     {
         try {

@@ -130,6 +130,7 @@
 }" :line-numbers="true" styleClass="vgt-table" max-height="550px">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'before'">
+                            <router-link :to="`${'/product-barcode/'+props.row.id}`" class="btn btn-sm btn-outline-primary shadow-none px-3"><i class="fa fa-barcode"></i></router-link>
                             <button :style="{display: useraccess.includes('product.edit')?'':'none'}" class="btn btn-sm btn-outline-primary shadow-none" @click="editRow(props.row)">
                                 Edit
                             </button>

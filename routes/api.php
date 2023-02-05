@@ -103,6 +103,7 @@ Route::post("/salary-payment", [EmployerController::class, "salaryPayment"]);
 Route::post("/salary-report", [EmployerController::class, "salaryReport"]);
 //product
 Route::get("/get-product", [ProductController::class, "getProduct"]);
+Route::get("/product-fetch/{id}", [ProductController::class, "fetch"]);
 Route::post("/save-product", [ProductController::class, "saveProduct"]);
 Route::get("/delete-product/{id}", [ProductController::class, "deleteProduct"]);
 Route::post("/get-product-stock", [ProductController::class, "stock"]);

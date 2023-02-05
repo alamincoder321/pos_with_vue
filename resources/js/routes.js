@@ -20,6 +20,7 @@ import employer from "./components/hrpayroll/employer.vue";
 import salaryGenerate from "./components/hrpayroll/salaryGenerate.vue";
 import salaryReport from "./components/hrpayroll/salaryReport.vue";
 import product from "./components/settings/product.vue";
+import barcode from "./components/settings/barcode.vue";
 import purchase from "./components/purchase/purchase.vue";
 import purchaselist from "./components/purchase/purchaselist.vue";
 import editpurchase from "./components/purchase/editpurchase.vue";
@@ -74,6 +75,7 @@ const routes = [
     { path: "/salary-report", component: salaryReport },
     //content
     { path: "/products", component: product },
+    { path: "/product-barcode/:id", component: barcode },
     //purchase
     { path: "/purchases", component: purchase },
     { path: "/purchases-list", component: purchaselist },

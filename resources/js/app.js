@@ -9,6 +9,11 @@ import "vue-good-table/dist/vue-good-table.css";
 
 Vue.use(VueGoodTablePlugin);
 
+//barcode
+
+import VueBarcode from 'vue-barcode'
+Vue.component('barcode', VueBarcode)
+
 // v-select
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
