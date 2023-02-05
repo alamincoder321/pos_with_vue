@@ -11,8 +11,6 @@ Vue.use(VueGoodTablePlugin);
 
 //barcode
 
-import VueBarcode from 'vue-barcode'
-Vue.component('barcode', VueBarcode)
 
 // v-select
 import vSelect from "vue-select";

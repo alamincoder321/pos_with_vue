@@ -58,7 +58,7 @@
 
         <div class="row" v-if="products.length > 0">
             <template v-for="(item, index) in products">
-                <barcode v-bind:value="product.product_code"></barcode>
+
             </template>
         </div>
     </div>

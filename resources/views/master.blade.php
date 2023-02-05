@@ -32,7 +32,7 @@
             padding: 4px 12px;
         }
 
-        .btn-invoice{
+        .btn-invoice {
             background: #e1347d;
             border-color: #e1347d;
             font-size: 13px;
