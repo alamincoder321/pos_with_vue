@@ -106,8 +106,34 @@ export default {
         async print(){
             let printWindow = window.open("", "", `width=${window.screen.width}, height=${window.screen.height}`)
             printWindow.document.write(`
-                ${document.querySelector(".QR").innerHTML}
-            `)
+                    <html>
+                        <head>
+                            <title>Stock Report</title>
+                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                            <style>    
+                                @media print {
+                                    *{
+                                        margin:0 auto;
+                                    }
+                                    @page{size:auto;}
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>
+                                        ${document.querySelector(".QR").innerHTML}
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                    </html>
+                `);
+            printWindow.focus();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            printWindow.print();
+            printWindow.close();
         },
         getPermission() {
             axios.get("/api/get-permission/" + this.user_id).then((res) => {
