@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SaleController;
@@ -129,4 +130,7 @@ Route::post("/getproduct-ledger", [ProductController::class, "ProductLedger"]);
 Route::post("/getcustomer-ledger", [CustomerController::class, "CustomerLedger"]);
 Route::post("/getsupplier-ledger", [SupplierController::class, "SupplierLedger"]);
 Route::post("/getbank-ledger", [BankAccountController::class, "BankLedger"]);
+
+//get profit
+Route::get("/profit", [ProfitController::class, "getProfit"]);
 
