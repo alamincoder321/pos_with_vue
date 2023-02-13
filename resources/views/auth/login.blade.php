@@ -146,7 +146,6 @@
                             $(".error-username").text(res.unauthenticate).addClass("text-danger")
                             return
                         }
-                        alert(res.msg)
                         location.href = "/home"
                         localStorage.setItem("user_id", res.user_id)
                     }

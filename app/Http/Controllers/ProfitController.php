@@ -44,9 +44,9 @@ class ProfitController extends Controller
         }
         $totalData["yearlySale"] = number_format($yearlyAmount, 2, '.', '');
 
-        $totalData["allMonthKey"] = array_keys($allMonth);
-        $totalData["allMonthData"] = array_values($allMonth);
+        $totalData["allMonth"] = array_keys($allMonth);
+        $totalData["allMonthValue"] = array_values($allMonth);
         
-        return $totalData;
+        return response()->json($totalData);
     }
 }

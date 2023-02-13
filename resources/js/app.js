@@ -21,10 +21,6 @@ Vue.use(VueDatePicker);
 
 // jquery use
 window.$ = window.jQuery = require("jquery/dist/jquery");
-// chart
-import VueApexCharts from "vue-apexcharts";
-Vue.use(VueApexCharts);
-Vue.component("apexchart", VueApexCharts);
 
 //toastr
 import VueToastr from "vue-toastr";

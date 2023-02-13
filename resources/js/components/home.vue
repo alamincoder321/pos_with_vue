@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-xl-4 col-md-6">
                 <div class="card bg-primary text-center text-white mb-4">
-                    <div class="card-body">{{profit.todaySale}}</div>
+                    <div class="card-body">{{ profit.todaySale }}</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
                         <a class="small text-white text-decoration-none stretched-link">Today Sales</a>
                     </div>
@@ -12,15 +12,15 @@
             </div>
             <div class="col-xl-4 col-md-6">
                 <div class="card bg-info text-center text-white mb-4">
-                    <div class="card-body">{{profit.monthlySale}}</div>
+                    <div class="card-body">{{ profit.monthlySale }}</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
-                        <a class="small text-white text-decoration-none stretched-link" >Monthly Sales</a>
+                        <a class="small text-white text-decoration-none stretched-link">Monthly Sales</a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-4 col-md-6">
                 <div class="card bg-success text-center text-white mb-4">
-                    <div class="card-body">{{profit.yearlySale}}</div>
+                    <div class="card-body">{{ profit.yearlySale }}</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
                         <a class="small text-white text-decoration-none stretched-link">Yearly Sales</a>
                     </div>
@@ -71,54 +71,61 @@
 
             <!-- chart list -->
             <div class="col-lg-8 offset-lg-2">
-                <apexchart width="100%" type="bar" :options="options" :series="series"></apexchart>
+                <Bar :options="chartOptions" :data="chartData" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import * as moment from 'moment';
+import moment from 'moment';
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
+    name: 'BarChart',
+    components: { Bar },
     data() {
         return {
-            options: {
-                chart: {
-                    id: 'vuechart-example'
-                },
-                xaxis: {
-                    categories: []
-                }
+            chartData: {
+                labels: [],
+                datasets: [
+                    {
+                        label: "Sales Amount",
+                        backgroundColor: '#f87979',
+                        data: []
+                    }
+                ]
             },
-            series: [{
-                name: 'Sales Amount',
-                data: []
-            }],
+            chartOptions: {
+                responsive: true
+            },
             profit: {},
             useraccess: [],
             user_id: null,
 
         }
     },
-    created() {
+    async created() {
         this.user_id = localStorage.getItem("user_id");
-        this.getProfit();
+        await this.getProfit();
         this.getPermission();
         this.logOut();
     },
     methods: {
-        getProfit(){
-            axios.get(location.origin+"/api/profit")
+        async getProfit() {
+            await axios.get(location.origin + "/api/profit")
                 .then(res => {
                     this.profit = res.data;
-                    res.data.allMonthKey.forEach(r => {
-                        this.options.xaxis.categories.push(moment(r).format("MM"))
-                    })
-                    res.data.allMonthData.forEach(r => {
-                        this.series[0].data.push(Number(r))
-                    })
+                    res.data.allMonth.map(v =>
+                        this.chartData.labels.push(moment(v).format("MMMM"))
+                    )
+                    res.data.allMonthValue.map(v =>
+                        this.chartData.datasets[0].data.push(v)
+                    )
                 })
+
         },
         getPermission() {
             axios.get("/api/get-permission/" + this.user_id).then((res) => {
