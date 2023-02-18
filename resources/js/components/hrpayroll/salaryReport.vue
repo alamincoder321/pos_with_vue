@@ -196,11 +196,7 @@ export default {
                                 <div class="row">
                                     <h2 style="margin:0;text-align:center">Salary Payment Report</h2>
                                     <table class="table table-sm table-bordered m-0">
-                                        <tr>
-                                            <td>
-                                                ${document.querySelector("#paymentReport").innerHTML}    
-                                            </td>
-                                        </tr>
+                                        ${document.querySelector("#paymentReport").innerHTML}
                                     </table>
                                 </div>
                                 <div style='width:100%;position:fixed;bottom:0;left:0;text-align:center;padding-top:8px;font-style:italic;'>Print Date: ${moment(new Date()).format("DD-MM-YYYY")}<div>
