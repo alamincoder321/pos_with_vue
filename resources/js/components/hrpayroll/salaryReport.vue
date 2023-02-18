@@ -14,7 +14,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3" :class="searchBy != 'employee' ? 'd-none' : ''">
+                            <div class="col-lg-3" v-if="searchBy == 'employee'">
                                 <div class="form-group">
                                     <v-select :options="employers" id="employee" v-model="selectedEmployee"
                                         label="name"></v-select>

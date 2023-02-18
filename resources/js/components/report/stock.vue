@@ -18,19 +18,19 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3" :style="{ display: changeVal == 'brand' ? '' : 'none' }">
+                            <div class="col-lg-3" v-if="changeVal == 'brand'">
                                 <div class="form-group">
                                     <v-select style="width:100% !important;" :options="brands" v-model="selectedBrand"
                                         label="name"></v-select>
                                 </div>
                             </div>
-                            <div class="col-lg-3" :style="{ display: changeVal == 'category' ? '' : 'none' }">
+                            <div class="col-lg-3" v-if="changeVal == 'category'">
                                 <div class="form-group">
                                     <v-select style="width:100% !important;" :options="categories"
                                         v-model="selectedCategory" label="name"></v-select>
                                 </div>
                             </div>
-                            <div class="col-lg-3" :style="{ display: changeVal == 'product' ? '' : 'none' }">
+                            <div class="col-lg-3" v-if="changeVal == 'product'">
                                 <div class="form-group">
                                     <v-select style="width:100% !important;" :options="products"
                                         v-model="selectedProduct" label="display_name"></v-select>

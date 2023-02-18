@@ -14,18 +14,18 @@
                               </select>
                            </div>
                         </div>
-                        <div class="col-lg-3" :style="{ display: searchBy == 'invoice' ? '' : 'none' }">
+                        <div class="col-lg-3" v-if="searchBy == 'invoice'">
                            <div class="form-group m-0">
                               <v-select :options="invoices" id="invoice" v-model="selectedInvoice"
                                  label="invoice"></v-select>
                            </div>
                         </div>
-                        <div class="col-lg-2" :style="{ display: searchBy == 'invoice' ? 'none' : '' }">
+                        <div class="col-lg-2" v-if="searchBy != 'invoice'">
                            <div class="form-group m-0">
                               <input type="date" class="form-control shadow-none" v-model="dateFrom" />
                            </div>
                         </div>
-                        <div class="col-lg-2" :style="{ display: searchBy == 'invoice' ? 'none' : '' }">
+                        <div class="col-lg-2" v-if="searchBy != 'invoice'">
                            <div class="form-group m-0">
                               <input type="date" class="form-control shadow-none" v-model="dateTo" />
                            </div>
