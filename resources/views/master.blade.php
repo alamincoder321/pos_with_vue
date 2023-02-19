@@ -8,6 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="{{asset($profile->company_logo)}}" sizes="150x150">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="{{asset('backend/css/styles.css')}}" rel="stylesheet" />
