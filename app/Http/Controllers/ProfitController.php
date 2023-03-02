@@ -9,44 +9,86 @@ class ProfitController extends Controller
 {
     public function getProfit()
     {
-        $today = date("Y-m-d");
         $month = date("m");
         $year = date("Y");
+        $today = date("Y-m-d");
+        $dayNumber = date('t', mktime(0, 0, 0, $month, 1, $year));
         // get data
-        $totalData = [];
+        // $totalData = [];
 
         //daywise sale
-        $saleToday = DB::select("SELECT 
+        $todaySale = DB::select("SELECT 
                             IFNULL(SUM(sm.total), 00) AS totalamount
                             FROM sales sm
                             WHERE sm.date = ?", [$today]);
-        $totalData["todaySale"] = $saleToday[0]->totalamount;
-
-        //monthwise sale
-        $monthly = DB::select("SELECT 
-                        IFNULL(SUM(sm.total), 00) AS totalamount
-                        FROM sales sm
-                        WHERE month(sm.date) = ?", [$month]);
-
-        $totalData["monthlySale"] = number_format($monthly[0]->totalamount, 2, '.', '');
-
-        //yearwise sale
-        $allMonth = [];
-        $yearlyAmount = 0;
-        for ($i=1; $i <= 12; $i++) {
-            $yearMonth = $year . sprintf("%02d", $i);
-            $yearly = DB::select("SELECT 
+        $monthlySale = DB::select("SELECT 
                             IFNULL(SUM(sm.total), 00) AS totalamount
                             FROM sales sm
-                            WHERE extract(year_month from sm.date) = ?", [$yearMonth]);
-            $allMonth[$year .'-'. sprintf("%02d", $i)] = number_format($yearly[0]->totalamount, 0,'','');
-            $yearlyAmount += $yearly[0]->totalamount;
-        }
-        $totalData["yearlySale"] = number_format($yearlyAmount, 2, '.', '');
+                            WHERE MONTH(sm.date) = ?", [$month]);
+        $yearlySale = DB::select("SELECT 
+                            IFNULL(SUM(sm.total), 00) AS totalamount
+                            FROM sales sm
+                            WHERE YEAR(sm.date) = ?", [$year]);
 
-        $totalData["allMonth"] = array_keys($allMonth);
-        $totalData["allMonthValue"] = array_values($allMonth);
-        
-        return response()->json($totalData);
+        // monthly record
+        $monthlyRecord = [];
+        for ($i = 1; $i <= $dayNumber; $i++) {
+            $date = $year . '-' . $month . '-' . sprintf("%02d", $i);
+            $query = DB::select("SELECT 
+                    IFNULL(SUM(sm.total), 00) AS totalamount
+                    FROM sales sm
+                    WHERE sm.date = ?", [$date]);
+
+            $amount = (float)$query[0]->totalamount;
+
+            $sale = [sprintf("%02d", $i), $amount];
+            array_push($monthlyRecord, $sale);
+        }
+
+        // yearly record
+        $yearlyRecord = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $yearMonth = $year . sprintf("%02d", $i);
+            $query = DB::select("SELECT 
+                                IFNULL(SUM(sm.total), 00) AS totalamount
+                                FROM sales sm
+                                WHERE extract(year_month from sm.date) = ?", [$yearMonth]);
+
+
+            $amount = (float)$query[0]->totalamount;
+            $monthName = date("M", mktime(0, 0, 0, $i, 10));
+
+            $sale = [$monthName, $amount];
+            array_push($yearlyRecord, $sale);
+        }
+
+        // top sold product
+        $topSold = DB::select("SELECT
+                                p.name AS product_name,
+                                SUM(sd.quantity) AS qty
+                            FROM sale_details sd
+                            JOIN products p ON p.id = sd.product_id
+                            JOIN sales sm ON sm.id = sd.sale_id
+                            GROUP BY product_name
+                            LIMIT 5");
+        // top sold product
+        $topCustomer = DB::select("SELECT
+                                    concat_ws('-', c.customer_code, c.name) as customer_name,
+                                    IFNULL(SUM(sm.total),0) AS total_amount
+                                FROM sales sm
+                                JOIN customers c ON c.id = sm.customer_id
+                                WHERE c.customer_type != 'G'
+                                GROUP BY name
+                                LIMIT 5");
+
+        return response()->json([
+            'monthlyRecord' => $monthlyRecord,
+            'yearlyRecord'  => $yearlyRecord,
+            'topSold'       => $topSold,
+            'topCustomer'   => $topCustomer,
+            'todaySale'     => $todaySale,
+            'monthlySale'   => $monthlySale,
+            'yearlySale'    => $yearlySale,
+        ]);
     }
 }
