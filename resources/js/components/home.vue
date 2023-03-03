@@ -12,7 +12,7 @@
             </div>
             <div class="col-xl-4 col-md-6">
                 <div class="card bg-info text-center text-white mb-4">
-                    <div class="card-body">{{monthlySale}}</div>
+                    <div class="card-body">{{ monthlySale }}</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
                         <a class="small text-white text-decoration-none stretched-link">Monthly Sales</a>
                     </div>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-xl-4 col-md-6">
                 <div class="card bg-success text-center text-white mb-4">
-                    <div class="card-body">{{yearlySale}}</div>
+                    <div class="card-body">{{ yearlySale }}</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
                         <a class="small text-white text-decoration-none stretched-link">Yearly Sales</a>
                     </div>
@@ -51,18 +51,18 @@
                 </div>
             </div>
             <div class="col-xl-6 col-md-6">
-                <div class="card bg-secondary text-center text-white mb-4">
+                <div class="card bg-primary text-center text-white mb-4">
                     <div class="card-body">2500.00</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
-                        <a class="small text-white text-decoration-none stretched-link">Yearly Collection</a>
+                        <a class="small text-white text-decoration-none stretched-link">Cash Balance</a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-6 col-md-6">
-                <div class="card bg-secondary text-center text-white mb-4">
+                <div class="card bg-success text-center text-white mb-4">
                     <div class="card-body">2500.00</div>
                     <div class="card-footer d-flex align-items-center justify-content-center">
-                        <a class="small text-white text-decoration-none stretched-link">Yearly Collection</a>
+                        <a class="small text-white text-decoration-none stretched-link">Bank Balance</a>
                     </div>
                 </div>
             </div>
@@ -70,27 +70,23 @@
             <hr />
 
             <!-- chart list -->
-            <div class="col-lg-12" v-if="searchType=='year'">
-                <h3 class="m-0 text-center">This Year Sales Amount</h3>
+            <div class="col-lg-12" v-if="searchType == 'year'">
                 <GChart type="ColumnChart" :data="yearlyData" :options="yearlychartOptions" />
             </div>
             <div class="col-lg-12" v-else>
-                <h3 class="m-0 text-center">This Month Sales Amount</h3>
                 <GChart type="ColumnChart" :data="monthlyData" :options="monthlychartOptions" />
             </div>
             <div class="col-12 mt-2">
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-warning shadow-none" @click="searchType = 'year'">Yearly</button>
-                    <button class="btn btn-primary shadow-none" @click="searchType = 'month'">Monthly</button>
+                    <button class="btn btn-info shadow-none" @click="searchType = 'month'">Monthly</button>
                 </div>
             </div>
 
             <div class="col-lg-7 my-3">
-                    <h3 class="m-0 text-center">Top Product List</h3>
-                    <GChart style="border:1px solid gray;" type="PieChart" :data="topData" :options="topchartOptions" />
+                <GChart style="border:1px solid gray;" type="PieChart" :data="topData" :options="topchartOptions" />
             </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-4 mt-3">
+            <div class="col-lg-5 mt-3">
                 <h3 class="m-0 text-center">Top Customer List</h3>
                 <table class="table table-bordered">
                     <thead>
@@ -114,7 +110,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import { GChart } from 'vue-google-charts/legacy'
 export default {
     components: {
@@ -127,31 +122,33 @@ export default {
                 ['Month', 'Sales'],
             ],
             monthlychartOptions: {
-                chart: {
-                    title: 'Monthly Sales Chart',
-                }
+                title: 'Monthly Sales Chart',
+                backgroundColor: '#0dcaf0',
+                width: 1000,
             },
             yearlyData: [
                 ['Year', 'Sales'],
             ],
             yearlychartOptions: {
-                chart: {
-                    title: 'Yearly Sales Chart',
-                }
+                title: 'Yearly Sales Chart',
+                backgroundColor: '#ffc107',
+                width: 1000,
             },
             topData: [
                 ['Year', 'Sales'],
             ],
             topchartOptions: {
-                chart: {
-                    title: 'Yearly Sales Chart',
-                }
+                title: 'Top Products',
+                width: 573,
+                height: 260,
+                backgroundColor: 'gray',
+                is3D: true
             },
-            customers:[],
+            customers: [],
 
-            todaySale:0,
-            monthlySale:0,
-            yearlySale:0,
+            todaySale: 0,
+            monthlySale: 0,
+            yearlySale: 0,
             useraccess: [],
             user_id: null,
 
@@ -177,10 +174,10 @@ export default {
                         this.topData.push([p.product_name, parseFloat(p.qty)]);
                     })
 
-                    this.customers   = res.data.topCustomer;
-                    this.todaySale   = res.data.todaySale[0].totalamount;
+                    this.customers = res.data.topCustomer;
+                    this.todaySale = res.data.todaySale[0].totalamount;
                     this.monthlySale = res.data.monthlySale[0].totalamount;
-                    this.yearlySale  = res.data.yearlySale[0].totalamount;
+                    this.yearlySale = res.data.yearlySale[0].totalamount;
                 })
 
         },
