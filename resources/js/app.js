@@ -32,6 +32,7 @@ Vue.use(VueToastr, {
 import "sweetalert2/src/sweetalert2.scss";
 // router
 import routes from "./routes.js";
+import Vue from "vue";
 const router = new VueRouter({
     mode: "history",
     routes,
@@ -41,3 +42,5 @@ const app = new Vue({
     router,
     el: "#app",
 });
+
+Vue.config.devtools = true;
